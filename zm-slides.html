@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Präsentation: Zohran Mamdani</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #111827; color: #F9FAFB; overflow: hidden; }
+        
+        /* Klickbarer Cursor für Touch-Steuerung */
+        #presentation-container { 
+            position: relative; 
+            width: 100%; 
+            height: 100vh; 
+            overflow: hidden; 
+            cursor: pointer; /* Zeigt Interaktivität an */
+        }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 5% 8%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; opacity: 0; transform: translateX(20px); transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out; visibility: hidden; }
+        .slide.active { opacity: 1; transform: translateX(0); visibility: visible; }
+        .reveal-item { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; transition-delay: 0s; }
+        .reveal-item.revealed { opacity: 1; transform: translateY(0); }
+        .text-accent-red { color: #EF4444; }
+        .text-accent-blue { color: #3B82F6; }
+        #controls-wrapper { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #1F2937; z-index: 100; }
+        #slide-pane #controls { display: flex; justify-content: center; align-items: center; padding: 12px 0; }
+        .control-btn { background: none; border: none; color: #F9FAFB; cursor: pointer; padding: 8px 12px; margin: 0 10px; border-radius: 8px; transition: background-color 0.2s; }
+        .control-btn:hover { background-color: #374151; }
+        .control-btn svg { width: 24px; height: 24px; pointer-events: none; }
+        .image-container { max-width: 450px; width: 100%; margin-top: 1.5rem; }
+        .image-container img { width: 100%; height: auto; border-radius: 12px; border: 2px solid #374151; cursor: zoom-in; } /* Zoom-Cursor */
+        .slide-layout { display: flex; flex-direction: column; width: 100%; height: 100%; justify-content: center; align-items: center; }
+        @media (min-width: 768px) { .slide-layout { flex-direction: row; gap: 2rem; } .slide-layout .content { flex-basis: 50%; text-align: left; } .slide-layout .image-container { flex-basis: 50%; margin-top: 0; } ul { padding-left: 1.5rem; } }
+        .lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); display: none; align-items: center; justify-content: center; z-index: 1000; cursor: zoom-out; }
+        #lightbox-image { max-width: 90%; max-height: 90vh; border-radius: 8px; border: 2px solid #F9FAFB; }
+        .lightbox-close { position: absolute; top: 20px; right: 35px; color: #F9FAFB; font-size: 40px; font-weight: bold; cursor: pointer; line-height: 1; }
+    </style>
+</head>
+<body>
+    <div id="presentation-container">
+        
+        <!-- FOLIE 1: TITEL (Sync mit 0:00 - 0:10) -->
+        <div class="slide active"> 
+            <div class="slide-layout"> 
+                <div class="content"> 
+                    <h1 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-red">New Yorks Neuer Bürgermeister</h1> 
+                    <h2 class="reveal-item text-2xl md:text-3xl font-bold mb-6">Wer ist Zohran Mamdani wirklich?</h2>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc"> 
+                        <li class="reveal-item">Terror-Finanziers & Radikale Ideologie</li> 
+                        <li class="reveal-item text-accent-blue">Das Soros-Paradoxon</li> 
+                        <li class="reveal-item">Was deutsche Medien ignorieren</li> 
+                    </ul> 
+                </div> 
+                <div class="reveal-item image-container"> 
+                    <!-- BILD ERSETZEN: Porträt von Zohran Mamdani -->
+                    <img src="images/mamdani-title.jpg" alt="Porträt von Zohran Mamdani"> 
+                </div> 
+            </div> 
+        </div>
+
+        <!-- FOLIE 2: "TANTEN-LÜGE" (Sync mit 0:10 - 0:15) -->
+        <div class="slide"> 
+            <div class="slide-layout"> 
+                <div class="content"> 
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">Was wir NICHT behandeln</h2> 
+                    <h3 class="reveal-item text-2xl md:text-3xl font-bold mb-6 text-accent-red">Die "Tanten-Lüge" (9/11)</h3>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc"> 
+                        <li class="reveal-item">Viraler Vorwurf: Faktisch schwach.</li> 
+                        <li class="reveal-item">Komplexe kulturelle Debatte.</li> 
+                        <li class="reveal-item text-accent-blue">Wir konzentrieren uns auf ernstere, belegbare Fakten.</li> 
+                    </ul> 
+                </div> 
+                <div class="reveal-item image-container"> 
+                    <!-- BILD ERSETZEN: Mamdani bei einer Rede -->
+                    <img src="images/mamdani-speech.jpg" alt="Zohran Mamdani hält eine Rede"> 
+                </div> 
+            </div> 
+        </div>
+
+        <!-- FOLIE 3: VÄTERLICHE IDEOLOGIE (Sync mit 0:15 - 0:30) -->
+        <div class="slide"> 
+            <div class="slide-layout"> 
+                <div class="content"> 
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-blue">Die väterliche Ideologie</h2> 
+                    <h3 class="reveal-item text-2xl md:text-3xl font-bold mb-6">Mahmood Mamdani (2004)</h3>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc"> 
+                        <li class="reveal-item">Buch: "Good Muslim, Bad Muslim"</li> 
+                        <li class="reveal-item text-accent-red">Selbstmordattentäter seien...<br><strong>"eine Kategorie von Soldaten"</strong>.</li> 
+                        <li class="reveal-item">Ihre Taten seien ein...<br><strong>"Merkmal moderner politischer Gewalt"</strong>.</li> 
+                    </ul> 
+                </div> 
+                <div class="reveal-item image-container"> 
+                    <!-- BILD ERSETZEN: Mahmood Mamdani oder Buchcover -->
+                    <img src="images/mamdani-father.jpg" alt="Mahmood Mamdani, Vater von Zohran"> 
+                </div> 
+            </div> 
+        </div>
+
+        <!-- FOLIE 4: RAP (HOLY LAND FIVE) (Sync mit 0:30 - 0:45) -->
+        <div class="slide"> 
+            <div class="slide-layout"> 
+                <div class="content"> 
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-red">Mamdanis Rap (2017)</h2> 
+                    <h3 class="reveal-item text-2xl md:text-3xl font-bold mb-6">"Liebe" für Hamas-Finanziers</h3>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc"> 
+                        <li class="reveal-item">Song "Salam": <strong>"My love to the Holy Land Five."</strong></li> 
+                        <li class="reveal-item">Wer sind die "Holy Land Five"?</li> 
+                        <li class="reveal-item text-accent-blue">Verurteilt (108 Anklagepunkte) wegen Weiterleitung von <strong>12 Mio. $ an die Hamas</strong>.</li> 
+                    </ul> 
+                </div> 
+                <div class="reveal-item image-container"> 
+                    <!-- BILD ERSETZEN: Logo der Holy Land Foundation -->
+                    <img src="images/mamdani-hlf5.png" alt="Logo der Holy Land Foundation (HLF)"> 
+                </div> 
+            </div> 
+        </div>
+        
+        <!-- FOLIE 5: SIRAJ WAHHAJ (Sync mit 0:45 - 1:00) -->
+        <div class="slide"> 
+            <div class="slide-layout"> 
+                <div class="content"> 
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-red">Verbindung: WTC-Anschlag 1993</h2> 
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc"> 
+                        <li class="reveal-item">Mamdani postet Foto mit Imam Siraj Wahhaj.</li> 
+                        <li class="reveal-item">Nennt ihn eine "Säule der Gemeinschaft".</li> 
+                        <li class="reveal-item text-accent-blue">US-Staatsanwaltschaft nannte Wahhaj: <strong>"Nicht angeklagter Mitverschwörer"</strong> (WTC-Anschlag 1993).</li> 
+                    </ul> 
+                </div> 
+                <div class="reveal-item image-container"> 
+                    <!-- BILD ERSETZEN: Foto von Mamdani und Wahhaj -->
+                    <img src="images/mamdani-wahhaj.jpg" alt="Zohran Mamdani posiert mit Imam Siraj Wahhaj"> 
+                </div> 
+            </div> 
+        </div>
+
+        <!-- FOLIE 6: SOROS-PARADOXON (Sync mit 1:00 - 1:15) -->
+        <div class="slide"> 
+            <div class="slide-layout"> 
+                <div class="content"> 
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-blue">Das Soros-Paradoxon</h2> 
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc"> 
+                        <li class="reveal-item">Mamdani (DSA) trat an gegen die "Milliardärsklasse".</li> 
+                        <li class="reveal-item">Alexander Soros: War <strong>"stolz"</strong>, Mamdani zu unterstützen.</li> 
+                        <li class="reveal-item text-accent-red">Soros OSF: <strong>37 Mio. $</strong> an die "Working Families Party" (WFP), die Mamdani zum Sieg verhalf.</li> 
+                    </ul> 
+                </div> 
+                <div class="reveal-item image-container"> 
+                    <!-- BILD ERSETZEN: Gegenüberstellung Mamdani / Soros -->
+                    <img src="images/mamdani-soros.jpg" alt="Gegenüberstellung von Zohran Mamdani und Alex Soros"> 
+                </div> 
+            </div> 
+        </div>
+
+        <!-- FOLIE 7: FAZIT (Sync mit 1:15 - 1:30) -->
+        <div class="slide"> 
+            <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-blue">Fazit: Fakten vs. Narrativ</h2> 
+            <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc max-w-3xl mx-auto"> 
+                <li class="reveal-item">Ein Rapper, der verurteilte Hamas-Finanziers liebt.</li> 
+                <li class="reveal-item">Ein Politiker, der sich mit WTC-Mitverschwörern schmückt.</li> 
+                <li class="reveal-item">Ein Sozialist, der von Soros finanziert wird.</li> 
+                <li class="reveal-item text-accent-red" style="margin-top: 1.5rem;">Was denken Sie? Schreiben Sie es in die Kommentare!</li> 
+            </ul> 
+        </div>
+
+    </div>
+
+    <!-- Steuerelemente (versteckt, aber für Tasten/Touch funktional) -->
+    <div id="controls-wrapper"> 
+        <div id="controls" style="display: none;">
+            <button id="prev-btn" class="control-btn"></button> 
+            <button id="next-btn" class="control-btn"></button> 
+        </div> 
+    </div>
+    
+    <!-- Lightbox (Zoom-Modus) -->
+    <div id="lightbox" class="lightbox-overlay"> 
+        <span class="lightbox-close">&times;</span> 
+        <img id="lightbox-image" src="" alt="Vergrößerte Ansicht"> 
+    </div>
+    
+    <script type="module">
+        document.addEventListener('DOMContentLoaded', () => {
+            const presentationContainer = document.getElementById('presentation-container');
+            const slides = document.querySelectorAll('.slide');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxClose = document.querySelector('.lightbox-close');
+            const slideImages = document.querySelectorAll('.image-container img');
+            let currentSlide = 0;
+
+            function openLightbox(src) { lightboxImage.src = src; lightbox.style.display = 'flex'; }
+            function closeLightbox() { lightbox.style.display = 'none'; lightboxImage.src = ''; }
+            
+            slideImages.forEach(img => { 
+                img.addEventListener('click', (e) => { 
+                    e.stopPropagation(); // Stoppt Klick-Event, um nicht zur nächsten Folie zu wechseln
+                    openLightbox(img.src); 
+                }); 
+            });
+            
+            lightboxClose.addEventListener('click', (e) => {
+                e.stopPropagation(); // Verhindert, dass der Klick die Folie wechselt
+                closeLightbox();
+            });
+            
+            lightbox.addEventListener('click', (e) => { 
+                if (e.target === lightbox) { // Nur schließen, wenn auf den Hintergrund geklickt wird
+                    closeLightbox(); 
+                }
+            });
+
+            function showSlide(index) {
+                slides.forEach((slide) => { slide.classList.remove('active'); });
+                const slide = slides[index];
+                if (!slide) return;
+                slide.classList.add('active');
+                currentSlide = index;
+                const items = slide.querySelectorAll('.reveal-item');
+                items.forEach((item, index) => {
+                    item.classList.remove('revealed');
+                    item.style.transitionDelay = `${index * 250}ms`;
+                    setTimeout(() => { item.classList.add('revealed'); }, 50);
+                });
+            }
+            function nextSlide() { let next = currentSlide + 1; if (next >= slides.length) { next = 0; } showSlide(next); }
+            function prevSlide() { let prev = currentSlide - 1; if (prev < 0) { prev = slides.length - 1; } showSlide(prev); }
+            
+            showSlide(0); // Zeigt die erste Folie
+
+            // --- TASTENSTEUERUNG ---
+            document.addEventListener('keydown', (e) => {
+                if (lightbox.style.display === 'flex') { 
+                    if (e.key === 'Escape') { closeLightbox(); } 
+                    return; 
+                }
+                if (e.key === 'ArrowRight') { nextSlide(); } 
+                else if (e.key === 'ArrowLeft') { prevSlide(); }
+                else if (e.key === 'Enter') {
+                    e.preventDefault(); 
+                    const activeSlide = document.querySelector('.slide.active');
+                    if (activeSlide) { 
+                        const image = activeSlide.querySelector('.image-container img'); 
+                        if (image) { openLightbox(image.src); } 
+                    }
+                }
+            });
+
+            // --- TOUCH-STEUERUNG (TIPPEN) ---
+            presentationContainer.addEventListener('click', (e) => {
+                // Nicht auslösen, wenn auf ein Bild (zum Zoomen) oder die Lightbox geklickt wurde
+                if (e.target.closest('.image-container img') || e.target.closest('#lightbox')) {
+                    return;
+                }
+
+                const clickX = e.clientX;
+                const windowWidth = window.innerWidth;
+
+                if (clickX > windowWidth / 2) {
+                    nextSlide(); // Tippen auf die rechte Hälfte
+                } else {
+                    prevSlide(); // Tippen auf die linke Hälfte
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
