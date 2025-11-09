@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>YouTube Video-Snippet</title>
+<style>
+    /* 1. CSS für das Modal-Fenster (Lightbox) */
+    
+    /* Das Overlay für das Modal (standardmäßig ausgeblendet) */
+   .video-modal {
+        display: none; /* Standardmäßig versteckt */
+        position: fixed; /* Bleibt an Ort und Stelle */
+        z-index: 1000; /* Liegt über allem anderen */
+        left: 0;
+        top: 0;
+        width: 100%; 
+        height: 100%;
+        overflow: auto; /* Scrollen, falls nötig */
+        background-color: rgba(0,0,0,0.85); /* Schwarz mit 85% Transparenz */
+    }
+
+    /* Der Container für das Video-Fenster */
+   .video-modal-content {
+        position: relative;
+        margin: 10% auto; /* 10% von oben und automatisch zentriert */
+        padding: 0;
+        width: 80%;
+        max-width: 800px; /* Maximale Breite des Videos */
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    }
+
+    /* Dieser Container sorgt für das korrekte 16:9-Seitenverhältnis */
+   .video-responsive-container {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 Aspektverhältnis */
+        height: 0;
+        overflow: hidden;
+        background: #000;
+    }
+
+    /* Das Iframe selbst, das das Video enthält */
+   .video-responsive-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+
+    /* Der Schließen-Button (das 'X') */
+   .video-close-button {
+        color: #FFFFFF;
+        position: absolute;
+        top: -35px; /* Positioniert es über dem Video-Container */
+        right: 0px;
+        font-size: 35px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    /* 2. CSS für das anklickbare Vorschaubild */
+   .video-thumbnail {
+        cursor: pointer;
+        width: 320px; /* Passen Sie die Größe nach Bedarf an */
+        border: 1px solid #ccc;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+</style>
+</head>
+<body>
+
+<h2>Video-Snippet-Beispiel</h2>
+
+<img 
+    class="video-thumbnail"
+    src="https://img.youtube.com/vi/IH-m-m2cE5U/hqdefault.jpg" 
+    onclick="openVideoPlayer('IH-m-m2cE5U', 30, 60)"
+    alt="Video abspielen"
+>
+
+
+<div id="myVideoModal" class="video-modal">
+    <div class="video-modal-content">
+        <span class="video-close-button" onclick="closeVideoPlayer()">&times;</span>
+        <div class="video-responsive-container" id="videoPlayerContainer">
+            </div>
+    </div>
+</div>
+
+<script>
+    // Referenzen zu den Modal-Elementen
+    var modal = document.getElementById("myVideoModal");
+    var videoContainer = document.getElementById("videoPlayerContainer");
+
+    // Funktion zum Öffnen des Videos
+    // Nimmt die Video-ID, Start- und Endzeit entgegen
+    function openVideoPlayer(videoId, startTime, endTime) {
+        
+        // Erstellt die spezielle YouTube-Embed-URL
+        // autoplay=1: Startet automatisch
+        // start=...: Setzt die Startzeit
+        // end=...: Setzt die Endzeit
+        // rel=0: Zeigt keine verwandten Videos am Ende
+        var embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&start=${startTime}&end=${endTime}&rel=0`;
+
+        // Erstellt das Iframe-Element und fügt es in den Container ein
+        videoContainer.innerHTML = `<iframe 
+                                        src="${embedUrl}" 
+                                        frameborder="0" 
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                        allowfullscreen>
+                                    </iframe>`;
+        
+        // Zeigt das Modal-Fenster an
+        modal.style.display = "block";
+    }
+
+    // Funktion zum Schließen des Videos
+    function closeVideoPlayer() {
+        // Versteckt das Modal-Fenster
+        modal.style.display = "none";
+        
+        // WICHTIG: Stoppt das Video, indem das Iframe entfernt wird.
+        // Andernfalls würde das Video im Hintergrund weiterlaufen.
+        videoContainer.innerHTML = "";
+    }
+
+    // Schließt das Modal auch, wenn der Benutzer auf das graue Overlay klickt
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeVideoPlayer();
+        }
+    }
+</script>
+
+</body>
+</html>
