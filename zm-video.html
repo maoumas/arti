@@ -1,44 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>YouTube Video-Snippet</title>
+<title>PETRO - Cumbre CELAC-UE.</title>
 <style>
-    /* 1. CSS für das Modal-Fenster (Lightbox) */
+    /* 1. CSS para el modal-ventana (Lightbox) */
     
-    /* Das Overlay für das Modal (standardmäßig ausgeblendet) */
-   .video-modal {
-        display: none; /* Standardmäßig versteckt */
-        position: fixed; /* Bleibt an Ort und Stelle */
-        z-index: 1000; /* Liegt über allem anderen */
+    /* El overlay para el modal (oculto por defecto) */
+  .video-modal {
+        display: none; /* Oculto por defecto */
+        position: fixed; /* Se mantiene en su lugar */
+        z-index: 1000; /* Se sitúa sobre todo lo demás */
         left: 0;
         top: 0;
         width: 100%; 
         height: 100%;
-        overflow: auto; /* Scrollen, falls nötig */
-        background-color: rgba(0,0,0,0.85); /* Schwarz mit 85% Transparenz */
+        overflow: auto; /* Scroll, si es necesario */
+        background-color: rgba(0,0,0,0.85); /* Negro con 85% de transparencia */
     }
 
-    /* Der Container für das Video-Fenster */
-   .video-modal-content {
+    /* El contenedor para la ventana de video */
+  .video-modal-content {
         position: relative;
-        margin: 10% auto; /* 10% von oben und automatisch zentriert */
+        margin: 10% auto; /* 10% desde arriba y centrado automáticamente */
         padding: 0;
         width: 80%;
-        max-width: 800px; /* Maximale Breite des Videos */
+        max-width: 800px; /* Ancho máximo del video */
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     }
 
-    /* Dieser Container sorgt für das korrekte 16:9-Seitenverhältnis */
-   .video-responsive-container {
+    /* Este contenedor asegura la correcta relación de aspecto 16:9 */
+  .video-responsive-container {
         position: relative;
-        padding-bottom: 56.25%; /* 16:9 Aspektverhältnis */
+        padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
         height: 0;
         overflow: hidden;
         background: #000;
     }
 
-    /* Das Iframe selbst, das das Video enthält */
-   .video-responsive-container iframe {
+    /* El Iframe que contiene el video */
+  .video-responsive-container iframe {
         position: absolute;
         top: 0;
         left: 0;
@@ -47,21 +47,21 @@
         border: 0;
     }
 
-    /* Der Schließen-Button (das 'X') */
-   .video-close-button {
+    /* El botón de cierre (la 'X') */
+  .video-close-button {
         color: #FFFFFF;
         position: absolute;
-        top: -35px; /* Positioniert es über dem Video-Container */
+        top: -35px; /* Lo posiciona sobre el contenedor de video */
         right: 0px;
         font-size: 35px;
         font-weight: bold;
         cursor: pointer;
     }
 
-    /* 2. CSS für das anklickbare Vorschaubild */
-   .video-thumbnail {
+    /* 2. CSS para la imagen de vista previa clicable */
+  .video-thumbnail {
         cursor: pointer;
-        width: 320px; /* Passen Sie die Größe nach Bedarf an */
+        width: 320px; /* Ajusta el tamaño según sea necesario */
         border: 1px solid #ccc;
         box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
@@ -69,13 +69,13 @@
 </head>
 <body>
 
-<h2>Video-Snippet-Beispiel</h2>
+<h2>PETRO - Cumbre CELAC-UE.</h2>
 
 <img 
     class="video-thumbnail"
-    src="https://img.youtube.com/vi/IH-m-m2cE5U/hqdefault.jpg" 
-    onclick="openVideoPlayer('IH-m-m2cE5U', 30, 60)"
-    alt="Video abspielen"
+    src="https://img.youtube.com/vi/cHQQKYkEypE/hqdefault.jpg" 
+    onclick="openVideoPlayer('cHQQKYkEypE', 0, 420)"
+    alt="Reproducir video"
 >
 
 
@@ -88,22 +88,22 @@
 </div>
 
 <script>
-    // Referenzen zu den Modal-Elementen
+    // Referencias a los elementos del modal
     var modal = document.getElementById("myVideoModal");
     var videoContainer = document.getElementById("videoPlayerContainer");
 
-    // Funktion zum Öffnen des Videos
-    // Nimmt die Video-ID, Start- und Endzeit entgegen
+    // Función para abrir el reproductor de video
+    // Recibe el ID del video, el tiempo de inicio y el tiempo de finalización
     function openVideoPlayer(videoId, startTime, endTime) {
         
-        // Erstellt die spezielle YouTube-Embed-URL
-        // autoplay=1: Startet automatisch
-        // start=...: Setzt die Startzeit
-        // end=...: Setzt die Endzeit
-        // rel=0: Zeigt keine verwandten Videos am Ende
+        // Crea la URL especial de YouTube para incrustar
+        // autoplay=1: Inicia automáticamente
+        // start=...: Establece el tiempo de inicio
+        // end=...: Establece el tiempo de finalización
+        // rel=0: No muestra videos relacionados al final
         var embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&start=${startTime}&end=${endTime}&rel=0`;
 
-        // Erstellt das Iframe-Element und fügt es in den Container ein
+        // Crea el elemento Iframe y lo inserta en el contenedor
         videoContainer.innerHTML = `<iframe 
                                         src="${embedUrl}" 
                                         frameborder="0" 
@@ -111,21 +111,21 @@
                                         allowfullscreen>
                                     </iframe>`;
         
-        // Zeigt das Modal-Fenster an
+        // Muestra la ventana modal
         modal.style.display = "block";
     }
 
-    // Funktion zum Schließen des Videos
+    // Función para cerrar el reproductor de video
     function closeVideoPlayer() {
-        // Versteckt das Modal-Fenster
+        // Oculta la ventana modal
         modal.style.display = "none";
         
-        // WICHTIG: Stoppt das Video, indem das Iframe entfernt wird.
-        // Andernfalls würde das Video im Hintergrund weiterlaufen.
+        // IMPORTANTE: Detiene el video eliminando el Iframe.
+        // De lo contrario, el video seguiría reproduciéndose en segundo plano.
         videoContainer.innerHTML = "";
     }
 
-    // Schließt das Modal auch, wenn der Benutzer auf das graue Overlay klickt
+    // Cierra el modal también si el usuario hace clic en el fondo gris
     window.onclick = function(event) {
         if (event.target == modal) {
             closeVideoPlayer();
