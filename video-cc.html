@@ -74,7 +74,7 @@
 <img 
     class="video-thumbnail"
     src="https://img.youtube.com/vi/cHQQKYkEypE/hqdefault.jpg" 
-    onclick="openVideoPlayer('cHQQKYkEypE', 20, 420)"
+    onclick="openVideoPlayer('cHQQKYkEypE', 23, 420)"
     alt="Reproducir video"
 >
 
@@ -96,7 +96,7 @@
     function openVideoPlayer(videoId, startTime, endTime) {
         
         // La URL usará los parámetros de 'startTime' (20) y 'endTime' (420)
-        var embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&start=${startTime}&end=${endTime}&cc_load_policy=1&cc_lang_pref=de&hl=de&rel=0`;
+        var embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&start=${startTime}&end=${endTime}&cc_load_policy=1&cc_lang_pref=de&hl=en&rel=0`;
 
         // Crea el elemento Iframe y lo inserta en el contenedor
         videoContainer.innerHTML = `<iframe 
