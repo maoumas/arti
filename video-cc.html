@@ -6,7 +6,7 @@
     /* 1. CSS para el modal-ventana (Lightbox) */
     
     /* El overlay para el modal (oculto por defecto) */
- .video-modal {
+.video-modal {
         display: none; /* Oculto por defecto */
         position: fixed; /* Se mantiene en su lugar */
         z-index: 1000; /* Se sitúa sobre todo lo demás */
@@ -19,7 +19,7 @@
     }
 
     /* El contenedor para la ventana de video */
- .video-modal-content {
+.video-modal-content {
         position: relative;
         margin: 10% auto; /* 10% desde arriba y centrado automáticamente */
         padding: 0;
@@ -29,7 +29,7 @@
     }
 
     /* Este contenedor asegura la correcta relación de aspecto 16:9 */
- .video-responsive-container {
+.video-responsive-container {
         position: relative;
         padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
         height: 0;
@@ -38,7 +38,7 @@
     }
 
     /* El Iframe que contiene el video */
- .video-responsive-container iframe {
+.video-responsive-container iframe {
         position: absolute;
         top: 0;
         left: 0;
@@ -48,7 +48,7 @@
     }
 
     /* El botón de cierre (la 'X') */
- .video-close-button {
+.video-close-button {
         color: #FFFFFF;
         position: absolute;
         top: -35px; /* Lo posiciona sobre el contenedor de video */
@@ -59,7 +59,7 @@
     }
 
     /* 2. CSS para la imagen de vista previa clicable */
- .video-thumbnail {
+.video-thumbnail {
         cursor: pointer;
         width: 320px; /* Ajusta el tamaño según sea necesario */
         border: 1px solid #ccc;
@@ -74,7 +74,7 @@
 <img 
     class="video-thumbnail"
     src="https://img.youtube.com/vi/cHQQKYkEypE/hqdefault.jpg" 
-    onclick="openVideoPlayer('cHQQKYkEypE', 0, 420)"
+    onclick="openVideoPlayer('cHQQKYkEypE', 20, 420)"
     alt="Reproducir video"
 >
 
@@ -95,14 +95,8 @@
     // Función para abrir el reproductor de video
     function openVideoPlayer(videoId, startTime, endTime) {
         
-        // Crea la URL especial de YouTube para incrustar
-        // autoplay=1: Inicia automáticamente
-        // start=...: Tiempo de inicio
-        // end=...: Tiempo de finalización
-        // rel=0: No muestra videos relacionados
-        // cc_load_policy=1: FUERZA que los subtítulos se muestren
-        // cc_lang_pref=de: Intenta poner los subtítulos en Alemán (si falla, usará inglés o español)
-        var embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&start=${startTime}&end=${endTime}&cc_load_policy=1&cc_lang_pref=de&rel=0`;
+        // La URL usará los parámetros de 'startTime' (20) y 'endTime' (420)
+        var embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&start=${startTime}&end=${endTime}&cc_load_policy=1&cc_lang_pref=de&hl=de&rel=0`;
 
         // Crea el elemento Iframe y lo inserta en el contenedor
         videoContainer.innerHTML = `<iframe 
