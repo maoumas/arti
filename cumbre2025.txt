@@ -1,0 +1,133 @@
+Comprendido. Procederé a generar la lista de secciones de video con sus respectivos puntos de inserción (CUEs) en formato HTML, eliminando todas las marcas de citas para un texto limpio y profesional.
+
+**Nota Importante:** Dado que las fuentes no proporcionan los identificadores únicos de YouTube, se utilizan identificadores genéricos (`VIDEO_ID_X`). Por favor, sustitúyalos por los IDs reales de los videos que cargue a su canal.
+
+---
+
+## Plan de Extracción de Video: Tensión en la Cumbre CELAC-UE
+
+El siguiente plan se centra en la tensión geopolítica generada por el conflicto entre el presidente Gustavo Petro y Estados Unidos (Lista Clinton y narcotráfico), las consecuentes ausencias de líderes europeos y la supuesta falta de coherencia en los discursos de Petro.
+
+### 1. Las Bajas Europeas y la Escasa Participación
+
+**Fuente:** Caracol Radio
+
+**Tiempo a Extraer:** 0 - 15 segundos
+
+**Descripción:** Este segmento anuncia las **ausencias notables** en la cumbre. Se debe destacar que el presidente francés **Emmanuel Macron**, la presidenta de la Comisión Europea **Úrsula Von der Leyen**, y el canciller alemán Frederich Mers, no asistieron. La no asistencia de Von der Leyen y Mers se debió oficialmente a la **"escasa participación de otros líderes"**.
+
+**CUE de Inserción (HTML):**
+```html
+<img class="video-thumbnail"
+    src="https://img.youtube.com/vi/VIDEO_ID_CARACOL/hqdefault.jpg" 
+    onclick="openVideoPlayer('VIDEO_ID_CARACOL', 0, 15)"
+    alt="Reproducir video: Caracol Radio - Ausencias Europeas">
+```
+
+***
+
+### 2. Petro, la Lista Clinton y el Narcotráfico: Origen de la Tensión
+
+**Fuente:** NTN24
+
+**Tiempo a Extraer:** 15 - 35 segundos
+
+**Descripción:** Este extracto es crucial para establecer la fuente de la **tensión bilateral**. Se señala que el desacuerdo de Petro con Washington sobre el combate al narcotráfico resultó en que **le fuera retirado el visado estadounidense** y fuera incluido en la **"denominada lista Clinton"**, siendo señalado de facilitar el narcotráfico.
+
+**CUE de Inserción (HTML):**
+```html
+<img class="video-thumbnail"
+    src="https://img.youtube.com/vi/VIDEO_ID_NTN24/hqdefault.jpg" 
+    onclick="openVideoPlayer('VIDEO_ID_NTN24', 15, 35)"
+    alt="Reproducir video: NTN24 - Tensión por narcotráfico y visado">
+```
+
+***
+
+### 3. La Presión de EE. UU. y las Ausencias Masivas
+
+**Fuente:** La República
+
+**Tiempo a Extraer:** 0 - 40 segundos
+
+**Descripción:** Petro denunció que la **Casa Blanca habría presionado para reducir la asistencia** de mandatarios latinoamericanos y europeos. La cita registró notables ausencias, con solo nueve de los 60 jefes de estado invitados asistiendo personalmente, mientras que la mayoría envió delegados de segundo nivel, reflejando el clima geopolítico tenso.
+
+**CUE de Inserción (HTML):**
+```html
+<img class="video-thumbnail"
+    src="https://img.youtube.com/vi/VIDEO_ID_LR/hqdefault.jpg" 
+    onclick="openVideoPlayer('VIDEO_ID_LR', 0, 40)"
+    alt="Reproducir video: La República - Presión de EE. UU.">
+```
+
+***
+
+### 4. Discurso: Misiles en el Caribe y la Acusación de Narcoterrorismo
+
+**Fuente:** Diario AS
+
+**Tiempo a Extraer:** 15 - 75 segundos
+
+**Descripción:** Este segmento establece el tono confrontacional del discurso de Petro. Él cuestiona la democracia ante los **misiles que caen en el Caribe** (de la misma fabricación que los de Gaza) sobre personas pobres. Cita el caso de Alejandro Carranza, un pescador pobre, cuya muerte a causa de un misil es catalogada bajo el "nuevo concepto" de **"narcoterrorista"**. Petro considera esto una "ejecución extrajudicial".
+
+**CUE de Inserción (HTML):**
+```html
+<img class="video-thumbnail"
+    src="https://img.youtube.com/vi/VIDEO_ID_AS_1/hqdefault.jpg" 
+    onclick="openVideoPlayer('VIDEO_ID_AS_1', 15, 75)"
+    alt="Reproducir video: Diario AS - Misiles y Narcoterrorismo">
+```
+
+***
+
+### 5. Confrontación Directa: "Mentiroso Trump y sus Amigos"
+
+**Fuente:** Diario AS
+
+**Tiempo a Extraer:** 650 - 690 segundos
+
+**Descripción:** Aquí se manifiesta la confrontación directa. Petro tilda de **"mentiroso Trump y sus amigos"** y al **"señor Rubio"**. Afirma que están asesinando a gente pobre y trabajadora en el Caribe y que el narcotráfico utiliza a estos políticos en Miami para pedir que **bombardeen Colombia y saquen al presidente** elegido por voto popular.
+
+**CUE de Inserción (HTML):**
+```html
+<img class="video-thumbnail"
+    src="https://img.youtube.com/vi/VIDEO_ID_AS_2/hqdefault.jpg" 
+    onclick="openVideoPlayer('VIDEO_ID_AS_2', 650, 690)"
+    alt="Reproducir video: Diario AS - Mentiroso Trump">
+```
+
+***
+
+### 6. Llamado a la "Democracia Global" (El Contraste en el Discurso)
+
+**Fuente:** Diario AS
+
+**Tiempo a Extraer:** 190 - 240 segundos
+
+**Descripción:** Para evidenciar la supuesta **falta de coherencia**, este segmento debe contrastarse con los ataques anteriores. Petro expresa su deseo de que la cumbre CELAC-UE sea un **"faro de luz en medio de la barbarie"**, promoviendo una **"democracia global"** que permita la coexistencia de diferencias. Este segmento promueve el diálogo y el multilateralismo.
+
+**CUE de Inserción (HTML):**
+```html
+<img class="video-thumbnail"
+    src="https://img.youtube.com/vi/VIDEO_ID_AS_3/hqdefault.jpg" 
+    onclick="openVideoPlayer('VIDEO_ID_AS_3', 190, 240)"
+    alt="Reproducir video: Diario AS - Democracia Global">
+```
+
+***
+
+### 7. La Advertencia Metafórica: El Águila Dorada y el Jaguar
+
+**Fuente:** Diario AS
+
+**Tiempo a Extraer:** 830 - 855 segundos
+
+**Descripción:** Este es el final dramático del discurso, retomando la retórica de confrontación. Petro advierte a Trump y Rubio con la leyenda del **"águila dorada"** (referencia a EE. UU.) que si ataca al **"cóndor"** (Latinoamérica), despertará al **"jaguar ancestral"**. Petro dice que la relación debe ser **"de tú a tú sin arrodillarnos"**.
+
+**CUE de Inserción (HTML):**
+```html
+<img class="video-thumbnail"
+    src="https://img.youtube.com/vi/VIDEO_ID_AS_4/hqdefault.jpg" 
+    onclick="openVideoPlayer('VIDEO_ID_AS_4', 830, 855)"
+    alt="Reproducir video: Diario AS - Advertencia del Jaguar">
+```
