@@ -16,7 +16,8 @@
         .text-accent-red { color: #EF4444; }
         .text-accent-blue { color: #3B82F6; }
         #controls-wrapper { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #1F2937; z-index: 100; }
-        #slide-pane #controls { display: flex; justify-content: center; align-items: center; padding: 12px 0; }
+        /* CORRECCIÓN: Se quitó el 'display: none' del template original y se estila aquí */
+        #controls { display: flex; justify-content: center; align-items: center; padding: 12px 0; }
         .control-btn { background: none; border: none; color: #F9FAFB; cursor: pointer; padding: 8px 12px; margin: 0 10px; border-radius: 8px; transition: background-color 0.2s; }
         .control-btn:hover { background-color: #374151; }
         .control-btn svg { width: 24px; height: 24px; pointer-events: none; }
@@ -133,7 +134,7 @@
                     <p class="reveal-item text-xl md:text-2xl mb-4">AI-generierte Häftlingsuniformen</p>
                     <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
                         <li class="reveal-item"><strong>Urheber:</strong> Senator <strong>Bernie Moreno</strong> (Republikaner, Ohio), ein scharfer Kritiker Petros.</li>
-                        <li class="reveal-item"><strong>Das Dokument:</strong> Moreno war Urheber der <strong>"Trump-Doktrin"</strong> für Kolumbien.</li>
+                        <li class="reveal-item"><strong>Das Dokument:</strong> Moreno war Urheber der <strong>"Trump-Doktrin"</strong> für Kolombien.</li>
                         <li class="reveal-item"><strong>Der Eklat:</strong> Enthielt ein AI-generiertes Foto, das Petro und Nicolás Maduro in <strong>orangefarbenen Häftlingsuniformen</strong> zeigte.</li>
                         <li class="reveal-item"><strong>Inhalt:</strong> Forderungen nach Sanktionen gegen Petro & Familie sowie Untersuchung seiner Kampagnen-Finanzierung.</li>
                     </ul>
@@ -227,17 +228,28 @@
                     </ul>
                 </div>
                 <div class="reveal-item image-container">
-                    <img src="https://placehold.co/600x400/374151/F9FAFB?text=Schachspiel:+Kalk%C3%BCl+vs.+Impuls" alt="Schachspiel, das Kalkül vs. Impuls darstellt">
+                    <img src="https{://placehold.co/600x400/374151/F9FAFB?text=Schachspiel:+Kalk%C3%BCl+vs.+Impuls" alt="Schachspiel, das Kalkül vs. Impuls darstellt">
                 </div>
             </div>
         </div>
 
     </div>
     <div id="controls-wrapper">
-        <!-- Controls are inserted by JS if needed, but wrapper is here -->
-        <div id="controls" style="display: none;"> 
-            <button id="prev-btn" class="control-btn"></button> 
-            <button id="next-btn" class="control-btn"></button> 
+        <!-- 
+        CORRECCIÓN: Se eliminó 'display: none;' para que los controles sean visibles en todos los dispositivos.
+        Se agregaron iconos SVG para los botones.
+        -->
+        <div id="controls"> 
+            <button id="prev-btn" class="control-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+            </button> 
+            <button id="next-btn" class="control-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+            </button> 
         </div>
     </div>
     <div id="lightbox" class="lightbox-overlay">
@@ -252,7 +264,12 @@
             const lightboxImage = document.getElementById('lightbox-image');
             const lightboxClose = document.querySelector('.lightbox-close');
             const slideImages = document.querySelectorAll('.image-container img');
+            const presentationContainer = document.getElementById('presentation-container');
+            const nextBtn = document.getElementById('next-btn');
+            const prevBtn = document.getElementById('prev-btn');
             let currentSlide = 0;
+            let touchStartX = 0;
+            let touchEndX = 0;
 
             function openLightbox(src) { lightboxImage.src = src; lightbox.style.display = 'flex'; }
             function closeLightbox() { lightbox.style.display = 'none'; lightboxImage.src = ''; }
@@ -276,11 +293,39 @@
             function nextSlide() { let next = currentSlide + 1; if (next >= slides.length) { next = 0; } showSlide(next); }
             function prevSlide() { let prev = currentSlide - 1; if (prev < 0) { prev = slides.length - 1; } showSlide(prev); }
             
+            // CORRECCIÓN: Conectar los botones de clic
+            if (nextBtn) { nextBtn.addEventListener('click', (e) => { e.stopPropagation(); nextSlide(); }); }
+            if (prevBtn) { prevBtn.addEventListener('click', (e) => { e.stopPropagation(); prevSlide(); }); }
+            
             showSlide(0); // Start with the first slide
 
+            // CORRECCIÓN: Agregar detección de deslizamiento (swipe) para móviles
+            presentationContainer.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true }); // Use passive for performance
+
+            presentationContainer.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipeGesture();
+            }, { passive: true });
+
+            function handleSwipeGesture() {
+                // No hacer nada si el lightbox está abierto
+                if (lightbox.style.display === 'flex') {
+                    return;
+                }
+                const deltaX = touchEndX - touchStartX;
+                if (deltaX < -50) { // Deslizar a la izquierda (avanzar)
+                    nextSlide();
+                } else if (deltaX > 50) { // Deslizar a la derecha (retroceder)
+                    prevSlide();
+                }
+            }
+
+            // Mantener la navegación por teclado para escritorio
             document.addEventListener('keydown', (e) => {
                 if (lightbox.style.display === 'flex') { if (e.key === 'Escape') { closeLightbox(); } return; }
-                if (e.key === 'ArrowRight' || e.key === ' ') { nextSlide(); } // Added spacebar for next slide
+                if (e.key === 'ArrowRight' || e.key === ' ') { nextSlide(); } 
                 else if (e.key === 'ArrowLeft') { prevSlide(); }
                 else if (e.key === 'Enter') {
                     e.preventDefault(); 
@@ -292,4 +337,3 @@
     </script>
 </body>
 </html>
-
