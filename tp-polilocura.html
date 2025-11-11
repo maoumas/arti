@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teleprompter Skript: Polilocura</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+    body { background-color: #111; color: #f0f0f0; font-family: 'Inter', sans-serif; }
+    #controls { position: sticky; bottom: 0; left: 0; right: 0; background-color: #222; border-top: 2px solid #3B82F6; padding: 0.75rem 1rem; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.75rem; z-index: 1000; box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5); }
+    #controls button { background-color: #3B82F6; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background-color 0.2s; }
+    #controls button:hover { background-color: #2563EB; }
+    #controls label { font-weight: 600; margin-left: 0.25rem; color: #ddd; font-size: 0.875rem; }
+    #controls input[type="range"] { cursor: pointer; width: 120px; }
+    .toggle-switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #444; transition: .3s; border-radius: 28px; }
+    .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .3s; border-radius: 50%; }
+    input:checked + .slider { background-color: #3B82F6; }
+    input:checked + .slider:before { transform: translateX(22px); }
+    #script-container { padding: 1rem 2rem; padding-bottom: 100vh; max-width: 900px; margin: 0 auto; line-height: 1.7; }
+    .speaker-text { font-size: 2.25rem; font-weight: 600; color: #ffffff; margin-bottom: 1rem; }
+    .instruction { font-size: 1.125rem; color: #FFD700; font-style: italic; background-color: #2a2a2a; border-left: 4px solid #FFD700; padding: 0.75rem; margin-bottom: 1rem; border-radius: 0 8px 8px 0; opacity: 0.9; }
+    .timestamp { font-size: 1.25rem; font-weight: 600; color: #3B82F6; border-top: 2px solid #444; padding-top: 1rem; margin-top: 2rem; margin-bottom: 1rem; }
+    body.hide-instructions .instruction { display: none; }
+    @media (max-width: 768px) { #controls { padding: 0.5rem; gap: 0.5rem; } #controls > label:not(.toggle-switch) { display: none; } #controls input[type="range"] { width: 90px; } #controls button { padding: 0.4rem 0.6rem; font-size: 0.875rem; } }
+  </style>
+</head>
+<body class="">
+  <div id="script-container">
+    <!-- HIER BEGINNT DER BEREINIGTE GUION -->
+    
+    <h2 class="timestamp">DER WAHNSINN IM WEISSEN HAUS VS. DER JÜNGSTE JAGUAR</h2>
+    <p class="instruction">(Professioneller Teleprompter-Text, im Stil einer investigativen Sondersendung)</p>
+    <p class="instruction">(Szene: Nahaufnahme des Moderators, dramatische Musik)</p>
+    
+    <p class="speaker-text">Guten Abend, meine Damen und Herren.</p>
+    <p class="speaker-text">Die Geopolitik wird zunehmend von Strategien bestimmt, die auf maximaler Unvorhersehbarkeit beruhen. Im Zentrum steht eine Methode, die einst im akademischen Bereich entwickelt wurde und heute die Weltbühne dominiert: <strong>Die Theorie des Verrückten</strong>—*The Madman Theory*.</p>
+    <p class="speaker-text">Wir analysieren heute, wie diese kalkulierte Taktik des ehemaligen US-Präsidenten Donald Trump triumphiert, während das unberechenbare, konfrontative Verhalten des kolumbianischen Präsidenten Gustavo Petro in eine diplomatische und persönliche Krise mündet.</p>
+    
+    <h2 class="timestamp">I. Die "Madman Theory" Trumps: Kalkulierter Wahnsinn</h2>
+    <p class="speaker-text">Politikexperten, deren Analysen unter anderem von der BBC aufgegriffen wurden, beschreiben die "Theorie des Verrückten" als einen Trick, bei dem man den Gegner davon überzeugt, man sei zu allem fähig, um Zugeständnisse zu erzwingen. Entscheidend ist, dass diese Strategie fernab jeglicher Irrationalität einem <strong>logischen Kalkül</strong> folgt.</p>
+    <p class="speaker-text">Trump setzt hierbei auf eine bewusste, strategische Mehrdeutigkeit (*"purposeful strategic ambiguity"*). Er fragt nicht nach dem, was er will, sondern nach einem Betrag, der das Ziel weit übersteigt, um Verbündete und Gegner gleichermaßen zu verschrecken.</p>
+    <p class="speaker-text"><strong>Die Triumphe der Unberechenbarkeit:</strong></p>
+    <p class="speaker-text">• <strong>NATO-Beiträge:</strong> Trump stellte die Unterstützung der USA für Europa infrage und drohte mit dem Austritt aus der Allianz. Das Ergebnis: Alle NATO-Länder bis auf Spanien versprachen, ihre Militärausgaben bis 2035 auf fünf Prozent des BIP zu erhöhen.</p>
+    <p class="speaker-text">• <strong>Zölle und Handel:</strong> Auch im internationalen Handel, etwa mit China, Kanada und Mexiko, nutzte Trump die Androhung astronomischer Zölle von 25 Prozent, um in letzter Minute größere Zugeständnisse zu erhalten, als ursprünglich geplant.</p>
+    <p class="speaker-text">Die Strategie besteht darin, Verwirrung zu stiften: Wenn die Gegner nicht wissen, was kommt, können sie sich nicht vorbereiten—und das spielt Trump in die Hände.</p>
+    
+    <h2 class="timestamp">II. Petro: Der selbsternannte Jaguar und die harte Vergeltung Washingtons</h2>
+    <p class="speaker-text">Im scharfen Kontrast dazu steht der kolumbianische Präsident Gustavo Petro, der sich in eine offene Konfrontation mit der Trump-Administration begeben hat, die ihn und seine Familie hart getroffen hat.</p>
+    <p class="speaker-text">Petro reagierte auf die massive militärische Präsenz der USA in der Region—die Teil einer Anti-Drogen-Kampagne ist—mit aggressiver Rhetorik: <strong>"Der uralte Jaguar wird erwachen, wenn der Goldene Adler es wagt, den Kondor anzugreifen."</strong> Er warnte die US-Führung: "Seien Sie vorsichtig, Sie betreten das karibische Meer der Befreier".</p>
+    <p class="speaker-text">Washington reagierte umgehend und drastisch:</p>
+    <p class="speaker-text">1. <strong>Sanktionen und Visa-Entzug:</strong> Präsident Trump bezeichnete Petro als <strong>"illegalen Drogenführer"</strong>. Das US-Finanzministerium fror daraufhin die Konten von Petro, dem Sohn seiner Frau und einem engen Vertrauten ein.</p>
+    <p class="speaker-text">2. <strong>Die Clinton-Liste:</strong> Petro selbst wurde auf die sogenannte OFAC- oder Clinton-Liste gesetzt, eine Maßnahme, die oft gegen Drogenhändler angewandt wird. Petro beschrieb dies als eine Zensur seiner Meinung und beklagte, dass er keine Konten mehr eröffnen könne.</p>
+    <p class="speaker-text">Die US-Regierung begründete die Maßnahmen damit, dass die Kokainproduktion in Kolumbien unter Petro auf den höchsten Stand seit Jahrzehnten explodiert sei und er Drogenkartellen erlaubt habe zu florieren.</p>
+    
+    <h2 class="timestamp">III. Der Konflikt mit Senator Moreno und Pastrana</h2>
+    <p class="speaker-text">Petros Konfrontationsstil, der in den Quellen als "erratisches Verhalten" kritisiert wird, richtet sich oft gegen Personen und deren Familien.</p>
+    <p class="speaker-text"><strong>Der Streit um die "Trump-Doktrin":</strong></p>
+    <p class="speaker-text">• Der kolumbianisch-amerikanische Senator Bernie Moreno (Republikaner, Ohio) ist einer der schärfsten Kritiker Petros. Moreno war der Urheber des kontroversen Dokuments <strong>"Die Trump-Doktrin"</strong> für Kolumbien, das Petro und Nicolás Maduro in orangefarbenen Häftlingsuniformen zeigte—eine AI-generierte Darstellung.</p>
+    <p class="speaker-text">• Moreno warf Petro vor, Kolumbien mit seinem Verhalten zu entehren, da er Drogenhändler besänftige und sich pathetisch als Opfer inszeniere.</p>
+    <p class="speaker-text">• Petro konterte mit Angriffen auf Morenos Familie, die zu den führenden Wirtschaftsfiguren Kolumbiens zählt. Er beschuldigte Luis Alberto Moreno (ehemaliger Präsident der Interamerikanischen Entwicklungsbank) und Roberto Moreno (Präsident des Großbauunternehmens Amarilo) der Korruption im Zusammenhang mit Landgeschäften (*"volteo de tierras"*). Beobachter kritisierten diese Angriffe *ad hominem* als eine Herabsetzung der politischen Diskussion.</p>
+    <p class="speaker-text"><strong>Die Auseinandersetzung mit Pastrana:</strong></p>
+    <p class="speaker-text">Die Spannungen eskalierten weiter, als Petro den ehemaligen Präsidenten Andrés Pastrana angriff. Pastrana warnte bereits vor der Möglichkeit eines <strong>"Indictment"</strong> (einer Anklage) gegen Petro in den USA, was die Sorgen des kolumbianischen Präsidenten weiter anheizt.</p>
+    <p class="speaker-text">(Anmerkung: Informationen über Drogenabhängigkeit oder den genauen Wortlaut des Angriffs auf Pastrana sind in den vorliegenden Quellen nicht enthalten. Die Kritik an Petros mentaler Verfassung wird indirekt durch die Bezeichnung seines Verhaltens als "erratisch" von Senator Moreno gestützt).</p>
+    
+    <h2 class="timestamp">IV. Die Bühne der CELAC-EU 2025: Ein Misserfolg als Waffe</h2>
+    <p class="speaker-text">Petro nutzte die kürzlich in Santa Marta abgehaltene vierte CELAC-EU 2025 Gipfel, um seine Konfrontation mit den USA zu vertiefen.</p>
+    <p class="speaker-text">Obwohl die Veranstaltung von geringer Beteiligung hochrangiger Mitglieder geprägt war—was einige als diplomatischen Misserfolg werteten, da konservative Regierungen nur andere Vertreter entsandten—nutzte Petro jede Gelegenheit, um gegen seine Feinde auszuholen. Er sah den Boykott als Sabotage durch eine "Miami-Buenos Aires-Achse".</p>
+    <p class="speaker-text">Petro prangerte die US-Angriffe auf mutmaßliche Drogenschmugglerboote als <strong>"Morde"</strong> an.</p>
+    
+    <h2 class="timestamp">V. Der Kontrast: Boote, Tote und die absurde Verteidigung</h2>
+    <p class="speaker-text">Die <strong>tödlichen Angriffe</strong> auf Schmuggelboote im karibischen Meer und im Ostpazifik sind ein zentrales Element der "Madman Theory"-Politik Trumps in Lateinamerika.</p>
+    <p class="speaker-text">• <strong>Die US-Aktionen:</strong> Bis zu 19 Angriffe wurden von US-Streitkräften auf Schiffe verübt, die angeblich Drogen transportierten, wobei über 75 Menschen getötet wurden. Das Pentagon bezeichnete dies als Reaktion auf einen "nicht-internationalen bewaffneten Konflikt" mit den Kartellen. Trump behauptet, jeder zerstörte Kahn <strong>rette 25.000 amerikanische Leben</strong>.</p>
+    <p class="speaker-text">• <strong>Petros Position:</strong> Petro verurteilte die Angriffe scharf. Er verteidigte die Toten als <strong>arme Fischer und nicht als Drogenhändler</strong>. Er argumentierte, dass die Toten "keine Drogenhändler" seien, sondern mittellose Arbeiter, die nicht die Todesstrafe verdient hätten. Er nannte die Tötungen "Morde" und wies darauf hin, dass die wahren Drogenhändler in New York, Miami, Dubai und Madrid lebten, während die Opfer nur arme Bootsführer ohne Perspektive seien.</p>
+    <p class="speaker-text">• <strong>Kritik an den Angriffen:</strong> Die linke Opposition und internationale Rechtsexperten verurteilten die Angriffe als <strong>rechtswidrige, außergerichtliche Hinrichtungen</strong> und als Verletzung des Seerechts und der Menschenrechte. Es besteht die Sorge, dass Fischer oder Zivilisten, die von Kartellen zur Beförderung gezwungen wurden, fälschlicherweise angegriffen werden. Ein Überlebender aus Ecuador wurde freigelassen, da keine Beweise für eine Straftat vorlagen.</p>
+    <p class="speaker-text"><strong>Der entscheidende Unterschied:</strong></p>
+    <p class="speaker-text">Trump nutzt Unberechenbarkeit als eine Waffe, um politische und wirtschaftliche Siege zu erzielen. Petro hingegen setzt auf impulsiven, ideologischen Trotz und persönliche Angriffe. Wo Trumps Strategie in Erfolgen (wie erhöhten NATO-Ausgaben) mündet, führt Petros Verhalten zu persönlichen und nationalen Sanktionen, während Kritiker sein Vorgehen als "erratisch" bezeichnen.</p>
+    
+    <p class="instruction">(Szene: Kameraschwenk auf den Moderator)</p>
+    <p class="speaker-text">Wenn Trump die "Madman Theory" wie einen nuklearen Schalter einsetzt, um seine Gegner strategisch zu verwirren, so scheint Petro seine diplomatischen Beziehungen wie einen Wutausbruch auf Twitter zu behandeln. Das eine ist ein kalkuliertes Spiel mit dem Risiko, das andere ein Risiko ohne Kalkül—und die Konsequenzen für Kolumbien sind bereits schmerzhaft spürbar.</p>
+    <p class="speaker-text">Zurück zu Ihnen.</p>
+    <!-- ENDE DES GUIONS -->
+  </div>
+
+  <div id="controls">
+    <button id="play-pause-btn">Play</button>
+    <button id="reset-btn">Reset</button>
+    <label for="speed-slider">Tempo:</label>
+    <input type="range" id="speed-slider" min="1" max="100" value="20">
+    <label for="fontsize-slider">Schriftgröße:</label>
+    <input type="range" id="fontsize-slider" min="20" max="80" value="36">
+    <label for="toggle-instructions">Anweisungen ausblenden:</label>
+    <label class="toggle-switch"> <input type="checkbox" id="toggle-instructions"> <span class="slider"></span> </label>
+  </div>
+
+  <script type="module">
+    document.addEventListener('DOMContentLoaded', () => {
+      const tpPane = document.body;
+      const tpControls = document.getElementById('controls');
+      const tpPlayPauseBtn = tpControls.querySelector('#play-pause-btn');
+      const tpResetBtn = tpControls.querySelector('#reset-btn');
+      const tpSpeedSlider = tpControls.querySelector('#speed-slider');
+      const tpFontsizeSlider = tpControls.querySelector('#fontsize-slider');
+      const tpToggleInstructionsBtn = tpControls.querySelector('#toggle-instructions');
+      const tpSpeakerTexts = document.querySelectorAll('.speaker-text');
+      let isScrolling = false;
+      let scrollSpeed = parseFloat(tpSpeedSlider.value) / 40;
+      let animationFrameId = null;
+      function tpScroll() {
+        if (!isScrolling) return;
+        window.scrollBy(0, scrollSpeed);
+        animationFrameId = requestAnimationFrame(tpScroll);
+      }
+      function tpTogglePlayPause() {
+        isScrolling = !isScrolling;
+        if (isScrolling) {
+          tpPlayPauseBtn.textContent = 'Pause';
+          tpScroll();
+        } else {
+          tpPlayPauseBtn.textContent = 'Play';
+          cancelAnimationFrame(animationFrameId);
+        }
+      }
+      tpPlayPauseBtn.addEventListener('click', tpTogglePlayPause);
+      tpResetBtn.addEventListener('click', () => {
+        window.scrollTo(0, 0);
+        if (isScrolling) {
+          isScrolling = false;
+          tpPlayPauseBtn.textContent = 'Play';
+          cancelAnimationFrame(animationFrameId);
+        }
+      });
+      tpSpeedSlider.addEventListener('input', (e) => {
+        scrollSpeed = parseFloat(e.target.value) / 40;
+      });
+      tpFontsizeSlider.addEventListener('input', (e) => {
+        const newSize = e.target.value + 'px';
+        tpSpeakerTexts.forEach(textEl => { textEl.style.fontSize = newSize; });
+      });
+      tpToggleInstructionsBtn.addEventListener('change', (e) => {
+        if (e.target.checked) {
+          document.body.classList.add('hide-instructions');
+        } else {
+          document.body.classList.remove('hide-instructions');
+        }
+      });
+      const initialFontSize = tpFontsizeSlider.value + 'px';
+      tpSpeakerTexts.forEach(textEl => { textEl.style.fontSize = initialFontSize; });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === ' ') {
+          e.preventDefault();
+          tpTogglePlayPause();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

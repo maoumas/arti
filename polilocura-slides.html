@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Präsentation: Wahnsinn im Weissen Haus vs. Jüngster Jaguar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #111827; color: #F9FAFB; overflow: hidden; }
+        #presentation-container { position: relative; width: 100%; height: 100vh; overflow: hidden; }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 5% 8%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; opacity: 0; transform: translateX(20px); transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out; visibility: hidden; }
+        .slide.active { opacity: 1; transform: translateX(0); visibility: visible; }
+        .reveal-item { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; transition-delay: 0s; }
+        .reveal-item.revealed { opacity: 1; transform: translateY(0); }
+        .text-accent-red { color: #EF4444; }
+        .text-accent-blue { color: #3B82F6; }
+        #controls-wrapper { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #1F2937; z-index: 100; }
+        #slide-pane #controls { display: flex; justify-content: center; align-items: center; padding: 12px 0; }
+        .control-btn { background: none; border: none; color: #F9FAFB; cursor: pointer; padding: 8px 12px; margin: 0 10px; border-radius: 8px; transition: background-color 0.2s; }
+        .control-btn:hover { background-color: #374151; }
+        .control-btn svg { width: 24px; height: 24px; pointer-events: none; }
+        .image-container { max-width: 450px; width: 100%; margin-top: 1.5rem; }
+        .image-container img { width: 100%; height: auto; border-radius: 12px; border: 2px solid #374151; cursor: zoom-in; }
+        .slide-layout { display: flex; flex-direction: column; width: 100%; height: 100%; justify-content: center; align-items: center; }
+        @media (min-width: 768px) { .slide-layout { flex-direction: row; gap: 2rem; } .slide-layout .content { flex-basis: 50%; text-align: left; } .slide-layout .image-container { flex-basis: 50%; margin-top: 0; } ul { padding-left: 1.5rem; } }
+        .lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); display: none; align-items: center; justify-content: center; z-index: 1000; cursor: zoom-out; }
+        #lightbox-image { max-width: 90%; max-height: 90vh; border-radius: 8px; border: 2px solid #F9FAFB; }
+        .lightbox-close { position: absolute; top: 20px; right: 35px; color: #F9FAFB; font-size: 40px; font-weight: bold; cursor: pointer; line-height: 1; }
+    </style>
+</head>
+<body>
+    <div id="presentation-container">
+
+        <!-- Slide 1: Titelseite -->
+        <div class="slide active">
+            <div class="slide-layout">
+                <div class="content">
+                    <h1 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-red">DER WAHNSINN IM WEISSEN HAUS VS. DER JÜNGSTE JAGUAR</h1>
+                    <p class="reveal-item text-xl md:text-2xl mb-4">Wie Petro gegen Trumps "Madman Theory" verliert.</p>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item">Eine Analyse der kalkulierten Unberechenbarkeit gegen den impulsiven Trotz.</li>
+                        <li class="reveal-item text-accent-blue">Die Geopolitik wird von Strategien der Unvorhersehbarkeit dominiert.</li>
+                        <li class="reveal-item">Wir vergleichen Trumps kalkulierte "Madman Theory" mit Petros konfrontativem Verhalten.</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/374151/F9FAFB?text=Trump+vs.+Petro" alt="Gegenüberstellung von Donald Trump und Gustavo Petro">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Einführung: Die "Theorie des Verrückten" -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-blue">I. Die "Madman Theory" Trumps</h2>
+                    <p class="reveal-item text-xl md:text-2xl mb-4">Kalkulierter Wahnsinn</p>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item"><strong>Kernkonzept:</strong> Ein politischer Trick, um den Gegner davon zu überzeugen, dass man zu allem fähig ist, um Zugeständnisse zu erzwingen.</li>
+                        <li class="reveal-item"><strong>Strategie:</strong> Folgt, fernab jeglicher Irrationalität, einem <strong>logischen Kalkül</strong>.</li>
+                        <li class="reveal-item"><strong>Trumps Taktik:</strong> Bewusste, strategische Mehrdeutigkeit (*"purposeful strategic ambiguity"*).</li>
+                        <li class="reveal-item">Er fordert astronomische Summen, um Gegner und Verbündete zu verschrecken.</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/374151/F9FAFB?text=Trump+in+Verhandlung" alt="Donald Trump in einer Verhandlungssituation">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Trumps Triumphe durch Unberechenbarkeit -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">Trumps Triumphe durch Unberechenbarkeit</h2>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item"><strong>NATO-Beiträge:</strong> Stellte die Unterstützung der USA für Europa infrage und drohte mit Austritt.</li>
+                        <li class="reveal-item"><strong>Ergebnis NATO:</strong> Alle NATO-Länder außer Spanien versprachen, ihre Militärausgaben bis 2035 auf <strong>fünf Prozent des BIP</strong> zu erhöhen.</li>
+                        <li class="reveal-item"><strong>Handelspolitik:</strong> Drohte China, Kanada und Mexiko mit astronomischen Zöllen von <strong>25 Prozent</strong>.</li>
+                        <li class="reveal-item text-accent-blue"><strong>Schlüsselerkenntnis:</strong> Die Strategie, Verwirrung zu stiften, spielt Trump in die Hände.</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/374151/F9FAFB?text=NATO-Gipfel+oder+25%25+Zoll" alt="Symbolbild für Zölle oder NATO-Gipfel">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: II. Petro: Der selbsternannte Jaguar -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-red">II. Petro: Der Jaguar und die Konfrontation</h2>
+                    <p class="reveal-item text-xl md:text-2xl mb-4">Petros aggressive Rhetorik</p>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item">Präsident Gustavo Petro begab sich in eine offene Konfrontation mit der Trump-Administration.</li>
+                        <li class="reveal-item"><strong>Die Jaguar-Drohung:</strong> Reagierte auf US-Militärpräsenz mit der Warnung: <strong>"Der uralte Jaguar wird erwachen, wenn der Goldene Adler es wagt, den Kondor anzugreifen."</strong></li>
+                        <li class="reveal-item"><strong>Weitere Warnung:</strong> "Seien Sie vorsichtig, Sie betreten das karibische Meer der Befreier".</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/374151/F9FAFB?text=Jaguar+vs.+Adler+(Video)" alt="Symbolische Darstellung Jaguar vs. Adler / Karte des Karibischen Meeres">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Harte Vergeltung Washingtons -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-red">Harte Vergeltung Washingtons</h2>
+                    <p class="reveal-item text-xl md:text-2xl mb-4">Sanktionen und "Clinton-Liste"</p>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item">Trump bezeichnete Petro als <strong>"illegalen Drogenführer"</strong>.</li>
+                        <li class="reveal-item"><strong>Sanktionen:</strong> US-Finanzministerium fror Konten von <strong>Petro, dem Sohn seiner Frau und einem engen Vertrauten</strong> ein.</li>
+                        <li class="reveal-item"><strong>Die Clinton-Liste (OFAC):</strong> Petro wurde selbst auf die Liste gesetzt – eine Maßnahme oft gegen Drogenhändler.</li>
+                        <li class="reveal-item"><strong>Petros Klage:</strong> Beschrieb dies als <strong>Zensur seiner Meinung</strong> und beklagte, er könne keine Konten mehr eröffnen.</li>
+                        <li class="reveal-item"><strong>Begründung der USA:</strong> Kokainproduktion sei explodiert; er habe Kartellen erlaubt zu florieren.</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/374151/F9FAFB?text=OFAC+Sanktionen" alt="Stilisiertes OFAC-Zeichen oder Sanktionen-Symbol">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: III. Der Konflikt um die "Trump-Doktrin" -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-blue">III. Konflikt: Die "Trump-Doktrin"</h2>
+                    <p class="reveal-item text-xl md:text-2xl mb-4">AI-generierte Häftlingsuniformen</p>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item"><strong>Urheber:</strong> Senator <strong>Bernie Moreno</strong> (Republikaner, Ohio), ein scharfer Kritiker Petros.</li>
+                        <li class="reveal-item"><strong>Das Dokument:</strong> Moreno war Urheber der <strong>"Trump-Doktrin"</strong> für Kolumbien.</li>
+                        <li class="reveal-item"><strong>Der Eklat:</strong> Enthielt ein AI-generiertes Foto, das Petro und Nicolás Maduro in <strong>orangefarbenen Häftlingsuniformen</strong> zeigte.</li>
+                        <li class="reveal-item"><strong>Inhalt:</strong> Forderungen nach Sanktionen gegen Petro & Familie sowie Untersuchung seiner Kampagnen-Finanzierung.</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/374151/F9FAFB?text=Petro/Maduro+H%C3%A4ftlinge+und+Senator+Moreno+(Video)" alt="AI-Bild Petro/Maduro in Häftlingsuniformen und Foto von Senator Moreno">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Ad Hominem Angriffe und "Erratic Behavior" -->
+        <div class="slide">
+            <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-red">Ad Hominem Angriffe & "Erratic Behavior"</h2>
+            <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc max-w-3xl mx-auto text-left">
+                <li class="reveal-item"><strong>Morenos Kritik:</strong> Warf Petro <strong>"erratisches Verhalten"</strong> vor, da er Drogenhändler besänftige und sich <strong>"pathetisch als Opfer"</strong> inszeniere.</li>
+                <li class="reveal-item"><strong>Petros Gegenangriff:</strong> Konterte mit Angriffen auf die Familie Moreno; beschuldigte sie der Korruption (*"volteo de tierras"*).</li>
+                <li class="reveal-item"><strong>Kritik:</strong> Beobachter verurteilten diese Angriffe *ad hominem* als Herabsetzung der politischen Diskussion.</li>
+                <li class="reveal-item"><strong>Pastrana und Anklage:</strong> Spannungen eskalierten, als Petro Ex-Präsident Andrés Pastrana angriff. Pastrana warnte vor einem möglichen <strong>"Indictment"</strong> (Anklage) gegen Petro in den USA.</li>
+                <li class="reveal-item"><strong>Anmerkung:</strong> Das Verhalten Petros wird von Kritikern als "erratisch" bezeichnet.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 8: IV. Die CELAC-EU 2025 -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-blue">IV. CELAC-EU 2025: Misserfolg als Waffe</h2>
+                    <p class="reveal-item text-xl md:text-2xl mb-4">Petros Bühne in Santa Marta</p>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item">Petro nutzte die CELAC-EU 2025 Gipfel zur Vertiefung seiner Konfrontation mit den USA.</li>
+                        <li class="reveal-item"><strong>Geringe Beteiligung:</strong> Von einigen als diplomatischer Misserfolg gewertet; konservative Regierungen entsandten nur Vertreter.</li>
+                        <li class="reveal-item"><strong>Petros Reaktion:</strong> Sah den Boykott als Sabotage durch eine <strong>"Miami-Buenos Aires-Achse"</strong>.</li>
+                        <li class="reveal-item"><strong>Zentrale Anklage:</strong> Prangerte die US-Angriffe auf mutmaßliche Drogenschmugglerboote als <strong>"Morde"</strong> an.</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/374151/F9FAFB?text=Petro+auf+CELAC-EU+Gipfel" alt="Foto von Gustavo Petro auf der CELAC-EU-Konferenz">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: V. Der Kontrast: Tödliche Angriffe auf "Narcolanchas" -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-red">V. Kontrast: Angriffe auf "Narcolanchas"</h2>
+                    <p class="reveal-item text-xl md:text-2xl mb-4">Trumps Anwendung von Gewalt</p>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item"><strong>US-Aktionen:</strong> Bis zu 19 Angriffe auf Schiffe, wobei <strong>über 75 Menschen getötet</strong> wurden.</li>
+                        <li class="reveal-item"><strong>Justifizierung:</strong> Pentagon nannte es Reaktion auf einen <strong>"nicht-internationalen bewaffneten Konflikt"</strong> mit den Kartellen.</li>
+                        <li class="reveal-item"><strong>Trumps Behauptung:</strong> Jeder zerstörte Kahn <strong>rette 25.000 amerikanische Leben</strong>.</li>
+                        <li class="reveal-item"><strong>Petros "Absurde Verteidigung":</strong> Verteidigte die Toten als <strong>arme Fischer und mittellose Arbeiter</strong>, nicht als Drogenhändler.</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/374151/F9FAFB?text=US-Kriegsschiff+oder+Go-Fast-Boot+(Video)" alt="Foto eines US-Kriegsschiffs oder eines Go-Fast-Boots">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Kritik an den US-Militärschlägen -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">Kritik an den US-Militärschlägen</h2>
+                    <p class="reveal-item text-xl md:text-2xl mb-4">Rechtswidrigkeit und Menschenrechtsbedenken</p>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item">Linke Opposition und internationale Rechtsexperten verurteilten die Angriffe.</li>
+                        <li class="reveal-item"><strong>Einschätzung:</strong> Als <strong>rechtswidrige, außergerichtliche Hinrichtungen</strong> und Verletzung des Seerechts kritisiert.</li>
+                        <li class="reveal-item"><strong>Risiko:</strong> Sorge, dass Zivilisten oder Fischer, die von Kartellen gezwungen wurden, fälschlicherweise angegriffen werden.</li>
+                        <li class="reveal-item"><strong>Petros Appell:</strong> Nannte die Tötungen "Morde" und die Opfer "arme Bootsführer ohne Perspektive".</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/374151/F9FAFB?text=Internationale+Justiz+(Video)" alt="Symbolbild für internationales Recht oder Justiz">
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Fazit: Kalkül vs. Impuls -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-blue">Fazit: Kalkül vs. Impuls</h2>
+                    <p class="reveal-item text-xl md:text-2xl mb-4">Der entscheidende Unterschied</p>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item"><strong>Trumps Strategie:</strong> Nutzt Unberechenbarkeit als <strong>Waffe</strong>, um kalkulierte politische und wirtschaftliche Siege zu erzielen (z.B. höhere NATO-Ausgaben).</li>
+                        <li class="reveal-item"><strong>Petros Verhalten:</strong> Setzt auf impulsiven, ideologischen Trotz und persönliche Angriffe.</li>
+                        <li class="reveal-item"><strong>Konsequenzen:</strong> Führt zu <strong>persönlichen und nationalen Sanktionen</strong>; wird als <strong>"erratisch"</strong> bezeichnet.</li>
+                        <li class="reveal-item text-accent-red"><strong>Zitat: "Das eine ist ein kalkuliertes Spiel mit dem Risiko, das andere ein Risiko ohne Kalkül..."</strong></li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/374151/F9FAFB?text=Schachspiel:+Kalk%C3%BCl+vs.+Impuls" alt="Schachspiel, das Kalkül vs. Impuls darstellt">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div id="controls-wrapper">
+        <!-- Controls are inserted by JS if needed, but wrapper is here -->
+        <div id="controls" style="display: none;"> 
+            <button id="prev-btn" class="control-btn"></button> 
+            <button id="next-btn" class="control-btn"></button> 
+        </div>
+    </div>
+    <div id="lightbox" class="lightbox-overlay">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-image" src="" alt="Vergrößerte Ansicht">
+    </div>
+    
+    <script type="module">
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxClose = document.querySelector('.lightbox-close');
+            const slideImages = document.querySelectorAll('.image-container img');
+            let currentSlide = 0;
+
+            function openLightbox(src) { lightboxImage.src = src; lightbox.style.display = 'flex'; }
+            function closeLightbox() { lightbox.style.display = 'none'; lightboxImage.src = ''; }
+            slideImages.forEach(img => { img.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(img.src); }); });
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', (e) => { if (e.target === lightbox) { closeLightbox(); } });
+
+            function showSlide(index) {
+                slides.forEach((slide) => { slide.classList.remove('active'); });
+                const slide = slides[index];
+                if (!slide) return;
+                slide.classList.add('active');
+                currentSlide = index;
+                const items = slide.querySelectorAll('.reveal-item');
+                items.forEach((item, index) => {
+                    item.classList.remove('revealed');
+                    item.style.transitionDelay = `${index * 250}ms`;
+                    setTimeout(() => { item.classList.add('revealed'); }, 50);
+                });
+            }
+            function nextSlide() { let next = currentSlide + 1; if (next >= slides.length) { next = 0; } showSlide(next); }
+            function prevSlide() { let prev = currentSlide - 1; if (prev < 0) { prev = slides.length - 1; } showSlide(prev); }
+            
+            showSlide(0); // Start with the first slide
+
+            document.addEventListener('keydown', (e) => {
+                if (lightbox.style.display === 'flex') { if (e.key === 'Escape') { closeLightbox(); } return; }
+                if (e.key === 'ArrowRight' || e.key === ' ') { nextSlide(); } // Added spacebar for next slide
+                else if (e.key === 'ArrowLeft') { prevSlide(); }
+                else if (e.key === 'Enter') {
+                    e.preventDefault(); 
+                    const activeSlide = document.querySelector('.slide.active');
+                    if (activeSlide) { const image = activeSlide.querySelector('.image-container img'); if (image) { openLightbox(image.src); } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
