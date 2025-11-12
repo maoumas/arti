@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Presentación ARTI</title>
+  <title>Präsentation ARTI</title>
   <style>
     body {
       margin: 0;
@@ -89,30 +89,50 @@
     a.external-link:hover {
       text-decoration: underline;
     }
+
+    /* Botón flotante */
+    .floating-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #d00;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 0.8rem 1.2rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+
+    .floating-button:hover {
+      background-color: #a00;
+    }
   </style>
 </head>
 <body>
   <header>
     <img src="https://copilot.microsoft.com/th/id/BCO.5fcfba05-26af-49d0-853d-bf8af37bb515.png" alt="TranslatedPressdE Logo" class="logo">
     <nav>
-      <a href="#">Presentación ARTI</a>
-      <a href="madman.html" target="_blank">Madman TP</a>
-      <a href="zm-tp.html" target="_blank">ZM TP</a>
-      <a href="#">Otras Presentaciones</a>
+      <a href="#">Präsentation ARTI</a>
+      <a href="madman.html" target="_blank">Madman Teleprompter</a>
+      <a href="zm-tp.html" target="_blank">ZM Teleprompter</a>
+      <a href="#">Weitere Präsentationen</a>
     </nav>
   </header>
 
   <main>
-    <h1>Presentación ARTI</h1>
-    <p>Explora la presentación directamente aquí:</p>
+    <h1>Präsentation ARTI</h1>
+    <p>Hier kannst du die Präsentation direkt ansehen:</p>
     <div class="iframe-container">
       <iframe src="https://docs.google.com/presentation/d/1kpW4NbPDp8B4oiUtyvQfxHamdibAWV3p_itF5Win22s/embed?start=false&loop=false&delayms=3000"
               allowfullscreen="true"></iframe>
     </div>
     <p style="margin-top:1rem;">
-      También puedes abrirla en una pestaña nueva:  
+      Oder öffne sie in einem neuen Tab:  
       <a class="external-link" href="https://docs.google.com/presentation/d/1kpW4NbPDp8B4oiUtyvQfxHamdibAWV3p_itF5Win22s/edit?usp=drivesdk" target="_blank">
-        Ver en Google Slides
+        In Google Slides ansehen
       </a>
     </p>
   </main>
@@ -120,5 +140,10 @@
   <footer>
     <p>© 2025 Mauricio Umaña Núñez | <a class="external-link" href="https://maoumas.github.io/arti/">maoumas.github.io/arti/</a></p>
   </footer>
+
+  <!-- Botón flotante -->
+  <a href="madman.html" target="_blank">
+    <button class="floating-button">🎤 Teleprompter öffnen</button>
+  </a>
 </body>
 </html>
