@@ -6,52 +6,119 @@
   <title>Presentación ARTI</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
+      font-family: Arial, sans-serif;
       background: #f4f4f9;
       color: #333;
-      text-align: center;
     }
+
     header {
-      background: #222;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #111;
+      padding: 0.5rem 1rem;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      height: 40px;
+    }
+
+    nav {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
       color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 0.3rem 0.6rem;
+      transition: background 0.3s;
+    }
+
+    nav a:hover {
+      background: #333;
+      border-radius: 4px;
+    }
+
+    main {
+      text-align: center;
       padding: 1rem;
     }
+
     h1 {
-      margin: 0;
       font-size: 1.8rem;
+      margin-bottom: 0.5rem;
     }
-    main {
-      padding: 2rem;
+
+    .iframe-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      margin-top: 1rem;
     }
-    iframe {
-      max-width: 100%;
+
+    .iframe-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       border: none;
     }
+
     footer {
-      background: #222;
+      background: #111;
       color: #fff;
+      text-align: center;
       padding: 1rem;
-      margin-top: 2rem;
       font-size: 0.9rem;
+      margin-top: 2rem;
+    }
+
+    a.external-link {
+      color: #0066cc;
+      text-decoration: none;
+    }
+
+    a.external-link:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Presentación ARTI</h1>
+    <img src="https://copilot.microsoft.com/th/id/BCO.5fcfba05-26af-49d0-853d-bf8af37bb515.png" alt="TranslatedPressdE Logo" class="logo">
+    <nav>
+      <a href="#">Presentación ARTI</a>
+      <a href="madman.html" target="_blank">Madman TP</a>
+      <a href="zm-tp.html" target="_blank">ZM TP</a>
+      <a href="#">Otras Presentaciones</a>
+    </nav>
   </header>
 
   <main>
+    <h1>Presentación ARTI</h1>
     <p>Explora la presentación directamente aquí:</p>
-    <!-- Sustituye el enlace con el de tu presentación publicada en Google Slides -->
-    <iframe src="https://docs.google.com/presentation/d/e/TU_ID_DE_PRESENTACION/embed?start=false&loop=false&delayms=3000"
-            width="960" height="569" allowfullscreen="true"></iframe>
+    <div class="iframe-container">
+      <iframe src="https://docs.google.com/presentation/d/1kpW4NbPDp8B4oiUtyvQfxHamdibAWV3p_itF5Win22s/embed?start=false&loop=false&delayms=3000"
+              allowfullscreen="true"></iframe>
+    </div>
+    <p style="margin-top:1rem;">
+      También puedes abrirla en una pestaña nueva:  
+      <a class="external-link" href="https://docs.google.com/presentation/d/1kpW4NbPDp8B4oiUtyvQfxHamdibAWV3p_itF5Win22s/edit?usp=drivesdk" target="_blank">
+        Ver en Google Slides
+      </a>
+    </p>
   </main>
 
   <footer>
-    <p>© 2025 Mauricio Umaña Núñez | maoumas.github.io/arti/</p>
+    <p>© 2025 Mauricio Umaña Núñez | <a class="external-link" href="https://maoumas.github.io/arti/">maoumas.github.io/arti/</a></p>
   </footer>
 </body>
 </html>
