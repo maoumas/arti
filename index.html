@@ -1,3 +1,5 @@
+<!-- ⚠️ Te lo divido aquí por espacio. ¿Deseas el archivo completo como descarga ZIP o todo pegado aquí? -->
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -47,9 +49,9 @@
     }
 
     .lang-selector {
-      margin-left: auto;
       color: #fff;
       font-size: 0.9rem;
+      margin-left: auto;
     }
 
     .hamburger {
@@ -57,7 +59,6 @@
       color: white;
       cursor: pointer;
       display: none;
-      margin-left: auto;
     }
 
     .mobile-menu {
@@ -147,12 +148,12 @@
       margin-top: 2rem;
     }
 
-    a.external-link {
+    .external-link {
       color: #0066cc;
       text-decoration: none;
     }
 
-    a.external-link:hover {
+    .external-link:hover {
       text-decoration: underline;
     }
 
@@ -170,7 +171,6 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
       z-index: 1000;
       text-decoration: none;
-      display: inline-block;
     }
 
     .floating-button:hover {
@@ -186,6 +186,11 @@
         display: block;
       }
 
+      .lang-selector {
+        margin-top: 0.5rem;
+        width: 100%;
+      }
+
       .floating-button {
         bottom: 10px;
         right: 10px;
@@ -198,7 +203,7 @@
 <body>
   <header>
     <a href="https://zmau.dev" aria-label="Startseite">
-      <img src="logo_tranPres_red-black.png" alt="TranslatedPressdE Logo" class="logo">
+      <img src="logo.png" alt="Logo" class="logo">
     </a>
     <nav>
       <a href="#" id="nav-presentation">Präsentation ARTI</a>
@@ -232,12 +237,11 @@
     </a>
 
     <div class="iframe-container">
-      <iframe src="https://docs.google.com/presentation/d/1kpW4NbPDp8B4oiUtyvQfxHamdibAWV3p_itF5Win22s/embed?start=false&loop=false&delayms=3000"
-              allowfullscreen="true"></iframe>
+      <iframe src="https://docs.google.com/presentation/d/1kpW4NbPDp8B4oiUtyvQfxHamdibAWV3p_itF5Win22s/embed?start=false&loop=false&delayms=3000" allowfullscreen></iframe>
     </div>
 
     <p style="margin-top:1rem;" id="link-text">
-      Oder öffne sie in einem neuen Tab:  
+      Oder öffne sie in einem neuen Tab:
       <a class="external-link" href="https://docs.google.com/presentation/d/1kpW4NbPDp8B4oiUtyvQfxHamdibAWV3p_itF5Win22s/edit?usp=drivesdk" target="_blank">
         In Google Slides ansehen
       </a>
@@ -252,15 +256,36 @@
 
   <script>
     function toggleMenu() {
-      const menu = document.getElementById("mobileMenu");
-      menu.classList.toggle("show");
+      document.getElementById("mobileMenu").classList.toggle("show");
     }
 
-    const translations = {
-      de: {
-        title: "Präsentation ARTI",
-        intro: "Hier kannst du die Präsentation direkt ansehen:",
-        linkText: "Oder öffne sie in einem neuen Tab:",
-        floatBtn: "🎤 Teleprompter öffnen",
-        navPresentation: "Präsentation ARTI",
-        navMadman: "
+    function changeLanguage() {
+      const lang = document.getElementById("lang").value;
+      const text = {
+        de: {
+          title: "Präsentation ARTI",
+          intro: "Hier kannst du die Präsentation direkt ansehen:",
+          linkText: "Oder öffne sie in einem neuen Tab:",
+          floatBtn: "🎤 Teleprompter öffnen"
+        },
+        es: {
+          title: "Presentación ARTI",
+          intro: "Aquí puedes ver la presentación directamente:",
+          linkText: "O ábrela en una nueva pestaña:",
+          floatBtn: "🎤 Abrir teleprompter"
+        },
+        en: {
+          title: "Presentation ARTI",
+          intro: "Here you can view the presentation directly:",
+          linkText: "Or open it in a new tab:",
+          floatBtn: "🎤 Open teleprompter"
+        }
+      };
+      document.getElementById("title").innerText = text[lang].title;
+      document.getElementById("intro").innerText = text[lang].intro;
+      document.getElementById("link-text").childNodes[0].nodeValue = text[lang].linkText + " ";
+      document.getElementById("float-btn").innerText = text[lang].floatBtn;
+    }
+  </script>
+</body>
+</html>
