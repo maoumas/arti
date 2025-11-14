@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CELAC-EU 2025 Teleprompter</title>
+    <title>CELAC-EU 2025 Teleprompter - Armenia</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Inter:wght@400;600&display=swap');
@@ -22,38 +22,38 @@
             color: var(--text-color);
             font-family: 'Inter', sans-serif;
             margin: 0;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-x: hidden; /* Verhindert horizontales Scrollen */
         }
 
         /* Layout Container */
         #prompter-container {
             display: flex;
             min-height: 100vh;
-            padding-bottom: 150px; /* Space for controls */
+            padding-bottom: 150px; /* Platz für Steuerelemente */
             position: relative;
         }
 
-        /* Columns */
+        /* Spalten */
         .col {
             padding: 2rem;
             transition: font-size 0.2s;
         }
 
         #col-context {
-            width: 40%; /* Default width */
+            width: 40%; /* Standardbreite */
             color: var(--context-color);
             font-family: 'Roboto Mono', monospace;
             border-right: 1px solid #333;
         }
 
         #col-script {
-            flex: 1; /* Takes remaining space */
+            flex: 1; /* Nimmt den restlichen Platz ein */
             color: var(--text-color);
             font-weight: 600;
             line-height: 1.6;
         }
 
-        /* Resizer Handle */
+        /* Größenänderungs-Griff */
         #resizer {
             width: 10px;
             cursor: col-resize;
@@ -69,7 +69,7 @@
             background-color: var(--accent);
         }
 
-        /* Markers and Highlights */
+        /* Marker und Hervorhebungen */
         .time-marker {
             display: inline-block;
             background-color: #333;
@@ -92,12 +92,12 @@
         }
 
         .script-block {
-            margin-bottom: 4rem; /* Space between segments */
+            margin-bottom: 4rem; /* Abstand zwischen Segmenten */
             padding-top: 1rem;
             border-top: 1px solid #222;
         }
 
-        /* Controls Bar */
+        /* Steuerleiste */
         #controls {
             position: fixed;
             bottom: 0;
@@ -115,7 +115,7 @@
             box-shadow: 0 -4px 20px rgba(0,0,0,0.5);
         }
 
-        /* Form Elements */
+        /* Formularelemente */
         button {
             background-color: var(--accent);
             color: white;
@@ -146,13 +146,13 @@
             width: 120px;
         }
 
-        /* Mobile Response */
+        /* Mobile Anpassung */
         @media (max-width: 768px) {
             #prompter-container {
                 flex-direction: column;
             }
             #col-context {
-                width: 100% !important; /* Force full width */
+                width: 100% !important; /* Erzwingt volle Breite */
                 border-right: none;
                 border-bottom: 1px solid #333;
                 padding: 1rem;
@@ -163,7 +163,7 @@
                 padding: 1rem;
             }
             #resizer {
-                display: none; /* Hide resizer on mobile */
+                display: none; /* Versteckt den Resizer auf Mobilgeräten */
             }
             .script-block {
                 margin-bottom: 2rem;
@@ -184,10 +184,10 @@
 </head>
 <body>
 
-    <!-- Main Prompter Area -->
+    <!-- Hauptbereich des Prompters -->
     <div id="prompter-container">
         
-        <!-- Left Column: Context (Petro's Speech Summary) -->
+        <!-- Linke Spalte: Kontext (Zusammenfassung von Petros Rede) -->
         <div id="col-context" class="col">
             <div class="script-block">
                 <span class="time-marker">INTRO</span>
@@ -196,32 +196,32 @@
 
             <div class="script-block">
                 <span class="time-marker">0:00 – 1:30</span>
-                <p><strong>Petro:</strong> Critica a la CELAC. Dice que no puede hablar por todos. El consenso limita la capacidad de actuar. Pide cambiar normas.</p>
+                <p><strong>Petro:</strong> Kritisiert die CELAC. Sagt, er könne nicht für alle sprechen. Der Konsens schränkt die Handlungsfähigkeit ein. Fordert Regeländerungen.</p>
             </div>
 
             <div class="script-block">
                 <span class="time-marker">1:30 – 4:00</span>
-                <p><strong>Petro:</strong> Filosofía e Historia. La existencia es un río. Democracia contra barbarie. Esclavitud, racismo, nazis.</p>
+                <p><strong>Petro:</strong> Philosophie und Geschichte. Die Existenz ist ein Fluss. Demokratie gegen Barbarei. Sklaverei, Rassismus, Nazis.</p>
             </div>
 
             <div class="script-block">
                 <span class="time-marker">4:00 – 6:30</span>
-                <p><strong>Petro:</strong> Democracia inconclusa. Bolívar murió inconcluso. Integración americana es "retórica", la UE es más eficiente.</p>
+                <p><strong>Petro:</strong> Unvollendete Demokratie. Bolivar starb unvollendet. Amerikanische Integration ist "Rhetorik", die EU ist effizienter.</p>
             </div>
 
             <div class="script-block">
                 <span class="time-marker">6:30 – 9:00</span>
-                <p><strong>Petro:</strong> Haití y la Gran Colombia. La libertad surgió de los pueblos negros. ¿Qué significa la libertad hoy?</p>
+                <p><strong>Petro:</strong> Haiti und Großkolumbien. Die Freiheit entstand aus den schwarzen Völkern. Was bedeutet Freiheit heute?</p>
             </div>
 
             <div class="script-block">
                 <span class="time-marker">9:00 – 13:30</span>
-                <p><strong>Petro:</strong> La Barbarie Actual. Bombas en Gaza y bombas en el Caribe. Caso Alejandro Carranza (pescador muerto por cohete).</p>
+                <p><strong>Petro:</strong> Die aktuelle Barbarei. Bomben in Gaza und Bomben in der Karibik. Fall Alejandro Carranza (Fischer durch Rakete getötet).</p>
             </div>
 
             <div class="script-block">
                 <span class="time-marker">13:30 – 18:30</span>
-                <p><strong>Petro:</strong> Conclusión. Ser un "faro". Santa Marta corazón del mundo. Diálogo de civilizaciones.</p>
+                <p><strong>Petro:</strong> Fazit. Ein "Leuchtturm" sein. Santa Marta als Herz der Welt. Dialog der Zivilisationen.</p>
             </div>
 
              <div class="script-block">
@@ -230,14 +230,14 @@
             </div>
         </div>
 
-        <!-- Resizer Handle -->
+        <!-- Resizer Griff -->
         <div id="resizer" title="Ziehen, um Spaltenbreite zu ändern"></div>
 
-        <!-- Right Column: Moderator Script (The content to be read) -->
+        <!-- Rechte Spalte: Moderatoren-Skript (Der zu lesende Text) -->
         <div id="col-script" class="col">
             <div class="script-block">
                 <span class="instruction-tag">[KAMERA ANMODERATION]</span>
-                <p>Willkommen in Medellin. Wir übertragen live die Eröffnungsrede des CELAC-EU Gipfels 2025. Die Atmosphäre ist angespannt. Viele Staatschefs haben abgesagt.</p>
+                <p>Willkommen in Armenia, Quindío. Wir übertragen live die Eröffnungsrede des CELAC-EU Gipfels 2025. Die Atmosphäre ist angespannt. Viele Staatschefs haben abgesagt.</p>
             </div>
 
             <div class="script-block">
@@ -277,9 +277,9 @@
         </div>
     </div>
 
-    <!-- Control Panel -->
+    <!-- Bedienfeld -->
     <div id="controls">
-        <button id="btn-play">Play</button>
+        <button id="btn-play">Start</button>
         <button id="btn-reset" class="secondary"><i class="fas fa-undo"></i> Reset</button>
         
         <div class="flex items-center gap-2">
@@ -294,7 +294,7 @@
     </div>
 
     <script>
-        // --- Resizable Columns Logic ---
+        // --- Logik für Größenänderung der Spalten ---
         const resizer = document.getElementById('resizer');
         const leftSide = document.getElementById('col-context');
         const rightSide = document.getElementById('col-script');
@@ -304,22 +304,22 @@
         let leftWidth = 0;
 
         const mouseDownHandler = function(e) {
-            // Get the current mouse position
+            // Aktuelle Mausposition holen
             x = e.clientX;
             leftWidth = leftSide.getBoundingClientRect().width;
 
-            // Attach listeners to document
+            // Listener an Dokument anhängen
             document.addEventListener('mousemove', mouseMoveHandler);
             document.addEventListener('mouseup', mouseUpHandler);
             resizer.classList.add('active');
         };
 
         const mouseMoveHandler = function(e) {
-            // Determine how far the mouse has been moved
+            // Berechnen, wie weit die Maus bewegt wurde
             const dx = e.clientX - x;
             const newLeftWidth = ((leftWidth + dx) * 100) / container.getBoundingClientRect().width;
             
-            // Limit resizing between 10% and 80% to prevent breaking
+            // Begrenzung der Größenänderung zwischen 10% und 80%
             if(newLeftWidth > 10 && newLeftWidth < 80) {
                 leftSide.style.width = `${newLeftWidth}%`;
             }
@@ -331,13 +331,13 @@
             resizer.classList.remove('active');
         };
 
-        // Only attach resizer on desktop (simple check)
+        // Resizer nur auf Desktop aktivieren (einfache Prüfung)
         if (window.innerWidth > 768) {
             resizer.addEventListener('mousedown', mouseDownHandler);
         }
 
 
-        // --- Teleprompter Logic ---
+        // --- Teleprompter Logik ---
         const btnPlay = document.getElementById('btn-play');
         const btnReset = document.getElementById('btn-reset');
         const sliderSpeed = document.getElementById('speed');
@@ -347,64 +347,65 @@
         let scrollSpeed = 1.5;
         let animationId;
 
-        // Scroll Loop
+        // Scroll-Schleife
         function autoScroll() {
             if (isPlaying) {
                 window.scrollBy(0, scrollSpeed);
-                // Check if reached bottom (optional stop logic could go here)
+                // Prüfung, ob das Ende erreicht ist (optional)
                 animationId = requestAnimationFrame(autoScroll);
             }
         }
 
-        // Play/Pause Toggle
+        // Start/Pause Umschaltung
         btnPlay.addEventListener('click', () => {
             isPlaying = !isPlaying;
             if (isPlaying) {
                 btnPlay.textContent = "Pause";
-                btnPlay.style.backgroundColor = "#EF4444"; // Red for stop
+                btnPlay.style.backgroundColor = "#EF4444"; // Rot für Stop
                 autoScroll();
             } else {
-                btnPlay.textContent = "Play";
-                btnPlay.style.backgroundColor = "#3B82F6"; // Blue for play
+                btnPlay.textContent = "Start";
+                btnPlay.style.backgroundColor = "#3B82F6"; // Blau für Start
                 cancelAnimationFrame(animationId);
             }
         });
 
-        // Keyboard Control (Spacebar)
+        // Tastatursteuerung (Leertaste)
         document.addEventListener('keydown', (e) => {
             if (e.code === 'Space') {
-                e.preventDefault(); // Prevent default page jump
+                e.preventDefault(); // Verhindert Standard-Sprung
                 btnPlay.click();
             }
         });
 
-        // Reset Top
+        // Zurücksetzen nach oben
         btnReset.addEventListener('click', () => {
             isPlaying = false;
             cancelAnimationFrame(animationId);
-            btnPlay.textContent = "Play";
+            btnPlay.textContent = "Start";
             btnPlay.style.backgroundColor = "#3B82F6";
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // Speed Control
+        // Geschwindigkeitssteuerung
         sliderSpeed.addEventListener('input', (e) => {
             scrollSpeed = parseFloat(e.target.value);
         });
 
-        // Font Size Control
+        // Schriftgrößensteuerung
         function updateFontSize() {
             const size = sliderFont.value + 'px';
             rightSide.style.fontSize = size;
-            // Scale context column slightly smaller
+            // Kontextspalte etwas kleiner skalieren
             leftSide.style.fontSize = `calc(${size} * 0.6)`;
         }
 
         sliderFont.addEventListener('input', updateFontSize);
         
-        // Initialize font size
+        // Schriftgröße initialisieren
         updateFontSize();
 
     </script>
 </body>
 </html>
+
