@@ -63,11 +63,24 @@
       margin-bottom: 0.5rem;
     }
 
-    .cover-image {
+    .cover-button {
+      display: block;
+      margin: 1rem auto;
       max-width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .cover-button:hover {
+      transform: scale(1.02);
+    }
+
+    .cover-button img {
+      width: 100%;
       height: auto;
-      margin-top: 1rem;
-      border-radius: 8px;
+      display: block;
     }
 
     .iframe-container {
@@ -167,7 +180,9 @@
     <h1 id="title">Präsentation ARTI</h1>
     <p id="intro">Hier kannst du die Präsentation direkt ansehen:</p>
 
-    <img src="arti_portada.png" alt="Portada ARTI" class="cover-image">
+    <a href="https://docs.google.com/presentation/d/1kpW4NbPDp8B4oiUtyvQfxHamdibAWV3p_itF5Win22s/edit?usp=drivesdk" target="_blank" class="cover-button">
+      <img src="arti_portada.png" alt="Portada ARTI">
+    </a>
 
     <div class="iframe-container">
       <iframe src="https://docs.google.com/presentation/d/1kpW4NbPDp8B4oiUtyvQfxHamdibAWV3p_itF5Win22s/embed?start=false&loop=false&delayms=3000"
@@ -218,13 +233,7 @@
         navPresentation: "ARTI Presentation",
         navMadman: "Madman Teleprompter",
         navZM: "ZM Teleprompter",
-        navOther: "Other Presentations"
-      }
-    };
-
-    function changeLanguage() {
-      const lang = document.getElementById("lang").value;
-      const t = translations[lang];
+        navOther: "Other [lang];
       document.getElementById("title").textContent = t.title;
       document.getElementById("intro").textContent = t.intro;
       document.getElementById("link-text").childNodes[0].textContent = t.linkText + " ";
@@ -232,8 +241,4 @@
       document.getElementById("nav-presentation").textContent = t.navPresentation;
       document.getElementById("nav-madman").textContent = t.navMadman;
       document.getElementById("nav-zm").textContent = t.navZM;
-      document.getElementById("nav-other").textContent = t.navOther;
-    }
-  </script>
-</body>
-</html>
+      document.getElementById
