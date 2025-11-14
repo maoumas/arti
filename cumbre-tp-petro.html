@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CELAC-EU 2025 Teleprompter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Inter:wght@400;600&display=swap');
+
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --context-color: #888888;
+            --highlight-color: #FFFF00;
+            --ui-bg: #1a1a1a;
+            --accent: #3B82F6;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* Layout Container */
+        #prompter-container {
+            display: flex;
+            min-height: 100vh;
+            padding-bottom: 150px; /* Space for controls */
+            position: relative;
+        }
+
+        /* Columns */
+        .col {
+            padding: 2rem;
+            transition: font-size 0.2s;
+        }
+
+        #col-context {
+            width: 40%; /* Default width */
+            color: var(--context-color);
+            font-family: 'Roboto Mono', monospace;
+            border-right: 1px solid #333;
+        }
+
+        #col-script {
+            flex: 1; /* Takes remaining space */
+            color: var(--text-color);
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        /* Resizer Handle */
+        #resizer {
+            width: 10px;
+            cursor: col-resize;
+            background-color: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            z-index: 10;
+        }
+
+        #resizer:hover, #resizer.active {
+            background-color: var(--accent);
+        }
+
+        /* Markers and Highlights */
+        .time-marker {
+            display: inline-block;
+            background-color: #333;
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-bottom: 0.5rem;
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .instruction-tag {
+            color: var(--highlight-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid var(--highlight-color);
+            padding-left: 10px;
+        }
+
+        .script-block {
+            margin-bottom: 4rem; /* Space between segments */
+            padding-top: 1rem;
+            border-top: 1px solid #222;
+        }
+
+        /* Controls Bar */
+        #controls {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--ui-bg);
+            border-top: 2px solid var(--accent);
+            padding: 1rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            z-index: 1000;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.5);
+        }
+
+        /* Form Elements */
+        button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            background-color: #2563EB;
+        }
+
+        button.secondary {
+            background-color: #4B5563;
+        }
+
+        label {
+            color: #ccc;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        input[type="range"] {
+            cursor: pointer;
+            width: 120px;
+        }
+
+        /* Mobile Response */
+        @media (max-width: 768px) {
+            #prompter-container {
+                flex-direction: column;
+            }
+            #col-context {
+                width: 100% !important; /* Force full width */
+                border-right: none;
+                border-bottom: 1px solid #333;
+                padding: 1rem;
+                font-size: 0.9rem !important;
+            }
+            #col-script {
+                width: 100% !important;
+                padding: 1rem;
+            }
+            #resizer {
+                display: none; /* Hide resizer on mobile */
+            }
+            .script-block {
+                margin-bottom: 2rem;
+            }
+            #controls {
+                padding: 0.5rem;
+                gap: 0.5rem;
+            }
+            button {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            input[type="range"] {
+                width: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Prompter Area -->
+    <div id="prompter-container">
+        
+        <!-- Left Column: Context (Petro's Speech Summary) -->
+        <div id="col-context" class="col">
+            <div class="script-block">
+                <span class="time-marker">INTRO</span>
+                <p><strong>Kontext:</strong> Eröffnung des Gipfels. Viele Plätze sind leer (Boykott).</p>
+            </div>
+
+            <div class="script-block">
+                <span class="time-marker">0:00 – 1:30</span>
+                <p><strong>Petro:</strong> Critica a la CELAC. Dice que no puede hablar por todos. El consenso limita la capacidad de actuar. Pide cambiar normas.</p>
+            </div>
+
+            <div class="script-block">
+                <span class="time-marker">1:30 – 4:00</span>
+                <p><strong>Petro:</strong> Filosofía e Historia. La existencia es un río. Democracia contra barbarie. Esclavitud, racismo, nazis.</p>
+            </div>
+
+            <div class="script-block">
+                <span class="time-marker">4:00 – 6:30</span>
+                <p><strong>Petro:</strong> Democracia inconclusa. Bolívar murió inconcluso. Integración americana es "retórica", la UE es más eficiente.</p>
+            </div>
+
+            <div class="script-block">
+                <span class="time-marker">6:30 – 9:00</span>
+                <p><strong>Petro:</strong> Haití y la Gran Colombia. La libertad surgió de los pueblos negros. ¿Qué significa la libertad hoy?</p>
+            </div>
+
+            <div class="script-block">
+                <span class="time-marker">9:00 – 13:30</span>
+                <p><strong>Petro:</strong> La Barbarie Actual. Bombas en Gaza y bombas en el Caribe. Caso Alejandro Carranza (pescador muerto por cohete).</p>
+            </div>
+
+            <div class="script-block">
+                <span class="time-marker">13:30 – 18:30</span>
+                <p><strong>Petro:</strong> Conclusión. Ser un "faro". Santa Marta corazón del mundo. Diálogo de civilizaciones.</p>
+            </div>
+
+             <div class="script-block">
+                <span class="time-marker">ENDE</span>
+                <p><strong>Analogie:</strong> Das leere Bankett.</p>
+            </div>
+        </div>
+
+        <!-- Resizer Handle -->
+        <div id="resizer" title="Ziehen, um Spaltenbreite zu ändern"></div>
+
+        <!-- Right Column: Moderator Script (The content to be read) -->
+        <div id="col-script" class="col">
+            <div class="script-block">
+                <span class="instruction-tag">[KAMERA ANMODERATION]</span>
+                <p>Willkommen in Medellin. Wir übertragen live die Eröffnungsrede des CELAC-EU Gipfels 2025. Die Atmosphäre ist angespannt. Viele Staatschefs haben abgesagt.</p>
+            </div>
+
+            <div class="script-block">
+                <span class="instruction-tag">[SPRECHER EINWURF]</span>
+                <p>Petro beginnt direkt mit der Diagnose, dass die CELAC ineffizient ist. Er spricht über Konsensregeln, aber der eigentliche Konsensbruch ist seine eigene, wenig diplomatische Haltung, die zum Boykott dieses Treffens geführt hat. Er kritisiert die Handlungsunfähigkeit, während er selbst die Bühne für eine Konfrontation schafft.</p>
+            </div>
+
+            <div class="script-block">
+                <span class="instruction-tag">[SPRECHER EINWURF]</span>
+                <p>Ein historischer Exkurs, der von Heraklit bis zu den Nazis reicht. In einer Eröffnungsrede eines Wirtschaftsgipfels sollte es um Partnerschaft gehen, nicht um eine Geschichtsstunde über Zivilisation und Rasse. Dies ist typisch für Petro: Ablenkung durch große Philosophie, anstatt konkrete Vorschläge für die europäische Zusammenarbeit zu machen.</p>
+            </div>
+
+            <div class="script-block">
+                <span class="instruction-tag">[SPRECHER EINWURF]</span>
+                <p>Er nennt die lateinamerikanische Integration "literarisch und rhetorisch". Erstaunlich, dass er das sagt, denn er selbst nutzt diese Bühne primär für Rhetorik und historische Abrechnungen, statt für Diplomatie. Der Amphiktionische Kongress mag gescheitert sein, aber die EU ist deshalb nicht hier, weil sie Angst vor Donald Trump und seinen Vergeltungsmaßnahmen hat.</p>
+            </div>
+
+            <div class="script-block">
+                <span class="instruction-tag">[SPRECHER EINWURF]</span>
+                <p>Das historische Lob für Haiti ist berechtigt, aber Petro lenkt ab. Wir können die Geschichte der Freiheit diskutieren, doch die Frage, die hier wirklich im Raum steht, ist: Wo waren die Führungskräfte Europas, die diese Partnerschaft vertiefen sollten? Sie haben es vorgezogen, sich hinter Diplomaten der zweiten Reihe zu verstecken.</p>
+            </div>
+
+            <div class="script-block">
+                <span class="instruction-tag">[SPRECHER SCHALTET UM AUF KONFLIKTANALYSE]</span>
+                <p>DAS IST DER WAHRE GRUND FÜR DEN BOYKOTT. Petro kritisiert hier öffentlich die US-Militäroperationen in der Karibik, bei denen verdächtige Schiffe angegriffen werden. Seine scharfe Kritik an den USA führte dazu, dass Trump ihn kurz vor dem Gipfel als "Anführer des illegalen Drogenhandels" sanktionierte. Er nutzt die Tragödie, um die Konfrontation zu eskalieren, was Europa zur Absage zwang, da sie nicht ins Kreuzfeuer geraten wollten.</p>
+            </div>
+
+            <div class="script-block">
+                <span class="instruction-tag">[SPRECHER ZUSAMMENFASSUNG & KRITIK]</span>
+                <p>Petro schließt mit der Forderung nach einer "freien Menschheit" und einem "Dialog der Zivilisationen". Das ist eine noble Botschaft, aber angesichts der Abwesenheit der wichtigsten Staats- und Regierungschefs wirkt es wie ein "Spektakel ohne Führungskräfte". Er spricht davon, ein "Leuchtturm" zu sein, aber seine aggressive Haltung hat die Schiffe weggescheucht. Dieser Gipfel wird als der Moment in die Geschichte eingehen, in dem viele Führer den Kopf einzogen, um den Konflikt mit den USA zu vermeiden.</p>
+            </div>
+
+            <div class="script-block">
+                <span class="instruction-tag">[SCHLUSSWORT / ANALOGIE]</span>
+                <p>Die Situation erinnert an einen Gastgeber, der zu einem Friedensbankett im "Herzen der Welt" lädt, aber so laut über den mächtigen Nachbarn schimpft, dass die Gäste fluchtartig das Weite suchen. Das Ergebnis: Ein brillanter Vortrag vor leeren Stühlen. Viel Leuchtturm-Rhetorik, aber keine Schiffe in Sicht.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Control Panel -->
+    <div id="controls">
+        <button id="btn-play">Play</button>
+        <button id="btn-reset" class="secondary"><i class="fas fa-undo"></i> Reset</button>
+        
+        <div class="flex items-center gap-2">
+            <label for="speed">Tempo:</label>
+            <input type="range" id="speed" min="0.5" max="5" step="0.1" value="1.5">
+        </div>
+
+        <div class="flex items-center gap-2">
+            <label for="fontsize">Textgröße:</label>
+            <input type="range" id="fontsize" min="16" max="72" step="2" value="32">
+        </div>
+    </div>
+
+    <script>
+        // --- Resizable Columns Logic ---
+        const resizer = document.getElementById('resizer');
+        const leftSide = document.getElementById('col-context');
+        const rightSide = document.getElementById('col-script');
+        const container = document.getElementById('prompter-container');
+
+        let x = 0;
+        let leftWidth = 0;
+
+        const mouseDownHandler = function(e) {
+            // Get the current mouse position
+            x = e.clientX;
+            leftWidth = leftSide.getBoundingClientRect().width;
+
+            // Attach listeners to document
+            document.addEventListener('mousemove', mouseMoveHandler);
+            document.addEventListener('mouseup', mouseUpHandler);
+            resizer.classList.add('active');
+        };
+
+        const mouseMoveHandler = function(e) {
+            // Determine how far the mouse has been moved
+            const dx = e.clientX - x;
+            const newLeftWidth = ((leftWidth + dx) * 100) / container.getBoundingClientRect().width;
+            
+            // Limit resizing between 10% and 80% to prevent breaking
+            if(newLeftWidth > 10 && newLeftWidth < 80) {
+                leftSide.style.width = `${newLeftWidth}%`;
+            }
+        };
+
+        const mouseUpHandler = function() {
+            document.removeEventListener('mousemove', mouseMoveHandler);
+            document.removeEventListener('mouseup', mouseUpHandler);
+            resizer.classList.remove('active');
+        };
+
+        // Only attach resizer on desktop (simple check)
+        if (window.innerWidth > 768) {
+            resizer.addEventListener('mousedown', mouseDownHandler);
+        }
+
+
+        // --- Teleprompter Logic ---
+        const btnPlay = document.getElementById('btn-play');
+        const btnReset = document.getElementById('btn-reset');
+        const sliderSpeed = document.getElementById('speed');
+        const sliderFont = document.getElementById('fontsize');
+        
+        let isPlaying = false;
+        let scrollSpeed = 1.5;
+        let animationId;
+
+        // Scroll Loop
+        function autoScroll() {
+            if (isPlaying) {
+                window.scrollBy(0, scrollSpeed);
+                // Check if reached bottom (optional stop logic could go here)
+                animationId = requestAnimationFrame(autoScroll);
+            }
+        }
+
+        // Play/Pause Toggle
+        btnPlay.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                btnPlay.textContent = "Pause";
+                btnPlay.style.backgroundColor = "#EF4444"; // Red for stop
+                autoScroll();
+            } else {
+                btnPlay.textContent = "Play";
+                btnPlay.style.backgroundColor = "#3B82F6"; // Blue for play
+                cancelAnimationFrame(animationId);
+            }
+        });
+
+        // Keyboard Control (Spacebar)
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault(); // Prevent default page jump
+                btnPlay.click();
+            }
+        });
+
+        // Reset Top
+        btnReset.addEventListener('click', () => {
+            isPlaying = false;
+            cancelAnimationFrame(animationId);
+            btnPlay.textContent = "Play";
+            btnPlay.style.backgroundColor = "#3B82F6";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Speed Control
+        sliderSpeed.addEventListener('input', (e) => {
+            scrollSpeed = parseFloat(e.target.value);
+        });
+
+        // Font Size Control
+        function updateFontSize() {
+            const size = sliderFont.value + 'px';
+            rightSide.style.fontSize = size;
+            // Scale context column slightly smaller
+            leftSide.style.fontSize = `calc(${size} * 0.6)`;
+        }
+
+        sliderFont.addEventListener('input', updateFontSize);
+        
+        // Initialize font size
+        updateFontSize();
+
+    </script>
+</body>
+</html>
