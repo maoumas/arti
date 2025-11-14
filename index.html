@@ -233,7 +233,13 @@
         navPresentation: "ARTI Presentation",
         navMadman: "Madman Teleprompter",
         navZM: "ZM Teleprompter",
-        navOther: "Other [lang];
+        navOther: "Other Presentations"
+      }
+    };
+
+    function changeLanguage() {
+      const lang = document.getElementById("lang").value;
+      const t = translations[lang];
       document.getElementById("title").textContent = t.title;
       document.getElementById("intro").textContent = t.intro;
       document.getElementById("link-text").childNodes[0].textContent = t.linkText + " ";
