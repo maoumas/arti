@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Präsentation: Clinton-Petro Skandal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #111827; color: #F9FAFB; overflow: hidden; }
+        #presentation-container { position: relative; width: 100%; height: 100vh; overflow: hidden; }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 5% 8%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; opacity: 0; transform: translateX(20px); transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out; visibility: hidden; }
+        .slide.active { opacity: 1; transform: translateX(0); visibility: visible; }
+        .reveal-item { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; transition-delay: 0s; }
+        .reveal-item.revealed { opacity: 1; transform: translateY(0); }
+        .text-accent-red { color: #EF4444; }
+        .text-accent-blue { color: #3B82F6; }
+        #controls-wrapper { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #1F2937; z-index: 100; }
+        #slide-pane #controls { display: flex; justify-content: center; align-items: center; padding: 12px 0; }
+        .control-btn { background: none; border: none; color: #F9FAFB; cursor: pointer; padding: 8px 12px; margin: 0 10px; border-radius: 8px; transition: background-color 0.2s; }
+        .control-btn:hover { background-color: #374151; }
+        .control-btn svg { width: 24px; height: 24px; pointer-events: none; }
+        .image-container { max-width: 450px; width: 100%; margin-top: 1.5rem; }
+        .image-container img { width: 100%; height: auto; border-radius: 12px; border: 2px solid #374151; cursor: zoom-in; }
+        .slide-layout { display: flex; flex-direction: column; width: 100%; height: 100%; justify-content: center; align-items: center; }
+        @media (min-width: 768px) { .slide-layout { flex-direction: row; gap: 2rem; } .slide-layout .content { flex-basis: 50%; text-align: left; } .slide-layout .image-container { flex-basis: 50%; margin-top: 0; } ul { padding-left: 1.5rem; } }
+        .lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); display: none; align-items: center; justify-content: center; z-index: 1000; cursor: zoom-out; }
+        #lightbox-image { max-width: 90%; max-height: 90vh; border-radius: 8px; border: 2px solid #F9FAFB; }
+        .lightbox-close { position: absolute; top: 20px; right: 35px; color: #F9FAFB; font-size: 40px; font-weight: bold; cursor: pointer; line-height: 1; }
+    </style>
+</head>
+<body>
+    <div id="presentation-container">
+        <div class="slide active"> <div class="slide-layout"> <div class="content"> <h1 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-red">LIVE: Clinton-Liste gegen Petro – Skandal in Bogotá!</h1> <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc"> <li class="reveal-item">Gustavo Petro sanktioniert: Warum?</li> <li class="reveal-item text-accent-blue">Live-Übersetzungen & Analyse</li> <li class="reveal-item">Umfrage: “Gerecht oder Rache?”</li> <li class="reveal-item">Chat: Teilt eure Meinungen!</li> </ul> </div> <div class="reveal-item image-container"> <img src="images/slide-1.jpg" alt="Gustavo Petro"> </div> </div> </div>
+        <div class="slide"> <div class="slide-layout"> <div class="content"> <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">Wer ist Gustavo Petro?</h2> <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc"> <li class="reveal-item">Geboren 1960, Ex-Guerrillero (M-19)</li> <li class="reveal-item">Erster linker Präsident seit 2022</li> <li class="reveal-item text-accent-blue">“Totaler Frieden”: Verhandlungen statt Krieg</li> <li class="reveal-item">US-Beziehungen: Plan Colombia – Milliarden-Hilfe</li> </ul> </div> <div class="reveal-item image-container"> <img src="images/slide-2.jpg" alt="Donald Trump"> </div> </div> </div>
+        <div class="slide"> <div class="slide-layout"> <div class="content"> <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-red">Die Eskalation: September bis Oktober 2025</h2> <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc"> <li class="reveal-item">Sept: Visum-Verlust nach UN-Rede</li> <li class="reveal-item">Okt: US-Schiffe versenken Boote (37 Tote)</li> <li class="reveal-item">Okt: Hilfen gestoppt, 50% Zölle</li> <li class="reveal-item">Okt: Clinton-Liste</li> <li class="reveal-item text-accent-blue">Statistik: Kokain-Produktion: 2.664 Tonnen (UNODC 2024)</li> </ul> </div> <div class="reveal-item image-container"> <img src="images/slide-3.png" alt="Karte Kolumbien"> </div> </div> </div>
+        <div class="slide"> <div class="slide-layout"> <div class="content"> <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-blue">US-Treasury: Die Anklage gegen Petro</h2> <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc"> <li class="reveal-item">“Nichts gegen Drogen getan” – Rekord-Produktion</li> <li class="reveal-item">Familie: Frau, Sohn (Geldwäsche), Benedetti</li> <li class="reveal-item">Kein direkter Beweis, nur Untätigkeit</li> <li class="reveal-item">Vergleich: Duque-Zeit +43% Steigerung</li> </ul> </div> <div class="reveal-item image-container"> <img src="images/slide-4.png" alt="US Treasury SDN-Liste"> </div> </div> </div>
+        <div class="slide"> <div class="slide-layout"> <div class="content"> <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-blue">Kokain-Boom: Fakten & Zahlen</h2> <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc"> <li class="reveal-item">2023: 253.000 Hektar Koka (+10%)</li> <li class="reveal-item">2024: 626 Tonnen beschlagnahmt (Rekord)</li> <li class="reveal-item">US-Konsum: 40% weltweit</li> <li class="reveal-item text-accent-red">“War on Drugs”-Versagen seit 1971</li> </ul> </div> <div class="reveal-item image-container"> <img src="images/slide-5.png" alt="Graph Kokain-Produktion"> </div> </div> </div>
+        <div class="slide"> <div class="slide-layout"> <div class="content"> <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-red">Petro schlägt zurück: Bolívar-Platz-Rede</h2> <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc"> <li class="reveal-item">“Erpressung durch die Mafia!”</li> <li class="reveal-item">“USA: Stoppt Konsum, nicht nur Produktion”</li> <li class="reveal-item">Anwalt engagiert: Dan Kovalik</li> <li class="reveal-item">Wirtschaft: Peso fällt, Investoren fliehen</li> </ul> </div> <div class="reveal-item image-container"> <img src="images/slide-6.jpg" alt="Medien-Zensur"> </div> </div> </div>
+        <div class="slide"> <div class="slide-layout"> <div class="content"> <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">Die Clinton-Liste: Geschichte & Effekte</h2> <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc"> <li class="reveal-item">1995: Kingpin Act unter Clinton</li> <li class="reveal-item">Über 10.000 Namen (z. B. El Chapo 2001, Maduro 2019)</li> <li class="reveal-item">Effekte: Vermögen einfrieren, Reiseverbot</li> <li class="reveal-item">Kolumbien: Tausende Einträge seit 90er</li> </ul> </div> <div class="reveal-item image-container"> <img src="images/slide-7.jpg" alt="El Chapo"> </div> </div> </div>
+        <div class="slide"> <div class="slide-layout"> <div class="content"> <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-blue">Medien-Schweigen: Zensur oder Überflutung?</h2> <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc"> <li class="reveal-item">NYT: Nur Seite A10</li> <li class="reveal-item">Economist/BBC: Kaum Berichte</li> <li class="reveal-item text-accent-red">Spanische Medien: Explosion!</li> <li class="reveal-item">Gründe: News-Überflutung, Angst vor Trump</li> </ul> </div> <div class="reveal-item image-container"> <img src="images/slide-8.png" alt="Kokain-Routen"> </div> </div> </div>
+        <div class="slide"> <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">Was bedeutet das für uns in Europa?</h2> <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc max-w-3xl mx-auto"> <li class="reveal-item">80% EU-Kokain aus Kolumbien</li> <li class="reveal-item">Preis: 60€/Gramm in Berlin</li> <li class="reveal-item">Flüchtlinge, Zölle: Deutsche Firmen betroffen</li> <li class="reveal-item text-accent-blue">Global: Machtpolitik USA</li> </ul> </div>
+        <div class="slide"> <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">Eure Fragen & Fazit</h2> <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc max-w-3xl mx-auto"> <li class="reveal-item">Chat-Fragen live beantworten</li> <li class="reveal-item text-accent-red">Abonniert für mehr!</li> <li class="reveal-item">Nächstes Live: Trump-Zölle?</li> <li class="reveal-item">Danke & Quellen</li> </ul> </div>
+    </div>
+    <div id="controls-wrapper"> <div id="controls" style="display: none;"> <button id="prev-btn" class="control-btn"></button> <button id="next-btn" class="control-btn"></button> </div> </div>
+    <div id="lightbox" class="lightbox-overlay"> <span class="lightbox-close">&times;</span> <img id="lightbox-image" src="" alt="Vergrößerte Ansicht"> </div>
+    
+    <script type="module">
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxClose = document.querySelector('.lightbox-close');
+            const slideImages = document.querySelectorAll('.image-container img');
+            let currentSlide = 0;
+
+            function openLightbox(src) { lightboxImage.src = src; lightbox.style.display = 'flex'; }
+            function closeLightbox() { lightbox.style.display = 'none'; lightboxImage.src = ''; }
+            slideImages.forEach(img => { img.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(img.src); }); });
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', (e) => { if (e.target === lightbox) { closeLightbox(); } });
+
+            function showSlide(index) {
+                slides.forEach((slide) => { slide.classList.remove('active'); });
+                const slide = slides[index];
+                if (!slide) return;
+                slide.classList.add('active');
+                currentSlide = index;
+                const items = slide.querySelectorAll('.reveal-item');
+                items.forEach((item, index) => {
+                    item.classList.remove('revealed');
+                    item.style.transitionDelay = `${index * 250}ms`;
+                    setTimeout(() => { item.classList.add('revealed'); }, 50);
+                });
+            }
+            function nextSlide() { let next = currentSlide + 1; if (next >= slides.length) { next = 0; } showSlide(next); }
+            function prevSlide() { let prev = currentSlide - 1; if (prev < 0) { prev = slides.length - 1; } showSlide(prev); }
+            
+            showSlide(0);
+
+            document.addEventListener('keydown', (e) => {
+                if (lightbox.style.display === 'flex') { if (e.key === 'Escape') { closeLightbox(); } return; }
+                if (e.key === 'ArrowRight') { nextSlide(); } 
+                else if (e.key === 'ArrowLeft') { prevSlide(); }
+                else if (e.key === 'Enter') {
+                    e.preventDefault(); 
+                    const activeSlide = document.querySelector('.slide.active');
+                    if (activeSlide) { const image = activeSlide.querySelector('.image-container img'); if (image) { openLightbox(image.src); } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
