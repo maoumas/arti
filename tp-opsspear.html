@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teleprompter - Operation Southern Spear</title>
+    <!-- Tailwind CSS laden -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Stil für die Inter-Schriftart */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Scrollbalken im Skript-Wrapper ausblenden */
+        #script-wrapper::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        #script-wrapper {
+            -ms-overflow-style: none;  /* IE und Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        /* Sicherstellen, dass das Padding korrekt mit dem Scrollen funktioniert */
+        #script-content {
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white h-screen flex flex-col overflow-hidden">
+
+    <!-- Hauptcontainer des Teleprompters -->
+    <div id="teleprompter-container" class="flex-1 flex flex-col relative">
+
+        <!-- Leseindikator (Rote/Grüne Linie) -->
+        <div id="indicator" class="absolute top-1/3 left-0 w-full border-t-4 border-red-500 z-10 transition-colors duration-300"></div>
+
+        <!-- Skript-Fenster (mit Scrollen) -->
+        <div id="script-wrapper" class="flex-1 overflow-y-scroll relative">
+            <!-- Skript-Inhalt (Der Text, der sich bewegt) -->
+            <!-- Oberes Padding (33vh), damit der Text am Indikator beginnt -->
+            <!-- Unteres Padding (67vh), damit die letzte Zeile den Indikator erreichen kann -->
+            <div id="script-content" class="max-w-4xl mx-auto px-6" style="font-size: 2.5rem; line-height: 1.5; padding-top: 33vh; padding-bottom: 67vh; box-sizing: border-box;">
+
+                <!-- Das übersetzte deutsche Skript -->
+                <h2 class="font-bold text-center mb-6">OPERATION SOUTHERN SPEAR: AMERIKAS NEUESTER IMPERIALER VORSTOSS IN DER KARIBIK.</h2>
+                
+                <p class="mb-6">Guten Abend und willkommen. Heute befassen wir uns mit einer Eskalation, die die gesamte westliche Hemisphäre betrifft. Das Pentagon hat seiner Militäroffensive in der Karibik einen offiziellen Namen gegeben: <strong>"Operation Southern Spear"</strong>.</p>
+                <p class="mb-6">Diese Benennung, so Militärexperten, signalisiert den offiziellen Beginn der Operation. Jede militärische Aktivität benötigt einen Namen, um Verwechslungen zu vermeiden. Es gibt kein Zurück mehr: Die Vereinigten Staaten planen nicht nur, sie <strong>handeln</strong>.</p>
+                
+                <p class="mb-6">Wir erleben den größten US-Truppenaufmarsch in der Region seit Generationen – über 15.000 Soldaten. Das Kernstück ist die <strong>USS Gerald R. Ford</strong>, der größte Flugzeugträger der Welt, begleitet von Lenkwaffenzerstörern und U-Booten.</p>
+                <p class="mb-6">Dazu kommen B-52-Bomber und F-18 Super Hornets sowie ein beträchtlicher Teil der <strong>82. Luftlandedivision</strong>. Das offizielle Ziel: die Zerschlagung von <strong>Narkoterroristen</strong> und die Verteidigung des Heimatlandes gegen Drogen.</p>
+                
+                <p class="mb-6">Schon vor der offiziellen Ankündigung hat die US-Marine mindestens 20 mutmaßliche Drogenschmuggelboote angegriffen. Das Ergebnis: rund 80 Menschen wurden ohne Gerichtsverfahren getötet.</p>
+                <p class="mb-6">Internationale Menschenrechtsorganisationen verurteilen diese Aktionen als <strong>illegale außergerichtliche Hinrichtungen</strong>. Die Administration ignoriert diese Kritik und betrachtet das Problem als eine wesentliche strategische Bedrohung.</p>
+                <p class="mb-6">Wir fragen uns: <strong>Ist der Kampf gegen den Narkoterrorismus nur ein Vorwand für einen Regimewechsel?</strong></p>
+                
+                <p class="mb-6">Diese Operation zielt darauf ab, die <strong>Wurzel des Problems</strong> anzugreifen: die gigantische transnationale kriminelle Superstruktur, die unter dem Schutz des "Cartel de los Soles" in Venezuela operiert.</p>
+                <p class="mb-6">Dies ist keine auf das Meer beschränkte Aktion, sondern eine multidimensionale Strategie zur <strong>Enthauptung des Narko-Regimes von Nicolás Maduro</strong>.</p>
+                <p class="mb-6">Berichten zufolge wurden dem Präsidenten Optionen für <strong>direkte Angriffe auf Landziele</strong> vorgelegt, einschließlich Präzisions- und Festnahmeoperationen durch Spezialeinheiten. Es wurde bestätigt, dass Einheiten von <strong>Spezialkräften</strong> bereits verdeckt nach Venezuela eingedrungen sein sollen und auf den Befehl warten, das Regime festzusetzen.</p>
+                
+                <p class="mb-6">Diese Strategie operiert nach dem Konzept einer *Speer- und Zangenbewegung*, um die kriminellen Netzwerke, die sich bis nach Kolumbien und Mexiko erstrecken, in die Enge zu treiben. Das Pentagon will einen durchschlagenden Erfolg sicherstellen.</p>
+                <p class="mb-6">Die Erwartung ist, dass mit der ersten Angriffswelle der Kollaps der internen Strukturen innerhalb der Bolivarischen Streitkräfte beginnt.</p>
+                <p class="mb-6">"Operation Southern Spear" bedeutet eine verlängerte Militärpräsenz und ein Ziel, das weit über einen chirurgischen Schlag hinausgeht: <strong>die totale Neukonfiguration der Sicherheit in der Hemisphäre.</strong></p>
+                
+                <p class="mb-6">Bleiben Sie bei uns, während wir weiter über diese gefährliche Eskalation berichten.</p>
+                
+                <!-- Ende des Skripts -->
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bedienfeld -->
+    <div id="controls" class="bg-gray-800 p-4 shadow-lg w-full z-20">
+        <div class="max-w-4xl mx-auto flex flex-wrap justify-center items-center gap-x-6 gap-y-3">
+
+            <!-- Aktionsknöpfe -->
+            <div class="flex gap-4">
+                <button id="play-pause-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition-colors duration-200 min-w-[120px]">
+                    Start
+                </button>
+                <button id="reset-btn" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-lg transition-colors duration-200">
+                    Zurücksetzen
+                </button>
+            </div>
+
+            <!-- Geschwindigkeitsregler -->
+            <div class="flex items-center gap-2 text-sm min-w-[200px]">
+                <label for="speed-slider">Tempo:</label>
+                <input id="speed-slider" type="range" min="10" max="150" value="30" class="w-full accent-blue-500">
+                <span id="speed-value" classs="w-8 text-right">30</span>
+            </div>
+
+            <!-- Schriftgrößenregler -->
+            <div class="flex items-center gap-2 text-sm min-w-[200px]">
+                <label for="font-slider">Größe:</label>
+                <input id="font-slider" type="range" min="1.5" max="6" value="2.5" step="0.1" class="w-full accent-blue-500">
+                <span id="font-value" class="w-8 text-right">2.5</span>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DOM-Elemente abrufen ---
+            const scriptWrapper = document.getElementById('script-wrapper');
+            const scriptContent = document.getElementById('script-content');
+            const playPauseBtn = document.getElementById('play-pause-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const speedSlider = document.getElementById('speed-slider');
+            const fontSlider = document.getElementById('font-slider');
+            const indicator = document.getElementById('indicator');
+            const speedValueSpan = document.getElementById('speed-value');
+            const fontValueSpan = document.getElementById('font-value');
+
+            // --- Statusvariablen ---
+            let isPlaying = false;
+            let scrollSpeed = 30; // Pixel pro Sekunde
+            let animationId = null;
+
+            // --- Funktionen ---
+
+            /**
+             * Haupt-Animationsschleife mit requestAnimationFrame
+             * für sanftes Scrollen.
+             */
+            function scrollLoop() {
+                if (!isPlaying) return; // Stoppen, wenn nicht im "Play"-Modus
+
+                // Scroll-Inkrement basierend auf 60fps berechnen
+                scriptWrapper.scrollTop += scrollSpeed / 60; 
+
+                // Schleife fortsetzen
+                animationId = requestAnimationFrame(scrollLoop);
+            }
+
+            /**
+             * Startet oder pausiert den Teleprompter.
+             */
+            function togglePlayPause() {
+                isPlaying = !isPlaying;
+                
+                if (isPlaying) {
+                    // --- Starten ---
+                    playPauseBtn.textContent = 'Pause';
+                    // Indikator auf Grün (aktiv) ändern
+                    indicator.classList.remove('border-red-500');
+                    indicator.classList.add('border-green-400');
+                    
+                    // Vorherige Animation abbrechen und neue starten
+                    cancelAnimationFrame(animationId); 
+                    animationId = requestAnimationFrame(scrollLoop);
+                } else {
+                    // --- Pausieren ---
+                    playPauseBtn.textContent = 'Start';
+                    // Indikator auf Rot (pausiert) ändern
+                    indicator.classList.remove('border-green-400');
+                    indicator.classList.add('border-red-500');
+                    
+                    // Animationsschleife stoppen
+                    cancelAnimationFrame(animationId);
+                }
+            }
+
+            /**
+             * Setzt den Scrollvorgang an den Anfang zurück.
+             */
+            function reset() {
+                // Jede Animation stoppen
+                cancelAnimationFrame(animationId);
+                animationId = null;
+                
+                // Status zurücksetzen
+                isPlaying = false;
+                playPauseBtn.textContent = 'Start';
+                indicator.classList.remove('border-green-400');
+                indicator.classList.add('border-red-500');
+                
+                // An den Anfang des Scrolls zurückkehren
+                scriptWrapper.scrollTop = 0;
+            }
+
+            // --- Event Listeners ---
+
+            // Start/Pause-Knopf
+            playPauseBtn.addEventListener('click', togglePlayPause);
+
+            // Zurücksetzen-Knopf
+            resetBtn.addEventListener('click', reset);
+
+            // Geschwindigkeitsregler
+            speedSlider.addEventListener('input', (e) => {
+                scrollSpeed = parseFloat(e.target.value);
+                speedValueSpan.textContent = e.target.value;
+            });
+
+            // Schriftgrößenregler
+            fontSlider.addEventListener('input', (e) => {
+                const newSize = parseFloat(e.target.value);
+                scriptContent.style.fontSize = `${newSize}rem`;
+                // Zeilenhöhe proportional anpassen
+                scriptContent.style.lineHeight = newSize > 3.5 ? '1.6' : '1.5';
+                fontValueSpan.textContent = newSize.toFixed(1);
+            });
+
+            // --- Grundeinstellungen ---
+            speedSlider.value = scrollSpeed;
+            speedValueSpan.textContent = scrollSpeed;
+            
+            const initialFontSize = 2.5;
+            fontSlider.value = initialFontSize;
+            scriptContent.style.fontSize = `${initialFontSize}rem`;
+            scriptContent.style.lineHeight = '1.5';
+            fontValueSpan.textContent = initialFontSize.toFixed(1);
+
+            // Steuerung mit Leertaste zulassen
+            window.addEventListener('keydown', (e) => {
+                if (e.code === 'Space') {
+                    e.preventDefault(); // Verhindern, dass die Seite scrollt
+                    togglePlayPause();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
