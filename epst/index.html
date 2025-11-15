@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teleprompter Plantilla</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+    body { background-color: #111; color: #f0f0f0; font-family: 'Inter', sans-serif; }
+    #controls { position: sticky; bottom: 0; left: 0; right: 0; background-color: #222; border-top: 2px solid #3B82F6; padding: 0.75rem 1rem; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.75rem; z-index: 1000; box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5); }
+    #controls button { background-color: #3B82F6; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background-color 0.2s; }
+    #controls button:hover { background-color: #2563EB; }
+    #controls label { font-weight: 600; margin-left: 0.25rem; color: #ddd; font-size: 0.875rem; }
+    #controls input[type="range"] { cursor: pointer; width: 120px; }
+    .toggle-switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #444; transition: .3s; border-radius: 28px; }
+    .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .3s; border-radius: 50%; }
+    input:checked + .slider { background-color: #3B82F6; }
+    input:checked + .slider:before { transform: translateX(22px); }
+    #script-container { padding: 1rem 2rem; padding-bottom: 100vh; max-width: 900px; margin: 0 auto; line-height: 1.7; }
+    .speaker-text { font-size: 2.25rem; font-weight: 600; color: #ffffff; margin-bottom: 1rem; }
+    .instruction { font-size: 1.125rem; color: #FFD700; font-style: italic; background-color: #2a2a2a; border-left: 4px solid #FFD700; padding: 0.75rem; margin-bottom: 1rem; border-radius: 0 8px 8px 0; opacity: 0.9; }
+    .timestamp { font-size: 1.25rem; font-weight: 600; color: #3B82F6; border-top: 2px solid #444; padding-top: 1rem; margin-top: 2rem; margin-bottom: 1rem; }
+    body.hide-instructions .instruction { display: none; }
+    @media (max-width: 768px) { #controls { padding: 0.5rem; gap: 0.5rem; } #controls > label:not(.toggle-switch) { display: none; } #controls input[type="range"] { width: 90px; } #controls button { padding: 0.4rem 0.6rem; font-size: 0.875rem; } }
+  </style>
+</head>
+<body class="">
+  <div id="script-container">
+    <h2 class="timestamp">Teil I: Die kontrollierte Explosion und das gescheiterte Manöver der Demokraten</h2>
+    
+    <p class="speaker-text">Guten Abend. Wir beleuchten die Wahrheit hinter der Veröffentlichung der Jeffrey-Epstein-Dokumente. Was als <strong>gezielter politischer Angriff der Demokraten</strong> gedacht war, um Präsident Trump zu diskreditieren, ist zu einem riesigen Skandal um Vertuschung und Absprachen geworden, der direkt auf die Elite der Demokratischen Partei abzielt.</p>
+    
+    <p class="speaker-text">Vor Kurzem, am 12. November 2025, veröffentlichten Demokraten des Aufsichtsausschusses des Repräsentantenhauses nur <strong>drei ausgewählte E-Mails</strong> von Epstein. Sie wollten den Skandal neu beleben und Donald Trump als Komplizen darstellen, der angeblich "von den Mädchen wusste". Kritiker nannten dies eine "Rosinenpickerei" (selektive Auswahl), da der größere Kontext ignoriert wurde.</p>
+    
+    <p class="speaker-text">Das Ziel der Demokraten war klar: von der drohenden Haushaltssperre (Shutdown) ablenken und alte Anschuldigungen gegen Trump wieder aufwärmen.</p>
+    
+    <p class="speaker-text">Aber die Aktion ging nach hinten los. Die Republikaner reagierten, indem sie die <strong>komplette Freigabe von über 20.000 Seiten</strong> aus Epsteins Nachlass erzwangen. In diesen Tausenden Seiten erwiesen sich die Hinweise auf Trump größtenteils als Gerüchte, persönliche Kritik oder Spekulationen ohne Beweise für direkte Straftaten oder Besuche auf Epsteins Insel.</p>
+    
+    <p class="speaker-text">Der wahre Effekt war der <strong>Bumerang-Effekt</strong>. Die Dokumente legten viel <strong>tiefer gehende und anhaltende Verbindungen der Demokraten</strong> offen. Der Fokus verlagerte sich plötzlich von Trump auf <strong>Bill Clinton</strong>, den ehemaligen Finanzminister <strong>Larry Summers</strong>, den LinkedIn-Mitbegründer <strong>Reid Hoffman</strong> und sogar hochrangige Beamte aus dem Umfeld von Barack Obama. Die Veröffentlichung wurde zu einem "Fiasko, das die Demokraten selbst verursacht haben".</p>
+    
+    <h2 class="timestamp">Teil II: Absprachen der Demokraten – Epstein als Waffe gegen Trump</h2>
+    
+    <p class="speaker-text">Die kürzlich veröffentlichten E-Mails zeigen nicht nur soziale Nähe, sondern Beweise für eine koordinierte politische Absprache hochrangiger Demokraten, die den verurteilten Sexualstraftäter Jeffrey Epstein nutzten, um Donald Trump zu stürzen.</p>
+    
+    <h2 class="timestamp">Das "rauchende Gewehr": Kathy Rumler</h2>
+    
+    <p class="speaker-text">Die Demokraten lieferten in ihrer Eile, Trump schuldig erscheinen zu lassen, Informationen, die sie selbst belasten. Es gibt den unbestreitbaren Beweis, dass die ehemalige Rechtsberaterin des Weißen Hauses unter Barack Obama, <strong>Kathy Rumler</strong>, in den Jahren 2018 und 2019 persönlich mit Jeffrey Epstein kommunizierte, Absprachen traf und <strong>Pläne schmiedete</strong>, um eine Anklage und ein Amtsenthebungsverfahren gegen Präsident Trump zu erreichen.</p>
+    
+    <p class="speaker-text">Rumler schickte Epstein 2018 einen Artikel über die "prinzipielle Notwendigkeit eines Amtsenthebungsverfahrens" gegen Trump. Epstein antwortete, er könne möglicherweise gegen Trump aussagen, und prahlte, er wisse, "wie schmutzig Donald ist".</p>
+    
+    <p class="speaker-text">Dies ist empörend: Obamas ehemalige Anwältin schmiedete Pläne mit einem verurteilten Sexualstraftäter, <strong>zehn Jahre nachdem</strong> dieser sich wegen Kinderprostitution schuldig bekannt hatte, um einen amtierenden republikanischen Präsidenten aus dem Amt zu drängen. Das Justizministerium untersucht nun, ob diese Absprachen strafrechtlich relevant waren.</p>
+    
+    <h2 class="timestamp">Komplizenschaft im Aufsichtsausschuss: Stacy Plaskett</h2>
+    
+    <p class="speaker-text">Die Verschwörung geht noch weiter. Die demokratische Abgeordnete <strong>Stacy Plaskett</strong>, Mitglied des Aufsichtsausschusses des Repräsentantenhauses, kommunizierte aktiv mit Jeffrey Epstein, <strong>während</strong> Michael Cohen 2019 vor dem Ausschuss aussagte.</p>
+    
+    <p class="speaker-text">Die neuen E-Mails beweisen, dass Epstein Plaskett buchstäblich <strong>Fragen und Gesprächspunkte lieferte</strong>, während sie am Rednerpult stand. Plaskett fragte Epstein, ob ein von Cohen erwähnter Name ein Akronym sei, und Epstein antwortete: "Das ist seine Assistentin." Plaskett nutzte diese Information sofort, um Cohen aggressiv zu befragen.</p>
+    
+    <p class="speaker-text">Eine hochrangige demokratische Beamtin stimmte sich mit einem verurteilten Sexualstraftäter ab, um eine Kongressuntersuchung gegen den amtierenden Präsidenten voranzutreiben.</p>
+    
+    <h2 class="timestamp">Teil III: Die Nähe unter der Lupe: Bill Clinton und die Folgen</h2>
+    
+    <p class="speaker-text">Der prominenteste Name, der in den aufgedeckten Dokumenten der Demokraten auftaucht, ist der ehemalige Präsident <strong>Bill Clinton</strong>.</p>
+    
+    <p class="speaker-text">Im Gegensatz zu Trump, der die Verbindung zu Epstein bereits um 2004 abbrach und sogar Behörden informierte, waren Clintons Beziehungen <strong>tiefer und anhaltender</strong>. Sie dauerten über seine Präsidentschaft hinaus bis mindestens 2005, mit Erwähnungen in E-Mails bis 2017. Die Dokumente von 2025 enthalten etwa <strong>800 Erwähnungen von Clinton</strong>, was auf eine beispiellose Nähe und einen Kontext des "Schutzes" hindeutet.</p>
+    
+    <h2 class="timestamp">26 Flüge im "Lolita Express"</h2>
+    
+    <p class="speaker-text">Clinton flog zwischen 2002 und 2003 <strong>26 Mal</strong> mit Epsteins Privatjet, dem "Lolita Express", unter anderem für eine humanitäre Afrikareise. Obwohl die Aufzeichnungen belegen, dass Clinton nie zu Epsteins Insel Little St. James flog, finanzierte Epstein Reisekosten in Höhe von etwa 100.000 US-Dollar. Clinton hat wiederholt jegliche Kenntnis von Epsteins illegalen Aktivitäten bestritten.</p>
+    
+    <h2 class="timestamp">E-Mails über den "Schutz von Bill"</h2>
+    
+    <p class="speaker-text">Die E-Mails zeigen, dass Epstein, selbst nachdem die Beziehung angeblich beendet war, aktiv damit beschäftigt war, Clintons Image zu pflegen.</p>
+    
+    <p class="speaker-text">In E-Mails von 2015 diskutierte Epstein mit Ghislaine Maxwell, wie man <strong>"Bill schützen"</strong> könne, falls Virginia Giuffre – eines der Opfer – Anschuldigungen erhebe. Giuffre hatte ausgesagt, Clinton auf der Insel mit "jungen Mädchen" gesehen zu haben. Epstein prahlte sogar gegenüber einem Autor, er könne Clintons Namen nutzen, um Anschuldigungen zu widerlegen. Dieses Bemühen Epsteins, Clintons Ruf zu schützen, zeigt, wie eng die Verbindung war.</p>
+    
+    <p class="speaker-text">Obwohl Clintons Sprecher im November 2025 erklärten, die E-Mails bewiesen, dass Bill Clinton nichts falsch gemacht habe, macht Epsteins Beharren auf "gegenseitigem Schutz" die Nähe des ehemaligen Präsidenten zu einer politischen Waffe.</p>
+    
+    <h2 class="timestamp">Die Auswirkungen auf Hillary und die Elite</h2>
+    
+    <p class="speaker-text">Der Epstein-Skandal hat Clintons Ansehen nachhaltig geschädigt. Die neuen Enthüllungen, die von den Demokraten selbst in Gang gesetzt wurden, beleben Fragen über die Integrität des demokratischen <strong>Establishments</strong>.</p>
+    
+    <p class="speaker-text">Die Frage, die sich die Öffentlichkeit stellen muss, ist: Wie kann die demokratische Elite, und insbesondere die Frau eines ehemaligen Präsidenten, zu einer Person stehen, deren Nähe zu einem verurteilten Sexualstraftäter so offensichtlich und kontinuierlich war?</p>
+    
+    <p class="speaker-text">Die Kontinuität der Beziehungen nach der Präsidentschaft und Epsteins dokumentierte Bemühungen, "Bill zu schützen", schaden Clintons Vermächtnis erheblich und nähren Verschwörungstheorien.</p>
+    
+    <h2 class="timestamp">Larry Summers und andere Verbindungen</h2>
+    
+    <p class="speaker-text">Das Netzwerk umfasst weitere Persönlichkeiten: <strong>Larry Summers</strong>, Clintons ehemaliger Finanzminister, scherzte in E-Mails von 2017 mit Epstein über Trump und nannte ihn einen "gefährlichen Clown". Auch der demokratische Großspender <strong>Reid Hoffman</strong> wird in E-Mails erwähnt, in denen Epstein um Spenden bat.</p>
+    
+    <h2 class="timestamp">Teil IV: Rollentausch – Trump ordnet formelle Untersuchung an</h2>
+    
+    <p class="speaker-text">Die gescheiterte Strategie der Demokraten führte zu einem völligen Rollentausch: Donald Trump wurde vom Angeklagten zum Ankläger.</p>
+    
+    <p class="speaker-text">Nur zwei Tage nach der Veröffentlichung der E-Mails, am 14. November, ordnete Präsident Trump einen kühnen Gegenangriff an: Er wies das Justizministerium (DOJ) unter Generalstaatsanwältin Pam Bondi an, eine formelle Untersuchung der Beziehungen Epsteins zu hochrangigen Demokraten und Finanzinstituten einzuleiten.</p>
+    
+    <p class="speaker-text">Trump forderte öffentlich eine Untersuchung der Verstrickung und Beziehung von Epstein mit <strong>Bill Clinton, Larry Summers, Reid Hoffman, JPMorgan Chase und vielen anderen</strong> Personen und Institutionen.</p>
+    
+    <p class="speaker-text">Das Justizministerium kündigte an, dieser Forderung nachzukommen.</p>
+    
+    <p class="speaker-text">Diese Entscheidung ist bemerkenswert, da sie einem internen Vermerk des DOJ vom Juli 2025 widerspricht, in dem zuvor jegliche Grundlage für Ermittlungen gegen "nicht angeklagte Dritte" verneint wurde.</p>
+    
+    <p class="speaker-text">Die Republikaner sehen dies als aktiven Aufbau eines Falls einer <strong>"großen Verschwörung"</strong> gegen jene Demokraten, die mit Epstein zusammengearbeitet haben, um Trump strafrechtlich verfolgen zu lassen.</p>
+    
+    <p class="speaker-text">Das Weiße Haus von Trump bezeichnete die Veröffentlichung der Demokraten als "Ablenkungskampagne" und einen "Schwindel", der "buchstäblich nichts" gegen ihn bewiesen habe.</p>
+    
+    <p class="speaker-text">Trumps Gegenangriff lenkte nicht nur die Aufmerksamkeit ab, sondern blockierte auch weitere Veröffentlichungen: Das DOJ hat die Freigabe zusätzlicher Epstein-Dokumente vorübergehend gestoppt und beruft sich dabei auf die Existenz <strong>"aktiver Ermittlungen"</strong> gegen Clinton und die Demokraten.</p>
+    
+    <h2 class="timestamp">Teil V: Die Paralyse der Demokraten und der Ruf nach Transparenz</h2>
+    
+    <p class="speaker-text">Die Frage ist nun: <strong>Was wird die Demokratische Partei tun?</strong></p>
+    
+    <p class="speaker-text">Die Strategie der Demokraten ist implodiert, sie stehen unter enormem Druck und sind in der Defensive.</p>
+    
+    <p class="speaker-text">1. <strong>Strafrechtliche Ermittlungen:</strong> Die oberste Priorität ist die Reaktion auf die vom DOJ angeordnete Untersuchung. Figuren wie Kathryn Rummler, die mit Epstein gegen Trump konspiriert hat, stehen nun selbst wegen möglicher strafrechtlicher Taten unter Beobachtung.</p>
+    
+    <p class="speaker-text">2. <strong>Lähmung im Kongress:</strong> Die Demokraten haben ihren Schwung verloren. Eine bevorstehende Abstimmung im Repräsentantenhaus, die das DOJ zwingen soll, *alle* Epstein-Akten innerhalb von 30 Tagen freizugeben, wird nun politisch blockiert. Obwohl es anfangs genügend Unterstützung gab, warnt Trump die Republikaner aktiv vor diesem Votum. Die Tatsache, dass die erste Veröffentlichung den Demokraten schadete, macht eine vollständige Transparenz für sie zu einem noch größeren Risiko.</p>
+    
+    <p class="speaker-text">3. <strong>Der Druck der Opfer:</strong> Der politische Fokus hat die Opfer überschattet. Opfer wie Jess Michaels fordern seit Langem, dass endlich alle Unterlagen ohne "graue Linien" veröffentlicht werden, denn es geht nur darum, ob man Pädophile oder Kinder und Opfer schützt [i]. Der Ruf nach <strong>"vollständiger Transparenz"</strong> ist mittlerweile ein parteiübergreifender Schrei, wenn auch aus unterschiedlichen politischen Gründen.</p>
+    
+    <p class="speaker-text"><strong>Zusammenfassend:</strong> Was die demokratische Elite als Angriffswaffe gegen Trump nutzen wollte, wurde zu einem selbst verschuldeten Desaster. Die vollständige Freigabe enthüllte ein Elitennetzwerk, in dem <strong>Bill Clinton</strong> aufgrund seiner 26 Flüge und der E-Mails über den "Schutz von Freunden" im Mittelpunkt steht, während die Beweise für politische Absprachen (Rumler, Plaskett) eine formelle Untersuchung durch das Justizministerium <strong>gerechtfertigt</strong> haben. Die Demokraten sind nun an einem Punkt, an dem sie sich gegen Anschuldigungen der kriminellen Absprache verteidigen müssen und ihre gesamte Erzählung zerstört ist.</p>
+    
+    <p class="speaker-text"><strong>Metapher zum Abschluss:</strong></p>
+    
+    <p class="speaker-text">Der Versuch der Demokraten, den Epstein-Skandal gegen Trump zu verwenden, war wie das Werfen einer politischen Handgranate. Sie hofften, sie würde in der republikanischen Stellung explodieren. Stattdessen verklemmte sich der Sicherungsstift, die Waffe prallte ab und detonierte direkt in ihrem eigenen Kommandoposten. Die Schockwelle wird so schnell nicht verebben.</p>
+
+  </div>
+
+  <div id="controls">
+    <button id="play-pause-btn">Play</button>
+    <button id="reset-btn">Reset</button>
+    <label for="speed-slider">Tempo:</label>
+    <input type="range" id="speed-slider" min="1" max="100" value="20">
+    <label for="fontsize-slider">Schriftgröße:</label>
+    <input type="range" id="fontsize-slider" min="20" max="80" value="36">
+    <label for="toggle-instructions">Anweisungen ausblenden:</label>
+    <label class="toggle-switch"> <input type="checkbox" id="toggle-instructions"> <span class="slider"></span> </label>
+  </div>
+
+  <script type="module">
+    document.addEventListener('DOMContentLoaded', () => {
+      const tpPane = document.body;
+      const tpControls = document.getElementById('controls');
+      const tpPlayPauseBtn = tpControls.querySelector('#play-pause-btn');
+      const tpResetBtn = tpControls.querySelector('#reset-btn');
+      const tpSpeedSlider = tpControls.querySelector('#speed-slider');
+      const tpFontsizeSlider = tpControls.querySelector('#fontsize-slider');
+      const tpToggleInstructionsBtn = tpControls.querySelector('#toggle-instructions');
+      const tpSpeakerTexts = document.querySelectorAll('.speaker-text');
+      let isScrolling = false;
+      let scrollSpeed = parseFloat(tpSpeedSlider.value) / 40;
+      let animationFrameId = null;
+      function tpScroll() {
+        if (!isScrolling) return;
+        window.scrollBy(0, scrollSpeed);
+        animationFrameId = requestAnimationFrame(tpScroll);
+      }
+      function tpTogglePlayPause() {
+        isScrolling = !isScrolling;
+        if (isScrolling) {
+          tpPlayPauseBtn.textContent = 'Pause';
+          tpScroll();
+        } else {
+          tpPlayPauseBtn.textContent = 'Play';
+          cancelAnimationFrame(animationFrameId);
+        }
+      }
+      tpPlayPauseBtn.addEventListener('click', tpTogglePlayPause);
+      tpResetBtn.addEventListener('click', () => {
+        window.scrollTo(0, 0);
+        if (isScrolling) {
+          isScrolling = false;
+          tpPlayPauseBtn.textContent = 'Play';
+          cancelAnimationFrame(animationFrameId);
+        }
+      });
+      tpSpeedSlider.addEventListener('input', (e) => {
+        scrollSpeed = parseFloat(e.target.value) / 40;
+      });
+      tpFontsizeSlider.addEventListener('input', (e) => {
+        const newSize = e.target.value + 'px';
+        tpSpeakerTexts.forEach(textEl => { textEl.style.fontSize = newSize; });
+      });
+      tpToggleInstructionsBtn.addEventListener('change', (e) => {
+        if (e.target.checked) {
+          document.body.classList.add('hide-instructions');
+        } else {
+          document.body.classList.remove('hide-instructions');
+        }
+      });
+      const initialFontSize = tpFontsizeSlider.value + 'px';
+      tpSpeakerTexts.forEach(textEl => { textEl.style.fontSize = initialFontSize; });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === ' ') {
+          e.preventDefault();
+          tpTogglePlayPause();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
