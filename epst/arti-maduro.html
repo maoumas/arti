@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teleprompter: Operation Lanza del Sur</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+    body { background-color: #111; color: #f0f0f0; font-family: 'Inter', sans-serif; }
+    #controls { position: sticky; bottom: 0; left: 0; right: 0; background-color: #222; border-top: 2px solid #3B82F6; padding: 0.75rem 1rem; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.75rem; z-index: 1000; box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5); }
+    #controls button { background-color: #3B82F6; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background-color 0.2s; }
+    #controls button:hover { background-color: #2563EB; }
+    #controls label { font-weight: 600; margin-left: 0.25rem; color: #ddd; font-size: 0.875rem; }
+    #controls input[type="range"] { cursor: pointer; width: 120px; }
+    .toggle-switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #444; transition: .3s; border-radius: 28px; }
+    .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .3s; border-radius: 50%; }
+    input:checked + .slider { background-color: #3B82F6; }
+    input:checked + .slider:before { transform: translateX(22px); }
+    #script-container { padding: 1rem 2rem; padding-bottom: 100vh; max-width: 900px; margin: 0 auto; line-height: 1.7; }
+    .speaker-text { font-size: 2.25rem; font-weight: 600; color: #ffffff; margin-bottom: 1rem; }
+    .instruction { font-size: 1.125rem; color: #FFD700; font-style: italic; background-color: #2a2a2a; border-left: 4px solid #FFD700; padding: 0.75rem; margin-bottom: 1rem; border-radius: 0 8px 8px 0; opacity: 0.9; }
+    .timestamp { font-size: 1.25rem; font-weight: 600; color: #3B82F6; border-top: 2px solid #444; padding-top: 1rem; margin-top: 2rem; margin-bottom: 1rem; }
+    body.hide-instructions .instruction { display: none; }
+    @media (max-width: 768px) { #controls { padding: 0.5rem; gap: 0.5rem; } #controls > label:not(.toggle-switch) { display: none; } #controls input[type="range"] { width: 90px; } #controls button { padding: 0.4rem 0.6rem; font-size: 0.875rem; } }
+  </style>
+</head>
+<body class="">
+  <div id="script-container">
+    <h2 class="timestamp" style="font-size: 1.5rem; color: #f0f0f0; border-top: none; padding-top: 0;">TRUMPS ULTIMATUM: Operation „Lanza del Sur“ gegen Venezuela</h2>
+
+    <h2 class="timestamp">Segment 1: Die Entscheidung ist gefallen (00:00 - 00:45)</h2>
+    <p class="instruction">(Sprecher: Professionell, mit einem Hauch von Dringlichkeit. Die Quellen klar benennen.)</p>
+    <p class="speaker-text">Meine Damen und Herren, willkommen zurück bei @TranslatedPressDE. Heute blicken wir auf ein Pulverfass, das kurz vor der Explosion stehen könnte: Venezuela.</p>
+    <p class="speaker-text">Präsident Trump erklärte gestern im Präsidentenflugzeug auf dem Weg nach Palm Beach, er habe bereits eine <strong>Entscheidung getroffen</strong>, welche militärischen Maßnahmen er ergreifen werde.</p>
+    <p class="speaker-text">Die spanische Zeitung <strong>El Mundo</strong> nennt es die Operation <strong>„Lanza del Sur“</strong> (Speer des Südens). Der Kriegsminister hat sie bereits angekündigt.</p>
+    <p class="speaker-text">Und das ist keine leere Drohung: Der Flugzeugträger <strong>Ford</strong> – das Kronjuwel der US-Marine – ist bereits in Kampfbereitschaft. Dutzende von Kampfflugzeugen warten nur auf den Befehl zum Angriff.</p>
+    <p class="speaker-text"><strong>El País</strong> zitiert Analysten, darunter Elliot Abrams, die sagen: Trump hat sich höchstwahrscheinlich entschieden, Maduro zu <strong>entfernen</strong>. Aus dem Amt zu vertreiben. Es geht darum, die „Drogenterroristen“ aus der Hemisphäre zu vertreiben. Und wen meint man damit? Natürlich: Maduro, Cabello und Padrino.</p>
+
+    <h2 class="timestamp">Segment 2: Flucht in die Türkei? (00:45 - 01:30)</h2>
+    <p class="instruction">(Sprecher: Jetzt sarkastisch und die Absurdität der Lage betonend.)</p>
+    <p class="speaker-text">Aber was passiert, wenn Maduro die Nerven verliert? Das Magazin <strong>Político</strong> – eine extrem zuverlässige Quelle – berichtet, die Trump-Regierung habe Maduro ein One-Way-Ticket angeboten.</p>
+    <p class="speaker-text">Er soll zusammen mit seinem Umfeld – den Brüdern Rodríguez, vielleicht Cabello und Padrino – in die <strong>Türkei</strong> fliehen. Nicht Russland, nicht China, nicht Kuba. Die Türkei. Das ist der vorgeschlagene Ort für sein... Versteck.</p>
+    <p class="instruction">(Pause, ironisches Lächeln)</p>
+    <p class="speaker-text">Aber braucht es das überhaupt? Die spanische Zeitung <strong>ABC</strong> hat in Caracas nachgefragt. Und wissen Sie, was die Leute auf der Straße sagen?</p>
+    <p class="speaker-text">„Wir haben keine Angst vor dem Einmarsch der Marines, wir haben Angst vor der <strong>Inflation</strong>.“ 400 Prozent pro Jahr. Die Menschen haben nicht genug Geld zum Essen.</p>
+    <p class="speaker-text">Ich zitiere: „Warum sollten wir Angst haben, dass die Marinesoldaten kommen, um uns zu befreien? Wenn sie einmarschieren, <strong>sind sie willkommen</strong>.“</p>
+    <p class="speaker-text">Das, meine Damen und Herren, ist die Realität. Niemand wird ein Gewehr in die Hand nehmen, um Maduro zu verteidigen. Nicht einmal die Soldaten, nicht einmal die korrupten Generäle.</p>
+
+    <h2 class="timestamp">Segment 3: Trumps Rache – Das 8,5-Millionen-Dollar-Problem (01:30 - 02:30)</h2>
+    <p class="instruction">(Sprecher: Analytisch, fokussiert auf die Geopolitik und die Kosten.)</p>
+    <p class="speaker-text">Aber das Ganze ist ein Spiel mit dem Feuer. <strong>Elliott Abrams</strong> sagt in <strong>El País</strong> etwas sehr Wahres: Trump hat bereits 2019 einen Machtkampf gegen Maduro <strong>verloren</strong>. Das war, als er Juan Guaidó unterstützte und Maduro einfach nicht stürzte.</p>
+    <p class="speaker-text">Abrams sagt: Trump kann sich keine zweite Niederlage leisten. Er hat zu viel militärische Kraft aufgebaut. Allein der Flugzeugträger Ford kostet <strong>8,5 Millionen Dollar. Pro Tag.</strong></p>
+    <p class="speaker-text">Diese gesamte Militärmacht, so Abrams, ist nicht dort, um „von Zeit zu Zeit ein Drogenboot zu versenken“. Das ist zu teuer für eine reine Polizeiaktion.</p>
+    <p class="speaker-text">Überraschend sind auch die Umfragen in den USA: 51 Prozent sind <strong>dagegen</strong>, Drogenboote zu versenken. Und nur 21 Prozent sind <strong>für</strong> eine militärische Intervention, um Maduro zu entfernen.</p>
+    <p class="speaker-text">Trump ist politisch im Konflikt. Er schwänzt den Amerika-Gipfel. Warum? Weil alle dort gegen ihn sind – Boric, Lula, Petro. Selbst die europäischen Verbündeten – UK, Frankreich, Kanada – verurteilen das Vorgehen.</p>
+    <p class="speaker-text">Aber Außenminister Rubio sagt: Europa diktiert nicht das Völkerrecht und schon gar nicht die nationale Sicherheit der USA.</p>
+    <p class="speaker-text">Die <strong>Washington Post</strong> titelt heute: „Etwas Großes steht bevor“. Trump hat seine Entscheidung getroffen. Wir werden es in den nächsten Stunden oder Tagen erfahren.</p>
+    <p class="instruction">(ENDE DES SKRIPTS)</p>
+  </div>
+
+  <div id="controls">
+    <button id="play-pause-btn">Play</button>
+    <button id="reset-btn">Reset</button>
+    <label for="speed-slider">Tempo:</label>
+    <input type="range" id="speed-slider" min="1" max="100" value="20">
+    <label for="fontsize-slider">Schriftgröße:</label>
+    <input type="range" id="fontsize-slider" min="20" max="80" value="36">
+    <label for="toggle-instructions">Anweisungen ausblenden:</label>
+    <label class="toggle-switch"> <input type="checkbox" id="toggle-instructions"> <span class="slider"></span> </label>
+  </div>
+
+  <script type="module">
+    document.addEventListener('DOMContentLoaded', () => {
+      const tpPane = document.body;
+      const tpControls = document.getElementById('controls');
+      const tpPlayPauseBtn = tpControls.querySelector('#play-pause-btn');
+      const tpResetBtn = tpControls.querySelector('#reset-btn');
+      const tpSpeedSlider = tpControls.querySelector('#speed-slider');
+      const tpFontsizeSlider = tpControls.querySelector('#fontsize-slider');
+      const tpToggleInstructionsBtn = tpControls.querySelector('#toggle-instructions');
+      const tpSpeakerTexts = document.querySelectorAll('.speaker-text');
+      let isScrolling = false;
+      let scrollSpeed = parseFloat(tpSpeedSlider.value) / 40;
+      let animationFrameId = null;
+      function tpScroll() {
+        if (!isScrolling) return;
+        window.scrollBy(0, scrollSpeed);
+        animationFrameId = requestAnimationFrame(tpScroll);
+      }
+      function tpTogglePlayPause() {
+        isScrolling = !isScrolling;
+        if (isScrolling) {
+          tpPlayPauseBtn.textContent = 'Pause';
+          tpScroll();
+        } else {
+          tpPlayPauseBtn.textContent = 'Play';
+          cancelAnimationFrame(animationFrameId);
+        }
+      }
+      tpPlayPauseBtn.addEventListener('click', tpTogglePlayPause);
+      tpResetBtn.addEventListener('click', () => {
+        window.scrollTo(0, 0);
+        if (isScrolling) {
+          isScrolling = false;
+          tpPlayPauseBtn.textContent = 'Play';
+          cancelAnimationFrame(animationFrameId);
+        }
+      });
+      tpSpeedSlider.addEventListener('input', (e) => {
+        scrollSpeed = parseFloat(e.target.value) / 40;
+      });
+      tpFontsizeSlider.addEventListener('input', (e) => {
+        const newSize = e.target.value + 'px';
+        tpSpeakerTexts.forEach(textEl => { textEl.style.fontSize = newSize; });
+      });
+      tpToggleInstructionsBtn.addEventListener('change', (e) => {
+        if (e.target.checked) {
+          document.body.classList.add('hide-instructions');
+        } else {
+          document.body.classList.remove('hide-instructions');
+        }
+      });
+      const initialFontSize = tpFontsizeSlider.value + 'px';
+      tpSpeakerTexts.forEach(textEl => { textEl.style.fontSize = initialFontSize; });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === ' ') {
+          e.preventDefault();
+          tpTogglePlayPause();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
