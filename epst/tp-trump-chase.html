@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teleprompter: Trump Chase Skript</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+    body { background-color: #111; color: #f0f0f0; font-family: 'Inter', sans-serif; }
+    #controls { position: sticky; bottom: 0; left: 0; right: 0; background-color: #222; border-top: 2px solid #3B82F6; padding: 0.75rem 1rem; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.75rem; z-index: 1000; box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5); }
+    #controls button { background-color: #3B82F6; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background-color 0.2s; }
+    #controls button:hover { background-color: #2563EB; }
+    #controls label { font-weight: 600; margin-left: 0.25rem; color: #ddd; font-size: 0.875rem; }
+    #controls input[type="range"] { cursor: pointer; width: 120px; }
+    .toggle-switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #444; transition: .3s; border-radius: 28px; }
+    .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .3s; border-radius: 50%; }
+    input:checked + .slider { background-color: #3B82F6; }
+    input:checked + .slider:before { transform: translateX(22px); }
+    #script-container { padding: 1rem 2rem; padding-bottom: 100vh; max-width: 900px; margin: 0 auto; line-height: 1.7; }
+    .speaker-text { font-size: 2.25rem; font-weight: 600; color: #ffffff; margin-bottom: 1rem; }
+    .instruction { font-size: 1.125rem; color: #FFD700; font-style: italic; background-color: #2a2a2a; border-left: 4px solid #FFD700; padding: 0.75rem; margin-bottom: 1rem; border-radius: 0 8px 8px 0; opacity: 0.9; }
+    .timestamp { font-size: 1.25rem; font-weight: 600; color: #3B82F6; border-top: 2px solid #444; padding-top: 1rem; margin-top: 2rem; margin-bottom: 1rem; }
+    body.hide-instructions .instruction { display: none; }
+    @media (max-width: 768px) { #controls { padding: 0.5rem; gap: 0.5rem; } #controls > label:not(.toggle-switch) { display: none; } #controls input[type="range"] { width: 90px; } #controls button { padding: 0.4rem 0.6rem; font-size: 0.875rem; } }
+  </style>
+</head>
+<body class="">
+  <div id="script-container">
+    <h2 class="timestamp" style="font-size: 1.5rem; color: #f0f0f0; border-top: none; padding-top: 0;">Der Polit-Krieg ums Geld – Chase, Trump und der Sumpf in Florida</h2>
+
+    <h2 class="timestamp">Segment 1: Der Kalte Schock – Analyse der Ermittlungen in Florida (00:00 - 00:30)</h2>
+    <p class="instruction">(Sprecher: Sehr professionell, aber mit einem spürbaren Unterton der Empörung und des Sarkasmus.)</p>
+    <p class="speaker-text">Meine Damen und Herren, liebe Freunde von @TranslatedPressDE, willkommen zurück zu unserer Spezialsendung. Sie haben gerade die Erklärung des Generalstaatsanwalts von Florida, <strong>James Uthmeier</strong>, gesehen und gehört. Ein Mann, der Klartext spricht, während die gesamte politische Elite und die Konzernmedien in Washington nervös auf ihren Stühlen herumrutschen.</p>
+    <p class="speaker-text">Was wir hier erleben, ist kein gewöhnlicher Bankenstreit. Es ist ein Akt der <strong>kalten Rache</strong> und der politischen Kriegsführung, inszeniert aus den höchsten Ebenen der Biden-Administration.</p>
+    <p class="speaker-text">Uthmeier hat eine offizielle Untersuchung gegen die <strong>JPMorgan Chase Bank</strong> eingeleitet. Der Vorwurf: Die Bank soll sich mit dem Justizministerium (DOJ) von Biden und dem Sonderermittler Jack Smith koordiniert haben. Der Deckname dieser Operation ist bezeichnend: <strong>„Operation Arctic Frost“</strong>. Arktischer Frost. Klingt nach einem James-Bond-Bösewicht, ist aber die Realität des politischen Mobs in Washington, der seine Feinde ausschalten will.</p>
+    <p class="speaker-text">Und wer ist das Ziel? Natürlich <strong>Trump Media Group</strong>, ein in Florida ansässiges Unternehmen.</p>
+    <p class="speaker-text">Chase soll dieses Unternehmen – man nennt es heute <strong>„De-banking“</strong> – fallen gelassen haben. Sie haben die Konten dichtgemacht, und zwar genau in einem <strong>entscheidenden Moment</strong>: kurz bevor das Unternehmen an die Börse ging. Das ist, als würde man einem Marathonläufer kurz vor der Ziellinie die Schuhe wegschneiden. Eine vorsätzliche Sabotage.</p>
+    <p class="speaker-text">Die Bank behauptet, sie würde Kunden nicht aus politischen Gründen fallen lassen. Aber schauen Sie sich die Fakten an: Uthmeier sagt, Chase habe <strong>Unmengen an Informationen</strong> von Trump Media angefordert, die <strong>nichts mit den Geschäftspraktiken</strong> zu tun hatten. Und schlimmer noch: Sie sollen diese hochsensiblen Bankdaten ohne wirklichen Anfangsverdacht an das Justizministerium weitergegeben haben. Das ist keine Bank, meine Damen und Herren, das ist ein verlängerter Arm der politischen Polizei.</p>
+    <p class="speaker-text">Florida hat Gesetze erlassen, um seine Bürger und Unternehmen genau vor diesem <strong>falschen „De-banking“</strong> zu schützen. Und Uthmeier ist sehr deutlich: Wer in Florida Bankkonten aufgrund politischer Meinungsverschiedenheiten schließt, der wird <strong>zur Rechenschaft gezogen</strong>.</p>
+
+    <h2 class="timestamp">Segment 2: Die Waffe des Geldes – Auswirkungen auf Trump und die Strafen (00:30 - 01:00)</h2>
+    <p class="instruction">(Sprecher: Fokussiert und detailliert, mit einem Hauch von Zynismus über die Machtverhältnisse.)</p>
+    <p class="speaker-text">Warum ist dieses „De-banking“ so gefährlich?</p>
+    <p class="speaker-text">Es geht nicht nur darum, dass Trump Media keine Schecks mehr ausstellen kann. Es geht um den <strong>Zugang zu Kapital</strong>. Wenn eine große Bank wie Chase Ihnen die Tür zuschlägt, wird es für jedes Unternehmen – insbesondere vor einem Börsengang – extrem schwierig, liquide zu bleiben und Investitionen zu sichern. Es ist die subtile, aber tödliche Art des Establishments, unliebsame Stimmen und Geschäfte zu ersticken.</p>
+    <p class="speaker-text">Und welche Konsequenzen drohen Chase in Florida? Uthmeier hat uns einen Einblick gegeben. Wenn Florida feststellt, dass Chase gegen staatliche Unternehmen diskriminiert hat, drohen <strong>zivilrechtliche Strafen und Bußgelder</strong>.</p>
+    <p class="speaker-text">Aber hören Sie gut zu: Sollte sich herausstellen, dass es sich um einen <strong>koordinierten Betrug</strong> oder eine Falschdarstellung gehandelt hat, dann reden wir hier über <strong>strafrechtliche Sanktionen</strong>. Das ist die nukleare Option, und genau das will die Trump-Seite erreichen: nicht nur eine Entschuldigung, sondern eine strafrechtliche Verfolgung der Täter im Finanzsektor.</p>
+    <p class="speaker-text">Denken Sie darüber nach, was Uthmeier sagt: Eine Bank, die Konten schließt, weil ihr die <strong>politische Einstellung</strong> des Kunden nicht passt, verletzt die Grundsätze der <strong>Ersten Ergänzung</strong> der Verfassung. In Florida verteidigen sie nicht nur Waffengeschäfte und republikanische Gruppen; sie verteidigen das Recht, eine andere Meinung zu haben, ohne dass der Bankier von nebenan das Licht ausschaltet.</p>
+    <p class="speaker-text">Für unser Publikum, das zu Hause sitzt und uns zuhört, ist das die Wahrheit, die in den Hauptnachrichten sorgfältig verpackt und versteckt wird. Es ist ein offener Angriff auf die Meinungsfreiheit, nur dieses Mal findet er nicht auf der Straße statt, sondern in den Banktresoren.</p>
+
+    <h2 class="timestamp">Segment 3: Der Sumpf von Epstein und die Chase-Verbindung zu Clinton (01:00 - 02:00)</h2>
+    <p class="instruction">(Sprecher: Jetzt wird es verschwörerisch und sarkastisch, die Stimme wird tiefer, um die brisanten Verbindungen zu betonen.)</p>
+    <p class="speaker-text">Kommen wir nun zum <strong>wirklich schmutzigen Teil</strong> der Geschichte – der Elefant im Raum, den die Elite gerne ignoriert: <strong>Jeffrey Epstein</strong>.</p>
+    <p class="speaker-text">Warum ist es so wichtig, dass ausgerechnet <strong>JPMorgan Chase</strong> Trumps Medienunternehmen „de-bankt“?</p>
+    <p class="speaker-text">Ganz einfach: Weil diese Bank selbst tief in den Morast von Epstein verstrickt ist.</p>
+    <p class="speaker-text">Präsident Trump hat am 14. November die Gegenoffensive gestartet. Er forderte sein eigenes Justizministerium unter Pam Bondi auf, die Verbindungen von Epstein zu großen Banken, einschließlich <strong>JPMorgan Chase</strong>, und zu hochrangigen Demokraten wie dem ehemaligen Präsidenten <strong>Bill Clinton</strong> zu untersuchen.</p>
+    <p class="speaker-text">Das ist der klassische <em>Trump-Move</em>: Wenn sie dich mit einem politischen Angriff in die Enge treiben, <strong>drehe den Spieß um</strong> und zeige auf den viel größeren Sumpf, in dem der Gegner steckt.</p>
+    <p class="speaker-text">Chase war über Jahre hinweg Epsteins Bank. Sie waren der Zahlmeister des berüchtigten Sexualstraftäters. Als Chase auf Trumps Forderung reagierte, sagten sie, sie bedauerten jegliche Verbindung zu dem Mann, aber die Regierung hätte ihnen angeblich keine <strong>„vernichtenden Informationen“</strong> über seine Verbrechen mitgeteilt. Entschuldigung, aber das ist, mit Verlaub, lächerlich. Chase war Epsteins Bankier, und Epstein nutzte seine Beziehungen zu den Eliten – auch zu den Clintons – um seine Geschäfte zu legitimieren.</p>
+    <p class="speaker-text">Sprechen wir über Clinton und Chase. Die Quellen zeigen, dass Bill Clinton <strong>26 Mal</strong> mit Epsteins Jet geflogen ist. Natürlich, man versichert uns, keiner dieser Flüge ging zur berüchtigten Insel <em>Little St. James</em>.</p>
+    <p class="speaker-text">Aber die kürzlich veröffentlichten E-Mails zeigen eines ganz klar: Epstein <strong>prahlt</strong> mit seinen Verbindungen zu Clinton, um Glaubwürdigkeit zu erlangen. Er nutzte diese Nähe, um Zugang zu wohlhabenden Spendern für die Clinton Global Initiative zu bekommen. Clinton bestreitet jegliches Wissen über Epsteins kriminelle Taten, aber die bloße Nähe in diesem <strong>Zirkel der Elite</strong> ist verheerend für sein Vermächtnis.</p>
+    <p class="speaker-text">Wir sehen hier die doppelte Moral der Elite:</p>
+    <p class="speaker-text">Auf der einen Seite wird eine Großbank wie Chase von Washington benutzt, um <strong>Trump Media finanziell zu erdrosseln</strong> – angeblich wegen „Operation Arctic Frost“ und nebulöser Sicherheitssorgen.</p>
+    <p class="speaker-text">Auf der anderen Seite ist dieselbe Bank, Chase, tief in den <strong>Epstein-Skandal</strong> verwickelt, der direkt in die Kreise um <strong>Bill Clinton</strong> führt. Epstein prahlte damit, Clinton "schützen" zu wollen.</p>
+    <p class="speaker-text">Meine Damen und Herren, das ist die wahre Geschichte: Der Angriff auf Trump Media ist nicht nur ein Angriff auf Donald Trump. Es ist der Versuch, die Aufmerksamkeit von dem <strong>wahren Sumpf der Elite</strong> abzulenken, jenem Sumpf, der von Banken wie JPMorgan Chase und Figuren wie Bill Clinton über Jahre hinweg mit Leben gefüllt wurde.</p>
+    <p class="speaker-text">Trump befiehlt die Ermittlungen gegen Chase und Clinton, weil er weiß, dass der Schmerzpunkt des Establishments dort liegt, wo Geld und dunkle Geheimnisse zusammenkommen. Und das ist der Grund, warum die großen Medien über diesen Florida-Probe so laut schweigen. Sie wollen, dass Sie sich auf Jack Smith konzentrieren, während wir hier in den Hintergrund blicken, wo die <strong>echte Verschwörung</strong> sitzt.</p>
+    <p class="speaker-text">Bleiben Sie dran. Wir werden jetzt die juristischen Details der möglichen zivil- und strafrechtlichen Folgen für Chase in Florida diskutieren und wie Trumps DOJ diesen Druck auf die Clinton-Epstein-Verbindung erhöhen könnte.</p>
+    <p class="instruction">(ENDE DES SEGMENTS)</p>
+
+  </div>
+
+  <div id="controls">
+    <button id="play-pause-btn">Play</button>
+    <button id="reset-btn">Reset</button>
+    <label for="speed-slider">Tempo:</label>
+    <input type="range" id="speed-slider" min="1" max="100" value="20">
+    <label for="fontsize-slider">Schriftgröße:</label>
+    <input type="range" id="fontsize-slider" min="20" max="80" value="36">
+    <label for="toggle-instructions">Anweisungen ausblenden:</label>
+    <label class="toggle-switch"> <input type="checkbox" id="toggle-instructions"> <span class="slider"></span> </label>
+  </div>
+
+  <script type="module">
+    document.addEventListener('DOMContentLoaded', () => {
+      const tpPane = document.body;
+      const tpControls = document.getElementById('controls');
+      const tpPlayPauseBtn = tpControls.querySelector('#play-pause-btn');
+      const tpResetBtn = tpControls.querySelector('#reset-btn');
+      const tpSpeedSlider = tpControls.querySelector('#speed-slider');
+      const tpFontsizeSlider = tpControls.querySelector('#fontsize-slider');
+      const tpToggleInstructionsBtn = tpControls.querySelector('#toggle-instructions');
+      const tpSpeakerTexts = document.querySelectorAll('.speaker-text');
+      let isScrolling = false;
+      let scrollSpeed = parseFloat(tpSpeedSlider.value) / 40;
+      let animationFrameId = null;
+      function tpScroll() {
+        if (!isScrolling) return;
+        window.scrollBy(0, scrollSpeed);
+        animationFrameId = requestAnimationFrame(tpScroll);
+      }
+      function tpTogglePlayPause() {
+        isScrolling = !isScrolling;
+        if (isScrolling) {
+          tpPlayPauseBtn.textContent = 'Pause';
+          tpScroll();
+        } else {
+          tpPlayPauseBtn.textContent = 'Play';
+          cancelAnimationFrame(animationFrameId);
+        }
+      }
+      tpPlayPauseBtn.addEventListener('click', tpTogglePlayPause);
+      tpResetBtn.addEventListener('click', () => {
+        window.scrollTo(0, 0);
+        if (isScrolling) {
+          isScrolling = false;
+          tpPlayPauseBtn.textContent = 'Play';
+          cancelAnimationFrame(animationFrameId);
+        }
+      });
+      tpSpeedSlider.addEventListener('input', (e) => {
+        scrollSpeed = parseFloat(e.target.value) / 40;
+      });
+      tpFontsizeSlider.addEventListener('input', (e) => {
+        const newSize = e.target.value + 'px';
+        tpSpeakerTexts.forEach(textEl => { textEl.style.fontSize = newSize; });
+      });
+      tpToggleInstructionsBtn.addEventListener('change', (e) => {
+        if (e.target.checked) {
+          document.body.classList.add('hide-instructions');
+        } else {
+          document.body.classList.remove('hide-instructions');
+        }
+      });
+      const initialFontSize = tpFontsizeSlider.value + 'px';
+      tpSpeakerTexts.forEach(textEl => { textEl.style.fontSize = initialFontSize; });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === ' ') {
+          e.preventDefault();
+          tpTogglePlayPause();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
