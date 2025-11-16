@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Präsentation: Der Epstein-Bumerang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #111827; color: #F9FAFB; overflow: hidden; }
+        #presentation-container { position: relative; width: 100%; height: 100vh; overflow: hidden; }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 5% 8%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; opacity: 0; transform: translateX(20px); transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out; visibility: hidden; }
+        .slide.active { opacity: 1; transform: translateX(0); visibility: visible; }
+        .reveal-item { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; transition-delay: 0s; }
+        .reveal-item.revealed { opacity: 1; transform: translateY(0); }
+        .text-accent-red { color: #EF4444; }
+        .text-accent-blue { color: #3B82F6; }
+        #controls-wrapper { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #1F2937; z-index: 100; }
+        #slide-pane #controls { display: flex; justify-content: center; align-items: center; padding: 12px 0; }
+        .control-btn { background: none; border: none; color: #F9FAFB; cursor: pointer; padding: 8px 12px; margin: 0 10px; border-radius: 8px; transition: background-color 0.2s; }
+        .control-btn:hover { background-color: #374151; }
+        .control-btn svg { width: 24px; height: 24px; pointer-events: none; }
+        .image-container { max-width: 450px; width: 100%; margin-top: 1.5rem; }
+        .image-container img { width: 100%; height: auto; border-radius: 12px; border: 2px solid #374151; cursor: zoom-in; }
+        .slide-layout { display: flex; flex-direction: column; width: 100%; height: 100%; justify-content: center; align-items: center; }
+        @media (min-width: 768px) { .slide-layout { flex-direction: row; gap: 2rem; } .slide-layout .content { flex-basis: 50%; text-align: left; } .slide-layout .image-container { flex-basis: 50%; margin-top: 0; } ul { padding-left: 1.5rem; } }
+        .lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); display: none; align-items: center; justify-content: center; z-index: 1000; cursor: zoom-out; }
+        #lightbox-image { max-width: 90%; max-height: 90vh; border-radius: 8px; border: 2px solid #F9FAFB; }
+        .lightbox-close { position: absolute; top: 20px; right: 35px; color: #F9FAFB; font-size: 40px; font-weight: bold; cursor: pointer; line-height: 1; }
+    </style>
+</head>
+<body>
+    <div id="presentation-container">
+        <div class="slide active"> <div class="slide-layout"> <div class="content"> <h1 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-red">Der Epstein-Bumerang</h1> <h2 class="reveal-item text-2xl md:text-3xl font-bold mb-6">Das entlarvte Netzwerk der Demokraten</h2> </div> <div class="reveal-item image-container"> <img src="https://www.shutterstock.com/image-vector/concept-consequences-cause-effect-karma-260nw-2283987815.jpg" alt="Bumerang fliegt zurück"> </div> </div> </div>
+        <div class="slide"> <div class="slide-layout"> <div class="content"> <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">Teil I - Die kontrollierte Explosion</h2> <h2 class="reveal-item text-3xl md:text-4xl font-bold mb-6">Der fehlgeschlagene Angriff</h2> <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc"> <li class="reveal-item">Demokraten-Plan: Trump mit 3 ausgewählten E-Mails diskreditieren (12. Nov. 2025).</li> <li class="reveal-item">Ziel: Ablenkung vom Shutdown, alte Vorwürfe neu aufwärmen.</li> <li class="reveal-item">Kritiker nannten es "Rosinenpickerei".</li> </ul> </div> <div class="reveal-item image-container"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Hindenburg_disaster.jpg/330px-Hindenburg_disaster.jpg" alt="Kontrollierte Explosion"> </div> </div> </div>
+        <div class="slide"> <div class="slide-layout"> <div class="content"> <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">Teil I - Der Bumerang-Effekt</h2> <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc"> <li class="reveal-item">Republikaner erzwingen Freigabe von 20.000+ Seiten.</li> <li class="reveal-item">Ergebnis: Hinweise gegen Trump schwach (Gerüchte, Spekulationen).</li> <li class="reveal-item">Wahrer Effekt: Tiefe Verbindungen der Demokraten-Elite aufgedeckt (Clinton, Summers, Hoffman, Obama-Umfeld).</li> </ul> </div> <div class="reveal-item image-container"> <img src="https://thumbs.dreamstime.com/b/left-arrow-back-previous-direction-navigation-icon-vector-design-generative-ai-clear-pointing-symbolizing-reverse-411017109.jpg" alt="Pfeil kehrt um"> </div> </div> </div>
+        <div class="slide"> <div class="slide-layout"> <div class="content"> <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">Teil II - Das "rauchende Gewehr": Kathy Rumler</h2> <h2 class="reveal-item text-3xl md:text-4xl font-bold mb-6">Politische Absprache: Kathy Rumler</h2> <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc"> <li class="reveal-item">Ehem. Rechtsberaterin von Obama kommunizierte 2018-2019 mit Epstein.</li> <li class="reveal-item">Schmiedete Pläne für Amtsenthebungsverfahren gegen Trump.</li> <li class="reveal-item">Epstein prahlte: "weiß, wie schmutzig Donald ist".</li> <li class="reveal-item">DOJ untersucht nun strafrechtliche Relevanz.</li> </ul> </div> <div class="reveal-item image-container"> <img src="https://www.pbs.org/wgbh/americanexperience/media/canonical_images/film/film-presidents-nixon.jpg" alt="Rauchendes Gewehr"> </div> </div> </div>
+        <div class="slide"> <div class="slide-layout"> <div class="content"> <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">Teil II - Komplizenschaft: Stacy Plaskett</h2> <h2 class="reveal-item text-3xl md:text-4xl font-bold mb-6">Komplizenschaft im Kongress</h2> <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc"> <li class="reveal-item">Demokratische Abgeordnete Stacy Plaskett kommunizierte mit Epstein während der Cohen-Anhörung 2019.</li> <li class="reveal-item">Epstein lieferte ihr live Fragen und Gesprächspunkte per E-Mail.</li> </ul> </div> <div class="reveal-item image-container"> <img src="https://www.shutterstock.com/image-vector/woman-whispering-secret-information-angry-260nw-2655422811.jpg" alt="Geheime Absprachen"> </div> </div> </div>
+        <div class="slide"> <div class="slide-layout"> <div class="content"> <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">Teil III - Die Nähe: Bill Clinton</h2> <h2 class="reveal-item text-3xl md:text-4xl font-bold mb-6">Unter der Lupe: Bill Clinton</h2> <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc"> <li class="reveal-item">Prominentester Name; ca. 800 Erwähnungen.</li> <li class="reveal-item">Verbindung tiefer und anhaltender als bei Trump (bis min. 2005).</li> <li class="reveal-item">26 Flüge im "Lolita Express" (2002-2003).</li> <li class="reveal-item">E-Mails von 2015: Epstein und Maxwell planten, "Bill zu schützen".</li> </ul> </div> <div class="reveal-item image-container"> <img src="https://provinziano.com/wp-content/uploads/2025/05/misinformation-sean-combs-trial-banner-768x432.webp" alt="Lupe über Clinton"> </div> </div> </div>
+        <div class="slide"> <div class="slide-layout"> <div class="content"> <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">Teil III - Weitere Verbindungen & Auswirkungen</h2> <h2 class="reveal-item text-3xl md:text-4xl font-bold mb-6">Das Netzwerk der Elite</h2> <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc"> <li class="reveal-item">Larry Summers (Ehem. Finanzminister): Scherzte 2017 mit Epstein über Trump.</li> <li class="reveal-item">Reid Hoffman (Großspender): In E-Mails bzgl. Spenden erwähnt.</li> <li class="reveal-item">Auswirkung: Schaden für Clintons Ansehen und das demokratische Establishment.</li> </ul> </div> <div class="reveal-item image-container"> <img src="https://think.design/wp-content/uploads/2020/07/01-Spider-Graph.jpg" alt="Spinnennetz-Diagramm"> </div> </div> </div>
+        <div class="slide"> <div class="slide-layout"> <div class="content"> <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">Teil IV - Der Gegenangriff</h2> <h2 class="reveal-item text-3xl md:text-4xl font-bold mb-6">Rollentausch: Trump schlägt zurück</h2> <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc"> <li class="reveal-item">Nov.: Trump weist DOJ an, Epsteins Beziehungen zu Demokraten (Clinton, Summers etc.) zu untersuchen.</li> <li class="reveal-item">Vom Angeklagten zum Ankläger.</li> <li class="reveal-item">DOJ stoppt Freigabe weiterer Dokumente unter Berufung auf "aktive Ermittlungen".</li> </ul> </div> <div class="reveal-item image-container"> <img src="https://chess-teacher.com/wp-content/uploads/2023/07/Wordpress-Featured-Image-5-770x400-1.png" alt="Schachfigur schlägt höhere"> </div> </div> </div>
+        <div class="slide"> <div class="slide-layout"> <div class="content"> <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">Teil V - Die Paralyse der Demokraten</h2> <h2 class="reveal-item text-3xl md:text-4xl font-bold mb-6">Strategie implodiert</h2> <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc"> <li class="reveal-item">Partei in der Defensive, Schwung verloren.</li> <li class="reveal-item">Eigene Leute (Rumler) stehen nun unter strafrechtlicher Beobachtung.</li> <li class="reveal-item">Abstimmung zur vollständigen Freigabe blockiert (zu hohes Risiko).</li> <li class="reveal-item">Druck der Opfer nach Transparenz wird ignoriert.</li> </ul> </div> <div class="reveal-item image-container"> <img src="https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=10208867837250898" alt="Gefangen im eigenen Netz"> </div> </div> </div>
+        <div class="slide"> <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">Zusammenfassung</h2> <h2 class="reveal-item text-3xl md:text-4xl font-bold mb-6">Das selbst verschuldete Desaster</h2> <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc max-w-3xl mx-auto"> <li class="reveal-item">Angriffswaffe wurde zum Desaster für die Demokraten.</li> <li class="reveal-item">Elitennetzwerk um Clinton enthüllt.</li> <li class="reveal-item">Politische Absprachen (Rumler, Plaskett) rechtfertigen formelle DOJ-Untersuchung.</li> </ul> </div>
+        <div class="slide"> <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">Abschluss-Metapher</h2> <h2 class="reveal-item text-3xl md:text-4xl font-bold mb-6">Die politische Handgranate</h2> <p class="reveal-item text-xl md:text-2xl max-w-3xl mx-auto">"Der Versuch... war wie das Werfen einer politischen Handgranate. ...[Sie] detonierte direkt in ihrem eigenen Kommandoposten."</p> <div class="reveal-item image-container"> <img src="https://www.hrw.org/sites/default/files/styles/opengraph/public/multimedia_images_2015/main.jpg?itok=p7mBodOS" alt="Explodierende Handgranate"> </div> </div>
+    </div>
+    <div id="controls-wrapper"> <div id="controls" style="display: none;"> <button id="prev-btn" class="control-btn"></button> <button id="next-btn" class="control-btn"></button> </div> </div>
+    <div id="lightbox" class="lightbox-overlay"> <span class="lightbox-close">&times;</span> <img id="lightbox-image" src="" alt="Vergrößerte Ansicht"> </div>
+    
+    <script type="module">
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxClose = document.querySelector('.lightbox-close');
+            const slideImages = document.querySelectorAll('.image-container img');
+            let currentSlide = 0;
+
+            function openLightbox(src) { lightboxImage.src = src; lightbox.style.display = 'flex'; }
+            function closeLightbox() { lightbox.style.display = 'none'; lightboxImage.src = ''; }
+            slideImages.forEach(img => { img.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(img.src); }); });
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', (e) => { if (e.target === lightbox) { closeLightbox(); } });
+
+            function showSlide(index) {
+                slides.forEach((slide) => { slide.classList.remove('active'); });
+                const slide = slides[index];
+                if (!slide) return;
+                slide.classList.add('active');
+                currentSlide = index;
+                const items = slide.querySelectorAll('.reveal-item');
+                items.forEach((item, index) => {
+                    item.classList.remove('revealed');
+                    item.style.transitionDelay = `${index * 250}ms`;
+                    setTimeout(() => { item.classList.add('revealed'); }, 50);
+                });
+            }
+            function nextSlide() { let next = currentSlide + 1; if (next >= slides.length) { next = 0; } showSlide(next); }
+            function prevSlide() { let prev = currentSlide - 1; if (prev < 0) { prev = slides.length - 1; } showSlide(prev); }
+            
+            showSlide(0);
+
+            document.addEventListener('keydown', (e) => {
+                if (lightbox.style.display === 'flex') { if (e.key === 'Escape') { closeLightbox(); } return; }
+                if (e.key === 'ArrowRight') { nextSlide(); } 
+                else if (e.key === 'ArrowLeft') { prevSlide(); }
+                else if (e.key === 'Enter') {
+                    e.preventDefault(); 
+                    const activeSlide = document.querySelector('.slide.active');
+                    if (activeSlide) { const image = activeSlide.querySelector('.image-container img'); if (image) { openLightbox(image.src); } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
