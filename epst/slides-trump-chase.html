@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Präsentation: Chase, Trump & Epstein Skandal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #111827; color: #F9FAFB; overflow: hidden; }
+        #presentation-container { position: relative; width: 100%; height: 100vh; overflow: hidden; }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 5% 8%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; opacity: 0; transform: translateX(20px); transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out; visibility: hidden; }
+        .slide.active { opacity: 1; transform: translateX(0); visibility: visible; }
+        .reveal-item { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; transition-delay: 0s; }
+        .reveal-item.revealed { opacity: 1; transform: translateY(0); }
+        .text-accent-red { color: #EF4444; }
+        .text-accent-blue { color: #3B82F6; }
+        #controls-wrapper { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #1F2937; z-index: 100; }
+        #slide-pane #controls { display: flex; justify-content: center; align-items: center; padding: 12px 0; }
+        .control-btn { background: none; border: none; color: #F9FAFB; cursor: pointer; padding: 8px 12px; margin: 0 10px; border-radius: 8px; transition: background-color 0.2s; }
+        .control-btn:hover { background-color: #374151; }
+        .control-btn svg { width: 24px; height: 24px; pointer-events: none; }
+        .image-container { max-width: 450px; width: 100%; margin-top: 1.5rem; }
+        .image-container img { width: 100%; height: auto; border-radius: 12px; border: 2px solid #374151; cursor: zoom-in; }
+        .slide-layout { display: flex; flex-direction: column; width: 100%; height: 100%; justify-content: center; align-items: center; }
+        @media (min-width: 768px) { .slide-layout { flex-direction: row; gap: 2rem; } .slide-layout .content { flex-basis: 50%; text-align: left; } .slide-layout .image-container { flex-basis: 50%; margin-top: 0; } ul { padding-left: 1.5rem; } }
+        .lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); display: none; align-items: center; justify-content: center; z-index: 1000; cursor: zoom-out; }
+        #lightbox-image { max-width: 90%; max-height: 90vh; border-radius: 8px; border: 2px solid #F9FAFB; }
+        .lightbox-close { position: absolute; top: 20px; right: 35px; color: #F9FAFB; font-size: 40px; font-weight: bold; cursor: pointer; line-height: 1; }
+    </style>
+</head>
+<body>
+    <div id="presentation-container">
+
+        <!-- DIAPOSITIVA 1: Introducción y Título -->
+        <div class="slide active">
+            <div class="slide-layout">
+                <div class="content">
+                    <h1 class="reveal-item text-4xl md:text-5xl font-extrabold mb-4 text-accent-red">LA GUERRA POLÍTICA POR EL DINERO</h1>
+                    <h2 class="reveal-item text-2xl md:text-3xl font-bold mb-6">Chase, Trump y el Fango de la Élite en Florida</h2>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item">El <strong class="text-accent-blue">"De-banking"</strong> como arma de guerra política.</li>
+                        <li class="reveal-item">Florida se levanta contra la <strong class="text-accent-red">Operación Arctic Frost</strong>.</li>
+                        <li class="reveal-item">El elefante en la sala: la conexión <strong class="text-accent-blue">JPMorgan Chase-Epstein-Clinton</strong>.</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/EF4444/111827?text=Chase+vs+Trump" alt="Chase vs Trump">
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 2: El Choque Frío -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-blue">OPERACIÓN ARCTIC FROST: El Ataque a Trump Media</h2>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item"><strong>Investigación Oficial:</strong> El Fiscal General de Florida, <strong>James Uthmeier</strong>, ha iniciado una investigación.</li>
+                        <li class="reveal-item"><strong>La Coordinación:</strong> El cargo es que Chase se coordinó con el DOJ de Biden y <strong>Jack Smith</strong>.</li>
+                        <li class="reveal-item"><strong>El Objetivo:</strong> <strong class="text-accent-red">Trump Media Group</strong>, una empresa con sede en Florida.</li>
+                        <li class="reveal-item">Uthmeier declara: La administración Biden estaba "apuntando a sus enemigos políticos".</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/3B82F6/FFFFFF?text=Operation+Arctic+Frost" alt="Operation Arctic Frost">
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 3: Sabotaje Financiero -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">Cierre de Cuentas: La Sabiduría Estratégica</h2>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item"><strong>¿Qué es De-banking?</strong> Negar el acceso al capital a un negocio por razones políticamente motivadas.</li>
+                        <li class="reveal-item"><strong>El Momento Fatal:</strong> Chase "de-banked" a Trump Media justo antes de que la compañía saliera a la bolsa <strong class="text-accent-red">(IPO)</strong>.</li>
+                        <li class="reveal-item"><strong>Sabotaje Intencional:</strong> Perder el banco en ese momento es crítico para cualquier empresa.</li>
+                        <li class="reveal-item"><strong>Uso de Datos Sensibles:</strong> Chase entregó información al DOJ <strong class="text-accent-blue">sin causa probable real</strong>.</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/F59E0B/111827?text=Sabotaje+Financiero" alt="Sabotaje Financiero">
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 4: Consecuencias Legales en Florida -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">Responsabilidad y la Primera Enmienda</h2>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item">Florida ha promulgado leyes específicas para proteger a sus empresas contra este <strong class="text-accent-blue">"de-banking" incorrecto</strong>.</li>
+                        <li class="reveal-item">Uthmeier es claro: Si las cuentas se cierran debido a <strong class="text-accent-red">opinión política</strong>, el banco será "responsabilizado".</li>
+                        <li class="reveal-item"><strong>Sanciones Civiles:</strong> Multas y sanciones si se comprueba discriminación.</li>
+                        <li class="reveal-item"><strong>Sanciones Penales:</strong> Si la investigación revela <strong class="text-accent-red">"fraude coordinado"</strong>, se podrían aplicar sanciones penales.</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/10B981/FFFFFF?text=Primera+Enmienda" alt="Primera Enmienda y Justicia">
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 5: El Pantano Mayor: Epstein y Chase -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-red">EL FANGO: De Trump Media a Jeffrey Epstein</h2>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item"><strong>¿Por qué justo Chase?</strong> La misma institución está profundamente involucrada en el <strong class="text-accent-blue">fango de Epstein</strong>.</li>
+                        <li class="reveal-item">JPMorgan Chase fue el <strong>banquero de Jeffrey Epstein</strong> durante años, sirviendo como su pagador.</li>
+                        <li class="reveal-item"><strong>Contraofensiva de Trump:</strong> Ordenó investigar las conexiones de Epstein con Chase y <strong class="text-accent-red">Bill Clinton</strong>.</li>
+                        <li class="reveal-item"><strong>Respuesta de Chase:</strong> Lamenta la conexión, pero culpa al gobierno por no compartir "información condenatoria".</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/6366F1/FFFFFF?text=Epstein+Chase" alt="Conexión Epstein y Chase">
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 6: El Vínculo Clinton -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-blue">Bill Clinton: El Socio de Credibilidad</h2>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item">Bill Clinton voló <strong class="text-accent-red">26 veces</strong> en el jet privado de Epstein (ninguno a la isla *Little St. James*).</li>
+                        <li class="reveal-item">Epstein "presumía" de sus lazos con Clinton para ganar <strong>credibilidad</strong> y acceso a donantes (ej. Clinton Global Initiative).</li>
+                        <li class="reveal-item"><strong>Correos Reveladores (Nov 2025):</strong> Epstein discutió cómo <strong class="text-accent-red">"proteger a Bill"</strong> de escándalos.</li>
+                        <li class="reveal-item">La proximidad en este "círculo de élite" es devastadora para su legado.</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/EC4899/111827?text=Clinton+Connection" alt="Conexión Clinton y Epstein">
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 7: La Doble Moral de la Élite -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-red">EL INTENTO DE DESVÍO</h2>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item"><strong>Ataque a Trump:</strong> Chase es usada para estrangular financieramente a Trump Media (<strong class="text-accent-blue">"Arctic Frost"</strong>).</li>
+                        <li class="reveal-item"><strong>Encubrimiento de la Élite:</strong> La misma Chase está inmersa en el escándalo Epstein, con lazos a <strong class="text-accent-blue">Bill Clinton</strong>.</li>
+                        <li class="reveal-item">El ataque 'De-banking' es un intento de desviar la atención del <strong class="text-accent-red">"verdadero pantano"</strong>.</li>
+                        <li class="reveal-item">El punto débil del *establishment*: donde el dinero y los secretos oscuros convergen.</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/F87171/111827?text=Doble+Moral" alt="Doble Moral de la Élite">
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 8: Resumen y Conclusión -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-blue">CONCLUSIÓN: La Realidad de la Guerra Financiera</h2>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item"><strong>Florida se Mantiene Firme:</strong> Usando sus leyes para defender la <strong class="text-accent-red">libertad de expresión</strong> contra la discriminación política.</li>
+                        <li class="reveal-item"><strong>Silencio Mediático:</strong> Quieren que la atención se centre en Jack Smith, no en la conspiración de la élite.</li>
+                        <li class="reveal-item">El 'De-banking' es una herramienta sutil pero mortal para <strong>"asfixiar voces y negocios impopulares"</strong>.</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/06B6D4/FFFFFF?text=Conclusión" alt="Conclusión de la Guerra Financiera">
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <!-- Controles y Lightbox de la Plantilla -->
+    <div id="controls-wrapper">
+        <div id="controls" style="display: none;"> <!-- Oculto por defecto según plantilla, JS debe manejarlo -->
+            <button id="prev-btn" class="control-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+            </button>
+            <button id="next-btn" class="control-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+            </button>
+        </div>
+    </div>
+    <div id="lightbox" class="lightbox-overlay">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-image" src="" alt="Vergrößerte Ansicht">
+    </div>
+    
+    <script type="module">
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxClose = document.querySelector('.lightbox-close');
+            const slideImages = document.querySelectorAll('.image-container img');
+            let currentSlide = 0;
+
+            function openLightbox(src) { lightboxImage.src = src; lightbox.style.display = 'flex'; }
+            function closeLightbox() { lightbox.style.display = 'none'; lightboxImage.src = ''; }
+            slideImages.forEach(img => { img.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(img.src); }); });
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', (e) => { if (e.target === lightbox) { closeLightbox(); } });
+
+            function showSlide(index) {
+                slides.forEach((slide) => { slide.classList.remove('active'); });
+                const slide = slides[index];
+                if (!slide) return;
+                slide.classList.add('active');
+                currentSlide = index;
+                const items = slide.querySelectorAll('.reveal-item');
+                items.forEach((item, index) => {
+                    item.classList.remove('revealed');
+                    item.style.transitionDelay = `${index * 250}ms`;
+                    setTimeout(() => { item.classList.add('revealed'); }, 50);
+                });
+                
+                // Mostrar/Ocultar botones de navegación (Añadido para mejor UX)
+                const prevBtn = document.getElementById('prev-btn');
+                const nextBtn = document.getElementById('next-btn');
+                if (prevBtn) prevBtn.style.visibility = (index === 0) ? 'hidden' : 'visible';
+                if (nextBtn) nextBtn.style.visibility = (index === slides.length - 1) ? 'hidden' : 'visible';
+            }
+            
+            function nextSlide() { let next = currentSlide + 1; if (next < slides.length) { showSlide(next); } }
+            function prevSlide() { let prev = currentSlide - 1; if (prev >= 0) { showSlide(prev); } }
+            
+            // Integrar botones de la plantilla
+            const nextBtn = document.getElementById('next-btn');
+            const prevBtn = document.getElementById('prev-btn');
+            if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+            if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+            
+            // Mostrar controles
+            const controls = document.getElementById('controls');
+            if (controls) controls.style.display = 'flex';
+
+            showSlide(0);
+
+            document.addEventListener('keydown', (e) => {
+                if (lightbox.style.display === 'flex') { if (e.key === 'Escape') { closeLightbox(); } return; }
+                if (e.key === 'ArrowRight') { nextSlide(); } 
+                else if (e.key === 'ArrowLeft') { prevSlide(); }
+                else if (e.key === 'Enter' || e.key === ' ') { // Añadir Espacio para Lightbox
+                    e.preventDefault(); 
+                    const activeSlide = document.querySelector('.slide.active');
+                    if (activeSlide) { const image = activeSlide.querySelector('.image-container img'); if (image) { openLightbox(image.src); } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
