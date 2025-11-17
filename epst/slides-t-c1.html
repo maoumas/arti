@@ -230,6 +230,17 @@
     </div>
     
     <script type="module">
+        // Mobile tap-to-advance behavior on left/right half
+document.getElementById('presentation-container').addEventListener('click', (e) => {
+    if (lightbox.style.display === 'flex') return; // avoid navigating while lightbox is open
+    const screenWidth = window.innerWidth;
+    const x = e.clientX;
+    if (x < screenWidth * 0.3) {
+        prevSlide();
+    } else if (x > screenWidth * 0.7) {
+        nextSlide();
+    }
+});
         document.addEventListener('DOMContentLoaded', () => {
             const slides = document.querySelectorAll('.slide');
             const lightbox = document.getElementById('lightbox');
