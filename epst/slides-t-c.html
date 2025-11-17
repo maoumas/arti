@@ -1,267 +1,309 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Präsentation: Chase, Trump & Epstein Skandal</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #111827;
-      color: #F9FAFB;
-      margin: 0;
-      padding: 0;
-      height: 100dvh; /* pantalla completa en móvil */
-      overflow: hidden;
-    }
-    #presentation-container {
-      position: relative;
-      width: 100%;
-      height: 100dvh;
-      overflow: hidden;
-    }
-    .slide { position:absolute; top:0; left:0; width:100%; height:100%; padding:5% 8%; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; opacity:0; transform:translateX(20px); transition:opacity 0.6s, transform 0.6s; visibility:hidden; }
-    .slide.active { opacity:1; transform:translateX(0); visibility:visible; }
-    .reveal-item { opacity:0; transform:translateY(20px); transition:opacity 0.5s, transform 0.5s; }
-    .reveal-item.revealed { opacity:1; transform:translateY(0); }
-    .text-accent-red { color:#EF4444; }
-    .text-accent-blue { color:#3B82F6; }
-    #controls-wrapper { position:fixed; bottom:0; left:0; width:100%; background-color:#1F2937; z-index:100; }
-    #controls { display:flex; justify-content:center; align-items:center; padding:12px 0; }
-    .control-btn { background:none; border:none; color:#F9FAFB; cursor:pointer; padding:8px 12px; margin:0 10px; border-radius:8px; }
-    .control-btn:hover { background-color:#374151; }
-    .video-container { position:relative; padding-bottom:56.25%; height:0; width:100%; margin-top:1.5rem; border-radius:12px; border:2px solid #374151; background:#000; }
-    .video-container img { width:100%; height:100%; object-fit:cover; cursor:pointer; border-radius:12px; }
-    .video-container iframe { position:absolute; top:0; left:0; width:100%; height:100%; }
-    .slide-layout { display:flex; flex-direction:column; width:100%; height:100%; justify-content:center; align-items:center; }
-    @media(min-width:768px){ .slide-layout{flex-direction:row; gap:2rem;} .slide-layout .content{flex-basis:50%; text-align:left;} .slide-layout .video-container{flex-basis:50%; margin-top:0; max-width:100%;} ul{padding-left:1.5rem;} }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Präsentation: Chase, Trump & Epstein Skandal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #111827; color: #F9FAFB; overflow: hidden; }
+        #presentation-container { position: relative; width: 100%; height: 100vh; overflow: hidden; }
+        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 5% 8%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; opacity: 0; transform: translateX(20px); transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out; visibility: hidden; }
+        .slide.active { opacity: 1; transform: translateX(0); visibility: visible; }
+        .reveal-item { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; transition-delay: 0s; }
+        .reveal-item.revealed { opacity: 1; transform: translateY(0); }
+        .text-accent-red { color: #EF4444; }
+        .text-accent-blue { color: #3B82F6; }
+        #controls-wrapper { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #1F2937; z-index: 100; }
+        #slide-pane #controls { display: flex; justify-content: center; align-items: center; padding: 12px 0; }
+        .control-btn { background: none; border: none; color: #F9FAFB; cursor: pointer; padding: 8px 12px; margin: 0 10px; border-radius: 8px; transition: background-color 0.2s; }
+        .control-btn:hover { background-color: #374151; }
+        .control-btn svg { width: 24px; height: 24px; pointer-events: none; }
+        
+        /* Contenedor de Imagen y Video */
+        .image-container { max-width: 450px; width: 100%; margin-top: 1.5rem; }
+        .image-container img { width: 100%; height: auto; border-radius: 12px; border: 2px solid #374151; cursor: zoom-in; }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            width: 100%;
+            margin-top: 1.5rem;
+            border-radius: 12px;
+            border: 2px solid #374151;
+            background-color: #000;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide-layout { display: flex; flex-direction: column; width: 100%; height: 100%; justify-content: center; align-items: center; }
+        @media (min-width: 768px) { 
+            .slide-layout { flex-direction: row; gap: 2rem; } 
+            .slide-layout .content { flex-basis: 50%; text-align: left; } 
+            .slide-layout .image-container, .slide-layout .video-container { flex-basis: 50%; margin-top: 0; max-width: 100%; }
+            ul { padding-left: 1.5rem; } 
+        }
+        
+        .lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); display: none; align-items: center; justify-content: center; z-index: 1000; cursor: zoom-out; }
+        #lightbox-image { max-width: 90%; max-height: 90vh; border-radius: 8px; border: 2px solid #F9FAFB; }
+        .lightbox-close { position: absolute; top: 20px; right: 35px; color: #F9FAFB; font-size: 40px; font-weight: bold; cursor: pointer; line-height: 1; }
+    </style>
 </head>
 <body>
-  <div id="presentation-container">
+    <div id="presentation-container">
+        
+        <div class="slide active">
+            <div class="slide-layout">
+                <div class="content">
+                    <h1 class="reveal-item text-4xl md:text-5xl font-extrabold mb-4 text-accent-red">DER POLITISCHE KRIEG UMS GELD</h1>
+                    <h2 class="reveal-item text-2xl md:text-3xl font-bold mb-6">Chase, Trump und der Sumpf der Elite in Florida</h2>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item"><strong class="text-accent-blue">"De-Banking"</strong> als politische Kriegswaffe.</li>
+                        <li class="reveal-item">Florida erhebt sich gegen die <strong class="text-accent-red">Operation Arctic Frost</strong>.</li>
+                        <li class="reveal-item">Der Elefant im Raum: die Verbindung <strong class="text-accent-blue">JPMorgan Chase-Epstein-Clinton</strong>.</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/EF4444/111827?text=Chase+gegen+Trump" alt="Chase gegen Trump">
+                </div>
+            </div>
+        </div>
 
-    <!-- Slide 1 -->
-    <div class="slide active">
-      <div class="slide-layout">
-        <div class="content">
-          <h1 class="reveal-item text-4xl md:text-5xl font-extrabold mb-4 text-accent-red">DER POLITISCHE KRIEG UMS GELD</h1>
-          <h2 class="reveal-item text-2xl md:text-3xl font-bold mb-6">Chase, Trump und der Sumpf der Elite in Florida</h2>
-          <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
-            <li class="reveal-item"><strong class="text-accent-blue">"De-Banking"</strong> als politische Kriegswaffe.</li>
-            <li class="reveal-item">Florida erhebt sich gegen die <strong class="text-accent-red">Operation Arctic Frost</strong>.</li>
-            <li class="reveal-item">Der Elefant im Raum: die Verbindung <strong class="text-accent-blue">JPMorgan Chase-Epstein-Clinton</strong>.</li>
-          </ul>
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-blue">OPERATION ARCTIC FROST: Der Angriff auf Trump Media</h2>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item"><strong>Offizielle Untersuchung:</strong> Floridas Generalstaatsanwalt <strong>James Uthmeier</strong> hat eine formelle Untersuchung gegen <strong>JPMorgan Chase Bank</strong> eingeleitet.</li>
+                        <li class="reveal-item"><strong>Die Koordination:</strong> Der Vorwurf lautet, dass Chase sich mit dem Biden-Justizministerium und <strong>Jack Smith</strong> in einer Operation namens <strong>"Operation Arctic Frost"</strong> koordiniert hat.</li>
+                        <li class="reveal-item"><strong>Das Ziel:</strong> <strong class="text-accent-red">Trump Media Group</strong>, ein in Florida ansässiges Unternehmen.</li>
+                        <li class="reveal-item">Uthmeier erklärt, die Biden-Administration habe "ihre politischen Feinde ins Visier genommen".</li>
+                    </ul>
+                </div>
+                <div class="reveal-item video-container">
+                    <iframe 
+                        width="560" 
+                        height="315" 
+                        src="https://www.youtube.com/embed/sc6ug9ex7rs?start=0" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
         </div>
-        <div class="reveal-item video-container">
-          <img src="https://placehold.co/600x400/EF4444/111827?text=Chase+gegen+Trump"
-               alt="Chase gegen Trump"
-               class="video-thumb"
-               data-video="https://www.youtube.com/embed/sc6ug9ex7rs?autoplay=1">
+
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">🛑 Kontoschließung: Die strategische Waffe</h2>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item"><strong>Was ist De-Banking?</strong> Einem Unternehmen wird der Zugang zu Kapital aus mutmaßlich <strong class="text-accent-red">"politisch motivierten"</strong> Gründen verweigert.</li>
+                        <li class="reveal-item"><strong>Der fatale Moment:</strong> Chase hat Trump Media unmittelbar vor dem Börsengang (IPO) <strong>"de-banked"</strong>.</li>
+                        <li class="reveal-item"><strong>Vorsätzliche Sabotage:</strong> In diesem Moment die Bank zu verlieren, ist kritisch.</li>
+                        <li class="reveal-item"><strong>Verwendung sensibler Daten:</strong> Chase hat Daten <strong class="text-accent-blue">ohne hinreichenden Verdacht</strong> an das Justizministerium weitergegeben.</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/F59E0B/111827?text=Finanzielle+Sabotage" alt="Finanzielle Sabotage">
+                </div>
+            </div>
         </div>
-      </div>
+
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">⚖️ Rechenschaft und der Erste Verfassungszusatz</h2>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item">Florida hat Gesetze erlassen, um seine Unternehmen vor diesem <strong class="text-accent-blue">"unzulässigen De-Banking"</strong> zu schützen.</li>
+                        <li class="reveal-item">Uthmeier ist deutlich: Wenn Konten aufgrund <strong class="text-accent-red">politischer Meinungen</strong> geschlossen werden, wird die Bank "zur Rechenschaft gezogen".</li>
+                        <li class="reveal-item"><strong>Zivilrechtliche Sanktionen:</strong> Geldstrafen und Bußgelder bei nachgewiesener Diskriminierung.</li>
+                        <li class="reveal-item"><strong>Strafrechtliche Sanktionen:</strong> Wenn die Untersuchung <strong class="text-accent-red">"koordinierten Betrug"</strong> aufdeckt, könnten strafrechtliche Sanktionen folgen.</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/10B981/FFFFFF?text=Erster+Verfassungszusatz" alt="Erster Verfassungszusatz & Justiz">
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-red">🐍 DER SUMPF: Von Trump Media zu Jeffrey Epstein</h2>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item"><strong>Warum ausgerechnet Chase?</strong> Dieselbe Institution ist tief in den <strong class="text-accent-blue">Epstein-Sumpf</strong> verstrickt.</li>
+                        <li class="reveal-item">JPMorgan Chase war jahrelang der <strong>Bankier von Jeffrey Epstein</strong>.</li>
+                        <li class="reveal-item"><strong>Trumps Gegenoffensive:</strong> Er ordnete eine Untersuchung der Verbindungen von Epstein zu Chase und <strong class="text-accent-red">Bill Clinton</strong> an.</li>
+                        <li class="reveal-item"><strong>Reaktion von Chase:</strong> Sie beschuldigen die Regierung, "belastende Informationen" nicht geteilt zu haben.</li>
+                    </ul>
+                </div>
+                <div class="reveal-item video-container">
+                    <iframe 
+                        width="560" 
+                        height="315" 
+                        src="https://www.youtube.com/embed/vrP1JKeovdU?start=5" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-blue">✈️ Bill Clinton: Der Glaubwürdigkeits-Partner</h2>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item">Bill Clinton flog <strong class="text-accent-red">26 Mal</strong> in Epsteins Privatjet.</li>
+                        <li class="reveal-item">Epstein "prahlte" mit seinen Verbindungen zu Clinton, um <strong>Glaubwürdigkeit</strong> und Zugang zu Spendern zu gewinnen (z.B. Clinton Global Initiative).</li>
+                        <li class="reveal-item"><strong>Enthüllende E-Mails (Nov 2025):</strong> Epstein besprach, wie man <strong class="text-accent-red">"Bill schützen"</strong> könne vor Skandalen.</li>
+                        <li class="reveal-item">Die Nähe in diesem "Elite-Zirkel" ist verheerend für sein Erbe.</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/EC4899/111827?text=Verbindung+Clinton+Epstein" alt="Verbindung Clinton & Epstein">
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-red">🎭 DER ABLENKUNGSVERSUCH</h2>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item"><strong>Angriff auf Trump:</strong> Chase wird benutzt, um Trump Media finanziell abzuwürgen (<strong class="text-accent-blue">"Arctic Frost"</strong>).</li>
+                        <li class="reveal-item"><strong>Vertuschung der Elite:</strong> Dieselbe Bank, Chase, ist tief in den Epstein-Skandal verwickelt, mit Verbindungen zu <strong class="text-accent-blue">Bill Clinton</strong>.</li>
+                        <li class="reveal-item">Der 'De-Banking'-Angriff ist ein Versuch, vom <strong class="text-accent-red">"wahren Sumpf"</strong> abzulenken.</li>
+                        <li class="reveal-item">Die Schwachstelle des Establishments: Wo Geld und dunkle Geheimnisse aufeinandertreffen.</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/F87171/111827?text=Doppelmoral+der+Elite" alt="Doppelmoral der Elite">
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-blue">📢 FAZIT: Die Realität des Finanzkriegs</h2>
+                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+                        <li class="reveal-item"><strong>Florida bleibt standhaft:</strong> Es nutzt seine Gesetze, um die <strong class="text-accent-red">Meinungsfreiheit</strong> gegen politische Diskriminierung zu verteidigen.</li>
+                        <li class="reveal-item"><strong>Mediales Schweigen:</strong> Sie wollen, dass sich die Aufmerksamkeit auf Jack Smith konzentriert, nicht auf die Verschwörung der Elite.</li>
+                        <li class="reveal-item">'De-Banking' ist ein subtiles, aber tödliches Werkzeug, um <strong>"unliebsame Stimmen und Geschäfte zu ersticken"</strong>.</li>
+                    </ul>
+                </div>
+                <div class="reveal-item image-container">
+                    <img src="https://placehold.co/600x400/06B6D4/FFFFFF?text=Fazit" alt="Fazit des Finanzkriegs">
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div id="controls-wrapper">
+        <div id="controls" style="display: none;"> 
+            <button id="prev-btn" class="control-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+            </button>
+            <button id="next-btn" class="control-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+            </button>
+        </div>
     </div>
 
-    <!-- Slide 2 -->
-    <div class="slide">
-      <div class="slide-layout">
-        <div class="content">
-          <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-blue">OPERATION ARCTIC FROST: Der Angriff auf Trump Media</h2>
-          <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
-            <li class="reveal-item"><strong>Offizielle Untersuchung:</strong> Floridas Generalstaatsanwalt James Uthmeier ...</li>
-          </ul>
-        </div>
-        <div class="reveal-item video-container">
-          <img src="https://placehold.co/600x400/3B82F6/111827?text=Operation+Arctic+Frost"
-               alt="Operation Arctic Frost"
-               class="video-thumb"
-               data-video="https://www.youtube.com/embed/sc6ug9ex7rs?autoplay=1">
-        </div>
-      </div>
+    <div id="lightbox" class="lightbox-overlay">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-image" src="" alt="Vergrößerte Ansicht">
     </div>
+    
+    <script type="module">
+        document.addEventListener('DOMContentLoaded', () => {
+            const slides = document.querySelectorAll('.slide');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxClose = document.querySelector('.lightbox-close');
+            const slideImages = document.querySelectorAll('.image-container img');
+            let currentSlide = 0;
 
-    <!-- Slide 3 -->
-    <div class="slide">
-      <div class="slide-layout">
-        <div class="content">
-          <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">🛑 Kontoschließung: Die strategische Waffe</h2>
-          <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
-            <li class="reveal-item"><strong>Was ist De-Banking?</strong> ...</li>
-          </ul>
-        </div>
-        <div class="reveal-item video-container">
-          <img src="https://placehold.co/600x400/F59E0B/111827?text=Finanzielle+Sabotage"
-               alt="Finanzielle Sabotage"
-               class="video-thumb"
-               data-video="https://www.youtube.com/embed/sc6ug9ex7rs?autoplay=1">
-        </div>
-      </div>
-    </div>
+            function openLightbox(src) { lightboxImage.src = src; lightbox.style.display = 'flex'; }
+            function closeLightbox() { lightbox.style.display = 'none'; lightboxImage.src = ''; }
+            slideImages.forEach(img => { img.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(img.src); }); });
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', (e) => { if (e.target === lightbox) { closeLightbox(); } });
 
-    <!-- Slide 4 -->
-    <div class="slide">
-      <div class="slide-layout">
-        <div class="content">
-          <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">⚖️ Rechenschaft und der Erste Verfassungszusatz</h2>
-          <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
-            <li class="reveal-item">Florida hat Gesetze erlassen ...</li>
-          </ul>
-        </div>
-        <div class="reveal-item video-container">
-          <img src="https://placehold.co/600x400/10B981/FFFFFF?text=Erster+Verfassungszusatz"
-               alt="Erster Verfassungszusatz"
-               class="video-thumb"
-               data-video="https://www.youtube.com/embed/sc6ug9ex7rs?autoplay=1">
-        </div>
-      </div>
-    </div>
+            function showSlide(index) {
+                // Videos auf der vorherigen Folie anhalten
+                const oldSlide = slides[currentSlide];
+                if (oldSlide) {
+                    const iframes = oldSlide.querySelectorAll('iframe');
+                    iframes.forEach(iframe => {
+                        iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                    });
+                }
 
-    <!-- Slide 5 -->
-    <div class="slide">
-      <div class="slide-layout">
-        <div class="content">
-          <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-red">🐍 DER SUMPF: Von Trump Media zu Jeffrey Epstein</h2>
-          <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
-            <li class="reveal-item"><strong>Warum ausgerechnet Chase?</strong> ...</li>
-          </ul>
-        </div>
-        <div class="reveal-item video-container">
-          <img src="https://placehold.co/600x400/EF4444/111827?text=Epstein+Verbindungen"
-               alt="Epstein Verbindungen"
-               class="video-thumb"
-               data-video="https://www.youtube.com/embed/vrP1JKeov
-    <!-- Slide 5 -->
-    <div class="slide">
-      <div class="slide-layout">
-        <div class="content">
-          <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-red">🐍 DER SUMPF: Von Trump Media zu Jeffrey Epstein</h2>
-          <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
-            <li class="reveal-item"><strong>Warum ausgerechnet Chase?</strong> Dieselbe Institution ist tief in den <strong class="text-accent-blue">Epstein-Sumpf</strong> verstrickt.</li>
-            <li class="reveal-item">JPMorgan Chase war jahrelang der <strong>Bankier von Jeffrey Epstein</strong>.</li>
-            <li class="reveal-item"><strong>Trumps Gegenoffensive:</strong> Er ordnete eine Untersuchung der Verbindungen von Epstein zu Chase und <strong class="text-accent-red">Bill Clinton</strong> an.</li>
-            <li class="reveal-item"><strong>Reaktion von Chase:</strong> Sie beschuldigen die Regierung, "belastende Informationen" nicht geteilt zu haben.</li>
-          </ul>
-        </div>
-        <div class="reveal-item video-container">
-          <img src="https://placehold.co/600x400/EF4444/111827?text=Epstein+Verbindungen"
-               alt="Epstein Verbindungen"
-               class="video-thumb"
-               data-video="https://www.youtube.com/embed/vrP1JKeovdU?autoplay=1">
-        </div>
-      </div>
-    </div>
+                slides.forEach((slide) => { slide.classList.remove('active'); });
+                const slide = slides[index];
+                if (!slide) return;
+                slide.classList.add('active');
+                currentSlide = index;
+                
+                const items = slide.querySelectorAll('.reveal-item');
+                items.forEach((item, index) => {
+                    item.classList.remove('revealed');
+                    item.style.transitionDelay = `${index * 250}ms`;
+                    setTimeout(() => { item.classList.add('revealed'); }, 50);
+                });
+                
+                // Navigationsschaltflächen ein-/ausblenden
+                const prevBtn = document.getElementById('prev-btn');
+                const nextBtn = document.getElementById('next-btn');
+                if (prevBtn) prevBtn.style.visibility = (index === 0) ? 'hidden' : 'visible';
+                if (nextBtn) nextBtn.style.visibility = (index === slides.length - 1) ? 'hidden' : 'visible';
+            }
+            
+            function nextSlide() { let next = currentSlide + 1; if (next < slides.length) { showSlide(next); } }
+            function prevSlide() { let prev = currentSlide - 1; if (prev >= 0) { showSlide(prev); } }
+            
+            // Schaltflächen der Vorlage integrieren
+            const nextBtn = document.getElementById('next-btn');
+            const prevBtn = document.getElementById('prev-btn');
+            if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+            if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+            
+            // Steuerelemente anzeigen
+            const controls = document.getElementById('controls');
+            if (controls) controls.style.display = 'flex';
 
-    <!-- Slide 6 -->
-    <div class="slide">
-      <div class="slide-layout">
-        <div class="content">
-          <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-blue">✈️ Bill Clinton: Der Glaubwürdigkeits-Partner</h2>
-          <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
-            <li class="reveal-item">Bill Clinton flog <strong class="text-accent-red">26 Mal</strong> in Epsteins Privatjet.</li>
-            <li class="reveal-item">Epstein "prahlte" mit seinen Verbindungen zu Clinton, um <strong>Glaubwürdigkeit</strong> und Zugang zu Spendern zu gewinnen.</li>
-            <li class="reveal-item"><strong>Enthüllende E-Mails (Nov 2025):</strong> Epstein besprach, wie man <strong class="text-accent-red">"Bill schützen"</strong> könne.</li>
-            <li class="reveal-item">Die Nähe in diesem "Elite-Zirkel" ist verheerend für sein Erbe.</li>
-          </ul>
-        </div>
-        <div class="reveal-item video-container">
-          <img src="https://placehold.co/600x400/EC4899/111827?text=Verbindung+Clinton+Epstein"
-               alt="Verbindung Clinton & Epstein"
-               class="video-thumb"
-               data-video="https://www.youtube.com/embed/vrP1JKeovdU?autoplay=1">
-        </div>
-      </div>
-    </div>
+            showSlide(0);
 
-    <!-- Slide 7 -->
-    <div class="slide">
-      <div class="slide-layout">
-        <div class="content">
-          <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-red">🎭 DER ABLENKUNGSVERSUCH</h2>
-          <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
-            <li class="reveal-item"><strong>Angriff auf Trump:</strong> Chase wird benutzt, um Trump Media finanziell abzuwürgen.</li>
-            <li class="reveal-item"><strong>Vertuschung der Elite:</strong> Dieselbe Bank ist tief in den Epstein-Skandal verwickelt.</li>
-            <li class="reveal-item">Der 'De-Banking'-Angriff ist ein Versuch, vom <strong class="text-accent-red">"wahren Sumpf"</strong> abzulenken.</li>
-            <li class="reveal-item">Die Schwachstelle des Establishments: Wo Geld und dunkle Geheimnisse aufeinandertreffen.</li>
-          </ul>
-        </div>
-        <div class="reveal-item video-container">
-          <img src="https://placehold.co/600x400/F87171/111827?text=Doppelmoral+der+Elite"
-               alt="Doppelmoral der Elite"
-               class="video-thumb"
-               data-video="https://www.youtube.com/embed/sc6ug9ex7rs?autoplay=1">
-        </div>
-      </div>
-    </div>
-
-    <!-- Slide 8 -->
-    <div class="slide">
-      <div class="slide-layout">
-        <div class="content">
-          <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6 text-accent-blue">📢 FAZIT: Die Realität des Finanzkriegs</h2>
-          <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
-            <li class="reveal-item"><strong>Florida bleibt standhaft:</strong> Es verteidigt die Meinungsfreiheit gegen politische Diskriminierung.</li>
-            <li class="reveal-item"><strong>Mediales Schweigen:</strong> Fokus auf Jack Smith statt auf die Elite-Verbindungen.</li>
-            <li class="reveal-item">'De-Banking' ist ein subtiles, aber tödliches Werkzeug.</li>
-          </ul>
-        </div>
-        <div class="reveal-item video-container">
-          <img src="https://placehold.co/600x400/06B6D4/FFFFFF?text=Fazit"
-               alt="Fazit des Finanzkriegs"
-               class="video-thumb"
-               data-video="https://www.youtube.com/embed/sc6ug9ex7rs?autoplay=1">
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div id="controls-wrapper">
-    <div id="controls">
-      <button id="prev-btn" class="control-btn">◀</button>
-      <button id="next-btn" class="control-btn">▶</button>
-    </div>
-  </div>
-
-  <script type="module">
-    document.addEventListener('DOMContentLoaded', () => {
-      const slides = document.querySelectorAll('.slide');
-      let currentSlide = 0;
-
-      function showSlide(index) {
-        slides.forEach(slide => slide.classList.remove('active'));
-        const slide = slides[index];
-        if (!slide) return;
-        slide.classList.add('active');
-        currentSlide = index;
-        const items = slide.querySelectorAll('.reveal-item');
-        items.forEach((item, idx) => {
-          item.classList.remove('revealed');
-          item.style.transitionDelay = `${idx * 250}ms`;
-          setTimeout(() => item.classList.add('revealed'), 50);
+            // Tastatursteuerung
+            document.addEventListener('keydown', (e) => {
+                if (lightbox.style.display === 'flex') { if (e.key === 'Escape') { closeLightbox(); } return; }
+                if (e.key === 'ArrowRight') { nextSlide(); } 
+                else if (e.key === 'ArrowLeft') { prevSlide(); }
+                else if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault(); 
+                    const activeSlide = document.querySelector('.slide.active');
+                    if (activeSlide) { 
+                        const image = activeSlide.querySelector('.image-container img'); 
+                        if (image) { openLightbox(image.src); } 
+                    }
+                }
+            });
         });
-      }
-
-      function nextSlide() { if (currentSlide + 1 < slides.length) showSlide(currentSlide + 1); }
-      function prevSlide() { if (currentSlide - 1 >= 0) showSlide(currentSlide - 1); }
-
-      document.getElementById('next-btn').addEventListener('click', nextSlide);
-      document.getElementById('prev-btn').addEventListener('click', prevSlide);
-
-      showSlide(0);
-
-      // Reemplazo de imagen por video al hacer clic
-      document.querySelectorAll('.video-thumb').forEach(img => {
-        img.addEventListener('click', () => {
-          const videoUrl = img.getAttribute('data-video');
-          const container = img.parentElement;
-          container.innerHTML = `
-            <iframe src="${videoUrl}" frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen></iframe>`;
-        });
-      });
-    });
-  </script>
+    </script>
 </body>
 </html>
