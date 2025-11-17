@@ -1,137 +1,136 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Präsentation: Chase, Trump & Epstein Skandal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: #111827; 
-            color: #F9FAFB; 
-            margin: 0; 
-            padding: 0; 
-            height: 100dvh; /* ocupa toda la pantalla en móvil */
-            overflow: hidden; 
-        }
-        #presentation-container { 
-            position: relative; 
-            width: 100%; 
-            height: 100dvh; /* asegura pantalla completa */
-            overflow: hidden; 
-        }
-        .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 5% 8%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; opacity: 0; transform: translateX(20px); transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out; visibility: hidden; }
-        .slide.active { opacity: 1; transform: translateX(0); visibility: visible; }
-        .reveal-item { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; transition-delay: 0s; }
-        .reveal-item.revealed { opacity: 1; transform: translateY(0); }
-        .text-accent-red { color: #EF4444; }
-        .text-accent-blue { color: #3B82F6; }
-        #controls-wrapper { position: fixed; bottom: 0; left: 0; width: 100%; background-color: #1F2937; z-index: 100; }
-        #slide-pane #controls { display: flex; justify-content: center; align-items: center; padding: 12px 0; }
-        .control-btn { background: none; border: none; color: #F9FAFB; cursor: pointer; padding: 8px 12px; margin: 0 10px; border-radius: 8px; transition: background-color 0.2s; }
-        .control-btn:hover { background-color: #374151; }
-        .control-btn svg { width: 24px; height: 24px; pointer-events: none; }
-        
-        .image-container { max-width: 450px; width: 100%; margin-top: 1.5rem; }
-        .image-container img { width: 100%; height: auto; border-radius: 12px; border: 2px solid #374151; cursor: zoom-in; }
-        
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%; 
-            height: 0;
-            overflow: hidden;
-            width: 100%;
-            margin-top: 1.5rem;
-            border-radius: 12px;
-            border: 2px solid #374151;
-            background-color: #000;
-        }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .slide-layout { display: flex; flex-direction: column; width: 100%; height: 100%; justify-content: center; align-items: center; }
-        @media (min-width: 768px) { 
-            .slide-layout { flex-direction: row; gap: 2rem; } 
-            .slide-layout .content { flex-basis: 50%; text-align: left; } 
-            .slide-layout .image-container, .slide-layout .video-container { flex-basis: 50%; margin-top: 0; max-width: 100%; }
-            ul { padding-left: 1.5rem; } 
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Präsentation: Chase, Trump & Epstein Skandal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #111827;
+      color: #F9FAFB;
+      margin: 0;
+      padding: 0;
+      height: 100dvh;
+      overflow: hidden;
+    }
+    #presentation-container {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      height: 100dvh;
+      overflow: hidden;
+      transition: transform 0.6s ease-in-out;
+    }
+    .slide {
+      flex-shrink: 0;
+      width: 100%;
+      height: 100dvh;
+      padding: 5% 8%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .reveal-item { opacity:0; transform:translateY(20px); transition:opacity 0.5s, transform 0.5s; }
+    .reveal-item.revealed { opacity:1; transform:translateY(0); }
+    .text-accent-red { color:#EF4444; }
+    .text-accent-blue { color:#3B82F6; }
+    #controls-wrapper { position:fixed; bottom:0; left:0; width:100%; background-color:#1F2937; z-index:9999; }
+    #controls { display:flex; justify-content:center; align-items:center; padding:12px 0; }
+    .control-btn { background:none; border:none; color:#F9FAFB; cursor:pointer; padding:8px 12px; margin:0 10px; border-radius:8px; }
+    .control-btn:hover { background-color:#374151; }
+    .video-container { position:relative; padding-bottom:56.25%; height:0; width:100%; margin-top:1.5rem; border-radius:12px; border:2px solid #374151; background:#000; }
+    .video-container img { width:100%; height:100%; object-fit:cover; cursor:pointer; border-radius:12px; }
+    .video-container iframe { position:absolute; top:0; left:0; width:100%; height:100%; }
+    .slide-layout { display:flex; flex-direction:column; width:100%; height:100%; justify-content:center; align-items:center; }
+    @media(min-width:768px){ .slide-layout{flex-direction:row; gap:2rem;} .slide-layout .content{flex-basis:50%; text-align:left;} .slide-layout .video-container{flex-basis:50%; margin-top:0; max-width:100%;} ul{padding-left:1.5rem;} }
+  </style>
 </head>
 <body>
-    <div id="presentation-container">
-        <!-- ejemplo de slide con imagen que se convierte en video -->
-        <div class="slide active">
-            <div class="slide-layout">
-                <div class="content">
-                    <h2 class="reveal-item text-4xl md:text-5xl font-extrabold mb-6">🛑 Kontoschließung: Die strategische Waffe</h2>
-                    <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
-                        <li class="reveal-item"><strong>Was ist De-Banking?</strong> ...</li>
-                    </ul>
-                </div>
-                <div class="reveal-item video-container">
-                    <img src="https://placehold.co/600x400/F59E0B/111827?text=Finanzielle+Sabotage" 
-                         alt="Finanzielle Sabotage"
-                         class="video-thumb"
-                         data-video="https://www.youtube.com/embed/sc6ug9ex7rs?autoplay=1">
-                </div>
-            </div>
+  <div id="presentation-container">
+    <!-- Ejemplo de slide -->
+    <div class="slide">
+      <div class="slide-layout">
+        <div class="content">
+          <h1 class="reveal-item text-4xl md:text-5xl font-extrabold mb-4 text-accent-red">DER POLITISCHE KRIEG UMS GELD</h1>
+          <h2 class="reveal-item text-2xl md:text-3xl font-bold mb-6">Chase, Trump und der Sumpf der Elite in Florida</h2>
+          <ul class="reveal-item text-xl md:text-2xl space-y-3 list-disc">
+            <li class="reveal-item"><strong class="text-accent-blue">"De-Banking"</strong> als politische Kriegswaffe.</li>
+            <li class="reveal-item">Florida erhebt sich gegen die <strong class="text-accent-red">Operation Arctic Frost</strong>.</li>
+            <li class="reveal-item">Der Elefant im Raum: die Verbindung <strong class="text-accent-blue">JPMorgan Chase-Epstein-Clinton</strong>.</li>
+          </ul>
         </div>
+        <div class="reveal-item video-container">
+          <img src="https://placehold.co/600x400/EF4444/111827?text=Chase+gegen+Trump"
+               alt="Chase gegen Trump"
+               class="video-thumb"
+               data-video="https://www.youtube.com/embed/sc6ug9ex7rs?autoplay=1">
+        </div>
+      </div>
     </div>
 
-    <div id="controls-wrapper">
-        <div id="controls" style="display: none;"> 
-            <button id="prev-btn" class="control-btn">◀</button>
-            <button id="next-btn" class="control-btn">▶</button>
-        </div>
+    <!-- Aquí van los demás slides siguiendo el mismo patrón -->
+    <!-- ... -->
+  </div>
+
+  <div id="controls-wrapper">
+    <div id="controls">
+      <button id="prev-btn" class="control-btn">◀</button>
+      <button id="next-btn" class="control-btn">▶</button>
     </div>
+  </div>
 
-    <script type="module">
-        document.addEventListener('DOMContentLoaded', () => {
-            const slides = document.querySelectorAll('.slide');
-            let currentSlide = 0;
+  <script type="module">
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('presentation-container');
+      const slides = document.querySelectorAll('.slide');
+      let currentSlide = 0;
 
-            function showSlide(index) {
-                slides.forEach((slide) => { slide.classList.remove('active'); });
-                const slide = slides[index];
-                if (!slide) return;
-                slide.classList.add('active');
-                currentSlide = index;
-                const items = slide.querySelectorAll('.reveal-item');
-                items.forEach((item, idx) => {
-                    item.classList.remove('revealed');
-                    item.style.transitionDelay = `${idx * 250}ms`;
-                    setTimeout(() => { item.classList.add('revealed'); }, 50);
-                });
-            }
-
-            function nextSlide() { if (currentSlide + 1 < slides.length) showSlide(currentSlide + 1); }
-            function prevSlide() { if (currentSlide - 1 >= 0) showSlide(currentSlide - 1); }
-
-            document.getElementById('next-btn').addEventListener('click', nextSlide);
-            document.getElementById('prev-btn').addEventListener('click', prevSlide);
-            document.getElementById('controls').style.display = 'flex';
-            showSlide(0);
-
-            // Reemplazo de imagen por video al hacer clic
-            document.querySelectorAll('.video-thumb').forEach(img => {
-                img.addEventListener('click', () => {
-                    const videoUrl = img.getAttribute('data-video');
-                    const container = img.parentElement;
-                    container.innerHTML = `
-                        <iframe src="${videoUrl}" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>`;
-                });
-            });
+      function showSlide(index) {
+        if (index < 0 || index >= slides.length) return;
+        currentSlide = index;
+        container.style.transform = `translateX(-${index * 100}%)`;
+        const items = slides[index].querySelectorAll('.reveal-item');
+        items.forEach((item, idx) => {
+          item.classList.remove('revealed');
+          item.style.transitionDelay = `${idx * 250}ms`;
+          setTimeout(() => item.classList.add('revealed'), 50);
         });
-    </script>
+      }
+
+      function nextSlide() { showSlide(currentSlide + 1); }
+      function prevSlide() { showSlide(currentSlide - 1); }
+
+      document.getElementById('next-btn').addEventListener('click', nextSlide);
+      document.getElementById('prev-btn').addEventListener('click', prevSlide);
+
+      // Swipe en móvil
+      let startX = 0;
+      document.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+      document.addEventListener('touchend', e => {
+        let endX = e.changedTouches[0].clientX;
+        if (endX - startX > 50) prevSlide();
+        else if (startX - endX > 50) nextSlide();
+      });
+
+      // Reemplazo de imagen por video
+      document.querySelectorAll('.video-thumb').forEach(img => {
+        img.addEventListener('click', () => {
+          const videoUrl = img.getAttribute('data-video');
+          const container = img.parentElement;
+          container.innerHTML = `
+            <iframe src="${videoUrl}" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>`;
+        });
+      });
+
+      showSlide(0);
+    });
+  </script>
 </body>
 </html>
