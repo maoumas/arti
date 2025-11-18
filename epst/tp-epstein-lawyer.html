@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta property="og:title" content="TELEPROMPTER: DIE EPSTEIN-VERSCHWÖRUNG" />
+    <meta property="og:description" content="Skript für den Moderator - @TranslatedPressDE" />
+    <title>Teleprompter: Epstein & Dershowitz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+        body { background-color: #111; color: #f0f0f0; font-family: 'Inter', sans-serif; }
+        
+        /* Controles Flotantes */
+        #controls { position: sticky; bottom: 0; left: 0; right: 0; background-color: #222; border-top: 2px solid #3B82F6; padding: 0.75rem 1rem; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.75rem; z-index: 1000; box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5); }
+        #controls button { background-color: #3B82F6; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background-color 0.2s; }
+        #controls button:hover { background-color: #2563EB; }
+        #controls label { font-weight: 600; margin-left: 0.25rem; color: #ddd; font-size: 0.875rem; }
+        #controls input[type="range"] { cursor: pointer; width: 120px; }
+        
+        /* Toggle Switch */
+        .toggle-switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #444; transition: .3s; border-radius: 28px; }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .3s; border-radius: 50%; }
+        input:checked + .slider { background-color: #3B82F6; }
+        input:checked + .slider:before { transform: translateX(22px); }
+        
+        /* Contenedor del Texto */
+        #script-container { padding: 1rem 2rem; padding-bottom: 100vh; max-width: 900px; margin: 0 auto; line-height: 1.7; }
+        
+        /* Estilos de Texto Generados */
+        .speaker-text { font-size: 2.25rem; font-weight: 600; color: #ffffff; margin-bottom: 1rem; }
+        .instruction { font-size: 1.125rem; color: #FFD700; font-style: italic; background-color: #2a2a2a; border-left: 4px solid #FFD700; padding: 0.75rem; margin-bottom: 1rem; border-radius: 0 8px 8px 0; opacity: 0.9; }
+        .timestamp { font-size: 1.25rem; font-weight: 600; color: #3B82F6; border-top: 2px solid #444; padding-top: 1rem; margin-top: 2rem; margin-bottom: 1rem; }
+        
+        body.hide-instructions .instruction { display: none; }
+        
+        @media (max-width: 768px) { 
+            #controls { padding: 0.5rem; gap: 0.5rem; } 
+            #controls > label:not(.toggle-switch) { display: none; } 
+            #controls input[type="range"] { width: 90px; } 
+            #controls button { padding: 0.4rem 0.6rem; font-size: 0.875rem; } 
+        }
+    </style>
+</head>
+<body class="">
+  <div id="script-container">
+     </div>
+
+  <div id="controls">
+    <button id="play-pause-btn">Play</button>
+    <button id="reset-btn">Reset</button>
+    <label for="speed-slider">Tempo:</label>
+    <input type="range" id="speed-slider" min="1" max="100" value="20">
+    <label for="fontsize-slider">Schriftgröße:</label>
+    <input type="range" id="fontsize-slider" min="20" max="80" value="36">
+    <label for="toggle-instructions">Anweisungen ausblenden:</label>
+    <label class="toggle-switch"> <input type="checkbox" id="toggle-instructions"> <span class="slider"></span> </label>
+  </div>
+
+  <script type="module">
+    // ====================================================================
+    // ⬇️⬇️⬇️  ZONA DE CONFIGURACIÓN (EDITAR AQUÍ) / KONFIGURATION  ⬇️⬇️⬇️
+    // ====================================================================
+
+    const scriptData = [
+        {
+            type: "title",
+            content: "TITEL: DIE EPSTEIN-VERSCHWÖRUNG: WAS DER ANWALT ÜBER TRUMP UND DIE GEHEIMHALTUNG WIRKLICH WEISS"
+        },
+        {
+            type: "instruction",
+            content: "(EINLEITUNG/HINTERGRUND – BILDER: Archivmaterial von Dershowitz, Gerichtsdokumente)"
+        },
+        {
+            type: "text",
+            content: "Guten Abend, liebe Zuschauer von @TranslatedPressDE. Heute blicken wir tief hinter die Kulissen des Jeffrey Epstein-Skandals und auf jenen Mann, der lange Zeit im Zentrum der juristischen und medialen Kontroversen stand: Alan Dershowitz."
+        },
+        {
+            type: "text",
+            content: "Dershowitz, ein emeritierter Professor der Harvard Law School und hochkarätiger Anwalt, vertrat Jeffrey Epstein bei seinem Plea Deal im Jahr 2008. Seine Verbindung zu Epstein war nach eigener Aussage rein professionell – als Rechtsberater und gelegentlicher sozialer Bekannter. Doch Dershowitz wurde selbst zum Ziel massiver Vorwürfe, hauptsächlich durch die Epstein-Opferin Virginia Giuffre."
+        },
+        {
+            type: "text",
+            content: "Seit Jahren kämpft dieser Jurist gegen eine mediale Maschinerie, die ihn allein aufgrund seiner Assoziation mit Epstein diskreditieren wollte. Dershowitz hat stets alle Anschuldigungen der Beteiligung an kriminellen Aktivitäten kategorisch und unter Eid zurückgewiesen. Er hat keine strafrechtlichen Anklagen in dieser Sache erhalten. Sein größter Kampf war die Durchsetzung der Wahrheit: Er hat aktiv auf die vollständige Entsiegelung aller Epstein-Dokumente gedrängt, weil er glaubte, dass diese ihn entlasten würden."
+        },
+        {
+            type: "text",
+            content: "Im November 2022 endete der Rechtsstreit mit Giuffre durch einen Vergleich ohne Geldaustausch, wobei Giuffre öffentlich erklärte, sie sei damals sehr jung gewesen, die Umgebung sei traumatisch gewesen, und sie könnte sich bei der Identifizierung von Herrn Dershowitz geirrt haben."
+        },
+        {
+            type: "text",
+            content: "Trotz dieser teilweisen Widerrufung der Anschuldigung durch die Hauptzeugin, wird Dershowitz weiterhin in den Medien thematisiert, was seine zentrale These bestätigt: Die Medien gehen von Schuld aus, sobald ein Name im Zusammenhang mit Epstein genannt wird."
+        },
+        {
+            type: "instruction",
+            content: "(ÜBERGANG ZUM INTERVIEW – BILDER: Ausschnitte aus dem Sky News Australia Interview)"
+        },
+        {
+            type: "text",
+            content: "Alan Dershowitz sprach kürzlich über die anhaltende Geheimhaltung der Akten und die politischen Implikationen. Lassen Sie uns seine wichtigsten Antworten im Detail analysieren."
+        },
+        {
+            type: "title",
+            content: "Analyse der Dershowitz-Aussagen"
+        },
+        {
+            type: "title",
+            content: "1. Die Forderung nach Offenlegung"
+        },
+        {
+            type: "text",
+            content: "Dershowitz stellt klar, dass er „alles“ veröffentlicht sehen möchte, was die Epstein-Akten betrifft. Er betont, dass dies nicht nur das Recht der Opfer, sondern auch der unschuldig Beschuldigten sei. Er ist der Ansicht, dass am Ende ohnehin alles ans Licht kommen wird."
+        },
+        {
+            type: "text",
+            content: "SEINE ANTWORTEN: Dershowitz argumentiert, dass wir bereits fast alles wissen, aber es immer noch einige Akten gibt, die von Gerichten unter Verschluss gehalten werden, nicht von der Regierung. Er sagt, er habe wahrscheinlich mehr Material, einschließlich unterdrückter Aussagen und Dokumente, gesehen als fast jeder andere."
+        },
+        {
+            type: "title",
+            content: "2. Die Rolle von Donald Trump – Die zentrale Entlastung"
+        },
+        {
+            type: "text",
+            content: "Die Frage, ob es eine „rauchende Kanone“ (Smoking Gun) gegen Präsident Trump geben könnte, ist politisch hochbrisant. Hier liefert Dershowitz eine klare Antwort."
+        },
+        {
+            type: "text",
+            content: "HERVORGEHOBENE ANTWORT: Dershowitz bestätigte im Interview, dass er Jeffrey Epstein während der Verhandlungen für einen möglichen Deal direkt fragte: „Gibt es irgendetwas, was Sie mir über andere Personen geben können, das ich der Regierung anbieten könnte, um ein besseres Geschäft für Sie zu bekommen?“ Dershowitz ging eine Namensliste durch, einschließlich Donald Trumps."
+        },
+        {
+            type: "text",
+            content: "Epsteins Antwort laut Dershowitz war eindeutig: „Nein, es gibt absolut nichts über Donald Trump.“"
+        },
+        {
+            type: "text",
+            content: "Epstein nannte ihm zwar den Namen einer anderen Person, die er belasten konnte – einen Geschäftsmann, nicht aber eine heute in der Regierung tätige Person."
+        },
+        {
+            type: "text",
+            content: "ANALYSE DES TRUMP-KOMMENTARS: Dershowitz hält Trump somit für „im Reinen“ (in the clear), basierend auf Epsteins direkter Aussage zu der Zeit, als dieser Material gegen Prominente als Verhandlungsmasse hätte nutzen können. Dies konterkariert direkt alle Hoffnungen oder jüngsten Versuche der politischen Gegenseite, Trump durch diese Akten zu diskreditieren."
+        },
+        {
+            type: "title",
+            content: "3. Das Politische Schwarzer-Peter-Spiel"
+        },
+        {
+            type: "text",
+            content: "Dershowitz sieht die politische Verflechtung klar. Er erwartet, dass die Demokraten die Republikaner und die Republikaner die Demokraten beschuldigen werden. Er schlägt vor, dass stattdessen Jeffrey Epstein die Schuld zugewiesen werden sollte, da er derjenige war, der die schrecklichen Dinge tat."
+        },
+        {
+            type: "text",
+            content: "KONTEXT ZUR AKTUELLEN DEBATTE: Man könnte argumentieren, dass der jüngste Versuch, Präsident Trump durch scheinbar harmlose E-Mails zu diskreditieren – der in den Quellen durch die allgemeine politische Anschuldigung und die Entlastung Trumps durch Dershowitz widergespiegelt wird – nach hinten losgegangen ist. Er führte nur dazu, dass die Öffentlichkeit noch lauter die vollständige Veröffentlichung aller Akten forderte, eine Forderung, die Dershowitz selbst teilt. Dershowitz merkte an, dass, wenn die Demokraten tatsächlich etwas gegen Trump in der Hand hätten, sie es bereits veröffentlicht hätten."
+        },
+        {
+            type: "title",
+            content: "4. Dershowitz' persönliches Verhältnis zu Epstein"
+        },
+        {
+            type: "text",
+            content: "Es gab Gerüchte, Dershowitz und Epstein seien beste Freunde gewesen. Dershowitz weist dies vehement zurück."
+        },
+        {
+            type: "text",
+            content: "SEINE ANTWORTEN: Epstein hasste Dershowitz in den letzten zehn Jahren seines Lebens. Epstein war wütend auf ihn, weil er den Plea Deal 2008 ausgehandelt hatte, der Epstein für 13 Monate ins Gefängnis brachte und ihn zwang, sich als Sexualstraftäter registrieren zu lassen. Epstein beschuldigte Dershowitz, „wahnsinnig“ und ein „schrecklicher Anwalt“ gewesen zu sein. Dershowitz sagt, je mehr Epstein ihn angreife, desto glücklicher sei er, da dies beweise, dass er seine persönliche Verbindung sofort beendete, als er von den Anschuldigungen erfuhr."
+        },
+        {
+            type: "text",
+            content: "Seine Beziehung begann als akademische Freundschaft; sie besuchten Seminare in Harvard, an denen Nobelpreisträger teilnahmen. Dershowitz beendete seine persönliche Teilnahme an diesen Treffen an dem Tag, als er von den Vorwürfen hörte, und führte nur noch eine professionelle Anwaltsbeziehung."
+        },
+        {
+            type: "title",
+            content: "ANALYSE DES SKRIPTS / WARUM DIE GEHEIMHALTUNG?"
+        },
+        {
+            type: "instruction",
+            content: "(BILDER: Gerichtssaal, verschlossene Akten, Schlagzeilen)"
+        },
+        {
+            type: "text",
+            content: "Warum gibt es so viel Geheimhaltung? Warum wurden nicht alle Informationen zu diesem Fall offengelegt, obwohl Dershowitz und viele andere die vollständige Freigabe fordern?"
+        },
+        {
+            type: "text",
+            content: "Die Quellen legen nahe, dass die Argumentation, die zur Geheimhaltung führt, komplex ist und zwischen dem Schutz der Opfer und der Angst vor Vertuschung oder Verleumdung oszilliert."
+        },
+        {
+            type: "text",
+            content: "1. Die Sorge vor Verleumdung und „Schuld durch Assoziation“: Dershowitz argumentiert, dass heute die Medien und die Öffentlichkeit davon ausgehen, dass man schuldig ist, wenn der Name auch nur auf einer Liste, in Flugprotokollen oder in einem Dokument auftaucht – selbst wenn die Kontakte harmlos waren. Er versteht die Zurückhaltung mancher Personen, die unschuldig sind, aber befürchten, vom medialen Schmutz getroffen zu werden. Dies dient dem Schutz der Reputation unbeteiligter Personen."
+        },
+        {
+            type: "text",
+            content: "2. Gerichtliche Unterdrückung: Dershowitz bestätigte, dass einige Akten immer noch durch Richteranordnungen geheim gehalten werden, was auf laufende rechtliche Sensibilitäten hindeutet."
+        },
+        {
+            type: "text",
+            content: "3. Die „Vertuschung“ These (Die Wahrheit): Für viele Bürger ist die fortgesetzte Geheimhaltung ein klares Zeichen für eine Vertuschung, um mächtige Persönlichkeiten zu schützen, deren Namen in den Dokumenten auftauchen – selbst wenn die Dokumente nur vage Anschuldigungen enthalten oder wie im Fall Dershowitz keine neuen Beweise für Fehlverhalten enthielten. Obwohl Dershowitz selbst behauptet, dass alles herauskommen muss, um die Wahrheit zu finden, nährt die Sorge um die mediale Verleumdung die juristische Praxis der Geheimhaltung, was wiederum den Verdacht der Vertuschung verstärkt."
+        },
+        {
+            type: "text",
+            content: "Der Kern des Dilemmas liegt also darin: Die Richter versuchen möglicherweise, die unschuldige Reputation von Assoziierten zu schützen, aber dieses Zurückhalten verstärkt den Verdacht, dass die gesamte Wahrheit nie ans Licht kommen soll."
+        },
+        {
+            type: "instruction",
+            content: "(SCHLUSSFOLGERUNG – BILDER: Logo @TranslatedPressDE)"
+        },
+        {
+            type: "text",
+            content: "Dershowitz' Aussage, dass es in den ihm bekannten Akten nichts gibt, was Donald Trump kompromittieren könnte, stellt einen wichtigen Ankerpunkt in dieser politisierten Debatte dar. Es scheint, als sei das größte Geheimnis nicht, wer auf den Listen steht, sondern die Wahrheit darüber, warum es so schwierig ist, die vollständige juristische Transparenz zu erlangen."
+        },
+        {
+            type: "text",
+            content: "Vielen Dank für Ihr Interesse. Bleiben Sie uns gewogen und informieren Sie sich kritisch."
+        }
+    ];
+
+    // ====================================================================
+    // ⬆️⬆️⬆️  FIN DE LA CONFIGURACIÓN - NO TOCAR NADA ABAJO  ⬆️⬆️⬆️
+    // ====================================================================
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const scriptContainer = document.getElementById('script-container');
+
+      // 1. Generar el HTML basado en scriptData
+      scriptData.forEach(item => {
+          let el;
+          if (item.type === 'title') {
+              el = document.createElement('h2');
+              el.className = 'timestamp';
+          } else if (item.type === 'instruction') {
+              el = document.createElement('p');
+              el.className = 'instruction';
+          } else {
+              // Default: text
+              el = document.createElement('p');
+              el.className = 'speaker-text';
+          }
+          el.textContent = item.content;
+          scriptContainer.appendChild(el);
+      });
+
+      // 2. Lógica del Teleprompter (Original)
+      const tpPane = document.body;
+      const tpControls = document.getElementById('controls');
+      const tpPlayPauseBtn = tpControls.querySelector('#play-pause-btn');
+      const tpResetBtn = tpControls.querySelector('#reset-btn');
+      const tpSpeedSlider = tpControls.querySelector('#speed-slider');
+      const tpFontsizeSlider = tpControls.querySelector('#fontsize-slider');
+      const tpToggleInstructionsBtn = tpControls.querySelector('#toggle-instructions');
+      
+      // Seleccionamos los textos recién creados
+      const tpSpeakerTexts = document.querySelectorAll('.speaker-text');
+      
+      let isScrolling = false;
+      let scrollSpeed = parseFloat(tpSpeedSlider.value) / 40;
+      let animationFrameId = null;
+
+      function tpScroll() {
+        if (!isScrolling) return;
+        window.scrollBy(0, scrollSpeed);
+        animationFrameId = requestAnimationFrame(tpScroll);
+      }
+
+      function tpTogglePlayPause() {
+        isScrolling = !isScrolling;
+        if (isScrolling) {
+          tpPlayPauseBtn.textContent = 'Pause';
+          tpScroll();
+        } else {
+          tpPlayPauseBtn.textContent = 'Play';
+          cancelAnimationFrame(animationFrameId);
+        }
+      }
+
+      tpPlayPauseBtn.addEventListener('click', tpTogglePlayPause);
+      
+      tpResetBtn.addEventListener('click', () => {
+        window.scrollTo(0, 0);
+        if (isScrolling) {
+          isScrolling = false;
+          tpPlayPauseBtn.textContent = 'Play';
+          cancelAnimationFrame(animationFrameId);
+        }
+      });
+
+      tpSpeedSlider.addEventListener('input', (e) => {
+        scrollSpeed = parseFloat(e.target.value) / 40;
+      });
+
+      tpFontsizeSlider.addEventListener('input', (e) => {
+        const newSize = e.target.value + 'px';
+        tpSpeakerTexts.forEach(textEl => { textEl.style.fontSize = newSize; });
+      });
+
+      tpToggleInstructionsBtn.addEventListener('change', (e) => {
+        if (e.target.checked) {
+          document.body.classList.add('hide-instructions');
+        } else {
+          document.body.classList.remove('hide-instructions');
+        }
+      });
+
+      // Inicializar tamaño de fuente
+      const initialFontSize = tpFontsizeSlider.value + 'px';
+      tpSpeakerTexts.forEach(textEl => { textEl.style.fontSize = initialFontSize; });
+
+      // Control con barra espaciadora
+      document.addEventListener('keydown', (e) => {
+        if (e.key === ' ') {
+          e.preventDefault();
+          tpTogglePlayPause();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
