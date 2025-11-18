@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teleprompter: Demokraten Panik</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+    body { background-color: #111; color: #f0f0f0; font-family: 'Inter', sans-serif; }
+    #controls { position: sticky; bottom: 0; left: 0; right: 0; background-color: #222; border-top: 2px solid #3B82F6; padding: 0.75rem 1rem; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.75rem; z-index: 1000; box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5); }
+    #controls button { background-color: #3B82F6; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background-color 0.2s; }
+    #controls button:hover { background-color: #2563EB; }
+    #controls label { font-weight: 600; margin-left: 0.25rem; color: #ddd; font-size: 0.875rem; }
+    #controls input[type="range"] { cursor: pointer; width: 120px; }
+    .toggle-switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #444; transition: .3s; border-radius: 28px; }
+    .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .3s; border-radius: 50%; }
+    input:checked + .slider { background-color: #3B82F6; }
+    input:checked + .slider:before { transform: translateX(22px); }
+    #script-container { padding: 1rem 2rem; padding-bottom: 100vh; max-width: 900px; margin: 0 auto; line-height: 1.7; }
+    .speaker-text { font-size: 2.25rem; font-weight: 600; color: #ffffff; margin-bottom: 1rem; }
+    .instruction { font-size: 1.125rem; color: #FFD700; font-style: italic; background-color: #2a2a2a; border-left: 4px solid #FFD700; padding: 0.75rem; margin-bottom: 1rem; border-radius: 0 8px 8px 0; opacity: 0.9; }
+    .timestamp { font-size: 1.25rem; font-weight: 600; color: #3B82F6; border-top: 2px solid #444; padding-top: 1rem; margin-top: 2rem; margin-bottom: 1rem; }
+    body.hide-instructions .instruction { display: none; }
+    @media (max-width: 768px) { #controls { padding: 0.5rem; gap: 0.5rem; } #controls > label:not(.toggle-switch) { display: none; } #controls input[type="range"] { width: 90px; } #controls button { padding: 0.4rem 0.6rem; font-size: 0.875rem; } }
+  </style>
+</head>
+<body class="">
+  <div id="script-container">
+    <!-- HIER BEGINNT DAS SKRIPT -->
+
+    <h2 class="timestamp">Panik bei den Demokraten. Sie zerstören sich selbst.</h2>
+    <h2 class="timestamp">Der Epstein-Bumerang: Wie die Aktenveröffentlichung das Netzwerk der Demokraten enthüllte</h2>
+
+    <p class="speaker-text">Die kürzlich erfolgte Freigabe von über 20.000 Dokumenten aus dem Nachlass von Jeffrey Epstein, die von einem politischen Manöver der Demokraten ausgelöst wurde, hat sich als gewaltiger Bumerang erwiesen, der den Fokus auf tief verwurzelte Verbindungen innerhalb der demokratischen Elite lenkt.</p>
+
+    <h2 class="timestamp">1. Die Eskalation und der politische Fehlschlag</h2>
+
+    <p class="speaker-text">Die Veröffentlichung der Akten (November 2025) ist das Ergebnis eines eskalierenden politischen Kampfes:</p>
+
+    <p class="speaker-text">Opferforderung und Petition: Opfer wie Jess Michaels fordern seit langem die vollständige Offenlegung der Unterlagen. Sie sagt, es gäbe keine graue Linie, man schütze entweder Pädophile oder Kinder und Opfer. Die demokratische Abgeordnete Angelita Gel setzte die 218. Unterschrift unter eine Petition, um das Justizministerium (DOJ) zur kompletten Offenlegung der Akten zu zwingen.</p>
+
+    <p class="speaker-text">Selektive Veröffentlichung: Demokraten veröffentlichten zunächst nur drei selektive E-Mails von Epstein, um Präsident Donald Trump zu belasten und den Skandal neu zu entfachen, offenbar als Ablenkung von der drohenden Haushaltssperre (shutdown). Diese Selektion wurde als "Rosinenpickerei" (cherry-picking) kritisiert.</p>
+
+    <p class="speaker-text">Trumps Gegenangriff: Trump, der die Veröffentlichung der Akten im Wahlkampf versprochen, sich aber danach zurückhaltend gezeigt hatte, forderte nun die totale Freigabe aller Epstein-Akten, da er "nichts zu verbergen" habe. Er bezeichnete die Aktion der Demokraten als "Schwindel" (hoax), der von seiner großartigen Arbeit ablenken solle.</p>
+
+    <p class="speaker-text">Der Bumerang-Effekt: Die von Republikanern erzwungene vollständige Freigabe von über 20.000 Seiten bewirkte, dass die Anschuldigungen gegen Trump verwässert wurden (die meisten Hinweise auf Trump waren soziale Gerüchte oder Kritik, keine Beweise für Straftaten). Stattdessen wurden "tiefer gehende und anhaltende Verbindungen" zu prominenten Demokraten offengelegt.</p>
+
+    <h2 class="timestamp">2. Die entlarvten Absprachen der Demokraten</h2>
+
+    <p class="speaker-text">Die E-Mails legen das angebliche Komplott von hochrangigen Demokraten offen, Jeffrey Epstein zu nutzen, um Donald Trump zu Fall zu bringen:</p>
+
+    <p class="speaker-text">Kathy Rumler (Ex-Obama-Beraterin): Die ehemalige Rechtsberaterin des Weißen Hauses unter Barack Obama, Kathy Rumler, kommunizierte in den Jahren 2018 und 2019 persönlich mit Epstein, um Pläne zu schmieden, wie Präsident Trump angeklagt oder einem Amtsenthebungsverfahren unterzogen werden könnte. Epstein sagte ihr, er wisse, "wie schmutzig Donald ist". Dies geschah zehn Jahre nach Epsteins Verurteilung wegen Kinderprostitution.</p>
+
+    <p class="speaker-text">Stacy Plaskett (Kongressabgeordnete): Die demokratische Abgeordnete Stacy Plaskett, Mitglied des House Oversight Committee (Aufsichtsausschuss), kommunizierte während einer Kongressanhörung im Jahr 2019 aktiv per SMS mit Epstein. Epstein lieferte Plaskett buchstäblich Fragen und Gesprächspunkte, um Trump während der Anhörung Schaden zuzufügen. Der republikanische Abgeordnete James Comer sagte dazu, es sehe so aus, als hätten "alle mit derselben Person zusammengearbeitet: Jeffrey Epstein".</p>
+
+    <h2 class="timestamp">3. Die Verbindungen von Bill Clinton und der demokratischen Elite</h2>
+
+    <p class="speaker-text">Bill Clinton, ehemaliger US-Präsident, wird in den Dokumenten besonders häufig erwähnt. Die Verbindungen von Clinton waren "tiefer und anhaltender" als die von Trump:</p>
+
+    <p class="speaker-text">Flüge: Clinton flog zwischen 2002 und 2003 26 Mal mit Epsteins Privatjet, dem "Lolita Express", unter anderem für eine humanitäre Afrikareise. Aufzeichnungen belegen jedoch, dass Clinton nie zu Epsteins Insel Little St. James flog.</p>
+
+    <p class="speaker-text">"Schutz von Bill": Die E-Mails von 2015 zeigen, wie Epstein mit Ghislaine Maxwell diskutierte, wie man "Bill schützen" könne. Dies bezog sich auf die Anschuldigungen des Opfers Virginia Giuffre, die behauptet hatte, Clinton auf der Insel mit "jungen Mädchen" gesehen zu haben. Epstein nutzte dies als "politische Munition". Clinton bestreitet jegliche Kenntnis von Epsteins illegalen Machenschaften.</p>
+
+    <p class="speaker-text">Weitere Demokraten: Die E-Mails enthüllen auch Verbindungen zu Larry Summers (ehemaliger Finanzminister unter Clinton) und Reid Hoffman (LinkedIn-Mitbegründer und Megadonor der Demokraten). Summers scherzte 2017 mit Epstein über Trump und nannte ihn einen "gefährlichen Clown".</p>
+
+    <h2 class="timestamp">4. Trumps Gegenangriff und die DOJ-Untersuchung</h2>
+
+    <p class="speaker-text">Als direkte Reaktion auf das Backfire der Dokumentenfreigabe ordnete Präsident Trump am 14. November an, dass das Justizministerium (DOJ) eine formelle Untersuchung der demokratischen Verbindungen einleiten solle.</p>
+
+    <p class="speaker-text">Ermittlungsforderung: Trump forderte Generalstaatsanwältin Pam Bondi auf, die Beziehungen von Epstein zu Bill Clinton, Larry Summers, Reid Hoffman, JPMorgan Chase und anderen Institutionen zu untersuchen.</p>
+
+    <p class="speaker-text">Widerspruch: Das Justizministerium (DOJ) unter Bondi kündigte an, dieser Forderung nachzukommen. Diese Entscheidung steht im Widerspruch zu einem Vermerk des DOJ vom Juli 2025, in dem noch erklärt wurde, es gäbe keine "glaubwürdigen Beweise, die eine Untersuchung gegen nicht angeklagte Dritte rechtfertigen könnten".</p>
+
+    <p class="speaker-text">Konsequenz: Trumps Schachzug blockierte vorübergehend weitere Freigaben von Epstein-Dokumenten, da nun "aktive Ermittlungen" gegen Clinton und andere Demokraten laufen.</p>
+
+    <h2 class="timestamp">5. Ausblick: Transparenz und politische Spaltung</h2>
+
+    <p class="speaker-text">Die Zustimmung zur Petition zur Aktenfreigabe gilt im Repräsentantenhaus als sicher, aber im Senat gibt es eine 60-Stimmen-Hürde. Das Thema verschwindet nicht und die Woge, die es schlägt, könnte bis zu den Midtermwahlen reichen. Überlebende drängen weiterhin auf "vollständige Transparenz".</p>
+
+    <p class="speaker-text">Der Versuch der Demokraten, den Epstein-Skandal als politische Handgranate gegen Trump einzusetzen, ist gescheitert. Stattdessen prallte die Waffe ab und detonierte im eigenen Kommandoposten, wodurch das demokratische Establishment gezwungen ist, sich gegen Anschuldigungen der kriminellen Absprache zu verteidigen.</p>
+
+    <!-- HIER ENDET DAS SKRIPT -->
+  </div>
+
+  <div id="controls">
+    <button id="play-pause-btn">Play</button>
+    <button id="reset-btn">Reset</button>
+    <label for="speed-slider">Tempo:</label>
+    <input type="range" id="speed-slider" min="1" max="100" value="20">
+    <label for="fontsize-slider">Schriftgröße:</label>
+    <input type="range" id="fontsize-slider" min="20" max="80" value="36">
+    <label for="toggle-instructions">Anweisungen ausblenden:</label>
+    <label class="toggle-switch"> <input type="checkbox" id="toggle-instructions"> <span class="slider"></span> </label>
+  </div>
+
+  <script type="module">
+    document.addEventListener('DOMContentLoaded', () => {
+      const tpPane = document.body;
+      const tpControls = document.getElementById('controls');
+      const tpPlayPauseBtn = tpControls.querySelector('#play-pause-btn');
+      const tpResetBtn = tpControls.querySelector('#reset-btn');
+      const tpSpeedSlider = tpControls.querySelector('#speed-slider');
+      const tpFontsizeSlider = tpControls.querySelector('#fontsize-slider');
+      const tpToggleInstructionsBtn = tpControls.querySelector('#toggle-instructions');
+      const tpSpeakerTexts = document.querySelectorAll('.speaker-text');
+      let isScrolling = false;
+      let scrollSpeed = parseFloat(tpSpeedSlider.value) / 40;
+      let animationFrameId = null;
+      function tpScroll() {
+        if (!isScrolling) return;
+        window.scrollBy(0, scrollSpeed);
+        animationFrameId = requestAnimationFrame(tpScroll);
+      }
+      function tpTogglePlayPause() {
+        isScrolling = !isScrolling;
+        if (isScrolling) {
+          tpPlayPauseBtn.textContent = 'Pause';
+          tpScroll();
+        } else {
+          tpPlayPauseBtn.textContent = 'Play';
+          cancelAnimationFrame(animationFrameId);
+        }
+      }
+      tpPlayPauseBtn.addEventListener('click', tpTogglePlayPause);
+      tpResetBtn.addEventListener('click', () => {
+        window.scrollTo(0, 0);
+        if (isScrolling) {
+          isScrolling = false;
+          tpPlayPauseBtn.textContent = 'Play';
+          cancelAnimationFrame(animationFrameId);
+        }
+      });
+      tpSpeedSlider.addEventListener('input', (e) => {
+        scrollSpeed = parseFloat(e.target.value) / 40;
+      });
+      tpFontsizeSlider.addEventListener('input', (e) => {
+        const newSize = e.target.value + 'px';
+        tpSpeakerTexts.forEach(textEl => { textEl.style.fontSize = newSize; });
+      });
+      tpToggleInstructionsBtn.addEventListener('change', (e) => {
+        if (e.target.checked) {
+          document.body.classList.add('hide-instructions');
+        } else {
+          document.body.classList.remove('hide-instructions');
+        }
+      });
+      const initialFontSize = tpFontsizeSlider.value + 'px';
+      tpSpeakerTexts.forEach(textEl => { textEl.style.fontSize = initialFontSize; });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === ' ') {
+          e.preventDefault();
+          tpTogglePlayPause();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
