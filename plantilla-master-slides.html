@@ -3,6 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ==================================================================== -->
+    <!-- ⚠️ CONFIGURACIÓN WHATSAPP (EDITAR MANUALMENTE AQUÍ) ⚠️               -->
+    <!-- WhatsApp no lee el JavaScript de abajo, así que debes cambiar esto   -->
+    <!-- para cada nuevo programa si quieres que salga la foto al compartir.  -->
+    <!-- ==================================================================== -->
+    
+    <meta property="og:title" content="TITEL DER PRÄSENTATION" /> 
+    <meta property="og:description" content="Präsentation ansehen" />
+    
+    <!-- CAMBIA 'IMG_X.JPG' POR LA IMAGEN QUE QUIERAS MOSTRAR EN WHATSAPP -->
+    <meta property="og:image" content="https://zmau.dev/epst/img/IMG_X.JPG" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    
+    <!-- ==================================================================== -->
+
     <title>Präsentation Master</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -201,13 +218,13 @@
         const slidesData = [
             {
                 // DIAPOSITIVA 1 (PORTADA)
-                title: "Titel der Präsentation Hier", // Título principal
-                titleColorClass: "text-accent-red",   // Color: text-accent-red (rojo) o text-accent-blue (azul) o vacío ""
+                title: "Titel der Präsentation Hier", 
+                titleColorClass: "text-accent-red",   // Opciones: "text-accent-red", "text-accent-blue", ""
                 points: [
                     "Unterzeile 1: Zusammenfassung",
                     "Unterzeile 2: Wichtiger Punkt"
                 ],
-                image: "img/IMG_1.JPG" // Ruta de la imagen
+                image: "img/IMG_1.JPG" // Ruta de la imagen local
             },
             {
                 // DIAPOSITIVA 2
@@ -231,7 +248,7 @@
                 ],
                 image: "img/IMG_3.JPG"
             }
-            // ... COPIA Y PEGA BLOQUES { ... } PARA MÁS DIAPOSITIVAS ...
+            // ... PARA AÑADIR MÁS, COPIA Y PEGA EL BLOQUE ENTRE LLAVES { ... } ...
         ];
 
         // ====================================================================
@@ -241,21 +258,18 @@
         document.addEventListener('DOMContentLoaded', () => {
             const container = document.getElementById('presentation-container');
             
-            // 1. Generar Diapositivas desde los Datos
+            // Generar Diapositivas desde los Datos
             slidesData.forEach((data, index) => {
                 const slide = document.createElement('div');
-                slide.className = 'slide'; // Inicialmente oculto
+                slide.className = 'slide';
                 
-                // Construir lista de puntos
                 let pointsHtml = '';
                 data.points.forEach(point => {
                     pointsHtml += `<li>${point}</li>`;
                 });
 
-                // Título con clase de color opcional
                 const titleClass = data.titleColorClass ? data.titleColorClass : '';
 
-                // HTML de la diapositiva
                 slide.innerHTML = `
                     <div class="slide-layout">
                         <div class="content">
@@ -273,7 +287,7 @@
                 container.appendChild(slide);
             });
 
-            // 2. Inicializar Lógica de Presentación (Igual que antes)
+            // Inicializar Lógica de Presentación
             const slides = document.querySelectorAll('.slide');
             const lightbox = document.getElementById('lightbox');
             const lightboxImage = document.getElementById('lightbox-image');
@@ -332,7 +346,6 @@
 
             container.addEventListener('click', handleTapNavigation);
             
-            // Mostrar la primera diapositiva
             if (totalSlides > 0) {
                 showSlide(0);
             }
@@ -340,4 +353,5 @@
     </script>
 </body>
 </html>
+
 
