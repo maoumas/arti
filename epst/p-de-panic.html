@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programminfo: Demokraten in Panik</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        
+        body {
+            background-color: #111827; /* Dunkler Hintergrund */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            font-family: 'Inter', sans-serif;
+            color: #E5E7EB; /* Heller Text */
+        }
+
+        #canvas {
+            background-color: #1F2937; /* Kartenhintergrund */
+            border-radius: 12px;
+            padding: 28px;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            border: 1px solid #374151;
+        }
+
+        /* Titel - Jetzt mit rotem Akzent */
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #FFFFFF;
+            border-bottom: 2px solid #EF4444; /* Roter Akzent */
+            padding-bottom: 12px;
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        /* Datum */
+        .datum {
+            font-size: 16px;
+            font-style: italic;
+            color: #9CA3AF; /* Grau */
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        /* Beschreibung */
+        .beschreibung {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        /* Überschriften für Links */
+        .link-header {
+            font-size: 20px;
+            font-weight: 600;
+            color: #FFFFFF;
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
+
+        /* Box, die den Link und Button enthält */
+        .link-box {
+            background-color: #111827;
+            border-radius: 8px;
+            padding: 16px;
+            border: 1px solid #374151;
+            margin-bottom: 16px;
+        }
+
+        /* Link-Text-Anzeige */
+        .link-text {
+            display: block;
+            background-color: #111827;
+            padding: 12px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 15px;
+            word-break: break-all;
+            color: #93C5FD; /* Hellblau für Link */
+        }
+        .link-text a {
+            color: #93C5FD;
+            text-decoration: none;
+        }
+        .link-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* Kopieren-Button */
+        .copy-button {
+            background-color: #3B82F6; /* Blau */
+            color: #FFFFFF;
+            border: none;
+            padding: 12px 16px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 16px;
+            width: 100%;
+        }
+        .copy-button:hover {
+            background-color: #2563EB; /* Dunkleres Blau */
+        }
+        .copy-button.copied {
+            background-color: #059669; /* Erfolgsgrün */
+        }
+
+        /* Bild-Vorschau-Rahmen */
+        .image-frame {
+            margin-top: 12px;
+            border: 2px solid #EF4444; /* Roter Akzentrahmen */
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #111827;
+        }
+        .image-frame img {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="canvas">
+        
+        <h1>DEMOKRATEN IN PANIK</h1>
+        <p class="datum">Programm vom 18. November 2025</p>
+
+        <p class="beschreibung">
+            Eine Analyse, wie die von den Demokraten erzwungene Veröffentlichung der Epstein-Akten nach hinten losging und stattdessen ihre eigenen tiefen Verbindungen zum Skandal enthüllte (der "Bumerang-Effekt").
+        </p>
+        
+        <!-- ==================
+             LINK 1: SLIDES
+        ================== -->
+        <h2 class="link-header">PRESENTACIÓN (Folien)</h2>
+        <div class="link-box">
+            <span class="link-text">
+                <a href="https://zmau.dev/slides-dem-panic" target="_blank">
+                    https://zmau.dev/epst/slides-de-panic
+                </a>
+            </span>
+            <button id="copy-slides-btn" class="copy-button">
+                Link Kopieren
+            </button>
+        </div>
+
+        <!-- ==================
+             LINK 2: TELEPROMPTER
+        ================== -->
+        <h2 class="link-header">TELEPROMPTER (Skript)</h2>
+        <div class="link-box">
+            <span class="link-text">
+                <a href="https://zmau.dev/epst/tp-dem-panic" target="_blank">
+                    https://zmau.dev/epst/tp-dem-panic
+                </a>
+            </span>
+            <button id="copy-tp-btn" class="copy-button">
+                Link Kopieren
+            </button>
+        </div>
+
+        <!-- ==================
+             BILD-VORSCHAU
+        ================== -->
+        <h2 class="link-header">Vorschaubild</h2>
+        <div class="image-frame">
+            <img src="img/IMG_0.JPG" 
+                 alt="Vorschaubild" 
+                 onerror="this.src='https://placehold.co/1600x900/1F2937/FFFFFF?text=Fehler%0Aimg/IMG_0.JPG'; this.onerror=null;">
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const copySlidesBtn = document.getElementById('copy-slides-btn');
+            const copyTpBtn = document.getElementById('copy-tp-btn');
+            
+            const slideLink = 'https://zmau.dev/slides-dem-panic';
+            const tpLink = 'https://zmau.dev/epst/tp-dem-panic';
+
+            // Funktion für den Kopiervorgang
+            function handleCopyClick(buttonElement, textToCopy, originalText) {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    // Erfolg: Visuelles Feedback geben
+                    buttonElement.textContent = '✅ Link Kopiert!';
+                    buttonElement.classList.add('copied');
+                    
+                    // Nach 2 Sekunden zurücksetzen
+                    setTimeout(() => {
+                        buttonElement.textContent = originalText;
+                        buttonElement.classList.remove('copied');
+                    }, 2000);
+                }).catch(err => {
+                    // Fehler behandeln
+                    buttonElement.textContent = 'Fehler beim Kopieren';
+                    console.error('Kopieren fehlgeschlagen: ', err);
+                });
+            }
+
+            // Event-Listener für beide Buttons
+            copySlidesBtn.addEventListener('click', () => {
+                handleCopyClick(copySlidesBtn, slideLink, 'Link Kopieren');
+            });
+            
+            copyTpBtn.addEventListener('click', () => {
+                handleCopyClick(copyTpBtn, tpLink, 'Link Kopieren');
+            });
+        });
+    </script>
+
+</body>
+</html>
+
