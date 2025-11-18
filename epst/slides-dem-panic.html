@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Präsentation: Der Epstein-Bumerang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        
+        /* Grundlegendes Setup, um Vollbild und kein Scrollen zu erzwingen */
+        html, body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #111827; 
+            color: #F9FAFB; 
+            overflow: hidden;
+            height: 100%;
+        }
+        #presentation-container { 
+            position: relative; 
+            width: 100%; 
+            height: 100%; /* Füllt den gesamten Viewport */
+            overflow: hidden; 
+        }
+        
+        /* Folien-Styling */
+        .slide { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            padding: 4% 8%; /* Etwas weniger vertikales Padding */
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+            opacity: 0; 
+            visibility: hidden; 
+            transition: opacity 0.4s ease-in-out; 
+            box-sizing: border-box; /* Stellt sicher, dass Padding in der Höhe enthalten ist */
+        }
+        .slide.active { 
+            opacity: 1; 
+            visibility: visible; 
+        }
+
+        /* Akzentfarben */
+        .text-accent-red { color: #EF4444; }
+        .text-accent-blue { color: #3B82F6; }
+        
+        /* Steuerleiste am unteren Rand */
+        #controls-wrapper { 
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            width: 100%; 
+            background-color: #1F2937; 
+            z-index: 100; 
+            border-top: 1px solid #374151;
+        }
+        #controls { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 12px 0;
+            max-width: 300px;
+            margin: 0 auto;
+            gap: 1rem;
+        }
+        .control-btn { 
+            background-color: #374151; 
+            border: none; 
+            color: #F9FAFB; 
+            cursor: pointer; 
+            padding: 10px; 
+            margin: 0 10px; 
+            border-radius: 50%; 
+            transition: background-color 0.2s; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .control-btn:hover { background-color: #4B5563; }
+        .control-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .control-btn svg { width: 24px; height: 24px; pointer-events: none; }
+        #slide-counter {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #D1D5DB;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        /* Bildcontainer */
+        .image-container { 
+            max-width: 450px; 
+            width: 100%; 
+            margin-top: 1rem; /* Weniger Abstand auf Mobilgeräten */
+        }
+        .image-container img { 
+            width: 100%; 
+            height: auto; 
+            border-radius: 12px; 
+            border: 2px solid #374151; 
+            cursor: zoom-in; 
+            object-fit: cover; 
+            aspect-ratio: 16 / 10; 
+        }
+        
+        /* Layout-Container */
+        .slide-layout { 
+            display: flex; 
+            flex-direction: column; 
+            width: 100%; 
+            height: 100%; 
+            justify-content: center; 
+            align-items: center; 
+            padding-bottom: 70px; /* Platz für Steuerung auf Mobilgeräten */ 
+        }
+        
+        /* MOBILE ANPASSUNG: Schriftgrößen und Abstände */
+        .slide-layout h1, .slide-layout h2 {
+            font-size: 1.75rem; /* text-3xl */
+            line-height: 2.25rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+        .slide-layout ul {
+            font-size: 1rem; /* text-lg */
+            line-height: 1.5rem;
+            space-y: 0.5rem; /* space-y-2 */
+        }
+        
+        /* Desktop-Layout: Nebeneinander und größere Schrift */
+        @media (min-width: 768px) { 
+            .slide-layout { 
+                flex-direction: row; 
+                gap: 2rem; 
+                padding-bottom: 0; 
+            } 
+            .slide-layout .content { 
+                flex-basis: 50%; 
+                text-align: left; 
+            } 
+            .slide-layout .image-container { 
+                flex-basis: 50%; 
+                margin-top: 0; 
+            } 
+            ul { padding-left: 1.5rem; }
+            
+            /* Größere Schriftarten für Desktop */
+            .slide-layout h1, .slide-layout h2 {
+                font-size: 2.25rem; /* md:text-5xl */
+                line-height: 2.5rem;
+                margin-bottom: 1.5rem;
+            }
+            .slide-layout ul {
+                font-size: 1.25rem; /* md:text-2xl */
+                line-height: 1.75rem;
+                space-y: 0.75rem; /* md:space-y-3 */
+            }
+        }
+        
+        /* Lightbox */
+        .lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); display: none; align-items: center; justify-content: center; z-index: 1000; cursor: zoom-out; }
+        #lightbox-image { max-width: 90%; max-height: 90vh; border-radius: 8px; border: 2px solid #F9FAFB; }
+        .lightbox-close { position: absolute; top: 20px; right: 35px; color: #F9FAFB; font-size: 40px; font-weight: bold; cursor: pointer; line-height: 1; }
+    </style>
+</head>
+<body>
+    <div id="presentation-container">
+
+        <!-- Folie 1: Titel (Startet mit .active) -->
+        <div class="slide active">
+            <div class="slide-layout">
+                <div class="content">
+                    <h1 class="text-accent-red">Der Epstein-Bumerang</h1>
+                    <ul class="list-disc">
+                        <li>Panik bei den Demokraten: Sie zerstören sich selbst.</li>
+                        <li>Wie die Aktenveröffentlichung das Netzwerk enthüllte.</li>
+                    </ul>
+                </div>
+                <div class="image-container">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/8313296850976867142" alt="Ein symbolischer roter Bumerang vor dunklem Hintergrund">
+                </div>
+            </div>
+        </div>
+
+        <!-- Folie 2: Die Eskalation -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2>Die Eskalation & der Fehlschlag</h2>
+                    <ul class="list-disc">
+                        <li>Opfer (Jess Michaels) & Abgeordnete (Angelita Gel) forderten Offenlegung.</li>
+                        <li>Demokraten veröffentlichten <span class="text-accent-red">nur 3 selektive E-Mails</span>, um Trump zu belasten.</li>
+                        <li>Ziel: Ablenkung von der Haushaltssperre (*shutdown*).</li>
+                    </ul>
+                </div>
+                <div class="image-container">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/9120422743097564412" alt="Ein einzelnes brennendes Streichholz im Dunkeln (selektive Enthüllung)">
+                </div>
+            </div>
+        </div>
+
+        <!-- Folie 3: Der Bumerang-Effekt -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2>Der <span class="text-accent-red">Bumerang-Effekt</span></h2>
+                    <ul class="list-disc">
+                        <li>Trumps Gegenangriff: Forderung nach <span class="text-accent-blue">totaler Freigabe</span> (20.000+ Seiten).</li>
+                        <li>Ergebnis: Hinweise gegen Trump verwässert (soziale Gerüchte).</li>
+                        <li>Wahrer Fund: <span class="text-accent-red">"Tiefer gehende"</span> Verbindungen zu Demokraten.</li>
+                    </ul>
+                </div>
+                <div class="image-container">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/15083395764103276988" alt="Ein leuchtender roter Pfeil, der eine 180-Grad-Wende macht">
+                </div>
+            </div>
+        </div>
+
+        <!-- Folie 4: Kathy Rumler -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2>Entlarvte Absprache (Teil 1)</h2>
+                    <ul class="list-disc">
+                        <li><span class="text-accent-red">Kathy Rumler</span> (Ex-Obama-Beraterin) kommunizierte 2018-19 mit Epstein.</li>
+                        <li>Ziel: Pläne schmieden, um Trump anzuklagen (Amtsenthebung).</li>
+                        <li>Epstein: "Ich weiß, wie schmutzig Donald ist."</li>
+                    </ul>
+                </div>
+                <div class="image-container">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/10428142828872453050" alt="Eine rauchende Waffe (Smoking Gun) im Film-Noir-Stil">
+                </div>
+            </div>
+        </div>
+
+        <!-- Folie 5: Stacy Plaskett -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2>Entlarvte Absprache (Teil 2)</h2>
+                    <ul class="list-disc">
+                        <li><span class="text-accent-red">Stacy Plaskett</span> (Kongressabgeordnete) kommunizierte mit Epstein...</li>
+                        <li>...<span class="text-accent-red">während</span> einer Kongressanhörung (2019).</li>
+                        <li>Epstein lieferte ihr buchstäblich <span class="text-accent-blue">Fragen & Gesprächspunkte</span> per SMS.</li>
+                    </ul>
+                </div>
+                <div class="image-container">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/3587856456817621466" alt="Symbolbild einer Marionette, die von Fäden gezogen wird">
+                </div>
+            </div>
+        </div>
+
+        <!-- Folie 6: Bill Clinton -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2>Im Zentrum: <span class="text-accent-red">Bill Clinton</span></h2>
+                    <ul class="list-disc">
+                        <li>Verbindungen "tiefer und anhaltender" als die von Trump.</li>
+                        <li><span class="text-accent-blue">26 Flüge</span> im "Lolita Express" (2002-2003) für humanitäre Reisen.</li>
+                        <li>(Anmerkung: Clinton flog <span class="text-accent-red">nie</span> zu Epsteins Insel).</li>
+                    </ul>
+                </div>
+                <div class="image-container">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/5268797118324987921" alt="Schwarz-Weiß-Foto eines Privatjets in düsterem Licht">
+                </div>
+            </div>
+        </div>
+
+        <!-- Folie 7: Das Netzwerk -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2>Das <span class="text-accent-red">Netzwerk der Elite</span></h2>
+                    <ul class="list-disc">
+                        <li>E-Mails (2015): Epstein & Maxwell diskutierten, wie man <span class="text-accent-blue">"Bill schützen"</span> könne.</li>
+                        <li><span class="text-accent-red">Larry Summers</span> (Ex-Finanzminister): Scherzte 2017 mit Epstein über Trump.</li>
+                        <li><span class="text-accent-red">Reid Hoffman</span> (LinkedIn-Gründer): Ebenfalls in den E-Mails enthüllt.</li>
+                    </ul>
+                </div>
+                <div class="image-container">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/8467710746631713456" alt="Abstraktes digitales Netz aus roten, leuchtenden Linien">
+                </div>
+            </div>
+        </div>
+
+        <!-- Folie 8: Trumps Gegenangriff -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2>Trumps <span class="text-accent-blue">Gegenangriff</span></h2>
+                    <ul class="list-disc">
+                        <li>14. Nov.: Trump weist Justizministerium (DOJ) an:</li>
+                        <li><span class="text-accent-blue">Formelle Untersuchung</span> der Beziehungen von Epstein zu...</li>
+                        <li>...Bill Clinton, Larry Summers, Reid Hoffman, JPMorgan Chase.</li>
+                    </ul>
+                </div>
+                <div class="image-container">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/18217176335687592643" alt="Symbolbild Schach: Ein weißer Bauer setzt einen schwarzen König schachmatt">
+                </div>
+            </div>
+        </div>
+
+        <!-- Folie 9: DOJ-Blockade -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2>Die <span class="text-accent-blue">Konsequenz</span></h2>
+                    <ul class="list-disc">
+                        <li>DOJ kündigt an, der Forderung nachzukommen.</li>
+                        <li>Trumps Schachzug <span class="text-accent-red">blockiert</span> vorübergehend weitere Freigaben.</li>
+                        <li>Begründung: Es laufen jetzt <span class="text-accent-red">"aktive Ermittlungen"</span> gegen Clinton & Co.</li>
+                    </ul>
+                </div>
+                <div class="image-container">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/7361696157195493772" alt="Eine Akte mit einem roten 'CLASSIFIED'-Stempel">
+                </div>
+            </div>
+        </div>
+
+        <!-- Folie 10: Fazit -->
+        <div class="slide">
+            <div class="slide-layout">
+                <div class="content">
+                    <h2>Fazit: <span class="text-accent-red">Selbstzerstörung</span></h2>
+                    <ul class="list-disc">
+                        <li>Der Versuch, eine <span class="text-accent-red">politische Handgranate</span> zu werfen, ist gescheitert.</li>
+                        <li>Die Waffe prallte ab und detonierte im eigenen Kommandoposten.</li>
+                        <li>Überlebende drängen weiter auf "vollständige Transparenz".</li>
+                    </ul>
+                </div>
+                <div class="image-container">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/10683551968266959088" alt="Eine dramatische rote Explosion vor dunklem Hintergrund">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Steuerelemente -->
+    <div id="controls-wrapper">
+        <div id="controls">
+            <button id="prev-btn" class="control-btn" aria-label="Vorherige Folie">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                </svg>
+            </button>
+            <span id="slide-counter">1 / 10</span>
+            <button id="next-btn" class="control-btn" aria-label="Nächste Folie">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Lightbox-Struktur -->
+    <div id="lightbox" class="lightbox-overlay">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-image" src="" alt="Vergrößerte Ansicht">
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const presentationContainer = document.getElementById('presentation-container');
+            const slides = document.querySelectorAll('.slide');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightbox-image');
+            const lightboxClose = document.querySelector('.lightbox-close');
+            const slideImages = document.querySelectorAll('.image-container img');
+            
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const slideCounter = document.getElementById('slide-counter');
+            const totalSlides = slides.length;
+            
+            let currentSlide = 0; // Startet bei 0 (Folie 1)
+
+            // Lightbox-Funktionen
+            function openLightbox(src) { lightboxImage.src = src; lightbox.style.display = 'flex'; }
+            function closeLightbox() { lightbox.style.display = 'none'; lightboxImage.src = ''; }
+            slideImages.forEach(img => { img.addEventListener('click', (e) => { e.stopPropagation(); openLightbox(img.src); }); });
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', (e) => { if (e.target === lightbox) { closeLightbox(); } });
+
+            // Funktion zum Aktualisieren des Zählers und der Button-Zustände
+            function updateControls(index) {
+                currentSlide = index;
+                slideCounter.textContent = `${index + 1} / ${totalSlides}`;
+                prevBtn.disabled = (index === 0);
+                nextBtn.disabled = (index === totalSlides - 1);
+            }
+
+            // Funktion zum Anzeigen der Folie (vereinfacht)
+            function showSlide(index) {
+                if (index < 0 || index >= totalSlides) return;
+
+                slides[currentSlide].classList.remove('active'); // Alte ausblenden
+                slides[index].classList.add('active'); // Neue einblenden
+                
+                updateControls(index);
+            }
+
+            // Nächste Folie
+            function nextSlide() { if (currentSlide < totalSlides - 1) { showSlide(currentSlide + 1); } }
+            // Vorherige Folie
+            function prevSlide() { if (currentSlide > 0) { showSlide(currentSlide - 1); } }
+            
+            // Event-Listener für Klick-Steuerung
+            prevBtn.addEventListener('click', prevSlide);
+            nextBtn.addEventListener('click', nextSlide);
+
+            // Tastatursteuerung
+            document.addEventListener('keydown', (e) => {
+                if (lightbox.style.display === 'flex') { if (e.key === 'Escape') { closeLightbox(); } return; }
+                if (e.key === 'ArrowRight') { nextSlide(); } 
+                else if (e.key === 'ArrowLeft') { prevSlide(); }
+                else if (e.key === 'Enter') {
+                    e.preventDefault(); 
+                    const activeSlide = slides[currentSlide];
+                    if (activeSlide) { const image = activeSlide.querySelector('.image-container img'); if (image) { openLightbox(image.src); } }
+                }
+            });
+
+            // NEU: Touch-Navigation
+            function handleTapNavigation(e) {
+                // Verhindern, dass auf Steuerelemente, Bilder oder Links geklickt wird
+                if (e.target.closest('#controls-wrapper') || 
+                    e.target.closest('.lightbox-overlay') || 
+                    e.target.closest('.image-container') ||
+                    e.target.closest('a')) {
+                    return;
+                }
+                
+                // Klick/Tap-Position ermitteln
+                const tapX = e.clientX;
+                const screenWidth = window.innerWidth;
+
+                if (tapX < screenWidth * 0.3) {
+                    // Klick auf die linken 30%
+                    prevSlide();
+                } else if (tapX > screenWidth * 0.7) {
+                    // Klick auf die rechten 30%
+                    nextSlide();
+                }
+            }
+
+            // 'click' verwenden, da es auf Desktop und Mobilgeräten funktioniert
+            presentationContainer.addEventListener('click', handleTapNavigation);
+            
+            // Initialen Zustand beim Laden setzen
+            updateControls(currentSlide);
+        });
+    </script>
+</body>
+</html>
