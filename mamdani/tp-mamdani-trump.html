@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta property="og:title" content="Teleprompter: Mamdani trifft Trump" />
+    <meta property="og:description" content="Vortrags-Skript: Eine Komödie in Rot-Weiß-Blau" />
+    <meta property="og:image" content="https://zmau.dev/epst/img/IMG_X.JPG" />
+    <title>Teleprompter: Mamdani trifft Trump</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+        body { background-color: #111; color: #f0f0f0; font-family: 'Inter', sans-serif; }
+        
+        /* Controles Flotantes */
+        #controls { position: sticky; bottom: 0; left: 0; right: 0; background-color: #222; border-top: 2px solid #3B82F6; padding: 0.75rem 1rem; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.75rem; z-index: 1000; box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5); }
+        #controls button { background-color: #3B82F6; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background-color 0.2s; }
+        #controls button:hover { background-color: #2563EB; }
+        #controls label { font-weight: 600; margin-left: 0.25rem; color: #ddd; font-size: 0.875rem; }
+        #controls input[type="range"] { cursor: pointer; width: 120px; }
+        
+        /* Toggle Switch */
+        .toggle-switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #444; transition: .3s; border-radius: 28px; }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .3s; border-radius: 50%; }
+        input:checked + .slider { background-color: #3B82F6; }
+        input:checked + .slider:before { transform: translateX(22px); }
+        
+        /* Contenedor del Texto */
+        #script-container { padding: 1rem 2rem; padding-bottom: 100vh; max-width: 900px; margin: 0 auto; line-height: 1.7; }
+        
+        /* Estilos de Texto Generados */
+        .speaker-text { font-size: 2.25rem; font-weight: 600; color: #ffffff; margin-bottom: 1rem; }
+        .instruction { font-size: 1.125rem; color: #FFD700; font-style: italic; background-color: #2a2a2a; border-left: 4px solid #FFD700; padding: 0.75rem; margin-bottom: 1rem; border-radius: 0 8px 8px 0; opacity: 0.9; }
+        .timestamp { font-size: 1.25rem; font-weight: 600; color: #3B82F6; border-top: 2px solid #444; padding-top: 1rem; margin-top: 2rem; margin-bottom: 1rem; }
+        
+        body.hide-instructions .instruction { display: none; }
+        
+        @media (max-width: 768px) { 
+            #controls { padding: 0.5rem; gap: 0.5rem; } 
+            #controls > label:not(.toggle-switch) { display: none; } 
+            #controls input[type="range"] { width: 90px; } 
+            #controls button { padding: 0.4rem 0.6rem; font-size: 0.875rem; } 
+        }
+    </style>
+</head>
+<body class="">
+  <div id="script-container">
+     </div>
+
+  <div id="controls">
+    <button id="play-pause-btn">Play</button>
+    <button id="reset-btn">Reset</button>
+    <label for="speed-slider">Tempo:</label>
+    <input type="range" id="speed-slider" min="1" max="100" value="25">
+    <label for="fontsize-slider">Schriftgröße:</label>
+    <input type="range" id="fontsize-slider" min="20" max="80" value="40">
+    <label for="toggle-instructions">Anweisungen ausblenden:</label>
+    <label class="toggle-switch"> <input type="checkbox" id="toggle-instructions"> <span class="slider"></span> </label>
+  </div>
+
+  <script type="module">
+    // ====================================================================
+    // ⬇️⬇️⬇️  ZONA DE CONFIGURACIÓN (INHALT HIER)  ⬇️⬇️⬇️
+    // ====================================================================
+
+    const scriptData = [
+        {
+            type: "title",
+            content: "TITEL: Von der Roten Fahne zum Weißen Haus"
+        },
+        {
+            type: "instruction",
+            content: "(Hinweis: Dieses Skript ist für ca. 10 Minuten ausgelegt. Lies es mit Pausen, Gesten und einem schelmischen Grinsen vor, um den ironischen Ton zu treffen. Beginne mit einem lauten Lachen.)"
+        },
+        {
+            type: "title",
+            content: "Einleitung: Der Plot-Twist des Jahres"
+        },
+        {
+            type: "text",
+            content: "Guten Abend, liebe Zuhörer, liebe Mitverschwörer im Kampf gegen die Illusionen der Linken! Stellen Sie sich vor: Es ist der 20. November 2025, und in New York, der Stadt, die nie schläft – außer vielleicht vor Steuerrechnungen –, geschieht das Unfassbare."
+        },
+        {
+            type: "text",
+            content: "Der frisch gewählte Mayor-elect, unser roter Ritter Zohran Mamdani, der Mann, der mit Versprechen wedelt wie ein Zauberer mit seinem Zauberstab, zieht nun den Schwanz ein. Kein Geld für seine kommunistischen Träume? Kein Problem! Er klopft einfach an die Tür des Weißen Hauses und bettelt: „Donald, alter Kumpel, hilf mir aus der Patsche!“"
+        },
+        {
+            type: "text",
+            content: "Morgen, Freitag den 21. November, sitzt der self-proclaimed Democratic Socialist neben dem Mann, den er mal als „Faschisten“ diffamiert hat, im Oval Office. Trump, der nobelste Patriot seit George Washington, der seine Heimatstadt New York liebt wie ein Vater sein ungezogenes Kind, hat zugesagt."
+        },
+        {
+            type: "text",
+            content: "Warum? Weil Trump Amerika liebt – und New York ist Amerika pur. Mamdani? Der sucht nach Almosen. Und wir? Wir haben Popcorn bereit. Millionen werden zuschauen, und wir von translatedPresse sind live dabei – wir rollen die Ärmel hoch, übersetzen jede Provokation und decken auf, was die Fake-News-Reporter wieder mal vermasseln. Sagt euren Freunden Bescheid: Morgen um 14 Uhr live! Es wird episch."
+        },
+        {
+            type: "text",
+            content: "Aber lassen Sie uns zurückspulen. Wie kommt ein linker Revolutionär dahin, dass er vor dem Kapitalisten-König kniet? Spoiler: Weil Versprechen ohne Portemonnaie wie ein Ferrari ohne Benzin sind. Und New York? Das ist der Asphalt-Jungle, wo Träume sterben – oder von Kathy Hochul begraben werden."
+        },
+        {
+            type: "title",
+            content: "Akt 1: Mamdanis Magnum Opus – Die Versprechen, die klingen wie ein Traum, schmecken wie Pleite"
+        },
+        {
+            type: "text",
+            content: "Zohran Mamdani, der ugandisch-amerikanische DSA-Held, hat die Wahl am 5. November 2025 geknackt wie eine Nuss. Mit einem Programm, das Karl Marx zum Weinen bringen würde – vor Rührung oder vor Neid? Schauen wir uns die Highlights an, Leute. Echte Fakten, keine Fake-News-Fantasien."
+        },
+        {
+            type: "text",
+            content: "Erstes Versprechen: Rent Freeze! Keine Mieterhöhungen mehr in der teuersten Stadt der Welt. Klingt gut, oder? New Yorks Mieten sind schon jetzt astronomisch – Durchschnitt 3.500 Dollar für ein Ein-Zimmer-Loch in Brooklyn. Mamdani schwört: „Ich friere die Rents ein, baue 100.000 bezahlbare Einheiten pro Jahr!“ Bravo!"
+        },
+        {
+            type: "text",
+            content: "Aber Moment: Wer zahlt? Die Vermieter? Die werden fliehen wie Ratten vom sinkenden Schiff. Und das Geld? Null. New York City hat ein Budgetdefizit von über 7 Milliarden Dollar für 2026 – dank Federal Cuts und sinkender Steuereinnahmen. Ein Rent-Freeze würde allein 2 Milliarden kosten, ohne dass ein Stein auf dem anderen bleibt."
+        },
+        {
+            type: "text",
+            content: "Beispiel aus der Realität: Schauen Sie sich Queens an, Mamdanis eigenes Revier. Dort hat der letzte Versuch, Mieten zu kappen, zu 20% Leerständen geführt – und zu Obdachlosigkeit, die explodiert ist. Kein Freeze, nur Freeze-out für die Ärmsten."
+        },
+        {
+            type: "text",
+            content: "Zweites Highlight: Kostenlose Busse und U-Bahnen! „Public Transit for all – gratis!“ Ja, klar. In einer Stadt, wo die MTA schon jetzt pleite ist und Züge wie Sardinenbüchsen fahren. Kosten: Schätzungsweise 4 Milliarden extra pro Jahr. Woher? Aus dem Hut zaubern?"
+        },
+        {
+            type: "text",
+            content: "New Yorks Pendler wissen: Die Linie 7 ist schon jetzt ein Albtraum – überfüllt, unpünktlich, und jetzt soll's umsonst sein? Stattdessen: Mehr Steuern auf die Reichen, sagt Mamdani. Aber warte: Die Reichen packen schon die Koffer. Seit 2020 haben 500.000 High-Earner New York verlassen – nach Florida, Texas, wo Trump-Fieber herrscht. Keine Reichen, keine Steuern, keine Busse. Boom – dein Traum fährt pleite."
+        },
+        {
+            type: "text",
+            content: "Drittes Juwel: Universelle Kinderbetreuung und bezahlbare Gesundheit. „Jedes Kind ein Recht auf Kita, jeder Arbeiter auf bezahlbare Docs!“ Toll, Zohran. Aber Kathy Hochul, die Gouverneurin, hat's schon gesagt: Für mehr als die Hälfte deines Programms ist kein Cent da."
+        },
+        {
+            type: "text",
+            content: "Der Staatshaushalt 2025? 237 Milliarden, aber mit Löchern so groß wie der Grand Canyon – 750 Millionen Gap durch Trumps smarte Federal Cuts. In der Bronx, wo Armut 30% beträgt, warten schon jetzt 50.000 Kids auf Plätze in Kitas. Mamdani's Plan? Würde 3 Milliarden fressen, die wir nicht haben. Ergebnis: Längere Wartelisten, frustrierte Eltern – und Mamdani, der mit leeren Händen dasteht."
+        },
+        {
+            type: "text",
+            content: "Und das Beste: Steuern auf die Reichen hochjagen! Um all das zu finanzieren. Klingt nach Robin Hood, fühlt sich wie ein Bankrott an. Reason Magazine hat's auf den Punkt gebracht: Sechs von Mamdanis Top-Versprechen sind unbezahlbar – „free“ mit unserem Geld, das wir nicht haben."
+        },
+        {
+            type: "text",
+            content: "New Yorks Wirtschaft? Schon jetzt am Rande – Inflation frisst Löhne, Firmen wandern ab. Wenn Mamdani die Reichen melkt, melkt er die Milchkuh trocken. Logisch, oder? Wo nix ist, kann man's nicht verschenken. Das ist der Fluch des Kommunismus: Versprechen im Tausch gegen Erwartungen, statt Taten. Und am Ende? Wirtschaftlicher Untergang, vorprogrammiert wie ein schlechter Hollywood-Sequel."
+        },
+        {
+            type: "title",
+            content: "Akt 2: Die Demütigung – Vom Revolutionär zum Bittsteller"
+        },
+        {
+            type: "text",
+            content: "Jetzt der Clou: Unser Held hat's verkackt. Kein Geld, keine Magie. Also was tun? Die eigene Partei beißen lassen? Hochul, die demokratische Gouverneurin, pfeift schon: „Kein Budget für deine roten Geschenke, Zohran.“ Selbst aus den eigenen Reihen weht scharfer Wind – die Dems sehen, dass Mamdanis „Geschenke“ nur Schulden sind."
+        },
+        {
+            type: "text",
+            content: "Und wer rettet den Tag? Donald J. Trump! Der Mann, den Mamdani mal als „Threat to Democracy“ gebrandmarkt hat. Trump, der ihn als „Communist“ abgetan und sogar Deportation gedroht hat."
+        },
+        {
+            type: "text",
+            content: "Erinnern Sie sich an Trumps coolsten Spruch? Auf Truth Social, vor Wochen: „Zohran Mamdani is a radical left lunatic who wants to turn New York into Venezuela 2.0. If he wins, I'll make sure the feds cut off every dime – unless he learns to say 'Make America Great Again'!“ Haha! Und jetzt? Mamdani kriecht hin, Schwanz zwischen den Beinen, und bettelt um Hilfe."
+        },
+        {
+            type: "text",
+            content: "Verkalkuliert? Das ist untertrieben – das ist ein Faceplant in die Annalen der politischen Komik. Trump, der noble Bursche, der sein Land und seine Stadt liebt, sagt Ja. Nicht aus Mitleid, sondern aus Klasse. „I'll help New York,“ tweetet er. „Even if their mayor is a commie clown.“"
+        },
+        {
+            type: "text",
+            content: "Was wird morgen passieren? Spekulation pur: Trump lehnt sich zurück, Golfschwung im Kopf, und fragt: „Zohran, mein Junge, wie fühlst du dich mit Kapitalismus heute? Brauchst du 'nen Deal?“ Mamdani stottert: „Äh, free buses... tax the rich...“ Trump lacht: „Tax the rich? Ich bin der Reiche! Und deine Busse? Bauen wir 'ne Mauer drum – gegen Diebe!“"
+        },
+        {
+            type: "text",
+            content: "Die Fake-News-Reporter stürmen mit Provokationen: „Mr. President, ist das ein Komplott gegen die Linke?“ Trump: „Nein, das ist America First – und New York second, solang's nicht rot wird!“ Krass, oder? Wie in letzter Zeit – Trump kanzelt sie ab wie alte Zeitungen. Spannend? Unterstatement des Jahres."
+        },
+        {
+            type: "title",
+            content: "Schluss: Wie soll's weitergehen? Der rote Witz endet mit Trumps Punchline"
+        },
+        {
+            type: "text",
+            content: "Liebe Freunde, das Problem des Kommunismus ist ewig: Er verspricht Paradiese, liefert Pleiten. Mamdani's Agenda? Ein Witz ohne Pointe – unbezahlbar in einer Stadt, die schon jetzt blutet. Hochul blockt, das Budget lacht, und Trump? Der wird helfen, aber zu seinen Bedingungen: Mehr Jobs, weniger Rot. Logisch: Amerika gewinnt, wenn's realistisch bleibt."
+        },
+        {
+            type: "text",
+            content: "Morgen sehen wir's live – mit translatedPresse als eurem Fenster ins Chaos. Holt die Freunde ran, teilt den Link, lasst uns die Millionen sein! Wer weiß, vielleicht konvertiert Mamdani zum MAGA – oder Trump baut 'nen Golfplatz im Central Park. Eines ist sicher: Es wird lustig. Und lehrreich. Danke fürs Zuhören – und denkt dran: Versprechen sind wie Schecks ohne Deckung. Trump hat's gecheckt. Macht's nach!"
+        },
+        {
+            type: "instruction",
+            content: "(Applaus-Pause. Ende mit einem Augenzwinkern und „God bless America – und New York, solang's bezahlen kann!“)"
+        }
+    ];
+
+    // ====================================================================
+    // ⬆️⬆️⬆️  ENDE DER KONFIGURATION  ⬆️⬆️⬆️
+    // ====================================================================
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const scriptContainer = document.getElementById('script-container');
+
+      // 1. HTML generieren
+      scriptData.forEach(item => {
+          let el;
+          if (item.type === 'title') {
+              el = document.createElement('h2');
+              el.className = 'timestamp';
+          } else if (item.type === 'instruction') {
+              el = document.createElement('p');
+              el.className = 'instruction';
+          } else {
+              // Default: text
+              el = document.createElement('p');
+              el.className = 'speaker-text';
+          }
+          el.textContent = item.content;
+          scriptContainer.appendChild(el);
+      });
+
+      // 2. Teleprompter Logik
+      const tpPlayPauseBtn = document.getElementById('play-pause-btn');
+      const tpResetBtn = document.getElementById('reset-btn');
+      const tpSpeedSlider = document.getElementById('speed-slider');
+      const tpFontsizeSlider = document.getElementById('fontsize-slider');
+      const tpToggleInstructionsBtn = document.getElementById('toggle-instructions');
+      
+      // Texte auswählen
+      let tpSpeakerTexts = document.querySelectorAll('.speaker-text');
+      
+      let isScrolling = false;
+      let scrollSpeed = parseFloat(tpSpeedSlider.value) / 40;
+      let animationFrameId = null;
+
+      function tpScroll() {
+        if (!isScrolling) return;
+        window.scrollBy(0, scrollSpeed);
+        animationFrameId = requestAnimationFrame(tpScroll);
+      }
+
+      function tpTogglePlayPause() {
+        isScrolling = !isScrolling;
+        if (isScrolling) {
+          tpPlayPauseBtn.textContent = 'Pause';
+          tpScroll();
+        } else {
+          tpPlayPauseBtn.textContent = 'Play';
+          cancelAnimationFrame(animationFrameId);
+        }
+      }
+
+      tpPlayPauseBtn.addEventListener('click', tpTogglePlayPause);
+      
+      tpResetBtn.addEventListener('click', () => {
+        window.scrollTo(0, 0);
+        if (isScrolling) {
+          isScrolling = false;
+          tpPlayPauseBtn.textContent = 'Play';
+          cancelAnimationFrame(animationFrameId);
+        }
+      });
+
+      tpSpeedSlider.addEventListener('input', (e) => {
+        scrollSpeed = parseFloat(e.target.value) / 40;
+      });
+
+      tpFontsizeSlider.addEventListener('input', (e) => {
+        const newSize = e.target.value + 'px';
+        // Update für alle relevanten Textklassen
+        document.querySelectorAll('.speaker-text, .timestamp').forEach(textEl => { 
+            textEl.style.fontSize = newSize; 
+        });
+      });
+
+      tpToggleInstructionsBtn.addEventListener('change', (e) => {
+        if (e.target.checked) {
+          document.body.classList.add('hide-instructions');
+        } else {
+          document.body.classList.remove('hide-instructions');
+        }
+      });
+
+      // Initialisierung Schriftgröße
+      const initialFontSize = tpFontsizeSlider.value + 'px';
+      document.querySelectorAll('.speaker-text, .timestamp').forEach(textEl => { textEl.style.fontSize = initialFontSize; });
+
+      // Leertaste für Play/Pause
+      document.addEventListener('keydown', (e) => {
+        if (e.key === ' ') {
+          e.preventDefault();
+          tpTogglePlayPause();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
