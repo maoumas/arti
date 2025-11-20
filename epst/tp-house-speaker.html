@@ -54,7 +54,9 @@
     <button id="play-pause-btn">Play</button>
     <button id="reset-btn">Reset</button>
     <label for="speed-slider">Tempo:</label>
-    <input type="range" id="speed-slider" min="1" max="100" value="20">
+    
+    <input type="range" id="speed-slider" min="1" max="100" value="20" step="0.1">
+    
     <label for="fontsize-slider">Schriftgröße:</label>
     <input type="range" id="fontsize-slider" min="20" max="80" value="36">
     <label for="toggle-instructions">Anweisungen ausblenden:</label>
@@ -257,7 +259,13 @@
       let tpSpeakerTexts = document.querySelectorAll('.speaker-text');
       
       let isScrolling = false;
-      let scrollSpeed = parseFloat(tpSpeedSlider.value) / 40;
+      
+      // UPDATE 2: Exponentielle Berechnungslogik für feinere Kontrolle bei langsamer Fahrt
+      function calculateSpeed(val) {
+          return Math.pow(parseFloat(val), 2) / 5000;
+      }
+
+      let scrollSpeed = calculateSpeed(tpSpeedSlider.value);
       let animationFrameId = null;
 
       function tpScroll() {
@@ -289,7 +297,8 @@
       });
 
       tpSpeedSlider.addEventListener('input', (e) => {
-        scrollSpeed = parseFloat(e.target.value) / 40;
+        // UPDATE 3: Verwendung der neuen Berechnungsfunktion
+        scrollSpeed = calculateSpeed(e.target.value);
       });
 
       tpFontsizeSlider.addEventListener('input', (e) => {
