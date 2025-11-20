@@ -6,7 +6,7 @@
     <title>Generador de Teleprompter para Arti</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: sans-serif; background: #f3f4f6; padding: 20px; color: #1f2937; }
+        body { font-family: sans-serif; background: #f3f4f6; padding: 20px; color: #1f2937; padding-bottom: 80px; /* Espacio para la barra inferior */ }
         .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         
         .instructions { background: #e0f2fe; padding: 15px; border-left: 5px solid #3b82f6; margin-bottom: 20px; color: #1e3a8a; }
@@ -14,31 +14,58 @@
         .instructions code { background: #bfdbfe; color: #1e3a8a; padding: 2px 5px; border-radius: 3px; font-weight: bold; }
         .instructions li { margin-bottom: 0.5rem; }
 
-        /* --- CORRECCIÓN IMPORTANTE AQUÍ --- */
         /* Forzamos texto NEGRO sobre fondo BLANCO */
         textarea { 
             width: 100%; 
             height: 300px; 
             padding: 10px; 
-            border: 2px solid #9ca3af; /* Borde más oscuro */
+            border: 2px solid #9ca3af; 
             border-radius: 5px; 
             font-size: 16px; 
             margin-bottom: 20px; 
-            
-            /* ¡ESTO SOLUCIONA EL PROBLEMA DEL TEXTO INVISIBLE! */
             background-color: #ffffff !important; 
             color: #000000 !important; 
         }
-        /* ---------------------------------- */
 
-        button { background: #10B981; color: white; font-weight: bold; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 18px; transition: 0.3s; width: 100%; }
+        /* Barra inferior fija para el botón Generar */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            padding: 15px;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button { background: #10B981; color: white; font-weight: bold; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 18px; transition: 0.3s; width: 100%; max-width: 400px; }
         button:hover { background: #059669; }
         
         h1 { color: #1f2937; }
         h3 { color: #374151; }
+
+        /* Mensaje de generación */
+        #generation-message {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #10B981;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            z-index: 1000;
+        }
     </style>
 </head>
 <body>
+
+<div id="generation-message">Generando Teleprompter...</div>
 
 <div class="container">
     <h1 class="text-2xl font-bold mb-4">Generador Mágico para Arti 🪄 (Versión Alemana)</h1>
@@ -47,10 +74,10 @@
         <p class="font-bold">Cómo usar esto (Instrucciones para Arti):</p>
         <ul class="list-disc pl-5 mt-2">
             <li>Pega tu guion en el cuadro grande de abajo.</li>
-            <li>Si una línea es un <b>TÍTULO AZUL</b>, pon un <code>#</code> al principio (Ej: <code># K APITEL 1</code>).</li>
+            <li>Si una línea es un <b>TÍTULO AZUL</b>, pon un <code>#</code> al principio (Ej: <code># KAPITEL 1</code>).</li>
             <li>Si es una <b>NOTA AMARILLA</b>, pon un <code>*</code> (Ej: <code>* Pause hier</code>).</li>
-            <li>El resto será texto blanco normal.</li>
-            <li><b>¡El botón verde para generar está justo debajo del cuadro de texto!</b> 👇</li>
+            <li>El resto será texto negro normal.</li>
+            <li><b>¡El botón verde para generar está en la barra inferior!</b> 👇</li>
         </ul>
     </div>
 
@@ -67,9 +94,10 @@ Dies ist der Haupttext für den Sprecher.
 
 Hier geht es weiter..."></textarea>
 
-    <div>
-        <button onclick="generateAndDownload()">2. ¡GENERIEREN & HERUNTERLADEN!</button>
-    </div>
+</div>
+
+<div class="bottom-bar">
+    <button onclick="generateAndDownload()">2. ¡GENERIEREN & HERUNTERLADEN!</button>
 </div>
 
 <script>
@@ -146,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function getScrollPixelPerFrame() { const val = state.speedLevel; if (val === 0) return 0; return (val * 5 + Math.pow(val, 2)) / 60; }
   function updateSpeedDisplay() { dispSpeed.textContent = state.speedLevel; }
   function loop() { if (!state.isScrolling) return; const pixels = getScrollPixelPerFrame(); if (pixels > 0) { window.scrollBy(0, pixels); } animationFrameId = requestAnimationFrame(loop); }
-  function togglePlay() { state.isScrolling = !state.isScrolling; if (state.isScrolling) { btnPlay.textContent = "PAUSE"; btnPlay.classList.add('paused'); loop(); } else { btnPlay.textContent = "START"; btnPlay.classList.remove('paused'); cancelAnimationFrame(animationFrameId); } }
+  function togglePlay() { state.isScrolling = !state.isScrolling; if (state.isScrolling) { btnPlay.textContent = "PAUSA"; btnPlay.classList.add('paused'); loop(); } else { btnPlay.textContent = "START"; btnPlay.classList.remove('paused'); cancelAnimationFrame(animationFrameId); } }
   btnSpeedMinus.addEventListener('click', () => { if (state.speedLevel > 0) { state.speedLevel--; updateSpeedDisplay(); } });
   btnSpeedPlus.addEventListener('click', () => { if (state.speedLevel < 20) { state.speedLevel++; updateSpeedDisplay(); } });
   btnFontMinus.addEventListener('click', () => { if (state.fontLevel > 0) { state.fontLevel--; updateFont(); } });
@@ -166,6 +194,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // ====================================================================
 
     function generateAndDownload() {
+        // Mostrar mensaje de generación
+        const message = document.getElementById('generation-message');
+        message.style.display = 'block';
+
         const rawText = document.getElementById('inputText').value;
         const lines = rawText.split('\n');
         let scriptJson = "";
@@ -198,12 +230,17 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Nombre del archivo con fecha
         const date = new Date();
-        const dateStr = date.getFullYear() + "-" + (date.getMonth()+1).toString().padStart(2, '0') + "-" + date.getDate().toString().padStart(2, '0');
+        const dateStr = date.getFullYear() + "-" + (date.getMonth()+1).toString().padStart(2, '0') + "-" + date.getDate().toString().padStart(2, '0') + "_" + date.getHours().toString().padStart(2, '0') + date.getMinutes().toString().padStart(2, '0');
         link.download = `teleprompter-${dateStr}.html`;
         
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+
+        // Ocultar mensaje después de un breve retraso
+        setTimeout(() => {
+            message.style.display = 'none';
+        }, 2000);
     }
 
     function escapeStr(str) {
