@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta property="og:title" content="Teleprompter: Die Epstein-Posse" />
-    <meta property="og:description" content="Skript für den Moderator @TranslatedPressDE" />
+    <meta property="og:title" content="Teleprompter Master" />
+    <meta property="og:description" content="Skript für den Moderator" />
     <meta property="og:image" content="https://zmau.dev/epst/img/IMG_X.JPG" />
     <title>Teleprompter Master</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,68 +15,67 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
         body { background-color: #000; color: #f0f0f0; font-family: 'Inter', sans-serif; }
         
-        /* --- BARRA DE CONTROL OPTIMIZADA --- */
+        /* --- BARRA DE CONTROL (Diseño Compacto) --- */
         #controls { 
             position: sticky; bottom: 0; left: 0; right: 0; 
             background-color: #111; 
             border-top: 1px solid #333; 
-            padding: 8px; 
+            padding: 6px 4px; /* Menos padding para móviles */
             display: flex; 
-            flex-wrap: nowrap; /* IMPORTANTE: Fuerza una sola línea */
+            flex-wrap: nowrap; /* Fuerza una sola línea */
             justify-content: space-between; 
             align-items: center; 
-            gap: 6px; 
+            gap: 4px; /* Menos espacio entre grupos */
             z-index: 1000; 
             box-shadow: 0 -10px 20px rgba(0,0,0,0.9);
-            overflow-x: auto; /* Si la pantalla es muy muy pequeña, permite scroll horizontal */
+            overflow-x: auto; /* Scroll horizontal si la pantalla es diminuta */
+            -webkit-overflow-scrolling: touch;
         }
 
-        /* Botones Generales */
+        /* Botones Play/Reset */
         .btn-main {
-            padding: 0 12px;
-            height: 44px;
+            height: 40px; /* Altura estándar táctil */
+            padding: 0 10px;
             border-radius: 8px;
             font-weight: 700;
             text-transform: uppercase;
             cursor: pointer;
             border: none;
             color: white;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0; /* No permite que se aplaste */
+            flex-shrink: 0; 
+            white-space: nowrap;
         }
         .btn-main:active { transform: scale(0.95); }
 
-        /* Play Button */
-        #play-pause-btn { background-color: #10B981; min-width: 70px; }
+        #play-pause-btn { background-color: #10B981; min-width: 60px; }
         #play-pause-btn.paused { background-color: #EF4444; } 
-        
-        /* Reset Button (Solo icono) */
-        #reset-btn { background-color: #374151; width: 44px; padding: 0; }
+        #reset-btn { background-color: #374151; width: 40px; padding: 0; }
 
-        /* --- GRUPOS DE CONTROL (Velocidad y Fuente) --- */
+        /* --- GRUPOS DE CONTROL --- */
         .control-group {
-            display: flex; align-items: center; gap: 2px;
+            display: flex; align-items: center; gap: 1px;
             background-color: #222;
-            padding: 3px;
+            padding: 2px;
             border-radius: 8px;
             border: 1px solid #444;
-            flex-shrink: 1; /* Permite encogerse ligeramente si es necesario */
+            flex-shrink: 0; /* No permite que se aplaste */
         }
 
-        /* El icono indicador (Rayo / Texto) */
+        /* Iconos indicadores */
         .group-icon {
-            color: #888;
-            padding: 0 6px;
+            padding: 0 4px;
             display: flex; align-items: center; justify-content: center;
         }
-        .material-icons { font-size: 20px; }
+        .material-icons { font-size: 18px; }
 
+        /* Botones + / - */
         .stepper-btn {
-            width: 38px; height: 38px; /* Botones táctiles grandes */
+            width: 36px; height: 36px; /* Tamaño optimizado para dedo */
             border-radius: 6px;
             border: none;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             line-height: 1;
             font-weight: bold;
             cursor: pointer;
@@ -85,33 +84,39 @@
             transition: background 0.1s;
         }
         
+        /* Display de números */
         .value-display {
             font-family: monospace;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
-            min-width: 24px;
+            min-width: 20px;
             text-align: center;
             color: #fff;
+            user-select: none;
         }
 
-        /* TEMA VELOCIDAD (Azul) */
-        .theme-speed .stepper-btn { background-color: #1E40AF; } /* Azul oscuro */
+        /* COLORES */
+        /* Velocidad (Azul) */
+        .theme-speed .stepper-btn { background-color: #1E40AF; }
         .theme-speed .stepper-btn:active { background-color: #3B82F6; }
         .theme-speed .group-icon { color: #60A5FA; }
 
-        /* TEMA FUENTE (Naranja) */
-        .theme-font .stepper-btn { background-color: #92400E; } /* Naranja oscuro */
+        /* Fuente (Naranja) */
+        .theme-font .stepper-btn { background-color: #92400E; }
         .theme-font .stepper-btn:active { background-color: #F59E0B; }
         .theme-font .group-icon { color: #FBBF24; }
 
-        /* Toggle Oculto en móvil para ahorrar espacio */
+        /* Toggle Oculto */
         .toggle-container { display: none; } 
+        
+        /* Media Query para pantallas más grandes */
         @media (min-width: 768px) {
-            .toggle-container { display: flex; align-items: center; gap: 0.5rem; color: #888; font-size: 0.8rem; margin-left: 10px;}
             #controls { justify-content: center; gap: 1.5rem; padding: 1rem; }
+            .toggle-container { display: flex; align-items: center; gap: 0.5rem; color: #888; font-size: 0.8rem; margin-left: 10px;}
+            .btn-main { font-size: 1rem; padding: 0 16px; }
         }
         
-        /* Content Styles */
+        /* Contenido */
         #script-container { padding: 1rem 1.5rem; padding-bottom: 70vh; max-width: 900px; margin: 0 auto; line-height: 1.5; }
         .speaker-text { font-size: 2.5rem; font-weight: 600; color: #ffffff; margin-bottom: 1.5rem; transition: font-size 0.1s; }
         .instruction { font-size: 1.2rem; color: #FCD34D; font-style: italic; background-color: #282518; border-left: 4px solid #F59E0B; padding: 1rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0; opacity: 0.9; }
@@ -127,9 +132,9 @@
 
   <div id="controls">
     
-    <div style="display:flex; gap:5px;">
+    <div style="display:flex; gap:4px; flex-shrink:0;">
         <button id="play-pause-btn" class="btn-main">PLAY</button>
-        <button id="reset-btn" class="btn-main"><span class="material-icons">replay</span></button>
+        <button id="reset-btn" class="btn-main"><span class="material-icons" style="font-size:20px;">replay</span></button>
     </div>
 
     <div class="control-group theme-speed">
@@ -142,7 +147,7 @@
     <div class="control-group theme-font">
         <div class="group-icon"><span class="material-icons">text_fields</span></div>
         <button class="stepper-btn" id="font-minus">−</button>
-        <div class="value-display" id="font-display">4</div>
+        <div class="value-display" id="font-display">6</div>
         <button class="stepper-btn" id="font-plus">+</button>
     </div>
 
@@ -154,53 +159,36 @@
 
   <script type="module">
     // ====================================================================
-    // ⬇️⬇️⬇️  DATOS DEL GUIÓN  ⬇️⬇️⬇️
+    // DATOS
     // ====================================================================
-
     const scriptData = [
         { type: "title", content: "TITEL: DIE EPSTEIN-POSSE" },
         { type: "instruction", content: "EINLEITUNG/HINTERGRUND – BILDER: Logo @TranslatedPressDE..." },
-        { type: "text", content: "Guten Morgen, liebe Zuschauer von @TranslatedPressDE. Wir haben bereits ausführlich über die juristische Saga rund um Jeffrey Epstein und die Forderung nach vollständiger Transparenz berichtet. Heute nehmen wir eine Pressekonferenz des Sprechers des Repräsentantenhauses, Mike Johnson, und das detaillierte Dokument zur Hand, das die fatalen Mängel des geplanten Veröffentlichungsgesetzes H.R. 4405 aufzeigt." },
+        { type: "text", content: "Guten Morgen, liebe Zuschauer von @TranslatedPressDE. Wir haben bereits ausführlich über die juristische Saga rund um Jeffrey Epstein und die Forderung nach vollständiger Transparenz berichtet." },
+        { type: "text", content: "Heute nehmen wir eine Pressekonferenz des Sprechers des Repräsentantenhauses, Mike Johnson, und das detaillierte Dokument zur Hand, das die fatalen Mängel des geplanten Veröffentlichungsgesetzes H.R. 4405 aufzeigt." },
         { type: "text", content: "Die Republikaner unterstützen Transparenz uneingeschränkt und wollen die Namen aller Komplizen und Helfer von Epstein und Ghislaine Maxwell offenlegen. Doch was uns hier präsentiert wird, ist, laut Speaker Johnson, keine ernsthafte Gesetzgebung, sondern ein durchsichtiges politisches Schauspiel der Demokraten." },
-        { type: "text", content: "Johnson fragt zurecht: Warum jetzt? Vier lange Jahre, während der Biden-Harris-Administration, hatten die Demokraten und das Justizministerium alle Epstein-Akten in ihrem Besitz. Doch nicht ein einziger der heutigen lauten Befürworter der Offenlegung forderte damals eine Freigabe. Offenbar war das Interesse am Opferschutz transitorisch – genau wie die Inflation, die uns die Demokraten vier Jahre lang als vorübergehend verkauften." },
-        { type: "text", content: "Die Wahrheit, so Johnson: Dies ist ein Versuch, von den eigenen Fehlern abzulenken und Präsident Trump in den Skandal hineinzuziehen. Es ist der neueste Versuch, das Justizsystem zu instrumentalisieren, um einen politischen Gegner anzugreifen." },
+        { type: "text", content: "Johnson fragt zurecht: Warum jetzt? Vier lange Jahre, während der Biden-Harris-Administration, hatten die Demokraten und das Justizministerium alle Epstein-Akten in ihrem Besitz. Doch nicht ein einziger der heutigen lauten Befürworter der Offenlegung forderte damals eine Freigabe." },
+        { type: "text", content: "Offenbar war das Interesse am Opferschutz transitorisch – genau wie die Inflation, die uns die Demokraten vier Jahre lang als vorübergehend verkauften. Die Wahrheit, so Johnson: Dies ist ein Versuch, von den eigenen Fehlern abzulenken und Präsident Trump in den Skandal hineinzuziehen." },
         { type: "instruction", content: "ÜBERGANG – BILDER: Alan Dershowitz im Interview, Trump-Archivmaterial" },
         { type: "title", content: "1. Die zentrale Entlastung: Trumps Reinewaschung" },
         { type: "text", content: "Die politischen Gegner tun so, als ob eine rauchende Kanone gegen Donald Trump in den Akten schlummern würde. Doch dieser Versuch, gegen den ehemaligen Präsidenten vorzugehen, verpufft bereits im Angesicht der Fakten." },
         { type: "text", content: "Wie wir in einer früheren Sendung anhand der Aussagen von Alan Dershowitz, Epsteins ehemaligem Anwalt, dargelegt haben, ist Trump in dieser Sache im Reinen." },
         { type: "text", content: "Dershowitz, der Epstein 2008 beim Aushandeln seines Plea Deals vertrat, stellte ihm die entscheidende Frage: „Gibt es irgendetwas, was Sie mir über andere Personen geben können, das ich der Regierung anbieten könnte, um ein besseres Geschäft für Sie zu bekommen?“" },
         { type: "text", content: "Dershowitz ging eine Namensliste durch, einschließlich Donald Trumps. Epsteins Antwort war unmissverständlich: „Nein, es gibt absolut nichts über Donald Trump.“" },
-        { type: "text", content: "Dershowitz merkte pointiert an, dass die Demokraten, wenn sie tatsächlich belastendes Material gegen Trump hätten, dies längst veröffentlicht hätten. Die Veröffentlichung der Akten dient hier also weniger der Wahrheit als vielmehr der Wiederholung falscher Anschuldigungen, in der Hoffnung, dass durch die bloße Assoziation Trumps Name beschädigt wird." },
-        { type: "instruction", content: "ÜBERGANG – BILDER: Auszüge aus dem PDF Flaws of H.R. 4405, Grafik mit Warnhinweisen" },
-        { type: "title", content: "2. Die Gefahr der politischen Eile: Sechs eklatante Mängel der H.R. 4405" },
+        { type: "text", content: "Dershowitz merkte pointiert an, dass die Demokraten, wenn sie tatsächlich belastendes Material gegen Trump hätten, dies längst veröffentlicht hätten." },
+        { type: "instruction", content: "ÜBERGANG – BILDER: Auszüge aus dem PDF Flaws of H.R. 4405" },
+        { type: "title", content: "2. Die Gefahr der politischen Eile" },
         { type: "text", content: "Während die Republikaner maximale Transparenz anstreben, bestehen sie darauf, dass dies auf verantwortungsvolle Weise geschehen muss, um keinen weiteren Schaden an unschuldigen Personen und Opfern anzurichten." },
-        { type: "text", content: "Der von den Demokraten vorangetriebene Antrag wurde jedoch so hastig und unsauber entworfen, dass er eine ganze Reihe juristischer und menschlicher Katastrophen heraufbeschwören könnte:" },
+        { type: "text", content: "Der von den Demokraten vorangetriebene Antrag wurde jedoch so hastig und unsauber entworfen, dass er eine ganze Reihe juristischer und menschlicher Katastrophen heraufbeschwören könnte." },
         { type: "title", content: "Mangel 1: Gefährdung der Opfer-Privatsphäre" },
-        { type: "text", content: "H.R. 4405 schützt die Opfer-Identität nicht ausreichend, da die Befugnis des Generalstaatsanwalts zur Schwärzung zu eng gefasst ist. Das Gesetz beschränkt die Schwärzung auf Fälle, die eine „eindeutig ungerechtfertigte Verletzung der Privatsphäre darstellen“." },
-        { type: "text", content: "Das ist lachhaft wenig. Dies riskiert die erneute Viktimisierung jener Hunderter von Opfern, die anonym bleiben wollen. Richter Richard Berman wies bereits darauf hin, dass Transparenz nicht auf Kosten derer gehen darf, die das Justizsystem schützen soll." },
+        { type: "text", content: "H.R. 4405 schützt die Opfer-Identität nicht ausreichend. Das ist lachhaft wenig. Dies riskiert die erneute Viktimisierung jener Hunderter von Opfern, die anonym bleiben wollen." },
         { type: "title", content: "Mangel 2: Schaffung neuer Opfer" },
-        { type: "text", content: "Das Gesetz verlangt die Freigabe von Informationen, selbst wenn das Justizministerium oder das FBI diese zuvor als falsch oder nicht glaubwürdig eingestuft hat." },
-        { type: "text", content: "Durch diese politisch motivierte Müllkippe von Dokumenten könnten die Karrieren und die Reputation unschuldiger Personen ruiniert werden, deren Namen Epstein vielleicht nur ausgenutzt hat. Sie würden der Schuld durch Assoziation ausgesetzt – ein brandneuer Kreis von Opfern ohne die Möglichkeit zur Rehabilitierung." },
-        { type: "title", content: "Mangel 3: Die peinliche CSAM-Lücke" },
-        { type: "text", content: "Der Gesetzentwurf beabsichtigt, die Freigabe von Materialien über sexuellen Kindesmissbrauch zu verhindern. Aber in einem Akt demokratischer legislativer Präzisionsarbeit wurde der falsche Abschnitt des US-Gesetzbuches zitiert. Dieser Abschnitt enthält keine Definition von CSAM." },
-        { type: "text", content: "Die Folge: Das Gesetz verleiht dem Generalstaatsanwalt keine echte Rechtsbefugnis zur Schwärzung dieser entsetzlichen Materialien, was deren Veröffentlichung erzwingen könnte. Ein echter Geniestreich!" },
-        { type: "title", content: "Mangel 4: Gefährdung zukünftiger Ermittlungen" },
-        { type: "text", content: "H.R. 4405 erlaubt die Schwärzung nur dann, wenn es sich um eine aktive Untersuchung handelt. Das ignoriert die abschreckende Wirkung auf zukünftige Whistleblower, vertrauliche Informanten oder Undercover-Beamte, deren Identitäten jetzt offengelegt werden könnten." },
-        { type: "title", content: "Mangel 5: Verletzung des Grand Jury-Geheimnisses" },
-        { type: "text", content: "Der Entwurf ist mehrdeutig und könnte die Freigabe von Grand Jury-Materialien erzwingen, was nach den Bundesregeln für Strafverfahren verboten ist. Dies würde das Risiko erhöhen, dass der Grand Jury-Prozess politisiert und missbraucht wird." },
-        { type: "title", content: "Mangel 6: Nationale Sicherheit und Chaos" },
-        { type: "text", content: "Das Gesetz fordert vom Justizministerium, innerhalb von 30 Tagen so viel klassifizierte Informationen wie möglich freizugeben. Dies ist nicht nur unrealistisch, sondern missachtet den Grundsatz, dass die Deklassifizierung bei der Ursprungsbehörde liegen muss." },
+        { type: "text", content: "Das Gesetz verlangt die Freigabe von Informationen, selbst wenn das Justizministerium diese zuvor als falsch eingestuft hat. Sie würden der Schuld durch Assoziation ausgesetzt." },
         { type: "title", content: "3. Fazit und Aufruf" },
-        { type: "text", content: "Mike Johnson betonte, die Republikaner hätten die Verfasser des Antrags gebeten, diese gravierenden Mängel zu korrigieren, erhielten jedoch eine harsche Absage. Daher bleibt nur der Schluss, dass es den Verfassern nicht um Opfer oder Transparenz ging, sondern um den politischen Moment." },
-        { type: "text", content: "Die Demokraten haben diesen Entwurf absichtlich als Show Vote konzipiert, um politisches Kapital zu schlagen, anstatt sich den realen Problemen des Landes zu widmen – wie den von ihnen verursachten Erschwinglichkeitsproblemen." },
-        { type: "text", content: "Die Ironie ist offensichtlich: Im verzweifelten Bemühen, Präsident Trump mit Falschbehauptungen in Verbindung zu bringen, haben die Demokraten nicht nur eine juristisch unhaltbare Situation geschaffen, sondern auch die wirklichen Opfer der Epstein-Gräueltaten dem Risiko einer weiteren Traumatisierung ausgesetzt." },
-        { type: "text", content: "Das größte Geheimnis in dieser ganzen Posse ist nicht, wer auf Epsteins Listen steht, sondern warum die politischen Kräfte im Kongress bereit sind, so rücksichtslos mit der Wahrheit, der Justiz und dem Schutz unschuldiger Bürger umzugehen, nur um einen nicht existenten politischen Skandal zu kreieren." },
+        { type: "text", content: "Mike Johnson betonte, die Republikaner hätten die Verfasser des Antrags gebeten, diese Mängel zu korrigieren, erhielten jedoch eine Absage." },
+        { type: "text", content: "Das größte Geheimnis ist nicht, wer auf Epsteins Listen steht, sondern warum die politischen Kräfte bereit sind, so rücksichtslos mit der Wahrheit umzugehen." },
         { type: "text", content: "Vielen Dank für Ihr Interesse. Bleiben Sie uns gewogen und informieren Sie sich kritisch." }
     ];
-
-    // ====================================================================
-    // ⬆️⬆️⬆️  FIN DE DATOS  ⬆️⬆️⬆️
-    // ====================================================================
 
     document.addEventListener('DOMContentLoaded', () => {
       const scriptContainer = document.getElementById('script-container');
@@ -222,69 +210,64 @@
           scriptContainer.appendChild(el);
       });
 
-      // 2. LÓGICA MEJORADA DEL TELEPROMPTER
+      // 2. LÓGICA TELEPROMPTER
       
       let state = {
-          speedLevel: 3,   // Comienza en 3
-          fontLevel: 6,    // Comienza en 6 (letra grande)
+          speedLevel: 3,
+          fontLevel: 6,
           isScrolling: false
       };
       
       let animationFrameId = null;
 
-      // Elementos DOM
       const btnPlay = document.getElementById('play-pause-btn');
       const btnReset = document.getElementById('reset-btn');
       const toggleInstr = document.getElementById('toggle-instructions');
-
-      // Velocidad
       const btnSpeedMinus = document.getElementById('speed-minus');
       const btnSpeedPlus = document.getElementById('speed-plus');
       const dispSpeed = document.getElementById('speed-display');
-
-      // Fuente
       const btnFontMinus = document.getElementById('font-minus');
       const btnFontPlus = document.getElementById('font-plus');
       const dispFont = document.getElementById('font-display');
 
       // --- FUNCIONES LÓGICAS ---
 
-      // A. Fuente: Mapea 0-10 a 24px-94px (Saltos de 7px)
       function updateFont() {
           const baseSize = 24; 
           const stepSize = 7; 
           const pixelSize = baseSize + (state.fontLevel * stepSize);
-          
           document.querySelectorAll('.speaker-text, .timestamp').forEach(el => {
               el.style.fontSize = pixelSize + 'px';
           });
-          
           dispFont.textContent = state.fontLevel;
       }
 
-      // B. Velocidad: Mapea 0-10 a velocidad de scroll
+      // 🔥 AQUÍ ESTÁ EL CAMBIO IMPORTANTE EN LA FÓRMULA 🔥
       function getScrollPixelPerFrame() {
-          if (state.speedLevel === 0) return 0; 
+          const val = state.speedLevel;
+          if (val === 0) return 0; 
           
-          // ⚠️ AQUÍ SE CALIBRA LA VELOCIDAD
-          // Fórmula: (Nivel al cuadrado) dividido por X.
-          // Cuanto MENOR sea el número '25', MÁS RÁPIDO irá.
-          return Math.pow(state.speedLevel, 2) / 25; 
+          // FÓRMULA NUEVA: (5*Nivel + Nivel^2) / 60
+          // Esto da un "impulso lineal" al principio para que el 1 y 2 no se congelen.
+          
+          // COMPARACIÓN:
+          // Nivel 1 Antiguo: 0.04 (Invisible) -> Nuevo: 0.10 (Lento pero visible)
+          // Nivel 2 Antiguo: 0.16 (Muy lento) -> Nuevo: 0.23 (Perfecto para leer lento)
+          // Nivel 3 Antiguo: 0.36 (Tu favorito) -> Nuevo: 0.40 (Casi igual)
+          
+          return (val * 5 + Math.pow(val, 2)) / 60; 
       }
 
       function updateSpeedDisplay() {
           dispSpeed.textContent = state.speedLevel;
       }
 
-      // --- MOTOR DE SCROLL ---
       function loop() {
           if (!state.isScrolling) return;
-          
           const pixels = getScrollPixelPerFrame();
           if (pixels > 0) {
               window.scrollBy(0, pixels);
           }
-          
           animationFrameId = requestAnimationFrame(loop);
       }
 
@@ -301,25 +284,19 @@
           }
       }
 
-      // --- EVENT LISTENERS ---
-
-      // Botones Velocidad
+      // Listeners
       btnSpeedMinus.addEventListener('click', () => {
           if (state.speedLevel > 0) { state.speedLevel--; updateSpeedDisplay(); }
       });
       btnSpeedPlus.addEventListener('click', () => {
           if (state.speedLevel < 20) { state.speedLevel++; updateSpeedDisplay(); }
       });
-
-      // Botones Fuente
       btnFontMinus.addEventListener('click', () => {
           if (state.fontLevel > 0) { state.fontLevel--; updateFont(); }
       });
       btnFontPlus.addEventListener('click', () => {
           if (state.fontLevel < 15) { state.fontLevel++; updateFont(); }
       });
-
-      // Play/Reset
       btnPlay.addEventListener('click', togglePlay);
       btnReset.addEventListener('click', () => {
           window.scrollTo(0, 0);
@@ -328,18 +305,14 @@
           btnPlay.classList.remove('paused');
           cancelAnimationFrame(animationFrameId);
       });
-
-      // Tecla Espacio
       document.addEventListener('keydown', (e) => {
           if (e.key === ' ') { e.preventDefault(); togglePlay(); }
       });
-
-      // Toggle Notas
       toggleInstr.addEventListener('change', (e) => {
           document.body.classList.toggle('hide-instructions', e.target.checked);
       });
 
-      // --- INIT ---
+      // Init
       updateFont();
       updateSpeedDisplay();
 
