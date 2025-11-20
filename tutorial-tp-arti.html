@@ -6,8 +6,8 @@
 
     <meta property="og:title" content="TUTORIAL PARA ARTI (Edición Especial)" />
     <meta property="og:description" content="Guía de supervivencia para no lanzar el PC por la ventana." />
-    
-    <meta property="og:image" content="https://zmau.dev/img/IMG_ART.jpeg" />
+    <meta property="og:image" content="https://zmau.dev/img/IMG_ARTI.jpeg" />
+
     <title>Tutorial para Arti (Español)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -16,7 +16,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
         body { background-color: #000; color: #f0f0f0; font-family: 'Inter', sans-serif; }
         
-        /* --- BARRA DE CONTROL (Optimizada para Arti) --- */
+        /* --- BARRA DE CONTROL --- */
         #controls { 
             position: sticky; bottom: 0; left: 0; right: 0; 
             background-color: #111; 
@@ -33,7 +33,6 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* Botones Principales (Grandes y Claros) */
         .btn-main {
             height: 44px;
             padding: 0 12px;
@@ -50,11 +49,10 @@
         }
         .btn-main:active { transform: scale(0.95); }
 
-        #play-pause-btn { background-color: #10B981; min-width: 80px; } /* Extra ancho para que no falle */
+        #play-pause-btn { background-color: #10B981; min-width: 80px; } 
         #play-pause-btn.paused { background-color: #EF4444; } 
         #reset-btn { background-color: #374151; width: 44px; padding: 0; }
 
-        /* --- GRUPOS DE CONTROL --- */
         .control-group {
             display: flex; align-items: center; gap: 1px;
             background-color: #222;
@@ -71,7 +69,6 @@
         }
         .material-icons { font-size: 20px; }
 
-        /* Botones táctiles (Grandes para el dedo) */
         .stepper-btn {
             width: 40px; height: 40px; 
             border-radius: 6px;
@@ -85,7 +82,6 @@
             transition: background 0.1s;
         }
         
-        /* Pantalla de números */
         .value-display {
             font-family: monospace;
             font-size: 1.1rem;
@@ -96,7 +92,6 @@
             user-select: none;
         }
 
-        /* COLORES (Para que se vean bien) */
         .theme-speed .stepper-btn { background-color: #1E40AF; }
         .theme-speed .stepper-btn:active { background-color: #3B82F6; }
         .theme-speed .group-icon { color: #60A5FA; }
@@ -113,7 +108,6 @@
             .btn-main { font-size: 1rem; padding: 0 20px; }
         }
         
-        /* Área de Texto */
         #script-container { padding: 1rem 1.5rem; padding-bottom: 70vh; max-width: 900px; margin: 0 auto; line-height: 1.5; }
         .speaker-text { font-size: 2.5rem; font-weight: 600; color: #ffffff; margin-bottom: 1.5rem; transition: font-size 0.1s; }
         .instruction { font-size: 1.2rem; color: #FCD34D; font-style: italic; background-color: #282518; border-left: 4px solid #F59E0B; padding: 1rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0; opacity: 0.9; }
@@ -144,7 +138,7 @@
     <div class="control-group theme-font">
         <div class="group-icon"><span class="material-icons">text_fields</span></div>
         <button class="stepper-btn" id="font-minus">−</button>
-        <div class="value-display" id="font-display">6</div>
+        <div class="value-display" id="font-display">3</div>
         <button class="stepper-btn" id="font-plus">+</button>
     </div>
 
@@ -156,75 +150,26 @@
 
   <script type="module">
     // ====================================================================
-    // ⬇️⬇️⬇️  TEXTO PARA ARTI (EN ESPAÑOL)  ⬇️⬇️⬇️
+    // TEXTO PARA ARTI (EN ESPAÑOL)
     // ====================================================================
 
     const scriptData = [
-        { 
-            type: "title", 
-            content: "HOLA, ARTI." 
-        },
-        { 
-            type: "text", 
-            content: "No, esto no es un error del sistema. Y no, no has roto nada... todavía." 
-        },
-        { 
-            type: "instruction", 
-            content: "Respira hondo. Suelta el ratón un momento. Te prometo que no muerde." 
-        },
-        { 
-            type: "text", 
-            content: "Sé que odias cuando las cosas cambian, Arti. Pero escúchame: Hemos arreglado este trasto para que por fin vaya tan lento como tú necesitas, sin que te quedes dormido esperando." 
-        },
-        { 
-            type: "title", 
-            content: "LECCIÓN 1: La Velocidad (El rayo azul)" 
-        },
-        { 
-            type: "text", 
-            content: "Mira abajo. ¿Ves esa cosa azul con un rayo? No es para cargar tu marcapasos. Es para la velocidad del texto." 
-        },
-        { 
-            type: "text", 
-            content: "Antes, el nivel 1 estaba congelado y el nivel 3 era un Ferrari, ¿verdad? Ahora hemos usado matemáticas (no preguntes) para que el nivel 1 y 2 vayan suaves como la seda. Pruébalo. Dale al botón MENOS (-)." 
-        },
-        { 
-            type: "title", 
-            content: "LECCIÓN 2: El Tamaño (La T naranja)" 
-        },
-        { 
-            type: "text", 
-            content: "A la derecha está lo naranja. Eso es para tus ojos, Arti. Para esos días en que no encuentras las gafas. Dale al botón MÁS (+) hasta que las letras sean del tamaño de señales de tráfico." 
-        },
-        { 
-            type: "title", 
-            content: "LECCIÓN 3: Para Vagos (El Teclado)" 
-        },
-        { 
-            type: "text", 
-            content: "No hace falta ni que uses el ratón si te pone nervioso." 
-        },
-        { 
-            type: "text", 
-            content: "Solo pulsa la BARRA ESPACIADORA. Sí, la tecla larga de abajo. Una vez: arranca. Otra vez: para. Magia pura." 
-        },
-        { 
-            type: "instruction", 
-            content: "¡DALE A LA BARRA ESPACIADORA AHORA!" 
-        },
-        { 
-            type: "text", 
-            content: "Y ahora la prueba de fuego, Arti: Pulsa el botón verde de INICIO (o la barra espaciadora) y lee esto en voz alta. Si va muy rápido, no le grites a la pantalla... simplemente pulsa el menos azul." 
-        },
-        { 
-            type: "text", 
-            content: "Vamos allá. Tú puedes. Y si no... tengo una copia de seguridad." 
-        }
+        { type: "title", content: "HOLA, ARTI." },
+        { type: "text", content: "No, esto no es un error del sistema. Y no, no has roto nada... todavía." },
+        { type: "instruction", content: "Respira hondo. Suelta el ratón un momento. Te prometo que no muerde." },
+        { type: "text", content: "Sé que odias cuando las cosas cambian, Arti. Pero escúchame: Hemos arreglado este trasto para que por fin vaya tan lento como tú necesitas, sin que te quedes dormido esperando." },
+        { type: "title", content: "LECCIÓN 1: La Velocidad (El rayo azul)" },
+        { type: "text", content: "Mira abajo. ¿Ves esa cosa azul con un rayo? No es para cargar tu marcapasos. Es para la velocidad del texto." },
+        { type: "text", content: "Antes, el nivel 1 estaba congelado y el nivel 3 era un Ferrari, ¿verdad? Ahora hemos usado matemáticas (no preguntes) para que el nivel 1 y 2 vayan suaves como la seda. Pruébalo. Dale al botón MENOS (-)." },
+        { type: "title", content: "LECCIÓN 2: El Tamaño (La T naranja)" },
+        { type: "text", content: "A la derecha está lo naranja. Eso es para tus ojos, Arti. Para esos días en que no encuentras las gafas. Dale al botón MÁS (+) hasta que las letras sean del tamaño de señales de tráfico." },
+        { type: "title", content: "LECCIÓN 3: Para Vagos (El Teclado)" },
+        { type: "text", content: "No hace falta ni que uses el ratón si te pone nervioso." },
+        { type: "text", content: "Solo pulsa la BARRA ESPACIADORA. Sí, la tecla larga de abajo. Una vez: arranca. Otra vez: para. Magia pura." },
+        { type: "instruction", content: "¡DALE A LA BARRA ESPACIADORA AHORA!" },
+        { type: "text", content: "Y ahora la prueba de fuego, Arti: Pulsa el botón verde de INICIO (o la barra espaciadora) y lee esto en voz alta. Si va muy rápido, no le grites a la pantalla... simplemente pulsa el menos azul." },
+        { type: "text", content: "Vamos allá. Tú puedes. Y si no... tengo una copia de seguridad." }
     ];
-
-    // ====================================================================
-    // ⬆️⬆️⬆️  LÓGICA INTERNA (¡NO TOCAR, ARTI!)  ⬆️⬆️⬆️
-    // ====================================================================
 
     document.addEventListener('DOMContentLoaded', () => {
       const scriptContainer = document.getElementById('script-container');
@@ -246,11 +191,11 @@
           scriptContainer.appendChild(el);
       });
 
-      // 2. LÓGICA 
+      // 2. LÓGICA
       
       let state = {
-          speedLevel: 3,   // Comienza agradable
-          fontLevel: 6,    // Comienza grande para Arti
+          speedLevel: 3,   // Velocidad inicial cómoda
+          fontLevel: 3,    // CORREGIDO: Tamaño inicial más pequeño (antes era 6)
           isScrolling: false
       };
       
@@ -279,7 +224,7 @@
           dispFont.textContent = state.fontLevel;
       }
 
-      // 🔥 FÓRMULA PARA ARTI: Sin congelamientos en 1 o 2 🔥
+      // FÓRMULA ARTI: Movimiento suave en niveles bajos
       function getScrollPixelPerFrame() {
           const val = state.speedLevel;
           if (val === 0) return 0; 
@@ -303,7 +248,7 @@
       function togglePlay() {
           state.isScrolling = !state.isScrolling;
           if (state.isScrolling) {
-              btnPlay.textContent = "PAUSA";
+              btnPlay.textContent = "PAUSE";
               btnPlay.classList.add('paused');
               loop();
           } else {
@@ -313,7 +258,7 @@
           }
       }
 
-      // Eventos Clic
+      // Eventos
       btnSpeedMinus.addEventListener('click', () => {
           if (state.speedLevel > 0) { state.speedLevel--; updateSpeedDisplay(); }
       });
@@ -335,7 +280,6 @@
           cancelAnimationFrame(animationFrameId);
       });
       
-      // Barra Espaciadora (¡Crucial para Arti!)
       document.addEventListener('keydown', (e) => {
           if (e.key === ' ') { e.preventDefault(); togglePlay(); }
       });
