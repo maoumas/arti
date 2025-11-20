@@ -4,12 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta property="og:title" content="TUTORIAL FÜR ARTI" />
-    <meta property="og:description" content="Bevor du den Computer aus dem Fenster wirfst, lies das hier." />
-    
-    <meta property="og:image" content="https://zmau.dev/img/IMG_ART.jpeg" />
+    <meta property="og:title" content="TUTORIAL FÜR ARTI (Auto-Start)" />
+    <meta property="og:description" content="Vorsicht! Es bewegt sich von selbst..." />
+    <meta property="og:image" content="https://lh3.googleusercontent.com/u/0/d/1Q4R9E2_Z9Z9Z9Z9Z9Z9Z9Z9Z9Z9Z9Z9=w1200-h630-p-k-nu" />
 
-    <title>Anleitung für Arti</title>
+    <title>Tutorial für Arti (Auto)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -17,7 +16,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
         body { background-color: #000; color: #f0f0f0; font-family: 'Inter', sans-serif; }
         
-        /* --- STEUERLEISTE (Optimiert für Arti) --- */
+        /* --- STEUERLEISTE --- */
         #controls { 
             position: sticky; bottom: 0; left: 0; right: 0; 
             background-color: #111; 
@@ -34,7 +33,6 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* Hauptbuttons (Groß und deutlich) */
         .btn-main {
             height: 44px;
             padding: 0 12px;
@@ -51,11 +49,12 @@
         }
         .btn-main:active { transform: scale(0.95); }
 
-        #play-pause-btn { background-color: #10B981; min-width: 80px; } /* Extra breit für Arti */
+        #play-pause-btn { background-color: #10B981; min-width: 80px; transition: background-color 0.3s; } 
+        /* Wenn PAUSE (läuft), wird er ROT */
         #play-pause-btn.paused { background-color: #EF4444; } 
+        
         #reset-btn { background-color: #374151; width: 44px; padding: 0; }
 
-        /* --- STEUERGRUPPEN --- */
         .control-group {
             display: flex; align-items: center; gap: 1px;
             background-color: #222;
@@ -72,7 +71,6 @@
         }
         .material-icons { font-size: 20px; }
 
-        /* Tasten (Groß genug für Finger) */
         .stepper-btn {
             width: 40px; height: 40px; 
             border-radius: 6px;
@@ -86,7 +84,6 @@
             transition: background 0.1s;
         }
         
-        /* Zahlenanzeige */
         .value-display {
             font-family: monospace;
             font-size: 1.1rem;
@@ -97,7 +94,6 @@
             user-select: none;
         }
 
-        /* FARBEN (Damit man es sieht) */
         .theme-speed .stepper-btn { background-color: #1E40AF; }
         .theme-speed .stepper-btn:active { background-color: #3B82F6; }
         .theme-speed .group-icon { color: #60A5FA; }
@@ -114,7 +110,6 @@
             .btn-main { font-size: 1rem; padding: 0 20px; }
         }
         
-        /* Textbereich */
         #script-container { padding: 1rem 1.5rem; padding-bottom: 70vh; max-width: 900px; margin: 0 auto; line-height: 1.5; }
         .speaker-text { font-size: 2.5rem; font-weight: 600; color: #ffffff; margin-bottom: 1.5rem; transition: font-size 0.1s; }
         .instruction { font-size: 1.2rem; color: #FCD34D; font-style: italic; background-color: #282518; border-left: 4px solid #F59E0B; padding: 1rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0; opacity: 0.9; }
@@ -125,11 +120,9 @@
 </head>
 <body class="">
   
-  <div id="script-container">
-     </div>
+  <div id="script-container"></div>
 
   <div id="controls">
-    
     <div style="display:flex; gap:4px; flex-shrink:0;">
         <button id="play-pause-btn" class="btn-main">START</button>
         <button id="reset-btn" class="btn-main"><span class="material-icons" style="font-size:24px;">replay</span></button>
@@ -145,95 +138,35 @@
     <div class="control-group theme-font">
         <div class="group-icon"><span class="material-icons">text_fields</span></div>
         <button class="stepper-btn" id="font-minus">−</button>
-        <div class="value-display" id="font-display">6</div>
+        <div class="value-display" id="font-display">3</div>
         <button class="stepper-btn" id="font-plus">+</button>
     </div>
 
     <div class="toggle-container">
         <input type="checkbox" id="toggle-instructions"> <label for="toggle-instructions">Regie ausblenden</label>
     </div>
-
   </div>
 
   <script type="module">
     // ====================================================================
-    // ⬇️⬇️⬇️  TEXT FÜR ARTI  ⬇️⬇️⬇️
+    // SCRIPT DATEN (DEUTSCH)
     // ====================================================================
-
     const scriptData = [
-        { 
-            type: "title", 
-            content: "HALLO ARTI." 
-        },
-        { 
-            type: "text", 
-            content: "Nein, das ist keine Fehlermeldung. Und nein, du hast nichts kaputt gemacht... noch nicht." 
-        },
-        { 
-            type: "instruction", 
-            content: "Atme tief durch. Nimm die Hand von der Maus. Sie beißt nicht." 
-        },
-        { 
-            type: "text", 
-            content: "Ich weiß, du hasst es, wenn Dinge am Computer nicht funktionieren. Deshalb haben wir das hier repariert." 
-        },
-        { 
-            type: "text", 
-            content: "Erinnerst du dich, wie der Text früher entweder 'eingefroren' oder 'Formel-1-schnell' war? Das haben wir behoben. Wirklich." 
-        },
-        { 
-            type: "title", 
-            content: "LEKTION 1: Das Tempo (Der blaue Blitz)" 
-        },
-        { 
-            type: "text", 
-            content: "Schau nach unten. Siehst du das blaue Ding mit dem Blitz? Das ist für die Geschwindigkeit." 
-        },
-        { 
-            type: "text", 
-            content: "Stufe 1, 2 und 3 laufen jetzt ganz sanft. Probier es gleich mal aus. Klick auf das Minus (-). Keine Sorge, der Computer explodiert nicht." 
-        },
-        { 
-            type: "title", 
-            content: "LEKTION 2: Die Augen (Das orangene T)" 
-        },
-        { 
-            type: "text", 
-            content: "Rechts daneben ist das orangene Ding. Das ist für dich, wenn du deine Brille wieder suchst. Drück auf das Plus (+), bis die Buchstaben so groß sind wie Straßenschilder." 
-        },
-        { 
-            type: "title", 
-            content: "LEKTION 3: Der Trick für Faule" 
-        },
-        { 
-            type: "text", 
-            content: "Jetzt kommt der beste Teil, Arti: Du brauchst die Maus gar nicht." 
-        },
-        { 
-            type: "text", 
-            content: "Drück einfach auf die LEERTASTE (die lange Taste unten auf der Tastatur)." 
-        },
-        { 
-            type: "instruction", 
-            content: "DRÜCK JETZT MAL DIE LEERTASTE!" 
-        },
-        { 
-            type: "text", 
-            content: "Siehst du? Einmal drücken: Es läuft. Noch mal drücken: Es stoppt. Magie." 
-        },
-        { 
-            type: "text", 
-            content: "Also, Arti: Drück jetzt auf den grünen START-Knopf (oder die Leertaste) und lies diesen Text laut vor. Wenn er zu schnell ist, schrei nicht den Monitor an, sondern drück unten auf das blaue Minus." 
-        },
-        { 
-            type: "text", 
-            content: "Los geht's. Du schaffst das." 
-        }
+        { type: "title", content: "HALLO ARTI." },
+        { type: "text", content: "Fass nichts an. Schau mal... Es bewegt sich von selbst!" },
+        { type: "text", content: "Wir haben den automatischen Start aktiviert, damit du dich entspannen kannst." },
+        { type: "instruction", content: "(Wenn du das hier liest, hat der Auto-Start funktioniert)" },
+        { type: "text", content: "Nein, das ist keine Fehlermeldung. Und nein, du hast nichts kaputt gemacht... noch nicht." },
+        { type: "instruction", content: "Atme tief durch. Lass die Maus los. Sie beißt nicht." },
+        { type: "text", content: "Ich weiß, du hasst es, wenn sich Dinge ändern. Aber hör mir zu: Wir haben diesen Teleprompter repariert, damit er endlich so langsam läuft, wie du es brauchst." },
+        { type: "title", content: "LEKTION 1: Das Tempo (Der blaue Blitz)" },
+        { type: "text", content: "Siehst du unten das blaue Ding mit dem Blitz? Das ist für die Geschwindigkeit. Stufe 1 und 2 laufen jetzt butterweich. Probier es aus, wenn du dich traust." },
+        { type: "title", content: "LEKTION 2: Die Größe (Das orangene T)" },
+        { type: "text", content: "Rechts daneben ist das orangene Ding. Das ist für deine Augen. Drück auf das PLUS (+), wenn du deine Brille verlegt hast." },
+        { type: "title", content: "LEKTION 3: Für Faule (Die Tastatur)" },
+        { type: "text", content: "Du brauchst keine Maus. Drück einfach die LEERTASTE zum Stoppen oder Starten." },
+        { type: "text", content: "Das war's! Viel Spaß mit deinem automatischen Teleprompter." }
     ];
-
-    // ====================================================================
-    // ⬆️⬆️⬆️  LOGIK (NICHT ANFASSEN, ARTI!)  ⬆️⬆️⬆️
-    // ====================================================================
 
     document.addEventListener('DOMContentLoaded', () => {
       const scriptContainer = document.getElementById('script-container');
@@ -255,17 +188,15 @@
           scriptContainer.appendChild(el);
       });
 
-      // 2. LOGIK 
-      
+      // 2. LOGIK
       let state = {
-          speedLevel: 3,   // Startet angenehm
-          fontLevel: 6,    // Startet groß genug für Arti
+          speedLevel: 3,
+          fontLevel: 3, // Startet klein (3), damit es nicht den Bildschirm sprengt
           isScrolling: false
       };
       
       let animationFrameId = null;
 
-      // Elemente
       const btnPlay = document.getElementById('play-pause-btn');
       const btnReset = document.getElementById('reset-btn');
       const toggleInstr = document.getElementById('toggle-instructions');
@@ -275,8 +206,6 @@
       const btnFontMinus = document.getElementById('font-minus');
       const btnFontPlus = document.getElementById('font-plus');
       const dispFont = document.getElementById('font-display');
-
-      // Funktionen
 
       function updateFont() {
           const baseSize = 24; 
@@ -288,11 +217,9 @@
           dispFont.textContent = state.fontLevel;
       }
 
-      // 🔥 FORMEL FÜR ARTI: Kein Einfrieren mehr bei 1 oder 2 🔥
       function getScrollPixelPerFrame() {
           const val = state.speedLevel;
           if (val === 0) return 0; 
-          // Formel: (5*Level + Level^2) / 60
           return (val * 5 + Math.pow(val, 2)) / 60; 
       }
 
@@ -313,29 +240,22 @@
           state.isScrolling = !state.isScrolling;
           if (state.isScrolling) {
               btnPlay.textContent = "PAUSE";
-              btnPlay.classList.add('paused');
+              btnPlay.classList.add('paused'); // Wird ROT
               loop();
           } else {
               btnPlay.textContent = "START";
-              btnPlay.classList.remove('paused');
+              btnPlay.classList.remove('paused'); // Wird GRÜN
               cancelAnimationFrame(animationFrameId);
           }
       }
 
-      // Klick-Events
-      btnSpeedMinus.addEventListener('click', () => {
-          if (state.speedLevel > 0) { state.speedLevel--; updateSpeedDisplay(); }
-      });
-      btnSpeedPlus.addEventListener('click', () => {
-          if (state.speedLevel < 20) { state.speedLevel++; updateSpeedDisplay(); }
-      });
-      btnFontMinus.addEventListener('click', () => {
-          if (state.fontLevel > 0) { state.fontLevel--; updateFont(); }
-      });
-      btnFontPlus.addEventListener('click', () => {
-          if (state.fontLevel < 15) { state.fontLevel++; updateFont(); }
-      });
+      // Event Listener
+      btnSpeedMinus.addEventListener('click', () => { if (state.speedLevel > 0) { state.speedLevel--; updateSpeedDisplay(); } });
+      btnSpeedPlus.addEventListener('click', () => { if (state.speedLevel < 20) { state.speedLevel++; updateSpeedDisplay(); } });
+      btnFontMinus.addEventListener('click', () => { if (state.fontLevel > 0) { state.fontLevel--; updateFont(); } });
+      btnFontPlus.addEventListener('click', () => { if (state.fontLevel < 15) { state.fontLevel++; updateFont(); } });
       btnPlay.addEventListener('click', togglePlay);
+      
       btnReset.addEventListener('click', () => {
           window.scrollTo(0, 0);
           state.isScrolling = false;
@@ -344,7 +264,6 @@
           cancelAnimationFrame(animationFrameId);
       });
       
-      // Leertaste (Wichtig für Arti!)
       document.addEventListener('keydown', (e) => {
           if (e.key === ' ') { e.preventDefault(); togglePlay(); }
       });
@@ -353,9 +272,16 @@
           document.body.classList.toggle('hide-instructions', e.target.checked);
       });
 
-      // Starten
+      // --- INITIALISIERUNG ---
       updateFont();
       updateSpeedDisplay();
+
+      // 🔥 AUTO-START (Nach 2 Sekunden) 🔥
+      setTimeout(() => {
+          if (!state.isScrolling) {
+              togglePlay(); 
+          }
+      }, 2000);
 
     });
   </script>
