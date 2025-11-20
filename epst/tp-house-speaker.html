@@ -55,7 +55,7 @@
     <button id="reset-btn">Reset</button>
     <label for="speed-slider">Tempo:</label>
     
-    <input type="range" id="speed-slider" min="1" max="100" value="20" step="0.1">
+    <input type="range" id="speed-slider" min="10" max="100" value="30">
     
     <label for="fontsize-slider">Schriftgröße:</label>
     <input type="range" id="fontsize-slider" min="20" max="80" value="36">
@@ -65,7 +65,7 @@
 
   <script type="module">
     // ====================================================================
-    // ⬇️⬇️⬇️  ZONA DE CONFIGURACIÓN (INHALT HIER)  ⬇️⬇️⬇️
+    // ⬇️⬇️⬇️  ZONA DE CONFIGURACIÓN (CONTENIDO)  ⬇️⬇️⬇️
     // ====================================================================
 
     const scriptData = [
@@ -240,7 +240,6 @@
               el = document.createElement('p');
               el.className = 'instruction';
           } else {
-              // Default: text
               el = document.createElement('p');
               el.className = 'speaker-text';
           }
@@ -260,9 +259,11 @@
       
       let isScrolling = false;
       
-      // UPDATE 2: Exponentielle Berechnungslogik für feinere Kontrolle bei langsamer Fahrt
+      // CORRECCIÓN 2: La división es ahora por 1500 (antes 5000).
+      // Esto hace que el teleprompter sea mucho más rápido en general, 
+      // pero sigue siendo suave en valores bajos.
       function calculateSpeed(val) {
-          return Math.pow(parseFloat(val), 2) / 5000;
+          return Math.pow(parseFloat(val), 2) / 1500;
       }
 
       let scrollSpeed = calculateSpeed(tpSpeedSlider.value);
@@ -296,14 +297,13 @@
         }
       });
 
+      // Optimización: cálculo directo para evitar "pausas" perceptibles
       tpSpeedSlider.addEventListener('input', (e) => {
-        // UPDATE 3: Verwendung der neuen Berechnungsfunktion
         scrollSpeed = calculateSpeed(e.target.value);
       });
 
       tpFontsizeSlider.addEventListener('input', (e) => {
         const newSize = e.target.value + 'px';
-        // Update für alle relevanten Textklassen
         document.querySelectorAll('.speaker-text, .timestamp').forEach(textEl => { 
             textEl.style.fontSize = newSize; 
         });
@@ -317,11 +317,10 @@
         }
       });
 
-      // Initialisierung Schriftgröße
+      // Initialisierung
       const initialFontSize = tpFontsizeSlider.value + 'px';
       document.querySelectorAll('.speaker-text').forEach(textEl => { textEl.style.fontSize = initialFontSize; });
 
-      // Leertaste für Play/Pause
       document.addEventListener('keydown', (e) => {
         if (e.key === ' ') {
           e.preventDefault();
