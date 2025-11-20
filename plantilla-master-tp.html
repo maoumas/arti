@@ -4,14 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- ==================================================================== -->
-    <!-- ⚠️ CONFIGURACIÓN WHATSAPP (EDITAR MANUALMENTE AQUÍ) ⚠️               -->
-    <!-- ==================================================================== -->
     <meta property="og:title" content="TELEPROMPTER: TITEL HIER" />
     <meta property="og:description" content="Skript für den Moderator" />
     <meta property="og:image" content="https://zmau.dev/epst/img/IMG_X.JPG" />
-    <!-- ==================================================================== -->
-
     <title>Teleprompter Master</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -53,14 +48,15 @@
 </head>
 <body class="">
   <div id="script-container">
-     <!-- EL TEXTO SE GENERARÁ AQUÍ AUTOMÁTICAMENTE -->
-  </div>
+     </div>
 
   <div id="controls">
     <button id="play-pause-btn">Play</button>
     <button id="reset-btn">Reset</button>
     <label for="speed-slider">Tempo:</label>
-    <input type="range" id="speed-slider" min="1" max="100" value="20">
+    
+    <input type="range" id="speed-slider" min="1" max="100" value="20" step="0.1">
+    
     <label for="fontsize-slider">Schriftgröße:</label>
     <input type="range" id="fontsize-slider" min="20" max="80" value="36">
     <label for="toggle-instructions">Anweisungen ausblenden:</label>
@@ -74,15 +70,15 @@
 
     const scriptData = [
         {
-            type: "title", // Título azul / Marca de tiempo
+            type: "title",
             content: "TITEL DES PROGRAMMS: Einführung"
         },
         {
-            type: "text", // Texto blanco principal
+            type: "text",
             content: "Guten Abend. Hier steht der Text für den Sprecher. Er ist groß und gut lesbar."
         },
         {
-            type: "instruction", // Nota amarilla (opcional)
+            type: "instruction",
             content: "(Kamera 2 - Bild einblenden)"
         },
         {
@@ -92,12 +88,7 @@
         {
             type: "text",
             content: "Hier geht der Text weiter. Sie können so viele Blöcke hinzufügen, wie Sie möchten. Einfach kopieren und einfügen."
-        },
-        {
-            type: "text",
-            content: "Ein weiterer Absatz für den Teleprompter."
         }
-        // ... COPIA Y PEGA MÁS BLOQUES { ... } AQUÍ ...
     ];
 
     // ====================================================================
@@ -125,7 +116,7 @@
           scriptContainer.appendChild(el);
       });
 
-      // 2. Lógica del Teleprompter (Original)
+      // 2. Lógica del Teleprompter (Actualizada para mayor control)
       const tpPane = document.body;
       const tpControls = document.getElementById('controls');
       const tpPlayPauseBtn = tpControls.querySelector('#play-pause-btn');
@@ -134,11 +125,17 @@
       const tpFontsizeSlider = tpControls.querySelector('#fontsize-slider');
       const tpToggleInstructionsBtn = tpControls.querySelector('#toggle-instructions');
       
-      // Seleccionamos los textos recién creados
       const tpSpeakerTexts = document.querySelectorAll('.speaker-text');
       
       let isScrolling = false;
-      let scrollSpeed = parseFloat(tpSpeedSlider.value) / 40;
+      
+      // NOTA: Nueva función matemática para calcular la velocidad (Exponencial)
+      // Esto permite que valores bajos (1-30) sean MUY lentos para fuentes grandes.
+      function calculateSpeed(val) {
+          return Math.pow(parseFloat(val), 2) / 5000;
+      }
+
+      let scrollSpeed = calculateSpeed(tpSpeedSlider.value);
       let animationFrameId = null;
 
       function tpScroll() {
@@ -170,7 +167,8 @@
       });
 
       tpSpeedSlider.addEventListener('input', (e) => {
-        scrollSpeed = parseFloat(e.target.value) / 40;
+        // NOTA: Usamos la nueva función aquí también al mover el slider
+        scrollSpeed = calculateSpeed(e.target.value);
       });
 
       tpFontsizeSlider.addEventListener('input', (e) => {
@@ -201,4 +199,3 @@
   </script>
 </body>
 </html>
-
