@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta property="og:title" content="PROGRAM TITLE HERE" />
+    <meta property="og:description" content="Teleprompter for the host" />
+    
+    <meta property="og:image" content="https://your-server.com/your-image.jpg" />
+    <title>Teleprompter Master Template</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+        body { background-color: #000; color: #f0f0f0; font-family: 'Inter', sans-serif; }
+        
+        /* --- CONTROL BAR (Single Line Design) --- */
+        #controls { 
+            position: sticky; bottom: 0; left: 0; right: 0; 
+            background-color: #111; 
+            border-top: 1px solid #333; 
+            padding: 8px 4px; 
+            display: flex; 
+            flex-wrap: nowrap; /* Prevents wrapping */
+            justify-content: space-between; 
+            align-items: center; 
+            gap: 4px; 
+            z-index: 1000; 
+            box-shadow: 0 -10px 20px rgba(0,0,0,0.9);
+            overflow-x: auto; /* Horizontal scroll for very small screens */
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Main Buttons */
+        .btn-main {
+            height: 44px;
+            padding: 0 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            border: none;
+            color: white;
+            font-size: 0.9rem;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; 
+            white-space: nowrap;
+        }
+        .btn-main:active { transform: scale(0.95); }
+
+        /* Play Button: Green when stopped, Red when playing */
+        #play-pause-btn { background-color: #10B981; min-width: 80px; transition: background-color 0.3s; } 
+        #play-pause-btn.paused { background-color: #EF4444; } 
+        
+        #reset-btn { background-color: #374151; width: 44px; padding: 0; }
+
+        /* Control Groups (+ / -) */
+        .control-group {
+            display: flex; align-items: center; gap: 1px;
+            background-color: #222;
+            padding: 2px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            flex-shrink: 0; 
+        }
+
+        .group-icon {
+            padding: 0 6px;
+            display: flex; align-items: center; justify-content: center;
+            color: #888;
+        }
+        .material-icons { font-size: 20px; }
+
+        .stepper-btn {
+            width: 40px; height: 40px; 
+            border-radius: 6px;
+            border: none;
+            font-size: 1.4rem;
+            line-height: 1;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+            display: flex; justify-content: center; align-items: center;
+            transition: background 0.1s;
+        }
+        
+        .value-display {
+            font-family: monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+            min-width: 24px;
+            text-align: center;
+            color: #fff;
+            user-select: none;
+        }
+
+        /* Color Themes */
+        .theme-speed .stepper-btn { background-color: #1E40AF; }
+        .theme-speed .stepper-btn:active { background-color: #3B82F6; }
+        .theme-speed .group-icon { color: #60A5FA; }
+
+        .theme-font .stepper-btn { background-color: #92400E; }
+        .theme-font .stepper-btn:active { background-color: #F59E0B; }
+        .theme-font .group-icon { color: #FBBF24; }
+
+        .toggle-container { display: none; } 
+        
+        @media (min-width: 768px) {
+            #controls { justify-content: center; gap: 1.5rem; padding: 1rem; }
+            .toggle-container { display: flex; align-items: center; gap: 0.5rem; color: #888; font-size: 0.8rem; margin-left: 10px;}
+            .btn-main { font-size: 1rem; padding: 0 20px; }
+        }
+        
+        /* Text Area */
+        #script-container { padding: 1rem 1.5rem; padding-bottom: 70vh; max-width: 900px; margin: 0 auto; line-height: 1.5; }
+        .speaker-text { font-size: 2.5rem; font-weight: 600; color: #ffffff; margin-bottom: 1.5rem; transition: font-size 0.1s; }
+        .instruction { font-size: 1.2rem; color: #FCD34D; font-style: italic; background-color: #282518; border-left: 4px solid #F59E0B; padding: 1rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0; opacity: 0.9; }
+        .timestamp { font-size: 1.5rem; font-weight: 700; color: #60A5FA; border-top: 1px solid #333; padding-top: 2rem; margin-top: 3rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+        
+        body.hide-instructions .instruction { display: none; }
+    </style>
+</head>
+<body class="">
+  
+  <div id="script-container"></div>
+
+  <div id="controls">
+    <div style="display:flex; gap:4px; flex-shrink:0;">
+        <button id="play-pause-btn" class="btn-main">START</button>
+        <button id="reset-btn" class="btn-main"><span class="material-icons" style="font-size:24px;">replay</span></button>
+    </div>
+
+    <div class="control-group theme-speed">
+        <div class="group-icon"><span class="material-icons">bolt</span></div>
+        <button class="stepper-btn" id="speed-minus">−</button>
+        <div class="value-display" id="speed-display">3</div>
+        <button class="stepper-btn" id="speed-plus">+</button>
+    </div>
+
+    <div class="control-group theme-font">
+        <div class="group-icon"><span class="material-icons">text_fields</span></div>
+        <button class="stepper-btn" id="font-minus">−</button>
+        <div class="value-display" id="font-display">3</div>
+        <button class="stepper-btn" id="font-plus">+</button>
+    </div>
+
+    <div class="toggle-container">
+        <input type="checkbox" id="toggle-instructions"> <label for="toggle-instructions">Hide notes</label>
+    </div>
+  </div>
+
+  <script type="module">
+    // ====================================================================
+    // 2. PASTE YOUR NEW SCRIPT HERE (Replace the block below)
+    //    Use: { type: "title" ... }, { type: "text" ... }, { type: "instruction" ... }
+    // ====================================================================
+    const scriptData = [
+        { 
+            type: "title", 
+            content: "PROGRAM TITLE (EXAMPLE)" 
+        },
+        { 
+            type: "instruction", 
+            content: "INSTRUCTION: (Camera 1, Background Music, etc.)" 
+        },
+        { 
+            type: "text", 
+            content: "Welcome to the Master Template. Here you can enter the host's introduction text." 
+        },
+        { 
+            type: "text", 
+            content: "Simply replace this 'scriptData' block with the content of the new program and save the file with a new name." 
+        },
+        { 
+            type: "title", 
+            content: "Section 1: The News" 
+        },
+        { 
+            type: "text", 
+            content: "The text will start moving automatically after 2 seconds. The speed is calibrated for comfortable reading." 
+        },
+        { 
+            type: "text", 
+            content: "Remember: F11 for Full Screen on PC. Tap the screen and wiggle it slightly if the menu disappears on mobile." 
+        }
+    ];
+    // ====================================================================
+    // ⬆️⬆️⬆️ END OF SCRIPT - DO NOT TOUCH LOGIC BELOW ⬆️⬆️⬆️
+    // ====================================================================
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const scriptContainer = document.getElementById('script-container');
+
+      // Generate HTML
+      scriptData.forEach(item => {
+          let el;
+          if (item.type === 'title') {
+              el = document.createElement('h2');
+              el.className = 'timestamp';
+          } else if (item.type === 'instruction') {
+              el = document.createElement('p');
+              el.className = 'instruction';
+          } else {
+              el = document.createElement('p');
+              el.className = 'speaker-text';
+          }
+          el.textContent = item.content;
+          scriptContainer.appendChild(el);
+      });
+
+      // INIT CONFIGURATION
+      let state = {
+          speedLevel: 3,   // Comfortable start speed
+          fontLevel: 3,    // Base size (not too huge)
+          isScrolling: false
+      };
+      
+      let animationFrameId = null;
+
+      // DOM References
+      const btnPlay = document.getElementById('play-pause-btn');
+      const btnReset = document.getElementById('reset-btn');
+      const toggleInstr = document.getElementById('toggle-instructions');
+      const btnSpeedMinus = document.getElementById('speed-minus');
+      const btnSpeedPlus = document.getElementById('speed-plus');
+      const dispSpeed = document.getElementById('speed-display');
+      const btnFontMinus = document.getElementById('font-minus');
+      const btnFontPlus = document.getElementById('font-plus');
+      const dispFont = document.getElementById('font-display');
+
+      // Update Functions
+      function updateFont() {
+          const baseSize = 24; 
+          const stepSize = 7; 
+          const pixelSize = baseSize + (state.fontLevel * stepSize);
+          document.querySelectorAll('.speaker-text, .timestamp').forEach(el => {
+              el.style.fontSize = pixelSize + 'px';
+          });
+          dispFont.textContent = state.fontLevel;
+      }
+
+      // "ARTI" SPEED FORMULA (Smooth at low levels)
+      function getScrollPixelPerFrame() {
+          const val = state.speedLevel;
+          if (val === 0) return 0; 
+          return (val * 5 + Math.pow(val, 2)) / 60; 
+      }
+
+      function updateSpeedDisplay() {
+          dispSpeed.textContent = state.speedLevel;
+      }
+
+      function loop() {
+          if (!state.isScrolling) return;
+          const pixels = getScrollPixelPerFrame();
+          if (pixels > 0) {
+              window.scrollBy(0, pixels);
+          }
+          animationFrameId = requestAnimationFrame(loop);
+      }
+
+      function togglePlay() {
+          state.isScrolling = !state.isScrolling;
+          if (state.isScrolling) {
+              btnPlay.textContent = "PAUSE";
+              btnPlay.classList.add('paused'); // Red
+              loop();
+          } else {
+              btnPlay.textContent = "START";
+              btnPlay.classList.remove('paused'); // Green
+              cancelAnimationFrame(animationFrameId);
+          }
+      }
+
+      // Event Listeners
+      btnSpeedMinus.addEventListener('click', () => { if (state.speedLevel > 0) { state.speedLevel--; updateSpeedDisplay(); } });
+      btnSpeedPlus.addEventListener('click', () => { if (state.speedLevel < 20) { state.speedLevel++; updateSpeedDisplay(); } });
+      
+      btnFontMinus.addEventListener('click', () => { if (state.fontLevel > 0) { state.fontLevel--; updateFont(); } });
+      btnFontPlus.addEventListener('click', () => { if (state.fontLevel < 15) { state.fontLevel++; updateFont(); } });
+      
+      btnPlay.addEventListener('click', togglePlay);
+      
+      btnReset.addEventListener('click', () => {
+          window.scrollTo(0, 0);
+          state.isScrolling = false;
+          btnPlay.textContent = "START";
+          btnPlay.classList.remove('paused');
+          cancelAnimationFrame(animationFrameId);
+      });
+      
+      // Spacebar for Play/Pause
+      document.addEventListener('keydown', (e) => {
+          if (e.key === ' ') { e.preventDefault(); togglePlay(); }
+      });
+      
+      toggleInstr.addEventListener('change', (e) => {
+          document.body.classList.toggle('hide-instructions', e.target.checked);
+      });
+
+      // Initialize Values
+      updateFont();
+      updateSpeedDisplay();
+
+      // 🔥 AUTO-START (After 2 Seconds) 🔥
+      setTimeout(() => {
+          if (!state.isScrolling) {
+              togglePlay(); 
+          }
+      }, 2000);
+
+    });
+  </script>
+</body>
+</html>
