@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="es">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta property="og:title" content="Teleprompter Master" />
-    <meta property="og:description" content="Vorlage für neue Programme" />
-    <meta property="og:image" content="https://zmau.dev/epst/img/IMG_X.JPG" />
-    <title>Teleprompter Master Template</title>
+    <meta property="og:title" content="TÍTULO DEL PROGRAMA AQUÍ" />
+    <meta property="og:description" content="Teleprompter para el presentador" />
+    
+    <meta property="og:image" content="https://tu-servidor.com/tu-imagen-thumbnail.jpg" />
+    <title>Teleprompter Master</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -15,45 +16,47 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
         body { background-color: #000; color: #f0f0f0; font-family: 'Inter', sans-serif; }
         
-        /* --- STEUERLEISTE (Optimiert für Mobile & Desktop) --- */
+        /* --- BARRA DE CONTROL (Diseño "Una Línea") --- */
         #controls { 
             position: sticky; bottom: 0; left: 0; right: 0; 
             background-color: #111; 
             border-top: 1px solid #333; 
-            padding: 6px 4px; 
+            padding: 8px 4px; 
             display: flex; 
-            flex-wrap: nowrap; /* Erzwingt eine Zeile */
+            flex-wrap: nowrap; /* Evita que los botones salten de línea */
             justify-content: space-between; 
             align-items: center; 
             gap: 4px; 
             z-index: 1000; 
             box-shadow: 0 -10px 20px rgba(0,0,0,0.9);
-            overflow-x: auto; 
+            overflow-x: auto; /* Scroll horizontal si la pantalla es diminuta */
             -webkit-overflow-scrolling: touch;
         }
 
-        /* Hauptbuttons (Play/Reset) */
+        /* Botones Generales */
         .btn-main {
-            height: 40px;
-            padding: 0 10px;
+            height: 44px;
+            padding: 0 12px;
             border-radius: 8px;
             font-weight: 700;
             text-transform: uppercase;
             cursor: pointer;
             border: none;
             color: white;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             display: flex; align-items: center; justify-content: center;
             flex-shrink: 0; 
             white-space: nowrap;
         }
         .btn-main:active { transform: scale(0.95); }
 
-        #play-pause-btn { background-color: #10B981; min-width: 60px; }
+        /* Botón Play: Verde en reposo, Rojo en acción */
+        #play-pause-btn { background-color: #10B981; min-width: 80px; transition: background-color 0.3s; } 
         #play-pause-btn.paused { background-color: #EF4444; } 
-        #reset-btn { background-color: #374151; width: 40px; padding: 0; }
+        
+        #reset-btn { background-color: #374151; width: 44px; padding: 0; }
 
-        /* --- STEUERGRUPPEN --- */
+        /* Grupos de botones (+ / -) */
         .control-group {
             display: flex; align-items: center; gap: 1px;
             background-color: #222;
@@ -64,17 +67,17 @@
         }
 
         .group-icon {
-            padding: 0 4px;
+            padding: 0 6px;
             display: flex; align-items: center; justify-content: center;
+            color: #888;
         }
-        .material-icons { font-size: 18px; }
+        .material-icons { font-size: 20px; }
 
-        /* Plus/Minus Buttons */
         .stepper-btn {
-            width: 36px; height: 36px; 
+            width: 40px; height: 40px; 
             border-radius: 6px;
             border: none;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             line-height: 1;
             font-weight: bold;
             cursor: pointer;
@@ -83,38 +86,34 @@
             transition: background 0.1s;
         }
         
-        /* Zahlenanzeige */
         .value-display {
             font-family: monospace;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: bold;
-            min-width: 20px;
+            min-width: 24px;
             text-align: center;
             color: #fff;
             user-select: none;
         }
 
-        /* FARBSCHEMATA */
-        /* Geschwindigkeit (Blau) */
+        /* Temas de color */
         .theme-speed .stepper-btn { background-color: #1E40AF; }
         .theme-speed .stepper-btn:active { background-color: #3B82F6; }
         .theme-speed .group-icon { color: #60A5FA; }
 
-        /* Schriftgröße (Orange) */
         .theme-font .stepper-btn { background-color: #92400E; }
         .theme-font .stepper-btn:active { background-color: #F59E0B; }
         .theme-font .group-icon { color: #FBBF24; }
 
-        /* Toggle für Anweisungen */
         .toggle-container { display: none; } 
         
         @media (min-width: 768px) {
             #controls { justify-content: center; gap: 1.5rem; padding: 1rem; }
             .toggle-container { display: flex; align-items: center; gap: 0.5rem; color: #888; font-size: 0.8rem; margin-left: 10px;}
-            .btn-main { font-size: 1rem; padding: 0 16px; }
+            .btn-main { font-size: 1rem; padding: 0 20px; }
         }
         
-        /* Textbereich Styles */
+        /* Área de Texto */
         #script-container { padding: 1rem 1.5rem; padding-bottom: 70vh; max-width: 900px; margin: 0 auto; line-height: 1.5; }
         .speaker-text { font-size: 2.5rem; font-weight: 600; color: #ffffff; margin-bottom: 1.5rem; transition: font-size 0.1s; }
         .instruction { font-size: 1.2rem; color: #FCD34D; font-style: italic; background-color: #282518; border-left: 4px solid #F59E0B; padding: 1rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0; opacity: 0.9; }
@@ -125,14 +124,12 @@
 </head>
 <body class="">
   
-  <div id="script-container">
-     </div>
+  <div id="script-container"></div>
 
   <div id="controls">
-    
     <div style="display:flex; gap:4px; flex-shrink:0;">
-        <button id="play-pause-btn" class="btn-main">PLAY</button>
-        <button id="reset-btn" class="btn-main"><span class="material-icons" style="font-size:20px;">replay</span></button>
+        <button id="play-pause-btn" class="btn-main">INICIO</button>
+        <button id="reset-btn" class="btn-main"><span class="material-icons" style="font-size:24px;">replay</span></button>
     </div>
 
     <div class="control-group theme-speed">
@@ -145,60 +142,58 @@
     <div class="control-group theme-font">
         <div class="group-icon"><span class="material-icons">text_fields</span></div>
         <button class="stepper-btn" id="font-minus">−</button>
-        <div class="value-display" id="font-display">6</div>
+        <div class="value-display" id="font-display">3</div>
         <button class="stepper-btn" id="font-plus">+</button>
     </div>
 
     <div class="toggle-container">
-        <input type="checkbox" id="toggle-instructions"> <label for="toggle-instructions">Regie ausblenden</label>
+        <input type="checkbox" id="toggle-instructions"> <label for="toggle-instructions">Ocultar notas</label>
     </div>
-
   </div>
 
   <script type="module">
     // ====================================================================
-    // ⬇️⬇️⬇️  INHALT HIER EINFÜGEN (SCRIPT DATA)  ⬇️⬇️⬇️
+    // 2. AQUÍ PEGAS TU NUEVO GUIÓN (Reemplaza todo lo de abajo)
+    //    Usa: { type: "title" ... }, { type: "text" ... }, { type: "instruction" ... }
     // ====================================================================
-
     const scriptData = [
         { 
             type: "title", 
-            content: "MASTER-VORLAGE: ANLEITUNG" 
-        },
-        { 
-            type: "text", 
-            content: "Willkommen. Dies ist Ihre neue Master-Vorlage für den Teleprompter. Sie enthält die optimierte Geschwindigkeitssteuerung (Stufen 0-20) und das einzeilige Design." 
+            content: "TÍTULO DEL PROGRAMA (EJEMPLO)" 
         },
         { 
             type: "instruction", 
-            content: "ANWEISUNG FÜR DEN NÄCHSTEN PROMPT:" 
+            content: "INSTRUCCIÓN: (Cámara 1, música de fondo, etc.)" 
         },
         { 
             type: "text", 
-            content: "Um diese Datei für ein neues Programm zu verwenden, laden Sie diese HTML-Datei hoch und geben Sie folgenden Prompt ein:" 
+            content: "Bienvenido a la plantilla maestra. Aquí puedes escribir el texto de introducción del presentador." 
         },
         { 
             type: "text", 
-            content: "„Bitte erstelle einen Teleprompter für [Thema einfügen] basierend auf dieser hochgeladenen Master-Vorlage. Ersetze nur den Inhalt der Variable scriptData durch den neuen Text. Behalte die gesamte Logik, das CSS und die Steuerelemente exakt so bei.“" 
+            content: "Simplemente reemplaza este bloque de 'scriptData' con el contenido del nuevo programa y guarda el archivo con un nuevo nombre." 
+        },
+        { 
+            type: "title", 
+            content: "Sección 1: Las Noticias" 
         },
         { 
             type: "text", 
-            content: "Testen Sie nun die Steuerung unten. Stufe 1 und 2 sollten jetzt langsam und flüssig laufen." 
+            content: "El texto se moverá automáticamente después de 2 segundos. La velocidad está calibrada para lectura cómoda." 
         },
         { 
             type: "text", 
-            content: "Viel Erfolg bei der nächsten Sendung!" 
+            content: "Recuerda: F11 para pantalla completa en PC. Tocar la pantalla en móvil si desaparece el menú." 
         }
     ];
-
     // ====================================================================
-    // ⬆️⬆️⬆️  ENDE DATENBEREICH - LOGIK NICHT ÄNDERN  ⬆️⬆️⬆️
+    // ⬆️⬆️⬆️ FIN DEL GUIÓN - NO TOCAR LA LÓGICA DE ABAJO ⬆️⬆️⬆️
     // ====================================================================
 
     document.addEventListener('DOMContentLoaded', () => {
       const scriptContainer = document.getElementById('script-container');
 
-      // 1. HTML Generieren
+      // Generar HTML desde scriptData
       scriptData.forEach(item => {
           let el;
           if (item.type === 'title') {
@@ -215,17 +210,16 @@
           scriptContainer.appendChild(el);
       });
 
-      // 2. LOGIK (Optimierte Version)
-      
+      // CONFIGURACIÓN INICIAL
       let state = {
-          speedLevel: 3,   // Standard Start-Geschwindigkeit
-          fontLevel: 6,    // Standard Start-Größe
+          speedLevel: 3,   // Velocidad base cómoda
+          fontLevel: 3,    // Tamaño base (no gigante) para ver el título
           isScrolling: false
       };
       
       let animationFrameId = null;
 
-      // DOM Elemente
+      // Referencias DOM
       const btnPlay = document.getElementById('play-pause-btn');
       const btnReset = document.getElementById('reset-btn');
       const toggleInstr = document.getElementById('toggle-instructions');
@@ -236,8 +230,7 @@
       const btnFontPlus = document.getElementById('font-plus');
       const dispFont = document.getElementById('font-display');
 
-      // --- FUNKTIONEN ---
-
+      // Funciones de Actualización
       function updateFont() {
           const baseSize = 24; 
           const stepSize = 7; 
@@ -248,11 +241,10 @@
           dispFont.textContent = state.fontLevel;
       }
 
-      // 🔥 OPTIMIERTE FORMEL FÜR FLÜSSIGEN START BEI 1 & 2 🔥
+      // FÓRMULA DE VELOCIDAD "ARTI" (Suave en bajos, rápida en altos)
       function getScrollPixelPerFrame() {
           const val = state.speedLevel;
           if (val === 0) return 0; 
-          // Formel: (5*Level + Level^2) / 60
           return (val * 5 + Math.pow(val, 2)) / 60; 
       }
 
@@ -272,47 +264,52 @@
       function togglePlay() {
           state.isScrolling = !state.isScrolling;
           if (state.isScrolling) {
-              btnPlay.textContent = "PAUSE";
-              btnPlay.classList.add('paused');
+              btnPlay.textContent = "PAUSA";
+              btnPlay.classList.add('paused'); // Rojo
               loop();
           } else {
-              btnPlay.textContent = "PLAY";
-              btnPlay.classList.remove('paused');
+              btnPlay.textContent = "INICIO";
+              btnPlay.classList.remove('paused'); // Verde
               cancelAnimationFrame(animationFrameId);
           }
       }
 
-      // Event Listener
-      btnSpeedMinus.addEventListener('click', () => {
-          if (state.speedLevel > 0) { state.speedLevel--; updateSpeedDisplay(); }
-      });
-      btnSpeedPlus.addEventListener('click', () => {
-          if (state.speedLevel < 20) { state.speedLevel++; updateSpeedDisplay(); }
-      });
-      btnFontMinus.addEventListener('click', () => {
-          if (state.fontLevel > 0) { state.fontLevel--; updateFont(); }
-      });
-      btnFontPlus.addEventListener('click', () => {
-          if (state.fontLevel < 15) { state.fontLevel++; updateFont(); }
-      });
+      // Event Listeners
+      btnSpeedMinus.addEventListener('click', () => { if (state.speedLevel > 0) { state.speedLevel--; updateSpeedDisplay(); } });
+      btnSpeedPlus.addEventListener('click', () => { if (state.speedLevel < 20) { state.speedLevel++; updateSpeedDisplay(); } });
+      
+      btnFontMinus.addEventListener('click', () => { if (state.fontLevel > 0) { state.fontLevel--; updateFont(); } });
+      btnFontPlus.addEventListener('click', () => { if (state.fontLevel < 15) { state.fontLevel++; updateFont(); } });
+      
       btnPlay.addEventListener('click', togglePlay);
+      
       btnReset.addEventListener('click', () => {
           window.scrollTo(0, 0);
           state.isScrolling = false;
-          btnPlay.textContent = "PLAY";
+          btnPlay.textContent = "INICIO";
           btnPlay.classList.remove('paused');
           cancelAnimationFrame(animationFrameId);
       });
+      
+      // Tecla Espacio para Play/Pause
       document.addEventListener('keydown', (e) => {
           if (e.key === ' ') { e.preventDefault(); togglePlay(); }
       });
+      
       toggleInstr.addEventListener('change', (e) => {
           document.body.classList.toggle('hide-instructions', e.target.checked);
       });
 
-      // Initialisierung
+      // Iniciar valores
       updateFont();
       updateSpeedDisplay();
+
+      // 🔥 AUTO-ARRANQUE (2 Segundos) 🔥
+      setTimeout(() => {
+          if (!state.isScrolling) {
+              togglePlay(); 
+          }
+      }, 2000);
 
     });
   </script>
