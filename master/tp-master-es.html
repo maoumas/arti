@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generador Teleprompter V6</title>
+  <style>
+    /* --- ESTILOS DEL GENERADOR (Interfaz de creación) --- */
+    :root { --primary: #2563EB; --bg: #F1F5F9; --card: #fff; --text: #1E293B; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background-color: var(--bg); color: var(--text);
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; margin: 0; padding: 20px;
+    }
+    .card {
+      background: var(--card); width: 100%; max-width: 600px;
+      border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      overflow: hidden; display: flex; flex-direction: column;
+    }
+    .header { background: #111827; padding: 24px; text-align: center; color: white; }
+    .header h1 { margin: 0; font-size: 1.5rem; }
+    .content { padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+    label { font-weight: 600; font-size: 0.9rem; color: #475569; }
+    textarea {
+      width: 100%; padding: 16px; border: 2px solid #E2E8F0; border-radius: 12px;
+      font-size: 16px; min-height: 250px; resize: vertical; outline: none;
+      font-family: inherit; box-sizing: border-box;
+    }
+    textarea:focus { border-color: var(--primary); }
+    .hint { font-size: 0.8rem; color: #64748B; background: #F8FAFC; padding: 8px; border-radius: 6px; border: 1px dashed #CBD5E1; }
+    button {
+      background: var(--primary); color: white; border: none; padding: 18px;
+      font-size: 1.1rem; font-weight: bold; border-radius: 12px; cursor: pointer;
+      transition: 0.2s; display: flex; justify-content: center; align-items: center; gap: 8px;
+    }
+    button:hover { background: #1D4ED8; transform: translateY(-1px); }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="header">
+      <h1>Generador Teleprompter 🎥</h1>
+      <p style="color:#9CA3AF; font-size:0.9rem; margin-top:4px;">V6: Nombre de archivo personalizado</p>
+    </div>
+    <div class="content">
+      <div>
+        <label for="input">Escribe tu guion aquí:</label>
+        <textarea id="input" placeholder="# Título del Programa&#10;* Instrucción (Sonreír...)&#10;Bienvenidos a este nuevo episodio..."></textarea>
+      </div>
+      
+      <div class="hint">
+        <strong>Sintaxis:</strong> Usa <code>#</code> para Títulos y <code>*</code> para Notas amarillas.
+      </div>
+
+      <button onclick="generate()">
+        <span>Descargar Teleprompter</span>
+        <span>🚀</span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function generate() {
+      const raw = document.getElementById('input').value;
+      const lines = raw.split('\n');
+      
+      let scriptData = [];
+      lines.forEach(line => {
+          line = line.trim();
+          if (!line) return;
+          if (line.startsWith('#')) {
+              scriptData.push({ type: "title", content: line.substring(1).trim() });
+          } else if (line.startsWith('*')) {
+              scriptData.push({ type: "instruction", content: line.substring(1).trim() });
+          } else {
+              scriptData.push({ type: "text", content: line });
+          }
+      });
+
+      if (scriptData.length === 0) {
+          scriptData = [{ type: "title", content: "GUION DE EJEMPLO" }, { type: "text", content: "Escribe tu texto en el generador." }];
+      }
+
+      const jsonContent = JSON.stringify(scriptData, null, 2);
+
+      // --- PLANTILLA FINAL V5 (Compacta) ---
+      const finalHTML = `
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Teleprompter Player</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+        body { background-color: #000; color: #f0f0f0; font-family: 'Inter', sans-serif; margin:0; overflow-x: hidden; }
+        
+        /* BARRA DE CONTROL (Estilo Base - MÓVIL COMPACTO) */
+        #controls { 
+            position: fixed; bottom: 0; left: 0; right: 0; 
+            background-color: #111; 
+            border-top: 1px solid #333; 
+            padding: 8px 10px; 
+            padding-bottom: env(safe-area-inset-bottom, 10px);
+            display: flex; flex-wrap: nowrap; align-items: center; gap: 6px; 
+            z-index: 1000; overflow-x: auto; justify-content: flex-start;
+            -webkit-overflow-scrolling: touch;
+        }
+        #controls::-webkit-scrollbar { display: none; }
+
+        /* Botón Principal (Play) - MÁS PEQUEÑO EN MÓVIL */
+        .btn-main {
+            height: 36px; 
+            padding: 0 12px; 
+            border-radius: 6px;
+            font-weight: 700; text-transform: uppercase; cursor: pointer;
+            border: none; color: white; font-size: 0.75rem; 
+            display: flex; align-items: center; justify-content: center; 
+            transition: background 0.2s; flex-shrink: 0;
+        }
+        .btn-main:active { transform: scale(0.96); }
+        #play-pause-btn { background-color: #10B981; min-width: 70px; } 
+        #play-pause-btn.paused { background-color: #EF4444; } 
+        #reset-btn { background-color: #374151; width: 36px; padding: 0; margin-left: 0; }
+
+        /* Grupos de Control */
+        .control-group {
+            display: flex; align-items: center; gap: 1px;
+            background-color: #222; padding: 2px; border-radius: 6px;
+            border: 1px solid #444; flex-shrink: 0;
+        }
+        .group-icon { padding: 0 6px; color: #888; display: flex; align-items: center; justify-content: center; }
+        
+        /* Botones +/- COMPACTOS */
+        .stepper-btn {
+            width: 32px; height: 32px; 
+            border-radius: 4px; border: none;
+            font-size: 1.2rem; font-weight: bold; cursor: pointer; color: white;
+            background: transparent; display:flex; justify-content:center; align-items:center;
+            padding-bottom: 4px;
+        }
+        .value-display { font-family: monospace; font-size: 0.9rem; font-weight: bold; min-width: 24px; text-align: center; }
+
+        /* Temas */
+        .theme-speed .stepper-btn { background-color: #1E40AF; }
+        .theme-font .stepper-btn { background-color: #92400E; }
+
+        /* ICONOS SVG AJUSTADOS */
+        .icon-svg { width: 18px; height: 18px; fill: currentColor; } 
+
+        /* Text Area */
+        #script-container { padding: 1.5rem 1rem; padding-bottom: 50vh; max-width: 900px; margin: 0 auto; line-height: 1.5; }
+        .speaker-text { font-size: 2.5rem; font-weight: 600; color: #fff; margin-bottom: 1.5rem; }
+        .instruction { font-size: 1.2rem; color: #FCD34D; font-style: italic; background-color: #282518; border-left: 4px solid #F59E0B; padding: 0.8rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0; }
+        .timestamp { font-size: 1.5rem; font-weight: 700; color: #60A5FA; border-top: 1px solid #333; padding-top: 2rem; margin-top: 3rem; margin-bottom: 1rem; text-transform: uppercase; }
+        
+        body.hide-instructions .instruction { display: none; }
+        .toggle-container { display: flex; align-items: center; gap: 5px; color: #9CA3AF; font-size: 0.75rem; margin-left: 6px; flex-shrink: 0; white-space: nowrap;}
+        input[type=checkbox] { transform: scale(1.1); }
+
+        /* --- MEDIA QUERY PARA PC (PANTALLAS GRANDES) --- */
+        @media (min-width: 768px) {
+            #controls { justify-content: center; padding: 12px 20px; gap: 12px; }
+            
+            .btn-main { height: 44px; font-size: 0.9rem; padding: 0 20px; }
+            #play-pause-btn { min-width: 100px; }
+            #reset-btn { width: 44px; }
+            
+            .stepper-btn { width: 40px; height: 40px; font-size: 1.5rem; }
+            .value-display { font-size: 1.1rem; min-width: 30px; }
+            .icon-svg { width: 22px; height: 22px; }
+            
+            .toggle-container { font-size: 0.9rem; gap: 8px; margin-left: 12px;}
+        }
+    </style>
+</head>
+<body>
+  
+  <div id="script-container"></div>
+
+  <div id="controls">
+    <button id="play-pause-btn" class="btn-main">INICIAR</button>
+    
+    <button id="reset-btn" class="btn-main" title="Reiniciar">
+        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+    </button>
+
+    <div class="control-group theme-speed">
+        <div class="group-icon">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+        </div>
+        <button class="stepper-btn" id="speed-minus">−</button>
+        <div class="value-display" id="speed-display">3</div>
+        <button class="stepper-btn" id="speed-plus">+</button>
+    </div>
+
+    <div class="control-group theme-font">
+        <div class="group-icon">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M2.5 4v3h5v12h3V7h5V4h-13zm19 5h-9v3h3v7h3v-7h3V9z"/></svg>
+        </div>
+        <button class="stepper-btn" id="font-minus">−</button>
+        <div class="value-display" id="font-display">3</div>
+        <button class="stepper-btn" id="font-plus">+</button>
+    </div>
+
+    <div class="toggle-container">
+        <input type="checkbox" id="toggle-instructions"> <label for="toggle-instructions">Ocultar notas</label>
+    </div>
+  </div>
+
+  <script>
+    const scriptData = ${jsonContent};
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const scriptContainer = document.getElementById('script-container');
+      
+      // Renderizado
+      scriptData.forEach(item => {
+          let el;
+          if (item.type === 'title') { el = document.createElement('h2'); el.className = 'timestamp'; }
+          else if (item.type === 'instruction') { el = document.createElement('p'); el.className = 'instruction'; }
+          else { el = document.createElement('p'); el.className = 'speaker-text'; }
+          el.textContent = item.content;
+          scriptContainer.appendChild(el);
+      });
+
+      // Lógica
+      let state = { speedLevel: 3, fontLevel: 3, isScrolling: false };
+      let animationFrameId = null;
+      const btnPlay = document.getElementById('play-pause-btn');
+      const dispSpeed = document.getElementById('speed-display');
+      const dispFont = document.getElementById('font-display');
+
+      function updateFont() {
+          const size = 20 + (state.fontLevel * 5); 
+          document.querySelectorAll('.speaker-text, .timestamp').forEach(el => el.style.fontSize = size + 'px');
+          dispFont.textContent = state.fontLevel;
+      }
+
+      function loop() {
+          if (!state.isScrolling) return;
+          const pixels = state.speedLevel === 0 ? 0 : (state.speedLevel * 4 + Math.pow(state.speedLevel, 1.8)) / 60;
+          if (pixels > 0) window.scrollBy(0, pixels);
+          animationFrameId = requestAnimationFrame(loop);
+      }
+
+      function togglePlay() {
+          state.isScrolling = !state.isScrolling;
+          if (state.isScrolling) {
+              btnPlay.textContent = "PAUSA";
+              btnPlay.classList.add('paused');
+              loop();
+          } else {
+              btnPlay.textContent = "SEGUIR";
+              btnPlay.classList.remove('paused');
+              cancelAnimationFrame(animationFrameId);
+          }
+      }
+
+      // Listeners
+      document.getElementById('speed-minus').onclick = () => { if (state.speedLevel > 0) state.speedLevel--; dispSpeed.textContent = state.speedLevel; };
+      document.getElementById('speed-plus').onclick = () => { if (state.speedLevel < 20) state.speedLevel++; dispSpeed.textContent = state.speedLevel; };
+      document.getElementById('font-minus').onclick = () => { if (state.fontLevel > 0) state.fontLevel--; updateFont(); };
+      document.getElementById('font-plus').onclick = () => { if (state.fontLevel < 15) state.fontLevel++; updateFont(); };
+      
+      btnPlay.onclick = togglePlay;
+      document.getElementById('reset-btn').onclick = () => {
+          window.scrollTo(0,0); state.isScrolling = false; 
+          btnPlay.textContent = "INICIAR"; btnPlay.classList.remove('paused'); cancelAnimationFrame(animationFrameId);
+      };
+      document.getElementById('toggle-instructions').onchange = (e) => document.body.classList.toggle('hide-instructions', e.target.checked);
+      
+      document.addEventListener('keydown', (e) => { if (e.key === ' ') { e.preventDefault(); togglePlay(); } });
+
+      updateFont();
+      dispSpeed.textContent = state.speedLevel;
+      
+      setTimeout(() => { if(!state.isScrolling) togglePlay(); }, 2000);
+    });
+  <\/script>
+</body>
+</html>`;
+
+      const blob = new Blob([finalHTML], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      
+      // --- GENERACIÓN DEL NOMBRE DE ARCHIVO TP-FECHA-XX ---
+      const now = new Date();
+      const year = now.getFullYear();
+      // Aseguramos 2 dígitos para mes y día
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      // Generamos un número aleatorio entre 10 y 99 para evitar duplicados
+      const randomNum = Math.floor(Math.random() * 90 + 10);
+      
+      const fileName = `tp-${year}${month}${day}-${randomNum}.html`;
+      // -------------------------------------------------------
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>
