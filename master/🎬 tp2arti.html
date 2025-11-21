@@ -1,0 +1,403 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Teleprompter Player</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎬</text></svg>">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+        body { background-color: #000; color: #f0f0f0; font-family: 'Inter', sans-serif; margin:0; overflow-x: hidden; }
+        
+        /* BARRA DE CONTROL (Móvil Compacto + PC Elegante) */
+        #controls { 
+            position: fixed; bottom: 0; left: 0; right: 0; 
+            background-color: #111; border-top: 1px solid #333; 
+            padding: 8px 10px; padding-bottom: env(safe-area-inset-bottom, 10px);
+            display: flex; flex-wrap: nowrap; align-items: center; gap: 6px; 
+            z-index: 1000; overflow-x: auto; justify-content: flex-start;
+            -webkit-overflow-scrolling: touch;
+        }
+        #controls::-webkit-scrollbar { display: none; }
+
+        /* Botones */
+        .btn-main {
+            height: 36px; padding: 0 12px; border-radius: 8px;
+            font-weight: 700; text-transform: uppercase; cursor: pointer;
+            border: none; color: white; font-size: 0.8rem; 
+            display: flex; align-items: center; justify-content: center; 
+            transition: background 0.2s; flex-shrink: 0;
+        }
+        .btn-main:active { transform: scale(0.96); }
+        #play-pause-btn { background-color: #10B981; min-width: 80px; } 
+        #play-pause-btn.paused { background-color: #EF4444; } 
+        #reset-btn { background-color: #374151; width: 36px; padding: 0; margin-left: 0; }
+
+        .control-group {
+            display: flex; align-items: center; gap: 1px;
+            background-color: #222; padding: 2px; border-radius: 8px;
+            border: 1px solid #444; flex-shrink: 0;
+        }
+        .group-icon { padding: 0 6px; color: #888; display: flex; align-items: center; justify-content: center; }
+        
+        .stepper-btn {
+            width: 32px; height: 32px; border-radius: 6px; border: none;
+            font-size: 1.2rem; font-weight: bold; cursor: pointer; color: white;
+            background: transparent; display:flex; justify-content:center; align-items:center; padding-bottom: 4px;
+        }
+        .value-display { font-family: monospace; font-size: 0.9rem; font-weight: bold; min-width: 24px; text-align: center; }
+
+        .theme-speed .stepper-btn { background-color: #1E40AF; }
+        .theme-font .stepper-btn { background-color: #92400E; }
+        .icon-svg { width: 18px; height: 18px; fill: currentColor; } 
+
+        /* Text Area */
+        #script-container { padding: 2rem 1.5rem; padding-bottom: 50vh; max-width: 900px; margin: 0 auto; line-height: 1.5; }
+        .speaker-text { font-size: 2.5rem; font-weight: 600; color: #fff; margin-bottom: 1.5rem; }
+        .instruction { font-size: 1.3rem; color: #FCD34D; font-style: italic; background-color: #282518; border-left: 4px solid #F59E0B; padding: 1rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0; }
+        .timestamp { font-size: 1.8rem; font-weight: 700; color: #60A5FA; border-top: 1px solid #333; padding-top: 2rem; margin-top: 3rem; margin-bottom: 1rem; text-transform: uppercase; }
+        
+        body.hide-instructions .instruction { display: none; }
+        .toggle-container { display: flex; align-items: center; gap: 6px; color: #9CA3AF; font-size: 0.8rem; margin-left: 8px; flex-shrink: 0; white-space: nowrap;}
+        input[type=checkbox] { transform: scale(1.2); accent-color: #2563EB; }
+
+        /* PC View Tweaks */
+        @media (min-width: 768px) {
+            #controls { justify-content: center; padding: 12px 20px; gap: 12px; }
+            .btn-main { height: 44px; font-size: 0.9rem; padding: 0 20px; }
+            #play-pause-btn { min-width: 110px; } #reset-btn { width: 44px; }
+            .stepper-btn { width: 40px; height: 40px; font-size: 1.5rem; }
+            .value-display { font-size: 1.1rem; min-width: 30px; }
+            .icon-svg { width: 22px; height: 22px; }
+            .toggle-container { font-size: 0.9rem; gap: 8px; margin-left: 12px;}
+        }
+    </style>
+</head>
+<body>
+  
+  <div id="script-container"></div>
+
+  <div id="controls">
+    <button id="play-pause-btn" class="btn-main">INICIAR</button>
+    <button id="reset-btn" class="btn-main" title="Reiniciar">
+        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+    </button>
+
+    <div class="control-group theme-speed">
+        <div class="group-icon">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+        </div>
+        <button class="stepper-btn" id="speed-minus">−</button>
+        <div class="value-display" id="speed-display">3</div>
+        <button class="stepper-btn" id="speed-plus">+</button>
+    </div>
+
+    <div class="control-group theme-font">
+        <div class="group-icon">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M2.5 4v3h5v12h3V7h5V4h-13zm19 5h-9v3h3v7h3v-7h3V9z"/></svg>
+        </div>
+        <button class="stepper-btn" id="font-minus">−</button>
+        <div class="value-display" id="font-display">3</div>
+        <button class="stepper-btn" id="font-plus">+</button>
+    </div>
+
+    <div class="toggle-container">
+        <input type="checkbox" id="toggle-instructions"> <label for="toggle-instructions">Ocultar notas</label>
+    </div>
+  </div>
+
+  <script>
+    const scriptData = [
+  {
+    "type": "title",
+    "content": "🎬 ¡Hola Arti! Bienvenido a tu Nuevo Teleprompter Mágico"
+  },
+  {
+    "type": "text",
+    "content": "¡Saludos, maestro de YouTube! 🎙️"
+  },
+  {
+    "type": "text",
+    "content": "Sabemos que a los 78 años tienes cosas más importantes que hacer (como grabar tus excelentes programas) que pelearte con una computadora caprichosa. Por eso, te he preparado esta herramienta personalizada."
+  },
+  {
+    "type": "text",
+    "content": "Piensa en esto no como \"software\", sino como un **microondas**: metes los ingredientes, aprietas un botón, y ¡pum! Sale el guion listo para leer."
+  },
+  {
+    "type": "text",
+    "content": "Aquí tienes el manual de padre Ernst para armar tu motocicleta (versión sin dolor de cabeza)."
+  },
+  {
+    "type": "text",
+    "content": "---"
+  },
+  {
+    "type": "title",
+    "content": "# Paso 1: La Cocina (El Generador) 👨‍🍳"
+  },
+  {
+    "type": "text",
+    "content": "Primero, abre el archivo del **Generador** que te envié. Verás una caja blanca grande que dice \"Escribe tu guion aquí\". Ahí es donde ocurre la magia."
+  },
+  {
+    "type": "text",
+    "content": "Puedes escribir directamente ahí o pegar el texto que ya tengas escrito en otro lado. Pero ojo, **tenemos un \"código secreto\"** para que la máquina sepa qué hacer:"
+  },
+  {
+    "type": "title",
+    "content": "## 1. Los Títulos Grandes (#)"
+  },
+  {
+    "type": "text",
+    "content": "Si quieres un **Título Gigante** (ideal para saber que cambias de tema), pon el signo de \"numeral\" o \"hashtag\" (`#`) antes del texto."
+  },
+  {
+    "type": "text",
+    "content": "> **Ejemplo:** `# La Noticia del Día`"
+  },
+  {
+    "type": "text",
+    "content": "> *Resultado:* La máquina lo pondrá en letras **AZULES** y grandes para que sepas dónde estás parado."
+  },
+  {
+    "type": "title",
+    "content": "## 2. Las Notas Secretas (*)"
+  },
+  {
+    "type": "text",
+    "content": "Si quieres dejarte una nota para ti mismo (tipo: *\"Aquí sonreír a la cámara\"* o *\"Beber agua\"*), pon un asterisco (`*`) antes del texto."
+  },
+  {
+    "type": "text",
+    "content": "> **Ejemplo:** `* Pausa dramática y mirar a la cámara 2`"
+  },
+  {
+    "type": "text",
+    "content": "> *Resultado:* La máquina lo pondrá en un recuadro **AMARILLO**. Es como si tu director te susurrara al oído, pero sin molestar."
+  },
+  {
+    "type": "title",
+    "content": "## 3. El Texto Normal"
+  },
+  {
+    "type": "text",
+    "content": "Todo lo que **NO** tenga signos raros, es lo que tienes que leer en voz alta para tu público."
+  },
+  {
+    "type": "text",
+    "content": "> **Ejemplo:** `Buenas noches queridos suscriptores, hoy vamos a hablar de...`"
+  },
+  {
+    "type": "text",
+    "content": "> *Resultado:* Letras **BLANCAS** sobre fondo negro, claritas y legibles."
+  },
+  {
+    "type": "text",
+    "content": "---"
+  },
+  {
+    "type": "title",
+    "content": "# Paso 2: Al Horno (Generar el Archivo) 🚀"
+  },
+  {
+    "type": "text",
+    "content": "Una vez que pegaste tu texto en la caja:"
+  },
+  {
+    "type": "text",
+    "content": "1.  Busca el botón azul grande que dice **\"Descargar Teleprompter 🚀\"**."
+  },
+  {
+    "type": "text",
+    "content": "2.  ¡Púlsalo con confianza! (No va a explotar)."
+  },
+  {
+    "type": "text",
+    "content": "3.  Automáticamente, tu computadora guardará un archivo nuevo."
+  },
+  {
+    "type": "instruction",
+    "content": "**El nombre es inteligente:** Se llamará algo así como `tp-20251121-85.html`."
+  },
+  {
+    "type": "instruction",
+    "content": "*Traducción:* `tp` (Teleprompter) + `La Fecha de Hoy` + `Un numerito extra`. Así no pierdes tus guiones antiguos."
+  },
+  {
+    "type": "instruction",
+    "content": "*¿Dónde se guarda?**"
+  },
+  {
+    "type": "text",
+    "content": "Por lo general, se va a la carpeta de **\"Descargas\"** (Downloads) de tu computadora. Búscalo ahí. Es el archivo \"recién nacido\"."
+  },
+  {
+    "type": "text",
+    "content": "---"
+  },
+  {
+    "type": "title",
+    "content": "# Paso 3: ¡Acción! (Usando el Teleprompter) 🎥"
+  },
+  {
+    "type": "text",
+    "content": "Ve a tu carpeta de Descargas y dale **doble clic** a ese archivo nuevo (`tp-....html`). Se abrirá en tu navegador de Internet (Chrome, Edge, el que uses)."
+  },
+  {
+    "type": "text",
+    "content": "¡Y listo! Verás tu guion en fondo negro, súper profesional."
+  },
+  {
+    "type": "title",
+    "content": "## Los Controles (Tu Tablero de Mando)"
+  },
+  {
+    "type": "text",
+    "content": "Abajo de la pantalla tienes una barra negra con botones. No te asustes, son muy fáciles:"
+  },
+  {
+    "type": "instruction",
+    "content": "🟢 **INICIAR / SEGUIR:** El botón verde grande. Si lo tocas, el texto empieza a subir. Si lo tocas otra vez, se pone rojo (PAUSA) y se detiene."
+  },
+  {
+    "type": "instruction",
+    "content": "*Truco de magia:* ¡También puedes pulsar la **Barra Espaciadora** de tu teclado para arrancar y frenar!"
+  },
+  {
+    "type": "instruction",
+    "content": "⚡ **El Rayo (Velocidad):**"
+  },
+  {
+    "type": "instruction",
+    "content": "Si el texto corre más rápido que Usain Bolt, dale al **Menos (-)**."
+  },
+  {
+    "type": "instruction",
+    "content": "Si va más lento que una tortuga, dale al **Más (+)**."
+  },
+  {
+    "type": "instruction",
+    "content": "🅰️ **Las Letras (Tamaño):**"
+  },
+  {
+    "type": "instruction",
+    "content": "¿Olvidaste los lentes? No hay problema. Dale al **Más (+)** en el icono de texto y las letras crecerán hasta que las veas desde la luna."
+  },
+  {
+    "type": "instruction",
+    "content": "🔄 **La Flecha Circular (Replay):**"
+  },
+  {
+    "type": "instruction",
+    "content": "¿Salió mal la toma? Toca este botón y el guion volverá al principio mágicamente."
+  },
+  {
+    "type": "instruction",
+    "content": "🚫 **Ocultar notas:**"
+  },
+  {
+    "type": "instruction",
+    "content": "Hay una cajita pequeña que dice \"Ocultar notas\". Si la marcas, todas las instrucciones amarillas desaparecen. Ideal si quieres leer el texto limpio sin distracciones."
+  },
+  {
+    "type": "title",
+    "content": "## Un último secreto... 🤫"
+  },
+  {
+    "type": "text",
+    "content": "Cuando abras el archivo, **cuenta hasta 2**. El teleprompter es educado y espera 2 segundos antes de empezar a moverse solo. ¡Aprovéchalos para acomodarte la corbata o peinarte el bigote!"
+  },
+  {
+    "type": "text",
+    "content": "---"
+  },
+  {
+    "type": "text",
+    "content": "¡Y eso es todo, Arti!"
+  },
+  {
+    "type": "text",
+    "content": "Ahora a grabar esos videos, que el mundo está esperando. Si la máquina se porta mal, échale la culpa a \"la nube\", que siempre funciona como excusa."
+  },
+  {
+    "type": "text",
+    "content": "¡Un abrazo digital! 🤖"
+  }
+];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const scriptContainer = document.getElementById('script-container');
+      
+      // Renderizado
+      scriptData.forEach(item => {
+          let el;
+          if (item.type === 'title') { el = document.createElement('h2'); el.className = 'timestamp'; }
+          else if (item.type === 'instruction') { el = document.createElement('p'); el.className = 'instruction'; }
+          else { el = document.createElement('p'); el.className = 'speaker-text'; }
+          el.textContent = item.content;
+          scriptContainer.appendChild(el);
+      });
+
+      // Lógica
+      let state = { speedLevel: 3, fontLevel: 3, isScrolling: false };
+      let animationFrameId = null;
+      const btnPlay = document.getElementById('play-pause-btn');
+      const dispSpeed = document.getElementById('speed-display');
+      const dispFont = document.getElementById('font-display');
+
+      function updateFont() {
+          const size = 20 + (state.fontLevel * 5); 
+          document.querySelectorAll('.speaker-text, .timestamp').forEach(el => el.style.fontSize = size + 'px');
+          dispFont.textContent = state.fontLevel;
+      }
+
+      function loop() {
+          if (!state.isScrolling) return;
+          const pixels = state.speedLevel === 0 ? 0 : (state.speedLevel * 4 + Math.pow(state.speedLevel, 1.8)) / 60;
+          if (pixels > 0) window.scrollBy(0, pixels);
+          animationFrameId = requestAnimationFrame(loop);
+      }
+
+      function togglePlay() {
+          state.isScrolling = !state.isScrolling;
+          if (state.isScrolling) {
+              btnPlay.textContent = "PAUSA";
+              btnPlay.classList.add('paused');
+              loop();
+          } else {
+              btnPlay.textContent = "SEGUIR";
+              btnPlay.classList.remove('paused');
+              cancelAnimationFrame(animationFrameId);
+          }
+      }
+
+      document.getElementById('speed-minus').onclick = () => { if (state.speedLevel > 0) state.speedLevel--; dispSpeed.textContent = state.speedLevel; };
+      document.getElementById('speed-plus').onclick = () => { if (state.speedLevel < 20) state.speedLevel++; dispSpeed.textContent = state.speedLevel; };
+      document.getElementById('font-minus').onclick = () => { if (state.fontLevel > 0) state.fontLevel--; updateFont(); };
+      document.getElementById('font-plus').onclick = () => { if (state.fontLevel < 15) state.fontLevel++; updateFont(); };
+      
+      btnPlay.onclick = togglePlay;
+      document.getElementById('reset-btn').onclick = () => {
+          window.scrollTo(0,0); state.isScrolling = false; 
+          btnPlay.textContent = "INICIAR"; btnPlay.classList.remove('paused'); cancelAnimationFrame(animationFrameId);
+      };
+      document.getElementById('toggle-instructions').onchange = (e) => document.body.classList.toggle('hide-instructions', e.target.checked);
+      
+      document.addEventListener('keydown', (e) => { if (e.key === ' ') { e.preventDefault(); togglePlay(); } });
+
+      // Tocar pantalla para Play/Pausa (Mejora de usabilidad móvil)
+      scriptContainer.addEventListener('click', (e) => {
+           // Solo si no se tocó un control
+           togglePlay();
+      });
+
+      updateFont();
+      dispSpeed.textContent = state.speedLevel;
+      
+      setTimeout(() => { if(!state.isScrolling) togglePlay(); }, 2000);
+    });
+  </script>
+</body>
+</html>
