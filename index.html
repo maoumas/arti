@@ -13,11 +13,12 @@
     
     <style>
         :root {
-            --bg-color: #0f172a; /* Fondo oscuro azulado */
+            --bg-color: #0f172a;
             --card-bg: #1e293b;
             --text-main: #ffffff;
             --text-muted: #94a3b8;
-            --accent: #3b82f6; /* Azul brillante */
+            --accent: #3b82f6;
+            --hover-bg: #2d3b55;
         }
 
         body {
@@ -32,7 +33,7 @@
             align-items: center;
         }
 
-        /* Header / Perfil */
+        /* Header */
         header {
             text-align: center;
             padding: 60px 20px 40px;
@@ -47,7 +48,7 @@
             border: 4px solid var(--accent);
             box-shadow: 0 0 25px rgba(59, 130, 246, 0.4);
             margin-bottom: 20px;
-            background-color: #fff; /* Fondo por si la imagen carga lento */
+            background-color: #fff;
         }
 
         h1 {
@@ -62,7 +63,6 @@
             line-height: 1.6;
         }
 
-        /* Enlace principal al Tutor (El botón que faltaba) */
         .tutor-btn {
             display: inline-block;
             margin-top: 20px;
@@ -80,7 +80,7 @@
             background-color: #2563eb;
         }
 
-        /* Sección Producciones */
+        /* Secciones */
         .section-title {
             width: 100%;
             max-width: 600px;
@@ -101,16 +101,39 @@
             box-sizing: border-box;
         }
 
+        /* Estilo de Tarjetas (Cards) */
         .card {
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 20px;
             border: 1px solid #334155;
+            display: block; /* Para que el enlace ocupe todo */
+            text-decoration: none; /* Quitar subrayado de enlaces */
+            color: inherit;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .card:hover {
+            background-color: var(--hover-bg);
+            transform: translateY(-2px);
+            border-color: var(--accent);
         }
 
         .breaking-badge {
             background-color: #dc2626;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .tool-badge {
+            background-color: #059669; /* Verde para herramientas */
             color: white;
             padding: 4px 8px;
             border-radius: 4px;
@@ -128,8 +151,15 @@
         }
 
         .card-content i {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: var(--accent);
+            width: 40px; /* Ancho fijo para alinear */
+            text-align: center;
+        }
+
+        .card-info {
+            display: flex;
+            flex-direction: column;
         }
 
         .card-title {
@@ -137,9 +167,15 @@
             font-weight: bold;
         }
 
-        /* Footer GitHub (Tu solicitud) */
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Footer */
         footer {
-            margin-top: auto; /* Empuja el footer al final */
+            margin-top: auto;
             padding: 40px 20px;
             text-align: center;
             width: 100%;
@@ -164,10 +200,9 @@
         <img src="https://zmau.dev/img/arti-preview.png" alt="Artis Studio Logo" class="profile-img">
         
         <h1>Artis Studio</h1>
-        
         <p class="description">
             Digitales Produktionszentrum für @TranslatedPressDE. 
-            Hier findest du alle Tools, Skripte und Analysen für deine Sendungen.
+            Hier findest du alle Tools, Skripte und Analysen.
         </p>
 
         <a href="https://zmau.dev/tutor/" class="tutor-btn">
@@ -176,17 +211,48 @@
     </header>
 
     <div class="section-title">
-        <i class="fa-solid fa-tower-broadcast"></i> Produktionen & Sendungen
+        <i class="fa-solid fa-tower-broadcast"></i> Produktionen
     </div>
 
     <div class="card-container">
-        <div class="card">
-            <div class="breaking-badge">Breaking News</div>
+        <a href="https://zmau.dev/karibik" class="card">
+            <div class="breaking-badge">Neueste Sendung</div>
             <div class="card-content">
-                <i class="fa-solid fa-ship"></i>
-                <div class="card-title">Operation Southern Spear</div>
+                <i class="fa-solid fa-water"></i>
+                <div class="card-info">
+                    <span class="card-title">Karibik / Southern Spear</span>
+                    <span class="card-desc">Aktuelles Programm ansehen</span>
+                </div>
             </div>
-        </div>
+        </a>
+    </div>
+
+    <div class="section-title">
+        <i class="fa-solid fa-screwdriver-wrench"></i> Tools & Generatoren
+    </div>
+
+    <div class="card-container">
+        <a href="https://zmau.dev/master/tp-gen" class="card">
+            <div class="tool-badge">Tool</div>
+            <div class="card-content">
+                <i class="fa-solid fa-file-code"></i>
+                <div class="card-info">
+                    <span class="card-title">Teleprompter Generator</span>
+                    <span class="card-desc">Erstelle das Skript für den Prompter</span>
+                </div>
+            </div>
+        </a>
+
+        <a href="https://zmau.dev/master/tp2arti" class="card">
+            <div class="tool-badge">Beispiel</div>
+            <div class="card-content">
+                <i class="fa-regular fa-eye"></i>
+                <div class="card-info">
+                    <span class="card-title">Teleprompter Vorschau</span>
+                    <span class="card-desc">Beispiel-Ansicht (Demo)</span>
+                </div>
+            </div>
+        </a>
     </div>
 
     <footer>
