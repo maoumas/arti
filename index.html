@@ -36,7 +36,8 @@
         /* Header */
         header {
             text-align: center;
-            padding: 60px 20px 20px; /* Reduje el padding inferior un poco */
+            /* CAMBIO: Reducido padding superior e inferior */
+            padding: 40px 20px 10px; 
             max-width: 600px;
         }
 
@@ -47,34 +48,35 @@
             object-fit: cover;
             border: 4px solid var(--accent);
             box-shadow: 0 0 25px rgba(59, 130, 246, 0.4);
-            margin-bottom: 20px;
+            margin-bottom: 15px; /* CAMBIO: Reducido un poco */
             background-color: #fff;
         }
 
         h1 {
             font-size: 2.5rem;
-            margin: 10px 0;
+            margin: 5px 0; /* CAMBIO: Reducido margen del título */
             font-weight: 800;
         }
 
         .description {
             color: var(--text-muted);
             font-size: 1.1rem;
-            line-height: 1.6;
+            line-height: 1.4; /* CAMBIO: Líneas un poco más juntas */
         }
 
-        /* Botón del Tutor (Estilos ajustados para estar abajo) */
+        /* Botón del Tutor */
         .tutor-btn {
             display: inline-block;
-            margin: 40px 0 20px 0; /* Más margen arriba para separarlo de las herramientas */
-            padding: 15px 30px;    /* Un poco más grande para destacar abajo */
+            /* CAMBIO: Margen superior reducido de 40px a 20px */
+            margin: 20px 0 20px 0; 
+            padding: 15px 30px;
             background-color: var(--accent);
             color: white;
             text-decoration: none;
             border-radius: 30px;
             font-weight: bold;
             transition: transform 0.2s, background 0.2s;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3); /* Sombra añadida */
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
         }
 
         .tutor-btn:hover {
@@ -87,7 +89,8 @@
             width: 100%;
             max-width: 600px;
             padding: 0 20px;
-            margin-top: 40px;
+            /* CAMBIO: Margen superior reducido de 40px a 20px */
+            margin-top: 20px; 
             border-left: 4px solid var(--accent);
             font-size: 1.5rem;
             font-weight: bold;
@@ -99,7 +102,8 @@
         .card-container {
             width: 100%;
             max-width: 600px;
-            padding: 20px;
+            /* CAMBIO: Padding superior reducido de 20px a 10px */
+            padding: 10px 20px; 
             box-sizing: border-box;
         }
 
@@ -108,7 +112,8 @@
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 20px;
-            margin-bottom: 20px;
+            /* CAMBIO: Margen inferior reducido de 20px a 15px */
+            margin-bottom: 15px; 
             border: 1px solid #334155;
             display: block; 
             text-decoration: none; 
@@ -131,7 +136,7 @@
             font-weight: bold;
             text-transform: uppercase;
             display: inline-block;
-            margin-bottom: 10px;
+            margin-bottom: 8px; /* Pequeño ajuste */
         }
 
         .tool-badge {
@@ -143,7 +148,7 @@
             font-weight: bold;
             text-transform: uppercase;
             display: inline-block;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .card-content {
@@ -172,13 +177,13 @@
         .card-desc {
             font-size: 0.9rem;
             color: var(--text-muted);
-            margin-top: 4px;
+            margin-top: 2px;
         }
 
         /* Footer */
         footer {
             margin-top: auto;
-            padding: 40px 20px;
+            padding: 30px 20px; /* Reducido un poco */
             text-align: center;
             width: 100%;
         }
@@ -206,7 +211,7 @@
             Digitales Produktionszentrum für @TranslatedPressDE. 
             Hier findest du alle Tools, Skripte und Analysen.
         </p>
-        </header>
+    </header>
 
     <div class="section-title">
         <i class="fa-solid fa-tower-broadcast"></i> Produktionen
