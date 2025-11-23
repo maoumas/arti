@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Produktions-Handbuch für Arti</title>
+    
+    <!-- WhatsApp / Social Media Preview Tags -->
+    <meta property="og:title" content="Das Regiebuch für Arti">
+    <meta property="og:description" content="Deine Anleitung für die perfekte Sendung mit NotebookLM & Gemini.">
+    <!-- Hier ist dein verlinktes Bild für die Vorschau -->
+    <meta property="og:image" content="http://zmau.dev/img/IMG_tutor.JPG">
+    <meta property="og:type" content="article">
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
@@ -30,21 +38,40 @@
             margin: 0 auto;
         }
 
+        /* Hero Image */
+        .hero-image {
+            width: 100%;
+            height: 300px; /* Etwas höher für bessere Sichtbarkeit */
+            object-fit: cover;
+            border-radius: 15px 15px 0 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: -20px; /* Overlap with header */
+            display: block;
+        }
+
         /* Header */
         .header {
             text-align: center;
             margin-bottom: 50px;
+            background: white;
+            padding: 40px 20px 20px;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 10;
         }
 
         .header h1 {
             color: var(--primary-color);
             font-size: 2.5rem;
             margin-bottom: 10px;
+            margin-top: 0;
         }
 
         .header p {
             font-size: 1.2rem;
             color: var(--text-light);
+            margin-bottom: 0;
         }
 
         /* Steps */
@@ -159,6 +186,10 @@
 <body>
 
     <div class="container">
+        
+        <!-- Hero Image Displayed at Top (Linked from server) -->
+        <img src="http://zmau.dev/img/IMG_tutor.JPG" alt="Studio Regieplatz" class="hero-image">
+
         <div class="header">
             <h1><i class="fa-solid fa-wand-magic-sparkles"></i> Das Regiebuch</h1>
             <p>Hallo Arti! Hier ist deine Schritt-für-Schritt-Anleitung, um aus bloßen Informationen eine großartige Sendung zu machen.</p>
@@ -263,3 +294,5 @@ Handeln Sie mit der ganzen Professionalität und Ernsthaftigkeit dieser Nachrich
 
 </body>
 </html>
+
+
