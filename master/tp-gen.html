@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Teleprompter Studio</title>
+  <title>Teleprompter Studio PRO</title>
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📡</text></svg>">
 
   <meta property="og:title" content="Teleprompter Studio PRO" />
   <meta property="og:description" content="Professional Script Generator. Load, Edit and Project Live." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://zmau.dev/img/IMG_tp.JPG" />
+  <meta property="og:image" content="https://zmau.dev/arti/maestro/img/IMG_to.jpeg" />
 
   <style>
-    /* --- THEME: PROFESSIONAL PURPLE --- */
+    /* --- PROFESSIONAL PURPLE THEME --- */
     :root { 
       --primary: #4C1D95; 
       --primary-light: #6D28D9; 
@@ -143,15 +143,12 @@
       });
 
       if (scriptData.length === 0) {
-          scriptData = [{ type: "title", content: "TEST MODE" }, { type: "text", content: "No text detected. Type something to begin." }];
+          scriptData = [{ type: "title", content: "TEST MODE" }, { type: "text", content: "No text detected." }];
       }
       
-      // Convertimos los datos a texto JSON seguro
       const jsonContent = JSON.stringify(scriptData, null, 2);
 
-      // =======================================================
-      // PLAYER TEMPLATE (CORRECTED)
-      // =======================================================
+      // --- PLAYER TEMPLATE WITH SMART COVER & CLEAN NAME LOGIC ---
       const playerHTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -163,6 +160,23 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
         body { background-color: #000; color: #f0f0f0; font-family: 'Inter', sans-serif; margin:0; overflow-x: hidden; }
         
+        /* SMART COVER (Purple Screen) */
+        #cover-screen {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, #4C1D95 0%, #2E1065 100%);
+            color: white; z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 30px;
+        }
+        .cover-icon { font-size: 5rem; margin-bottom: 20px; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3)); }
+        .cover-title { font-size: 2rem; font-weight: 800; margin-bottom: 10px; }
+        .cover-text { font-size: 1.1rem; opacity: 0.9; }
+        .cover-warning { 
+            margin-top: 30px; background: rgba(255,255,255,0.15); 
+            padding: 15px 25px; border-radius: 12px; font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
         /* CONTROLS */
         #controls { 
             position: fixed; bottom: 0; left: 0; right: 0; 
@@ -171,6 +185,7 @@
             display: flex; flex-wrap: nowrap; align-items: center; gap: 8px; 
             z-index: 1000; overflow-x: auto; justify-content: center;
             -webkit-overflow-scrolling: touch;
+            opacity: 0; transition: opacity 0.5s;
         }
         #controls::-webkit-scrollbar { display: none; }
 
@@ -201,7 +216,7 @@
         .theme-font .stepper-btn { background-color: #92400E; }
         .icon-svg { width: 20px; height: 20px; fill: currentColor; } 
 
-        #script-container { padding: 2rem 1.5rem; padding-bottom: 50vh; max-width: 900px; margin: 0 auto; line-height: 1.5; }
+        #script-container { padding: 2rem 1.5rem; padding-bottom: 50vh; max-width: 900px; margin: 0 auto; line-height: 1.5; opacity: 0; transition: opacity 0.5s; }
         .speaker-text { font-size: 2.5rem; font-weight: 600; color: #fff; margin-bottom: 1.5rem; }
         .instruction { font-size: 1.3rem; color: #FCD34D; font-style: italic; background-color: #282518; border-left: 4px solid #F59E0B; padding: 1rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0; }
         .timestamp { font-size: 1.8rem; font-weight: 700; color: #60A5FA; border-top: 1px solid #333; padding-top: 2rem; margin-top: 3rem; margin-bottom: 1rem; text-transform: uppercase; }
@@ -217,105 +232,94 @@
 </head>
 <body>
 
+  <div id="cover-screen">
+     <div class="cover-icon">🎬</div>
+     <div class="cover-title">Script Ready</div>
+     <div class="cover-text">The file is loaded.</div>
+     <div class="cover-warning">
+        ⚠️ Open in <b>Chrome</b> or <b>Safari</b> to run.
+     </div>
+  </div>
+
   <div id="script-container"></div>
   
   <div id="controls">
     <button id="play-pause-btn" class="btn-main">START</button>
     <button id="reset-btn" class="btn-main" title="Reset"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg></button>
-    
-    <div class="control-group theme-speed">
-        <button class="stepper-btn" id="speed-minus">−</button>
-        <div class="value-display" id="speed-display">3</div>
-        <button class="stepper-btn" id="speed-plus">+</button>
-    </div>
-    
-    <div class="control-group theme-font">
-        <button class="stepper-btn" id="font-minus">−</button>
-        <div class="value-display" id="font-display">3</div>
-        <button class="stepper-btn" id="font-plus">+</button>
-    </div>
-    
-    <button id="save-btn" class="btn-main" title="Save"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg></button>
+    <div class="control-group theme-speed"><button class="stepper-btn" id="speed-minus">−</button><div class="value-display" id="speed-display">3</div><button class="stepper-btn" id="speed-plus">+</button></div>
+    <div class="control-group theme-font"><button class="stepper-btn" id="font-minus">−</button><div class="value-display" id="font-display">3</div><button class="stepper-btn" id="font-plus">+</button></div>
+    <button id="save-btn" class="btn-main" title="Save File"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg></button>
   </div>
 
   <script>
-    // AQUÍ ESTABA EL ERROR: Ahora pasamos los datos directamente sin caracteres extraños
     const scriptData = ${jsonContent};
     
     document.addEventListener('DOMContentLoaded', () => {
-      const scriptContainer = document.getElementById('script-container');
-      
+      const cover = document.getElementById('cover-screen');
+      const scriptCont = document.getElementById('script-container');
+      const controls = document.getElementById('controls');
+
+      if(cover) {
+         // Fade out cover if JS runs
+         setTimeout(() => {
+             cover.style.opacity = '0';
+             cover.style.pointerEvents = 'none'; 
+             scriptCont.style.opacity = '1';
+             controls.style.opacity = '1';
+             setTimeout(() => cover.remove(), 500); 
+         }, 800);
+      }
+
       scriptData.forEach(item => {
           let el;
           if (item.type === 'title') { el = document.createElement('h2'); el.className = 'timestamp'; }
           else if (item.type === 'instruction') { el = document.createElement('p'); el.className = 'instruction'; }
           else { el = document.createElement('p'); el.className = 'speaker-text'; }
           el.textContent = item.content;
-          scriptContainer.appendChild(el);
+          scriptCont.appendChild(el);
       });
 
       let state = { speedLevel: 3, fontLevel: 3, isScrolling: false };
       let animationFrameId = null;
-      
       const btnPlay = document.getElementById('play-pause-btn');
       const dispSpeed = document.getElementById('speed-display');
       const dispFont = document.getElementById('font-display');
 
-      function updateFont() { 
-          const size = 20 + (state.fontLevel * 5); 
-          document.querySelectorAll('.speaker-text, .timestamp').forEach(el => el.style.fontSize = size + 'px'); 
-          dispFont.textContent = state.fontLevel; 
-      }
-
-      function loop() { 
-          if (!state.isScrolling) return; 
-          const pixels = state.speedLevel === 0 ? 0 : (state.speedLevel * 4 + Math.pow(state.speedLevel, 1.8)) / 60; 
-          if (pixels > 0) window.scrollBy(0, pixels); 
-          animationFrameId = requestAnimationFrame(loop); 
-      }
-
-      function togglePlay() { 
-          state.isScrolling = !state.isScrolling; 
-          if (state.isScrolling) { 
-              btnPlay.textContent = "PAUSA"; btnPlay.classList.add('paused'); loop(); 
-          } else { 
-              btnPlay.textContent = "START"; btnPlay.classList.remove('paused'); cancelAnimationFrame(animationFrameId); 
-          } 
-      }
+      function updateFont() { const size = 20 + (state.fontLevel * 5); document.querySelectorAll('.speaker-text, .timestamp').forEach(el => el.style.fontSize = size + 'px'); dispFont.textContent = state.fontLevel; }
+      function loop() { if (!state.isScrolling) return; const pixels = state.speedLevel === 0 ? 0 : (state.speedLevel * 4 + Math.pow(state.speedLevel, 1.8)) / 60; if (pixels > 0) window.scrollBy(0, pixels); animationFrameId = requestAnimationFrame(loop); }
+      function togglePlay() { state.isScrolling = !state.isScrolling; if (state.isScrolling) { btnPlay.textContent = "PAUSA"; btnPlay.classList.add('paused'); loop(); } else { btnPlay.textContent = "INICIAR"; btnPlay.classList.remove('paused'); cancelAnimationFrame(animationFrameId); } }
 
       document.getElementById('speed-minus').onclick = () => { if (state.speedLevel > 0) state.speedLevel--; dispSpeed.textContent = state.speedLevel; };
       document.getElementById('speed-plus').onclick = () => { if (state.speedLevel < 20) state.speedLevel++; dispSpeed.textContent = state.speedLevel; };
       document.getElementById('font-minus').onclick = () => { if (state.fontLevel > 0) state.fontLevel--; updateFont(); };
       document.getElementById('font-plus').onclick = () => { if (state.fontLevel < 15) state.fontLevel++; updateFont(); };
-      
       btnPlay.onclick = togglePlay;
+      document.getElementById('reset-btn').onclick = () => { window.scrollTo(0,0); state.isScrolling = false; btnPlay.textContent = "INICIAR"; btnPlay.classList.remove('paused'); cancelAnimationFrame(animationFrameId); };
       
-      document.getElementById('reset-btn').onclick = () => { 
-          window.scrollTo(0,0); state.isScrolling = false; 
-          btnPlay.textContent = "START"; btnPlay.classList.remove('paused'); cancelAnimationFrame(animationFrameId); 
-      };
-      
-      // SAVE CLEAN FILE NAME
+      // --- NAMING MAGIC: Use Title from Script ---
       document.getElementById('save-btn').onclick = () => {
           const htmlContent = document.documentElement.outerHTML;
           const blob = new Blob([htmlContent], { type: 'text/html' });
-          const now = new Date();
-          const dateStr = now.toISOString().slice(0,10).replace(/-/g,'');
-          const fileName = 'Teleprompter-' + dateStr + '.html';
           
-          const link = document.createElement('a'); 
-          link.href = URL.createObjectURL(blob); 
-          link.download = fileName;
+          // FIND TITLE
+          const titleItem = scriptData.find(i => i.type === 'title');
+          let titleSlug = 'Script';
+          if (titleItem) {
+              // Remove weird chars
+              titleSlug = titleItem.content.replace(/[^a-zA-Z0-9 ]/g, '').trim();
+          }
+          if(!titleSlug) titleSlug = 'Teleprompter';
+
+          const fileName = 'Teleprompter - ' + titleSlug + '.html';
+          
+          const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = fileName;
           document.body.appendChild(link); link.click(); document.body.removeChild(link);
       };
       
       document.addEventListener('keydown', (e) => { if (e.key === ' ') { e.preventDefault(); togglePlay(); } });
-      scriptContainer.addEventListener('click', (e) => { togglePlay(); });
-      
-      updateFont(); 
-      dispSpeed.textContent = state.speedLevel;
-      
-      setTimeout(() => { if(!state.isScrolling) togglePlay(); }, 2000);
+      scriptCont.addEventListener('click', (e) => { togglePlay(); });
+      updateFont(); dispSpeed.textContent = state.speedLevel;
+      setTimeout(() => { if(!state.isScrolling) togglePlay(); }, 2500);
     });
   <\/script>
 </body>
@@ -327,7 +331,7 @@
         newWindow.document.write(playerHTML);
         newWindow.document.close();
       } else {
-        alert("⚠️ Pop-up blocked. Please allow pop-ups for this site.");
+        alert("⚠️ Pop-up blocked. Please allow pop-ups.");
       }
     }
   </script>
