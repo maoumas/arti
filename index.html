@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arti's Studio | Zmau.dev</title>
+    <title>Artis Studio | Zmau.dev</title>
     
-    <!-- METADATOS PARA WHATSAPP (Open Graph) -->
-    <meta property="og:title" content="Arti's Studio - Zmau.dev">
-    <meta property="og:description" content="Centro de control de producción y análisis para @TranslatedPressDE.">
+    <!-- METADATEN FÜR WHATSAPP (Open Graph) -->
+    <meta property="og:title" content="Artis Studio - Zmau.dev">
+    <meta property="og:description" content="Produktions- und Analysezentrum für @TranslatedPressDE.">
     <meta property="og:image" content="https://zmau.dev/img/arti_preview.png">
     <meta property="og:type" content="website">
 
-    <!-- Estilos e Iconos -->
+    <!-- Stile und Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     
@@ -19,7 +19,7 @@
         :root {
             --bg-dark: #0f172a;
             --card-bg: #1e293b;
-            --accent: #3b82f6; /* Azul Tech */
+            --accent: #3b82f6; /* Tech Blue */
             --accent-hover: #2563eb;
             --text-main: #f8fafc;
             --text-dim: #94a3b8;
@@ -51,6 +51,7 @@
             overflow: hidden;
             border: 4px solid var(--accent);
             box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+            background-color: #fff; /* Weißer Hintergrund falls Bild transparent */
         }
 
         .logo-container img {
@@ -153,70 +154,70 @@
 
     <header>
         <div class="logo-container">
-            <!-- Asegúrate de tener esta imagen subida en /img/ -->
-            <img src="img/arti_preview.png" alt="Arti Logo">
+            <!-- ACHTUNG: Stelle sicher, dass das Bild 'arti_preview.png' im Ordner 'img' liegt -->
+            <img src="img/arti_preview.png" alt="Arti Logo" onerror="this.style.display='none'">
         </div>
-        <h1>Arti's Studio</h1>
-        <p class="subtitle">Centro de producción digital para @TranslatedPressDE. Aquí encontrarás las herramientas y los guiones para tus transmisiones.</p>
+        <h1>Artis Studio</h1>
+        <p class="subtitle">Digitales Produktionszentrum für @TranslatedPressDE. Hier findest du alle Tools, Skripte und Analysen für deine Sendungen.</p>
     </header>
 
     <main>
         
-        <!-- SECCIÓN 1: ÚLTIMAS TRANSMISIONES -->
-        <h2><i class="fa-solid fa-tower-broadcast"></i> Producciones & Programas</h2>
+        <!-- SEKTION 1: PRODUKTIONEN -->
+        <h2><i class="fa-solid fa-tower-broadcast"></i> Produktionen & Sendungen</h2>
         <div class="grid">
             
-            <!-- Programa: KARIBIK -->
+            <!-- Programm: KARIBIK -->
             <div class="card">
                 <div class="card-header">
                     <span class="tag tag-live">Breaking News</span>
                     <div class="card-icon"><i class="fa-solid fa-ship"></i></div>
                 </div>
-                <h3>Operación Southern Spear</h3>
-                <p>Análisis de la situación en el Caribe y Venezuela. Paquete completo con presentación oscura y teleprompter.</p>
+                <h3>Operation Southern Spear</h3>
+                <p>Analyse der Lage in der Karibik und Venezuela. Komplettpaket mit Dark-Mode-Präsentation und Teleprompter-Skript.</p>
                 <div class="btn-group">
-                    <!-- Enlace directo al Teleprompter -->
+                    <!-- Link zum Teleprompter -->
                     <a href="/karibik/Teleprompter%20-%20DER%20LUFTRUMKRIEG%20FAABEFEHL%20LHMT%20VENEZUELAS%20HIMMEL%20%20DIE%20STILLE%20VOR%20DEM%20STURM.html" target="_blank" class="btn btn-primary">
                         <i class="fa-solid fa-microphone-lines"></i> Teleprompter
                     </a>
-                    <!-- Enlace directo a la Presentación PPT -->
+                    <!-- Link zur PPT -->
                     <a href="/karibik/Schachmatt%20in%20der%20Karibik%20-%20Analyse.pptx" class="btn btn-secondary">
                         <i class="fa-solid fa-download"></i> PPTX
                     </a>
                 </div>
             </div>
 
-            <!-- Puedes agregar más programas copiando el bloque <div class="card">...</div> -->
+            <!-- Hier können weitere Sendungen hinzugefügt werden -->
 
         </div>
 
 
-        <!-- SECCIÓN 2: HERRAMIENTAS DE ESTUDIO -->
-        <h2><i class="fa-solid fa-toolbox"></i> Herramientas de Arti</h2>
+        <!-- SEKTION 2: TOOLS -->
+        <h2><i class="fa-solid fa-toolbox"></i> Artis Werkzeuge</h2>
         <div class="grid">
 
-            <!-- Herramienta: TUTORIAL DE PRODUCCIÓN -->
+            <!-- Tool: HANDBUCH -->
             <div class="card">
-                <span class="tag tag-tool">Manual</span>
+                <span class="tag tag-tool">Handbuch</span>
                 <div class="card-icon"><i class="fa-solid fa-book-open"></i></div>
-                <h3>Manual de Producción</h3>
-                <p>Guía paso a paso: Cómo usar NotebookLM y Gemini para crear un programa desde cero.</p>
+                <h3>Produktionshandbuch</h3>
+                <p>Schritt-für-Schritt-Anleitung: Wie man mit NotebookLM und Gemini eine Sendung von Null an erstellt.</p>
                 <div class="btn-group">
                     <a href="/tp2arti.html" class="btn btn-primary">
-                        <i class="fa-solid fa-eye"></i> Leer Manual
+                        <i class="fa-solid fa-eye"></i> Handbuch lesen
                     </a>
                 </div>
             </div>
 
-            <!-- Herramienta: GENERADOR DE TELEPROMPTER -->
+            <!-- Tool: TELEPROMPTER GEN -->
             <div class="card">
                 <span class="tag tag-tool">Software</span>
                 <div class="card-icon"><i class="fa-solid fa-code"></i></div>
                 <h3>Teleprompter Gen</h3>
-                <p>Herramienta maestra para generar y editar los teleprompters de los nuevos programas.</p>
+                <p>Das Master-Tool zum Erstellen und Bearbeiten der Teleprompter für neue Sendungen.</p>
                 <div class="btn-group">
                     <a href="/master/tp-gen" class="btn btn-primary">
-                        <i class="fa-solid fa-rocket"></i> Abrir App
+                        <i class="fa-solid fa-rocket"></i> App öffnen
                     </a>
                 </div>
             </div>
@@ -226,9 +227,8 @@
     </main>
 
     <footer style="text-align: center; padding: 40px; color: #64748b; font-size: 0.9rem;">
-        <p>&copy; 2025 Zmau.dev | Designed for Arti with <i class="fa-solid fa-heart" style="color: #ef4444;"></i></p>
+        <p>&copy; 2025 Zmau.dev | Entworfen für Arti mit <i class="fa-solid fa-heart" style="color: #ef4444;"></i></p>
     </footer>
 
 </body>
 </html>
-
