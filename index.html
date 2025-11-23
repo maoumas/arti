@@ -36,7 +36,7 @@
         /* Header */
         header {
             text-align: center;
-            padding: 60px 20px 40px;
+            padding: 60px 20px 20px; /* Reduje el padding inferior un poco */
             max-width: 600px;
         }
 
@@ -63,16 +63,18 @@
             line-height: 1.6;
         }
 
+        /* Botón del Tutor (Estilos ajustados para estar abajo) */
         .tutor-btn {
             display: inline-block;
-            margin-top: 20px;
-            padding: 12px 25px;
+            margin: 40px 0 20px 0; /* Más margen arriba para separarlo de las herramientas */
+            padding: 15px 30px;    /* Un poco más grande para destacar abajo */
             background-color: var(--accent);
             color: white;
             text-decoration: none;
             border-radius: 30px;
             font-weight: bold;
             transition: transform 0.2s, background 0.2s;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3); /* Sombra añadida */
         }
 
         .tutor-btn:hover {
@@ -108,8 +110,8 @@
             padding: 20px;
             margin-bottom: 20px;
             border: 1px solid #334155;
-            display: block; /* Para que el enlace ocupe todo */
-            text-decoration: none; /* Quitar subrayado de enlaces */
+            display: block; 
+            text-decoration: none; 
             color: inherit;
             transition: background-color 0.2s, transform 0.2s;
         }
@@ -133,7 +135,7 @@
         }
 
         .tool-badge {
-            background-color: #059669; /* Verde para herramientas */
+            background-color: #059669; 
             color: white;
             padding: 4px 8px;
             border-radius: 4px;
@@ -153,7 +155,7 @@
         .card-content i {
             font-size: 1.8rem;
             color: var(--accent);
-            width: 40px; /* Ancho fijo para alinear */
+            width: 40px; 
             text-align: center;
         }
 
@@ -204,11 +206,7 @@
             Digitales Produktionszentrum für @TranslatedPressDE. 
             Hier findest du alle Tools, Skripte und Analysen.
         </p>
-
-        <a href="https://zmau.dev/tutor/" class="tutor-btn">
-            <i class="fa-solid fa-wand-magic-sparkles"></i> Zum Regiebuch (Tutor)
-        </a>
-    </header>
+        </header>
 
     <div class="section-title">
         <i class="fa-solid fa-tower-broadcast"></i> Produktionen
@@ -254,6 +252,10 @@
             </div>
         </a>
     </div>
+
+    <a href="https://zmau.dev/tutor/" class="tutor-btn">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> Zum Regiebuch (Tutor)
+    </a>
 
     <footer>
         <a href="https://github.com/maoumas/arti" target="_blank" class="dev-link">
