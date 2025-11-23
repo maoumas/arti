@@ -19,6 +19,7 @@
             --text-muted: #94a3b8;
             --accent: #3b82f6;
             --hover-bg: #2d3b55;
+            --youtube-color: #ff0000; /* Color rojo para YouTube */
         }
 
         body {
@@ -36,7 +37,6 @@
         /* Header */
         header {
             text-align: center;
-            /* CAMBIO: Reducido padding superior e inferior */
             padding: 40px 20px 10px; 
             max-width: 600px;
         }
@@ -48,40 +48,20 @@
             object-fit: cover;
             border: 4px solid var(--accent);
             box-shadow: 0 0 25px rgba(59, 130, 246, 0.4);
-            margin-bottom: 15px; /* CAMBIO: Reducido un poco */
+            margin-bottom: 15px;
             background-color: #fff;
         }
 
         h1 {
             font-size: 2.5rem;
-            margin: 5px 0; /* CAMBIO: Reducido margen del título */
+            margin: 5px 0;
             font-weight: 800;
         }
 
         .description {
             color: var(--text-muted);
             font-size: 1.1rem;
-            line-height: 1.4; /* CAMBIO: Líneas un poco más juntas */
-        }
-
-        /* Botón del Tutor */
-        .tutor-btn {
-            display: inline-block;
-            /* CAMBIO: Margen superior reducido de 40px a 20px */
-            margin: 20px 0 20px 0; 
-            padding: 15px 30px;
-            background-color: var(--accent);
-            color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: bold;
-            transition: transform 0.2s, background 0.2s;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-        }
-
-        .tutor-btn:hover {
-            transform: scale(1.05);
-            background-color: #2563eb;
+            line-height: 1.4;
         }
 
         /* Secciones */
@@ -89,7 +69,6 @@
             width: 100%;
             max-width: 600px;
             padding: 0 20px;
-            /* CAMBIO: Margen superior reducido de 40px a 20px */
             margin-top: 20px; 
             border-left: 4px solid var(--accent);
             font-size: 1.5rem;
@@ -102,7 +81,6 @@
         .card-container {
             width: 100%;
             max-width: 600px;
-            /* CAMBIO: Padding superior reducido de 20px a 10px */
             padding: 10px 20px; 
             box-sizing: border-box;
         }
@@ -112,7 +90,6 @@
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 20px;
-            /* CAMBIO: Margen inferior reducido de 20px a 15px */
             margin-bottom: 15px; 
             border: 1px solid #334155;
             display: block; 
@@ -136,7 +113,7 @@
             font-weight: bold;
             text-transform: uppercase;
             display: inline-block;
-            margin-bottom: 8px; /* Pequeño ajuste */
+            margin-bottom: 8px;
         }
 
         .tool-badge {
@@ -180,10 +157,64 @@
             margin-top: 2px;
         }
 
+        /* Botón del Tutor */
+        .tutor-btn {
+            display: inline-block;
+            margin: 20px 0 30px 0; /* Un poco más de margen abajo para separar del logo */
+            padding: 15px 30px;
+            background-color: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: transform 0.2s, background 0.2s;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .tutor-btn:hover {
+            transform: scale(1.05);
+            background-color: #2563eb;
+        }
+
+        /* NUEVOS ESTILOS: Sección YouTube */
+        .youtube-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .youtube-link {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-muted);
+            transition: transform 0.2s, color 0.2s;
+        }
+
+        .youtube-link:hover {
+            transform: scale(1.05);
+            color: var(--text-main);
+        }
+
+        .youtube-logo {
+            width: 80px; /* Tamaño más pequeño para el logo secundario */
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--youtube-color); /* Borde rojo YouTube */
+            margin-bottom: 10px;
+            background-color: #fff;
+        }
+        
+        .youtube-label i {
+            color: var(--youtube-color);
+            margin-right: 5px;
+        }
+
         /* Footer */
         footer {
             margin-top: auto;
-            padding: 30px 20px; /* Reducido un poco */
+            padding: 30px 20px;
             text-align: center;
             width: 100%;
         }
@@ -261,6 +292,15 @@
     <a href="https://zmau.dev/tutor/" class="tutor-btn">
         <i class="fa-solid fa-wand-magic-sparkles"></i> Zum Regiebuch (Tutor)
     </a>
+
+    <div class="youtube-section">
+        <a href="http://youtube.com/@TranslatedPressDE/videos" target="_blank" class="youtube-link">
+            <img src="https://zmau.dev/img/arti-preview.png" alt="@TranslatedPressDE YouTube" class="youtube-logo">
+            <span class="youtube-label">
+                <i class="fa-brands fa-youtube"></i> @TranslatedPressDE Videos
+            </span>
+        </a>
+    </div>
 
     <footer>
         <a href="https://github.com/maoumas/arti" target="_blank" class="dev-link">
