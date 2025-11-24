@@ -18,6 +18,7 @@
         --bg-app: #0f172a;
         --bg-panel: #1e293b;
         --accent: #10b981;
+        --accent-hover: #059669;
         --text-main: #e2e8f0;
         --border: #334155;
     }
@@ -32,14 +33,14 @@
         overflow: hidden;
     }
 
-    /* HEADER SIMPLE */
+    /* HEADER */
     .header {
         padding: 15px 24px;
         border-bottom: 1px solid var(--border);
         background: var(--bg-panel);
         display: flex;
         align-items: center;
-        justify-content: center; /* Centrado en móvil por defecto */
+        justify-content: center;
         flex-shrink: 0;
     }
 
@@ -49,7 +50,7 @@
         display: flex;
         padding: 20px;
         gap: 20px;
-        overflow-y: auto; /* Scroll general si es necesario */
+        overflow-y: auto;
     }
 
     /* PANELES */
@@ -62,7 +63,7 @@
         flex-direction: column;
     }
 
-    /* ÁREA DEL EDITOR (IZQUIERDA EN DESKTOP, ARRIBA EN MÓVIL) */
+    /* EDITOR */
     .editor-section {
         flex: 2;
         display: flex;
@@ -83,16 +84,16 @@
         outline: none;
     }
 
-    /* ÁREA LATERAL (DERECHA EN DESKTOP, ABAJO EN MÓVIL) */
+    /* SIDEBAR */
     .sidebar-section {
         flex: 1;
         display: flex;
         flex-direction: column;
         gap: 20px;
-        min-width: 300px;
+        min-width: 320px;
     }
 
-    /* BARRA DE ACCIONES (BOTONES) */
+    /* BARRA DE ACCIONES */
     .actions-bar {
         background: var(--bg-panel);
         border: 1px solid var(--border);
@@ -100,78 +101,60 @@
         padding: 20px;
         display: flex;
         flex-direction: column;
-        gap: 12px;
-    }
-
-    /* PANEL DE CONTROL (INFO) */
-    .control-panel {
-        flex: 1; /* Ocupa el resto del espacio en la barra lateral */
-        padding: 20px;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        border-color: var(--accent); /* Borde verde para destacar */
-        position: relative;
-        overflow: hidden;
+        gap: 15px;
     }
 
     /* BOTONES */
     .btn {
         display: inline-flex; justify-content: center; items-center; gap: 10px;
-        padding: 12px 20px;
+        padding: 14px 20px;
         border-radius: 8px;
-        font-weight: 600;
+        font-weight: 700;
         font-size: 0.95rem;
         cursor: pointer;
         transition: all 0.2s;
         border: 1px solid transparent;
         width: 100%;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
-    .btn-primary { background: var(--accent); color: #064e3b; }
-    .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
-    .btn-secondary { background: #334155; color: #fff; border-color: #475569; }
+    
+    /* Botón Principal (Lanzar) - Verde Brillante */
+    .btn-live { 
+        background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%); 
+        color: #022c22; 
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        font-size: 1.1rem;
+        padding: 18px;
+    }
+    .btn-live:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4); }
+    .btn-live:active { transform: scale(0.98); }
+
+    /* Botones Secundarios */
+    .btn-secondary { background: #334155; color: #fff; border-color: #475569; font-size: 0.85rem; padding: 10px;}
     .btn-secondary:hover { background: #475569; }
-    .btn-outline { background: transparent; color: #94a3b8; border: 1px dashed #475569; }
+    
+    .btn-outline { background: transparent; color: #94a3b8; border: 1px dashed #475569; font-size: 0.85rem; padding: 10px; }
     .btn-outline:hover { border-color: #94a3b8; color: #fff; }
 
-    /* SCROLLBARS */
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: var(--bg-app); }
-    ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
-
-    /* --- RESPONSIVE (MÓVIL) --- */
-    @media (max-width: 768px) {
-        body { height: auto; overflow-y: auto; } /* Permitir scroll natural en body */
-        
-        .main-layout {
-            flex-direction: column; /* Apilar todo verticalmente */
-            padding: 15px;
-            gap: 15px;
-        }
-
-        .editor-section {
-            min-height: 50vh; /* El editor es lo más importante, dale altura */
-            order: 1; /* 1. Editor */
-        }
-
-        .sidebar-section {
-            order: 2; /* 2. Barra Lateral debajo */
-            min-width: 100%;
-            gap: 15px;
-        }
-
-        .actions-bar {
-            order: 1; /* Dentro de sidebar: Botones primero */
-        }
-
-        .control-panel {
-            order: 2; /* Dentro de sidebar: Info al final */
-            min-height: auto;
-            padding: 30px 20px;
-        }
+    /* PANEL INFO */
+    .control-panel {
+        flex: 1;
+        padding: 20px;
+        align-items: center;
+        text-align: center;
+        justify-content: flex-start;
+        opacity: 0.8;
     }
 
-    /* PDF PRINT */
+    /* MÓVIL */
+    @media (max-width: 768px) {
+        body { height: auto; overflow-y: auto; }
+        .main-layout { flex-direction: column; padding: 15px; gap: 15px; }
+        .editor-section { min-height: 50vh; order: 1; }
+        .sidebar-section { order: 2; min-width: 100%; gap: 15px; }
+    }
+
     @media print {
         body * { visibility: hidden; }
         #print-area, #print-area * { visibility: visible; }
@@ -181,85 +164,88 @@
 </head>
 <body>
 
-  <!-- 1. TÍTULO / ENCABEZADO -->
+  <!-- HEADER -->
   <header class="header">
     <div class="flex items-center gap-3">
         <span class="text-3xl">📡</span>
         <div>
             <h1 class="text-xl font-bold tracking-tight text-white">Teleprompter Studio <span class="text-emerald-500">PRO</span></h1>
-            <p class="text-xs text-slate-400 font-mono">v3.2 // Mobile Flow</p>
+            <p class="text-xs text-slate-400 font-mono">v3.3 // Live Ready</p>
         </div>
     </div>
   </header>
 
   <div class="main-layout">
     
-    <!-- 2. EDITOR (Arriba en móvil, Izquierda en Desktop) -->
+    <!-- EDITOR -->
     <div class="panel editor-section">
         <div class="bg-slate-900/50 p-3 border-b border-slate-700 flex justify-between items-center">
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Guión / Script</span>
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Editor de Guión</span>
             <span class="text-[10px] text-slate-600 font-mono bg-slate-800 px-2 py-1 rounded">MARKDOWN</span>
         </div>
         <textarea id="input" placeholder="# Título del Programa&#10;* [Instrucción: Cámara 1]&#10;&#10;Pega tu texto aquí..."></textarea>
     </div>
 
-    <!-- CONTENEDOR LATERAL (Abajo en móvil, Derecha en Desktop) -->
+    <!-- SIDEBAR -->
     <div class="sidebar-section">
         
-        <!-- 3. BOTONES DE ACCIÓN -->
+        <!-- BARRA DE ACCIONES -->
         <div class="actions-bar">
-            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Acciones</h3>
             
-            <!-- Input oculto -->
+            <!-- 1. IMPORTAR -->
             <input type="file" id="fileImport" accept=".txt,.md,.json" style="display: none;" onchange="importFile(this)">
-            
             <button class="btn btn-secondary" onclick="document.getElementById('fileImport').click()">
-                <span>📂</span> Importar Archivo
+                <span>📂</span> Importar Texto
             </button>
-            
+
+            <!-- 2. LANZAR (ACCIÓN PRINCIPAL) -->
+            <div class="my-2">
+                <button class="btn btn-live" onclick="testLive()">
+                    <span>▶</span> LANZAR AHORA
+                </button>
+                <p class="text-[10px] text-center text-slate-500 mt-2 font-mono">Abre una ventana emergente instantánea</p>
+            </div>
+
+            <hr class="border-slate-700">
+
+            <!-- 3. EXPORTAR -->
             <div class="grid grid-cols-2 gap-2">
                 <button class="btn btn-outline" onclick="generatePDF()">
-                    <span>📄</span> Exportar PDF
+                    <span>📄</span> Guardar PDF
                 </button>
-                <button class="btn btn-primary" onclick="exportPlayer()">
-                    <span>🚀</span> Exportar HTML
+                <button class="btn btn-outline" onclick="exportPlayer()">
+                    <span>💾</span> Guardar HTML
                 </button>
             </div>
         </div>
 
-        <!-- 4. PANEL DE CONTROL (AL FONDO) -->
+        <!-- PANEL DE ESTADO -->
         <div class="panel control-panel">
-            <div class="mb-4 p-3 bg-emerald-500/10 rounded-full border border-emerald-500/20 inline-block">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-            </div>
-            <h3 class="text-lg font-bold text-white mb-1">Estado: Listo</h3>
-            <p class="text-xs text-slate-400 mb-6">Motor de reproducción preparado.</p>
+            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Estado del Sistema</h3>
             
-            <div class="w-full bg-slate-900 rounded p-3 text-left mb-6 space-y-1">
-                <div class="flex justify-between text-[10px] font-mono text-slate-500">
-                    <span>MODO ESPEJO</span> <span class="text-emerald-400">SÍ</span>
+            <div class="w-full bg-slate-900 rounded p-3 text-left space-y-2 mb-4">
+                <div class="flex justify-between text-[11px] font-mono text-slate-400 border-b border-slate-800 pb-1">
+                    <span>MOTOR</span> <span class="text-emerald-400">V3.3.0</span>
                 </div>
-                <div class="flex justify-between text-[10px] font-mono text-slate-500">
-                    <span>OFFLINE</span> <span class="text-emerald-400">SÍ</span>
+                <div class="flex justify-between text-[11px] font-mono text-slate-400 border-b border-slate-800 pb-1">
+                    <span>ESPEJO (MIRROR)</span> <span class="text-emerald-400">ACTIVO</span>
+                </div>
+                <div class="flex justify-between text-[11px] font-mono text-slate-400">
+                    <span>TECLADO</span> <span class="text-emerald-400">[ESPACIO] / [FLECHAS]</span>
                 </div>
             </div>
-
-            <button class="btn btn-secondary" onclick="testLive()">
-                <span>▶</span> Probar Ventana Flotante
-            </button>
+            
+            <p class="text-[10px] text-slate-600">
+                Tip: Usa la "Ventana Flotante" para colocar el prompter sobre tu software de videoconferencia (Zoom/Meet).
+            </p>
         </div>
 
     </div>
   </div>
 
-  <!-- ÁREA OCULTA PARA IMPRESIÓN -->
   <div id="print-area" style="display:none;"></div>
 
   <script>
-    // --- IMPORTAR ---
     function importFile(input) {
         const file = input.files[0];
         if (!file) return;
@@ -269,7 +255,6 @@
         input.value = '';
     }
 
-    // --- PDF (EXPORTAR) ---
     function generatePDF() {
         const raw = document.getElementById('input').value;
         const lines = raw.split('\n');
@@ -283,7 +268,6 @@
         window.print();
     }
 
-    // --- PARSER ---
     function parseScript() {
         const raw = document.getElementById('input').value;
         const lines = raw.split('\n');
@@ -299,7 +283,6 @@
         return JSON.stringify(scriptData);
     }
 
-    // --- EXPORTAR PLAYER HTML ---
     function getPlayerHTML(jsonData) {
         return `<!DOCTYPE html>
 <html lang="es">
