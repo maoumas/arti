@@ -7,7 +7,6 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   
-  <!-- METADATOS PRO -->
   <meta property="og:title" content="Teleprompter Studio PRO">
   <meta property="og:description" content="Generador de guiones profesional para transmisión.">
   <meta property="og:image" content="https://placehold.co/1200x630/1e293b/10b981/png?text=TELEPROMPTER+STUDIO">
@@ -35,7 +34,7 @@
 
     /* HEADER */
     .header {
-        padding: 15px 24px;
+        padding: 10px 20px;
         border-bottom: 1px solid var(--border);
         background: var(--bg-panel);
         display: flex;
@@ -48,8 +47,8 @@
     .main-layout {
         flex: 1;
         display: flex;
-        padding: 20px;
-        gap: 20px;
+        padding: 15px;
+        gap: 15px;
         overflow-y: auto;
     }
 
@@ -57,7 +56,7 @@
     .panel {
         background: var(--bg-panel);
         border: 1px solid var(--border);
-        border-radius: 12px;
+        border-radius: 8px;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: column;
@@ -78,7 +77,7 @@
         padding: 20px;
         color: #fff;
         font-family: 'JetBrains Mono', monospace;
-        font-size: 16px;
+        font-size: 15px;
         line-height: 1.6;
         resize: none;
         outline: none;
@@ -89,50 +88,46 @@
         flex: 1;
         display: flex;
         flex-direction: column;
-        gap: 20px;
-        min-width: 320px;
+        gap: 15px;
+        min-width: 300px;
     }
 
     /* BARRA DE ACCIONES */
     .actions-bar {
         background: var(--bg-panel);
         border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 20px;
+        border-radius: 8px;
+        padding: 15px;
         display: flex;
         flex-direction: column;
-        gap: 15px;
+        gap: 10px;
     }
 
-    /* BOTONES */
+    /* BOTONES GENÉRICOS DE LA APP */
     .btn {
-        display: inline-flex; justify-content: center; items-center; gap: 10px;
-        padding: 14px 20px;
-        border-radius: 8px;
-        font-weight: 700;
-        font-size: 0.95rem;
+        display: inline-flex; justify-content: center; items-center; gap: 8px;
+        padding: 10px 16px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
         cursor: pointer;
         transition: all 0.2s;
         border: 1px solid transparent;
         width: 100%;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
     }
     
     .btn-live { 
         background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%); 
         color: #022c22; 
-        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-        font-size: 1.1rem;
-        padding: 18px;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
     }
-    .btn-live:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4); }
-    .btn-live:active { transform: scale(0.98); }
+    .btn-live:hover { transform: translateY(-1px); filter: brightness(1.1); }
 
-    .btn-secondary { background: #334155; color: #fff; border-color: #475569; font-size: 0.85rem; padding: 10px;}
+    .btn-secondary { background: #334155; color: #fff; border-color: #475569; }
     .btn-secondary:hover { background: #475569; }
     
-    .btn-outline { background: transparent; color: #94a3b8; border: 1px dashed #475569; font-size: 0.85rem; padding: 10px; }
+    .btn-outline { background: transparent; color: #94a3b8; border: 1px dashed #475569; font-size: 0.8rem; }
     .btn-outline:hover { border-color: #94a3b8; color: #fff; }
 
     /* PANEL INFO */
@@ -148,9 +143,9 @@
     /* MÓVIL */
     @media (max-width: 768px) {
         body { height: auto; overflow-y: auto; }
-        .main-layout { flex-direction: column; padding: 15px; gap: 15px; }
+        .main-layout { flex-direction: column; padding: 10px; gap: 10px; }
         .editor-section { min-height: 50vh; order: 1; }
-        .sidebar-section { order: 2; min-width: 100%; gap: 15px; }
+        .sidebar-section { order: 2; min-width: 100%; gap: 10px; }
     }
 
     @media print {
@@ -165,10 +160,10 @@
   <!-- HEADER -->
   <header class="header">
     <div class="flex items-center gap-3">
-        <span class="text-3xl">📡</span>
+        <span class="text-2xl">📡</span>
         <div>
-            <h1 class="text-xl font-bold tracking-tight text-white">Teleprompter Studio <span class="text-emerald-500">PRO</span></h1>
-            <p class="text-xs text-slate-400 font-mono">v3.6 // Mobile Touch</p>
+            <h1 class="text-lg font-bold tracking-tight text-white">Teleprompter Studio <span class="text-emerald-500">PRO</span></h1>
+            <p class="text-[10px] text-slate-400 font-mono">v4.0 // Precision Engine</p>
         </div>
     </div>
   </header>
@@ -177,8 +172,8 @@
     
     <!-- EDITOR -->
     <div class="panel editor-section">
-        <div class="bg-slate-900/50 p-3 border-b border-slate-700 flex justify-between items-center">
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Editor de Guión</span>
+        <div class="bg-slate-900/50 p-2 px-3 border-b border-slate-700 flex justify-between items-center">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Editor</span>
             <span class="text-[10px] text-slate-600 font-mono bg-slate-800 px-2 py-1 rounded">MARKDOWN</span>
         </div>
         <textarea id="input" placeholder="# Título del Programa&#10;* [Instrucción: Cámara 1]&#10;&#10;Pega tu texto aquí..."></textarea>
@@ -195,43 +190,42 @@
                 <span>📂</span> Importar Texto
             </button>
 
-            <div class="my-2">
+            <div class="my-1">
                 <button class="btn btn-live" onclick="testLive()">
                     <span>▶</span> LANZAR AHORA
                 </button>
-                <p class="text-[10px] text-center text-slate-500 mt-2 font-mono">Abre Player Instantáneo</p>
             </div>
 
-            <hr class="border-slate-700">
+            <hr class="border-slate-700 my-1">
 
             <div class="grid grid-cols-2 gap-2">
                 <button class="btn btn-outline" onclick="generatePDF()">
-                    <span>📄</span> Guardar PDF
+                    <span>📄</span> PDF
                 </button>
                 <button class="btn btn-outline" onclick="exportPlayer()">
-                    <span>💾</span> Guardar HTML
+                    <span>💾</span> HTML
                 </button>
             </div>
         </div>
 
         <!-- PANEL DE ESTADO -->
         <div class="panel control-panel">
-            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Mejoras V3.6</h3>
+            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Mejoras v4.0</h3>
             
             <div class="w-full bg-slate-900 rounded p-3 text-left space-y-2 mb-4">
                 <div class="flex justify-between text-[11px] font-mono text-slate-400 border-b border-slate-800 pb-1">
-                    <span>TOUCH PLAY</span> <span class="text-emerald-400">ACTIVO</span>
+                    <span>MOTOR</span> <span class="text-emerald-400">PRECISIÓN FINA</span>
                 </div>
                 <div class="flex justify-between text-[11px] font-mono text-slate-400 border-b border-slate-800 pb-1">
-                    <span>DISEÑO</span> <span class="text-emerald-400">FULL WIDTH</span>
+                    <span>CONTROLES</span> <span class="text-emerald-400">COMPACTOS</span>
                 </div>
                 <div class="flex justify-between text-[11px] font-mono text-slate-400">
-                    <span>BOTONES</span> <span class="text-emerald-400">ADAPTATIVOS</span>
+                    <span>MIRROR</span> <span class="text-emerald-400">INTEGRADO</span>
                 </div>
             </div>
             
             <p class="text-[10px] text-slate-600">
-                Toca cualquier parte de la pantalla negra para Pausar/Arrancar el teleprompter.
+                Scroll ultra-lento habilitado para lectura precisa. Controles optimizados para ocupar menos espacio.
             </p>
         </div>
 
@@ -263,7 +257,6 @@
         window.print();
     }
 
-    // Extractor de título para metadatos
     function getTitleFromScript() {
         const raw = document.getElementById('input').value;
         const lines = raw.split('\n');
@@ -284,23 +277,22 @@
             else if (line.startsWith('*')) scriptData.push({ type: "instruction", content: line.substring(1).trim() });
             else scriptData.push({ type: "text", content: line });
         });
-        if (scriptData.length === 0) scriptData = [{ type: "title", content: "DEMO" }, { type: "text", content: "Escribe tu texto..." }];
+        if (scriptData.length === 0) scriptData = [{ type: "title", content: "LISTO" }, { type: "text", content: "Escribe tu texto..." }];
         return JSON.stringify(scriptData);
     }
 
     function getPlayerHTML(jsonData) {
         const scriptTitle = getTitleFromScript();
-        // URL dinámica de imagen para la tarjeta de WhatsApp
-        const ogImage = `https://placehold.co/1200x630/000000/10b981/png?text=${encodeURIComponent(scriptTitle.toUpperCase())}&font=roboto`;
+        // Uso de placehold.co para generar imagen con el título del guión
+        const ogImage = `https://placehold.co/1200x630/000000/10b981/png?text=${encodeURIComponent(scriptTitle.substring(0, 30).toUpperCase())}&font=roboto`;
         
         return `<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${scriptTitle} - Teleprompter</title>
-<!-- METADATOS DINÁMICOS -->
+<title>${scriptTitle}</title>
 <meta property="og:title" content="${scriptTitle}">
-<meta property="og:description" content="Guión de Teleprompter listo para transmisión.">
+<meta property="og:description" content="Guión de Teleprompter listo para leer.">
 <meta property="og:image" content="${ogImage}">
 <meta property="og:type" content="website">
 
@@ -308,69 +300,78 @@
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
   body{background:#000;color:#fff;font-family:'Inter',sans-serif;margin:0;overflow:hidden;height:100vh;display:flex;flex-direction:column;}
   
-  /* ÁREA DE TEXTO */
   #prompter-area{
       flex:1;
       overflow-y:scroll;
-      padding:50px 20px;
-      padding-bottom:50vh; /* Espacio para que el final llegue al centro */
-      cursor: pointer; /* Indica que es clicable */
+      padding:20px 20px;
+      padding-bottom:60vh; /* Espacio final */
+      cursor: pointer;
   }
   
   .p-text{font-size:3.5rem;line-height:1.4;margin-bottom:1.5rem;font-weight:700;}
   .p-title{color:#10B981;font-size:2rem;text-transform:uppercase;letter-spacing:2px;border-bottom:1px solid #333;margin:40px 0 20px 0;}
   .p-inst{color:#F59E0B;font-size:1.8rem;font-style:italic;background:#1e1e1e;padding:15px;border-left:5px solid #F59E0B;}
   
-  /* ESPEJO */
-  .mirror-x { transform: scaleX(-1); } .mirror-y { transform: scaleY(-1); }
+  /* UTILIDADES VISUALES */
+  .mirror-x { transform: scaleX(-1); } 
+  .mirror-y { transform: scaleY(-1); }
   
-  /* CONTROLES UNIFICADOS (ABAJO) */
+  /* BARRA DE CONTROL COMPACTA (Estilo TP-GEN Clásico Mejorado) */
   #controls {
       position:fixed; bottom:0; left:0; width:100%;
-      background: #000; /* Fondo sólido para mejor contraste en móvil */
-      border-top: 1px solid #333;
-      padding: 10px;
-      display:flex; justify-content: space-between; align-items:center;
-      z-index:999; 
-      box-sizing: border-box; /* Evita que el padding rompa el ancho */
+      background: #111; border-top: 1px solid #333;
+      padding: 8px 15px;
+      display:flex; flex-wrap: wrap; justify-content: center; align-items:center; gap:10px;
+      z-index:999;
   }
 
-  /* GRUPOS DE CONTROL */
-  .c-group { display:flex; gap:5px; align-items:center; background:#111; padding:4px; border-radius:12px; border:1px solid #333; }
+  /* GRUPOS */
+  .c-group { 
+      display:flex; gap:2px; align-items:center; 
+      background:#222; padding:2px; border-radius:6px; border:1px solid #444; 
+  }
   
+  /* BOTONES COMPACTOS */
   button {
-      background:#222; border:none; color:#fff;
-      width:42px; height:42px; border-radius:8px; /* Cuadrado redondeado */
+      background:transparent; border:none; color:#eee;
+      width:36px; height:36px; border-radius:4px;
       font-weight:bold; cursor:pointer; font-size:1.1rem;
       display:flex; align-items:center; justify-content:center;
-      transition:0.2s;
+      transition:0.1s;
   }
-  button:hover { background:#444; }
+  button:hover { background:#333; color:#fff; }
+  button:active { background:#444; }
+
+  /* BOTÓN PLAY (DESTACADO PERO COMPACTO) */
+  #btnPlay {
+      background:#10B981; color:#000; 
+      width:auto; padding:0 20px; height:36px; border-radius:6px;
+      font-size:0.9rem; text-transform:uppercase; font-weight:800;
+      min-width: 80px;
+  }
+  #btnPlay:hover { background:#059669; }
+  #btnPlay.paused { background:#EF4444; color:#fff; }
+
+  /* VALORES */
+  .val { font-family:monospace; font-size:13px; width:30px; text-align:center; color:#ccc; }
   
-  /* BOTÓN PRINCIPAL (TEXTO) */
-  button.btn-main {
-      width:auto; padding:0 20px; height:50px; border-radius:12px;
-      background:#10B981; color:#000; font-size:1rem; text-transform:uppercase;
-      box-shadow: 0 0 10px rgba(16,185,129,0.2);
-      min-width: 90px;
+  /* MARCADOR DE LECTURA */
+  #guide {
+      position:fixed; top:40%; left:0; width:100%; height:12%;
+      border-top:1px solid rgba(255,255,255,0.1);
+      border-bottom:1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.02);
+      pointer-events:none; z-index:50;
   }
-  button.btn-main:hover { transform:scale(1.02); }
-  button.btn-main.paused { background:#EF4444; color:#fff; box-shadow: 0 0 10px rgba(239,68,68,0.2); }
+  
+  /* ICONOS SVG SIMPLES */
+  .icon { width:18px; height:18px; fill:currentColor; }
 
-  /* Ocultar etiquetas en móvil */
-  .label { font-family:monospace; font-size:9px; color:#666; text-align:center; display:block; margin-bottom:2px; text-transform:uppercase; }
-  .val { font-family:monospace; font-size:14px; width:25px; text-align:center; font-weight:bold; }
-
-  /* Media Query para Móviles */
   @media (max-width: 600px) {
-      .label { display: none; } /* Ahorra espacio vertical */
-      #controls { padding: 10px 5px; gap: 5px; }
-      button { width: 38px; height: 38px; }
-      .c-group { padding: 2px; }
-      /* Esconder espejo en móvil vertical muy estrecho si hace falta */
+      #controls { justify-content: space-between; padding: 10px; }
+      .c-group { gap:0; }
+      button { width: 40px; height: 40px; }
   }
-
-  #guide{position:fixed;top:45%;left:0;width:100%;height:10%;border-top:2px dashed rgba(255,0,0,0.3);border-bottom:2px dashed rgba(255,0,0,0.3);pointer-events:none;z-index:50;}
 </style>
 </head>
 <body>
@@ -378,38 +379,29 @@
   <div id="prompter-area"><div id="content"></div></div>
   
   <div id="controls">
-    <!-- VELOCIDAD (IZQ) -->
-    <div>
-        <span class="label">VELOCIDAD</span>
-        <div class="c-group">
-            <button onclick="changeSpeed(-1)">-</button>
-            <span class="val" id="spdVal">3</span>
-            <button onclick="changeSpeed(1)">+</button>
-        </div>
+    
+    <!-- VELOCIDAD -->
+    <div class="c-group" title="Velocidad">
+        <button onclick="changeSpeed(-1)">-</button>
+        <span class="val" id="spdVal">1</span>
+        <button onclick="changeSpeed(1)">+</button>
     </div>
 
-    <!-- PLAY / PAUSE (CENTRO) -->
-    <button onclick="togglePlay()" id="btnPlay" class="btn-main">INICIAR</button>
+    <!-- PLAY -->
+    <button onclick="togglePlay()" id="btnPlay">INICIAR</button>
 
-    <!-- DERECHA: FUENTE + ESPEJO -->
-    <div style="display:flex; gap:5px;">
-        <!-- Fuente -->
-        <div>
-            <span class="label">FUENTE</span>
-            <div class="c-group">
-                <button onclick="changeSize(-1)">A-</button>
-                <span class="val" id="fntVal">3</span>
-                <button onclick="changeSize(1)">A+</button>
-            </div>
-        </div>
-        <!-- Espejo (Compacto) -->
-        <div>
-             <span class="label">ESPEJO</span>
-             <div class="c-group">
-                <button onclick="toggleMirror()" title="Espejo">⇄</button>
-             </div>
-        </div>
+    <!-- FUENTE -->
+    <div class="c-group" title="Tamaño Fuente">
+        <button onclick="changeSize(-1)">A-</button>
+        <span class="val" id="fntVal">3</span>
+        <button onclick="changeSize(1)">A+</button>
     </div>
+
+    <!-- ESPEJO -->
+    <div class="c-group" title="Espejo">
+        <button onclick="toggleMirror()" style="width:36px;">⇄</button>
+    </div>
+
   </div>
 
 <script>
@@ -425,25 +417,28 @@
     content.appendChild(el);
   });
 
-  let playing=false, speed=3, font=3.5, mirrorState=0, animationId;
+  let playing=false, speed=10, font=3.5, mirrorState=0, animationId;
   let accumulator = 0; 
 
-  // AUTO-START
-  setTimeout(() => {
-     if(!playing) togglePlay();
-  }, 2000);
+  // AUTO-START (2 seg)
+  setTimeout(() => { if(!playing) togglePlay(); }, 2000);
 
-  // CLICK TO PLAY/PAUSE (TÁCTIL)
-  area.addEventListener('click', (e) => {
-      // Evitar conflicto si se selecciona texto
-      if (window.getSelection().toString().length === 0) {
-          togglePlay();
-      }
+  // CLICK EN PANTALLA PARA PAUSA
+  area.addEventListener('click', () => {
+      if (window.getSelection().toString().length === 0) togglePlay();
   });
 
   function loop() {
     if(playing) {
-      const move = 0.3 + (speed * 0.15);
+      // MOTOR DE PRECISIÓN
+      // Base (offset) = 0.05 px (movimiento casi invisible)
+      // Multiplicador = 0.05 px por nivel
+      // Nivel 1 = 0.1 px/frame (muy lento)
+      // Nivel 10 = 0.55 px/frame
+      // Nivel 50 = 2.5 px/frame (rápido)
+      
+      const move = 0.05 + (speed * 0.05);
+      
       accumulator += move;
       if(accumulator >= 1) {
           const pixels = Math.floor(accumulator);
@@ -468,13 +463,15 @@
     }
   }
 
+  // Velocidad de 1 a 100 para control fino
   function changeSpeed(d) { 
-      speed = Math.max(1, Math.min(50, speed + d)); 
+      speed = Math.max(1, Math.min(100, speed + (d * 1))); // Pasos de 1 en 1
+      // Si pulsas shift + click, salta de 5 en 5 (opcional para el futuro)
       document.getElementById('spdVal').innerText = speed; 
   }
 
   function changeSize(d) { 
-      font = Math.max(1.5, Math.min(8, font + d * 0.5)); 
+      font = Math.max(1.5, Math.min(10, font + d * 0.5)); 
       document.querySelectorAll('.p-text').forEach(e => e.style.fontSize = font + 'rem');
       document.getElementById('fntVal').innerText = Math.round(font*10)/10;
   }
@@ -492,6 +489,9 @@
       if(e.code === 'ArrowUp') changeSpeed(1); 
       if(e.code === 'ArrowDown') changeSpeed(-1); 
   });
+  
+  // Iniciar display de velocidad
+  document.getElementById('spdVal').innerText = speed;
 <\/script>
 </body>
 </html>`;
