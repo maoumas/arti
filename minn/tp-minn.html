@@ -1,0 +1,268 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Teleprompter Player</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎬</text></svg>">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        body { background-color: #000; color: #f0f0f0; font-family: 'Inter', sans-serif; margin:0; overflow-x: hidden; }
+        
+        /* SMART COVER (Purple Screen) */
+        #cover-screen {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, #4C1D95 0%, #2E1065 100%);
+            color: white; z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 30px;
+        }
+        .cover-icon { font-size: 5rem; margin-bottom: 20px; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3)); }
+        .cover-title { font-size: 2rem; font-weight: 800; margin-bottom: 10px; }
+        .cover-text { font-size: 1.1rem; opacity: 0.9; }
+        .cover-warning { 
+            margin-top: 30px; background: rgba(255,255,255,0.15); 
+            padding: 15px 25px; border-radius: 12px; font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* CONTROLS */
+        #controls { 
+            position: fixed; bottom: 0; left: 0; right: 0; 
+            background-color: #111; border-top: 1px solid #333; 
+            padding: 10px; padding-bottom: env(safe-area-inset-bottom, 10px);
+            display: flex; flex-wrap: nowrap; align-items: center; gap: 8px; 
+            z-index: 1000; overflow-x: auto; justify-content: center;
+            -webkit-overflow-scrolling: touch;
+            opacity: 0; transition: opacity 0.5s;
+        }
+        #controls::-webkit-scrollbar { display: none; }
+
+        .btn-main {
+            height: 40px; padding: 0 16px; border-radius: 8px;
+            font-weight: 700; text-transform: uppercase; cursor: pointer;
+            border: none; color: white; font-size: 0.85rem; 
+            display: flex; align-items: center; justify-content: center; 
+            flex-shrink: 0; transition: 0.2s;
+        }
+        .btn-main:active { transform: scale(0.95); }
+        #play-pause-btn { background-color: #10B981; min-width: 90px; } 
+        #play-pause-btn.paused { background-color: #EF4444; } 
+        #reset-btn { background-color: #374151; width: 40px; padding: 0; }
+        #save-btn { background-color: #7C3AED; margin-left: 10px; width: 40px; padding:0; border: 1px solid #8B5CF6; }
+
+        .control-group {
+            display: flex; align-items: center; gap: 2px;
+            background-color: #222; padding: 3px; border-radius: 8px; border: 1px solid #444; flex-shrink: 0;
+        }
+        .stepper-btn {
+            width: 36px; height: 36px; border-radius: 6px; border: none;
+            font-size: 1.2rem; font-weight: bold; cursor: pointer; color: white;
+            background: transparent; display:flex; justify-content:center; align-items:center; padding-bottom:4px;
+        }
+        .value-display { font-family: monospace; font-size: 0.95rem; font-weight: bold; min-width: 28px; text-align: center; }
+        .theme-speed .stepper-btn { background-color: #1E40AF; }
+        .theme-font .stepper-btn { background-color: #92400E; }
+        .icon-svg { width: 20px; height: 20px; fill: currentColor; } 
+
+        #script-container { padding: 2rem 1.5rem; padding-bottom: 50vh; max-width: 900px; margin: 0 auto; line-height: 1.5; opacity: 0; transition: opacity 0.5s; }
+        .speaker-text { font-size: 2.5rem; font-weight: 600; color: #fff; margin-bottom: 1.5rem; }
+        .instruction { font-size: 1.3rem; color: #FCD34D; font-style: italic; background-color: #282518; border-left: 4px solid #F59E0B; padding: 1rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0; }
+        .timestamp { font-size: 1.8rem; font-weight: 700; color: #60A5FA; border-top: 1px solid #333; padding-top: 2rem; margin-top: 3rem; margin-bottom: 1rem; text-transform: uppercase; }
+        
+        @media (min-width: 768px) {
+            #controls { gap: 16px; padding: 16px; }
+            .btn-main, #save-btn { height: 48px; width:48px; }
+            #play-pause-btn { min-width: 120px; }
+            .stepper-btn { width: 44px; height: 44px; }
+            .icon-svg { width: 24px; height: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+  
+
+  <div id="script-container" style="opacity: 1;"><h2 class="timestamp" style="font-size: 35px;">Massive Betrugsfälle und die Terror-Verbindung in Minnesota</h2><p class="speaker-text" style="font-size: 35px;">Minnesota kämpft mit einer der größten Wellen von Sozialhilfebetrug in der Geschichte der USA. Staatsanwälte sprechen von einer Krise, in der schätzungsweise Milliarden von Dollar an Steuergeldern gestohlen wurden.</p><h2 class="timestamp" style="font-size: 35px;">Die Betrugs-Netzwerke</h2><p class="speaker-text" style="font-size: 35px;">Die Betrugsmaschen formen ein weitreichendes Netzwerk, das hauptsächlich Mitglieder der somalischen Gemeinschaft Minnesotas betrifft.</p><p class="speaker-text" style="font-size: 35px;">Feeding Our Future</p><p class="speaker-text" style="font-size: 35px;">Dies ist das bekannteste Schema, bei dem etwa 250 bis 300 Millionen Dollar aus einem bundesfinanzierten Programm gestohlen wurden, das Kinder während der Coronavirus-Pandemie ernähren sollte. Die Betrüger meldeten angeblich Millionen von Mahlzeiten ab, die jedoch nie oder nur in geringem Umfang ausgegeben wurden.</p><p class="speaker-text" style="font-size: 35px;">Autismus- und Medicaid-Betrug</p><p class="speaker-text" style="font-size: 35px;">Ein weiteres Schema betrifft betrügerische Abrechnungen im staatlichen Medicaid-System für Autismus-Therapien. Die Ansprüche für Autismus-Dienstleistungen stiegen von 3 Millionen Dollar im Jahr 2018 auf fast 400 Millionen Dollar im Jahr 2023. Es wird behauptet, dass Angeklagte Eltern Geldzahlungen anboten, damit sie ihre Kinder für nicht rechtmäßig erbrachte Dienstleistungen anmeldeten.</p><p class="speaker-text" style="font-size: 35px;">Wohnungshilfe (HSS)</p><p class="speaker-text" style="font-size: 35px;">Das Housing Stabilization Services Programm, das Senioren und Menschen mit Behinderungen bei der Wohnungssuche helfen sollte, sah seine Kosten von 2,6 Millionen Dollar im Jahr 2020 auf über 100 Millionen Dollar jährlich ansteigen. Dies führte zu Anklagen gegen Personen, die gefälschte Kundenlisten erstellten und für nie erbrachte Dienste Rechnungen stellten.</p><p class="speaker-text" style="font-size: 35px;">Das gestohlene Geld wurde Berichten zufolge für den Kauf von Luxusautos, Schmuck und Immobilien in den USA, Kenia und der Türkei verwendet. Die Angeklagten nutzten die liberalen Wohlfahrtssysteme, die mit geringen Zugangshürden und minimaler Überprüfung konzipiert waren.</p><h2 class="timestamp" style="font-size: 35px;">Finanzierung des Terrorismus</h2><p class="instruction">Dies ist die alarmierendste Enthüllung, die auf Berichten von Bundesermittlern und Quellen der Terrorismusbekämpfung basiert.*</p><p class="speaker-text" style="font-size: 35px;">Die größte Sorge ist die angebliche direkte Verbindung zwischen den gestohlenen Wohlfahrtsgeldern und der Finanzierung des islamischen Terrorgruppe Al-Shabaab, dem Al-Qaida-Verbündeten, der in Somalia operiert. Mehrere Quellen behaupteten: **Der größte Geldgeber von Al-Shabaab ist der Steuerzahler von Minnesota.**</p><p class="speaker-text" style="font-size: 35px;">Ein Großteil des betrügerisch erlangten Geldes wurde über Hawalas, informelle Geldtransfernetzwerke, nach Somalia überwiesen. Ermittler stellten fest, dass Al-Shabaab einen Anteil oder eine Steuer auf jegliche wirtschaftliche Aktivität erhebt, die nach Somalia transferiert wird, was bedeutet, dass die Terrorgruppe von den Überweisungen profitiert, unabhängig davon, ob der Absender dies beabsichtigt hat oder nicht.</p><h2 class="timestamp" style="font-size: 35px;">Trumps Ankündigung des TPS-Endes</h2><p class="speaker-text" style="font-size: 35px;">Als Reaktion auf die Betrugswelle kündigte Präsident Donald Trump auf Truth Social an, den Temporary Protected Status (TPS) für Somalier in Minnesota mit sofortiger Wirkung zu beenden. Er begründete den Schritt damit, dass Minnesota unter Gouverneur Tim Walls ein **Zentrum für betrügerische Geldwäscheaktivitäten** sei und somalische Banden den Staat terrorisierten. Er forderte: Schickt sie zurück, woher sie gekommen sind.</p><p class="speaker-text" style="font-size: 35px;">Der TPS, der somalischen Einwanderern seit 1991 aufgrund von Bürgerunruhen und Gewalt in ihrem Heimatland gewährt wird, war zuletzt bis März 2026 verlängert worden.</p><h2 class="timestamp" style="font-size: 35px;">Politische und rechtliche Auseinandersetzung</h2><p class="speaker-text" style="font-size: 35px;">Die Ankündigung von Präsident Trump löste schnelle Reaktionen aus. Die Republikaner lobten den Schritt und forderten die sofortige Abschiebung aller Kriminellen, die sich nicht legal in den USA aufhalten.</p><p class="speaker-text" style="font-size: 35px;">Kongressabgeordnete Ilhan Omar, deren Netzwerk Verbindungen zu Personen hatte, die später angeklagt wurden, erklärte, sie sei eine Bürgerin und die Mehrheit der Somalier in Amerika sei es auch. Sie betonte: **Wir bleiben hier.**</p><p class="instruction">Omar hat die Betrugsfälle als verwerflich verurteilt, wurde jedoch in den Bundesermittlungen nicht angeklagt oder als Verdächtige genannt.*</p><p class="speaker-text" style="font-size: 35px;">Rechtlich gesehen würde eine Beendigung des TPS die formelle Mitteilung durch den Minister für Heimatschutz erfordern, und sie würde landesweit für alle somalischen TPS-Inhaber gelten, nicht nur für jene in Minnesota. Die Ankündigung wurde von Kritikern als politischer Akt dargestellt.</p><p class="speaker-text" style="font-size: 35px;">Gouverneur Walls wies Trumps Vorgehen zurück und nannte es eine breite und unfaire Zielgruppenansprache, um vom eigentlichen Thema abzulenken. Die somalische Gemeinschaft äußerte große Besorgnis, da sie befürchtet, dass die Aktionen einiger Krimineller zur Stigmatisierung der gesamten Gemeinschaft führen, obwohl die meisten Somalier gesetzeskonforme Bürger seien.</p><p class="speaker-text" style="font-size: 35px;">Kritiker werfen den demokratischen Führern Minnesotas vor, das Ausmaß des Betrugs aus Angst vor Gegenreaktionen des mächtigen somalisch-amerikanischen Wählerblocks ignoriert zu haben, was es den Betrugsnetzwerken ermöglichte, zu wachsen und sich mit kriminellen Netzwerken im Ausland zu verflechten.</p></div>
+  
+  <div id="controls" style="opacity: 1;">
+    <button id="play-pause-btn" class="btn-main">INICIAR</button>
+    <button id="reset-btn" class="btn-main" title="Reset"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"></path></svg></button>
+    <div class="control-group theme-speed"><button class="stepper-btn" id="speed-minus">−</button><div class="value-display" id="speed-display">3</div><button class="stepper-btn" id="speed-plus">+</button></div>
+    <div class="control-group theme-font"><button class="stepper-btn" id="font-minus">−</button><div class="value-display" id="font-display">3</div><button class="stepper-btn" id="font-plus">+</button></div>
+    <button id="save-btn" class="btn-main" title="Save File"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"></path></svg></button>
+  </div>
+
+  <script>
+    const scriptData = [
+  {
+    "type": "title",
+    "content": "Massive Betrugsfälle und die Terror-Verbindung in Minnesota"
+  },
+  {
+    "type": "text",
+    "content": "Minnesota kämpft mit einer der größten Wellen von Sozialhilfebetrug in der Geschichte der USA. Staatsanwälte sprechen von einer Krise, in der schätzungsweise Milliarden von Dollar an Steuergeldern gestohlen wurden."
+  },
+  {
+    "type": "title",
+    "content": "Die Betrugs-Netzwerke"
+  },
+  {
+    "type": "text",
+    "content": "Die Betrugsmaschen formen ein weitreichendes Netzwerk, das hauptsächlich Mitglieder der somalischen Gemeinschaft Minnesotas betrifft."
+  },
+  {
+    "type": "text",
+    "content": "Feeding Our Future"
+  },
+  {
+    "type": "text",
+    "content": "Dies ist das bekannteste Schema, bei dem etwa 250 bis 300 Millionen Dollar aus einem bundesfinanzierten Programm gestohlen wurden, das Kinder während der Coronavirus-Pandemie ernähren sollte. Die Betrüger meldeten angeblich Millionen von Mahlzeiten ab, die jedoch nie oder nur in geringem Umfang ausgegeben wurden."
+  },
+  {
+    "type": "text",
+    "content": "Autismus- und Medicaid-Betrug"
+  },
+  {
+    "type": "text",
+    "content": "Ein weiteres Schema betrifft betrügerische Abrechnungen im staatlichen Medicaid-System für Autismus-Therapien. Die Ansprüche für Autismus-Dienstleistungen stiegen von 3 Millionen Dollar im Jahr 2018 auf fast 400 Millionen Dollar im Jahr 2023. Es wird behauptet, dass Angeklagte Eltern Geldzahlungen anboten, damit sie ihre Kinder für nicht rechtmäßig erbrachte Dienstleistungen anmeldeten."
+  },
+  {
+    "type": "text",
+    "content": "Wohnungshilfe (HSS)"
+  },
+  {
+    "type": "text",
+    "content": "Das Housing Stabilization Services Programm, das Senioren und Menschen mit Behinderungen bei der Wohnungssuche helfen sollte, sah seine Kosten von 2,6 Millionen Dollar im Jahr 2020 auf über 100 Millionen Dollar jährlich ansteigen. Dies führte zu Anklagen gegen Personen, die gefälschte Kundenlisten erstellten und für nie erbrachte Dienste Rechnungen stellten."
+  },
+  {
+    "type": "text",
+    "content": "Das gestohlene Geld wurde Berichten zufolge für den Kauf von Luxusautos, Schmuck und Immobilien in den USA, Kenia und der Türkei verwendet. Die Angeklagten nutzten die liberalen Wohlfahrtssysteme, die mit geringen Zugangshürden und minimaler Überprüfung konzipiert waren."
+  },
+  {
+    "type": "title",
+    "content": "Finanzierung des Terrorismus"
+  },
+  {
+    "type": "instruction",
+    "content": "Dies ist die alarmierendste Enthüllung, die auf Berichten von Bundesermittlern und Quellen der Terrorismusbekämpfung basiert.*"
+  },
+  {
+    "type": "text",
+    "content": "Die größte Sorge ist die angebliche direkte Verbindung zwischen den gestohlenen Wohlfahrtsgeldern und der Finanzierung des islamischen Terrorgruppe Al-Shabaab, dem Al-Qaida-Verbündeten, der in Somalia operiert. Mehrere Quellen behaupteten: **Der größte Geldgeber von Al-Shabaab ist der Steuerzahler von Minnesota.**"
+  },
+  {
+    "type": "text",
+    "content": "Ein Großteil des betrügerisch erlangten Geldes wurde über Hawalas, informelle Geldtransfernetzwerke, nach Somalia überwiesen. Ermittler stellten fest, dass Al-Shabaab einen Anteil oder eine Steuer auf jegliche wirtschaftliche Aktivität erhebt, die nach Somalia transferiert wird, was bedeutet, dass die Terrorgruppe von den Überweisungen profitiert, unabhängig davon, ob der Absender dies beabsichtigt hat oder nicht."
+  },
+  {
+    "type": "title",
+    "content": "Trumps Ankündigung des TPS-Endes"
+  },
+  {
+    "type": "text",
+    "content": "Als Reaktion auf die Betrugswelle kündigte Präsident Donald Trump auf Truth Social an, den Temporary Protected Status (TPS) für Somalier in Minnesota mit sofortiger Wirkung zu beenden. Er begründete den Schritt damit, dass Minnesota unter Gouverneur Tim Walls ein **Zentrum für betrügerische Geldwäscheaktivitäten** sei und somalische Banden den Staat terrorisierten. Er forderte: Schickt sie zurück, woher sie gekommen sind."
+  },
+  {
+    "type": "text",
+    "content": "Der TPS, der somalischen Einwanderern seit 1991 aufgrund von Bürgerunruhen und Gewalt in ihrem Heimatland gewährt wird, war zuletzt bis März 2026 verlängert worden."
+  },
+  {
+    "type": "title",
+    "content": "Politische und rechtliche Auseinandersetzung"
+  },
+  {
+    "type": "text",
+    "content": "Die Ankündigung von Präsident Trump löste schnelle Reaktionen aus. Die Republikaner lobten den Schritt und forderten die sofortige Abschiebung aller Kriminellen, die sich nicht legal in den USA aufhalten."
+  },
+  {
+    "type": "text",
+    "content": "Kongressabgeordnete Ilhan Omar, deren Netzwerk Verbindungen zu Personen hatte, die später angeklagt wurden, erklärte, sie sei eine Bürgerin und die Mehrheit der Somalier in Amerika sei es auch. Sie betonte: **Wir bleiben hier.**"
+  },
+  {
+    "type": "instruction",
+    "content": "Omar hat die Betrugsfälle als verwerflich verurteilt, wurde jedoch in den Bundesermittlungen nicht angeklagt oder als Verdächtige genannt.*"
+  },
+  {
+    "type": "text",
+    "content": "Rechtlich gesehen würde eine Beendigung des TPS die formelle Mitteilung durch den Minister für Heimatschutz erfordern, und sie würde landesweit für alle somalischen TPS-Inhaber gelten, nicht nur für jene in Minnesota. Die Ankündigung wurde von Kritikern als politischer Akt dargestellt."
+  },
+  {
+    "type": "text",
+    "content": "Gouverneur Walls wies Trumps Vorgehen zurück und nannte es eine breite und unfaire Zielgruppenansprache, um vom eigentlichen Thema abzulenken. Die somalische Gemeinschaft äußerte große Besorgnis, da sie befürchtet, dass die Aktionen einiger Krimineller zur Stigmatisierung der gesamten Gemeinschaft führen, obwohl die meisten Somalier gesetzeskonforme Bürger seien."
+  },
+  {
+    "type": "text",
+    "content": "Kritiker werfen den demokratischen Führern Minnesotas vor, das Ausmaß des Betrugs aus Angst vor Gegenreaktionen des mächtigen somalisch-amerikanischen Wählerblocks ignoriert zu haben, was es den Betrugsnetzwerken ermöglichte, zu wachsen und sich mit kriminellen Netzwerken im Ausland zu verflechten."
+  }
+];
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      const cover = document.getElementById('cover-screen');
+      const scriptCont = document.getElementById('script-container');
+      const controls = document.getElementById('controls');
+
+      if(cover) {
+         setTimeout(() => {
+             cover.style.opacity = '0';
+             cover.style.pointerEvents = 'none'; 
+             scriptCont.style.opacity = '1';
+             controls.style.opacity = '1';
+             setTimeout(() => cover.remove(), 500); 
+         }, 800);
+      }
+
+      scriptData.forEach(item => {
+          let el;
+          if (item.type === 'title') { el = document.createElement('h2'); el.className = 'timestamp'; }
+          else if (item.type === 'instruction') { el = document.createElement('p'); el.className = 'instruction'; }
+          else { el = document.createElement('p'); el.className = 'speaker-text'; }
+          el.textContent = item.content;
+          scriptCont.appendChild(el);
+      });
+
+      let state = { speedLevel: 3, fontLevel: 3, isScrolling: false };
+      let animationFrameId = null;
+      const btnPlay = document.getElementById('play-pause-btn');
+      const dispSpeed = document.getElementById('speed-display');
+      const dispFont = document.getElementById('font-display');
+
+      function updateFont() { const size = 20 + (state.fontLevel * 5); document.querySelectorAll('.speaker-text, .timestamp').forEach(el => el.style.fontSize = size + 'px'); dispFont.textContent = state.fontLevel; }
+      
+      // --- CORRECCIÓN DE VELOCIDAD LINEAL ---
+      // Ahora es simplemente el Nivel * 0.5. 
+      // Nivel 1 = 0.5px/frame (Lento pero visible). Nivel 10 = 5px/frame (Rápido).
+      function loop() { 
+          if (!state.isScrolling) return; 
+          const pixels = state.speedLevel * 0.5; // Fórmula lineal simple
+          if (pixels > 0) window.scrollBy(0, pixels); 
+          animationFrameId = requestAnimationFrame(loop); 
+      }
+
+      function togglePlay() { state.isScrolling = !state.isScrolling; if (state.isScrolling) { btnPlay.textContent = "PAUSA"; btnPlay.classList.add('paused'); loop(); } else { btnPlay.textContent = "INICIAR"; btnPlay.classList.remove('paused'); cancelAnimationFrame(animationFrameId); } }
+
+      document.getElementById('speed-minus').onclick = () => { if (state.speedLevel > 0) state.speedLevel--; dispSpeed.textContent = state.speedLevel; };
+      document.getElementById('speed-plus').onclick = () => { if (state.speedLevel < 20) state.speedLevel++; dispSpeed.textContent = state.speedLevel; };
+      document.getElementById('font-minus').onclick = () => { if (state.fontLevel > 0) state.fontLevel--; updateFont(); };
+      document.getElementById('font-plus').onclick = () => { if (state.fontLevel < 15) state.fontLevel++; updateFont(); };
+      btnPlay.onclick = togglePlay;
+      document.getElementById('reset-btn').onclick = () => { window.scrollTo(0,0); state.isScrolling = false; btnPlay.textContent = "INICIAR"; btnPlay.classList.remove('paused'); cancelAnimationFrame(animationFrameId); };
+      
+      document.getElementById('save-btn').onclick = () => {
+          const htmlContent = document.documentElement.outerHTML;
+          const blob = new Blob([htmlContent], { type: 'text/html' });
+          const titleItem = scriptData.find(i => i.type === 'title');
+          let titleSlug = 'Script';
+          if (titleItem) { titleSlug = titleItem.content.replace(/[^a-zA-Z0-9 ]/g, '').trim(); }
+          if(!titleSlug) titleSlug = 'Teleprompter';
+          const fileName = 'Teleprompter - ' + titleSlug + '.html';
+          const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = fileName;
+          document.body.appendChild(link); link.click(); document.body.removeChild(link);
+      };
+      
+      document.addEventListener('keydown', (e) => { if (e.key === ' ') { e.preventDefault(); togglePlay(); } });
+      scriptCont.addEventListener('click', (e) => { togglePlay(); });
+      updateFont(); dispSpeed.textContent = state.speedLevel;
+      setTimeout(() => { if(!state.isScrolling) togglePlay(); }, 2500);
+    });
+  </script>
+
+</body></html>
