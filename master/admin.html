@@ -170,7 +170,7 @@
         <span class="text-3xl">📡</span>
         <div>
             <h1 class="text-xl font-bold tracking-tight text-white">Teleprompter Studio <span class="text-emerald-500">PRO</span></h1>
-            <p class="text-xs text-slate-400 font-mono">v3.3 // Live Ready</p>
+            <p class="text-xs text-slate-400 font-mono">v3.4 // Safe Mode</p>
         </div>
     </div>
   </header>
@@ -203,7 +203,7 @@
                 <button class="btn btn-live" onclick="testLive()">
                     <span>▶</span> LANZAR AHORA
                 </button>
-                <p class="text-[10px] text-center text-slate-500 mt-2 font-mono">Abre una ventana emergente instantánea</p>
+                <p class="text-[10px] text-center text-slate-500 mt-2 font-mono">Abre una ventana emergente segura</p>
             </div>
 
             <hr class="border-slate-700">
@@ -221,22 +221,22 @@
 
         <!-- PANEL DE ESTADO -->
         <div class="panel control-panel">
-            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Estado del Sistema</h3>
+            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Mejoras V3.4</h3>
             
             <div class="w-full bg-slate-900 rounded p-3 text-left space-y-2 mb-4">
                 <div class="flex justify-between text-[11px] font-mono text-slate-400 border-b border-slate-800 pb-1">
-                    <span>MOTOR</span> <span class="text-emerald-400">V3.3.0</span>
+                    <span>SCROLL</span> <span class="text-emerald-400">AUTO-START</span>
                 </div>
                 <div class="flex justify-between text-[11px] font-mono text-slate-400 border-b border-slate-800 pb-1">
-                    <span>ESPEJO (MIRROR)</span> <span class="text-emerald-400">ACTIVO</span>
+                    <span>CONTROLES</span> <span class="text-emerald-400">SEPARADOS</span>
                 </div>
                 <div class="flex justify-between text-[11px] font-mono text-slate-400">
-                    <span>TECLADO</span> <span class="text-emerald-400">[ESPACIO] / [FLECHAS]</span>
+                    <span>LAYOUT</span> <span class="text-emerald-400">SAFE MODE</span>
                 </div>
             </div>
             
             <p class="text-[10px] text-slate-600">
-                Tip: Usa la "Ventana Flotante" para colocar el prompter sobre tu software de videoconferencia (Zoom/Meet).
+                Los botones peligrosos (Espejo) ahora están aislados en la esquina superior para evitar accidentes.
             </p>
         </div>
 
@@ -279,7 +279,7 @@
             else if (line.startsWith('*')) scriptData.push({ type: "instruction", content: line.substring(1).trim() });
             else scriptData.push({ type: "text", content: line });
         });
-        if (scriptData.length === 0) scriptData = [{ type: "title", content: "DEMO MODE" }, { type: "text", content: "Escribe tu texto..." }];
+        if (scriptData.length === 0) scriptData = [{ type: "title", content: "LISTO" }, { type: "text", content: "El teleprompter está listo para usar." }];
         return JSON.stringify(scriptData);
     }
 
@@ -291,35 +291,103 @@
 <title>Teleprompter Player</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-  body{background:#000;color:#fff;font-family:'Inter',sans-serif;margin:0;overflow-x:hidden;height:100vh;display:flex;flex-direction:column;}
-  #prompter-area{flex:1;overflow-y:scroll;padding:50px 20px;padding-bottom:50vh;scroll-behavior:smooth;}
-  .p-text{font-size:3rem;line-height:1.4;margin-bottom:1.5rem;font-weight:700;}
-  .p-title{color:#10B981;font-size:1.5rem;text-transform:uppercase;letter-spacing:2px;border-bottom:1px solid #333;margin:40px 0 20px 0;}
-  .p-inst{color:#F59E0B;font-size:1.5rem;font-style:italic;background:#1e1e1e;padding:10px;border-left:4px solid #F59E0B;}
+  body{background:#000;color:#fff;font-family:'Inter',sans-serif;margin:0;overflow:hidden;height:100vh;display:flex;flex-direction:column;}
+  
+  /* ÁREA DE TEXTO */
+  #prompter-area{
+      flex:1;
+      overflow-y:scroll; /* Scroll vital */
+      padding:50px 20px;
+      padding-bottom:120vh; /* Espacio extra al final para que todo el texto suba */
+      scroll-behavior:auto; /* Smooth desactivado para JS */
+  }
+  
+  .p-text{font-size:3.5rem;line-height:1.4;margin-bottom:1.5rem;font-weight:700;}
+  .p-title{color:#10B981;font-size:2rem;text-transform:uppercase;letter-spacing:2px;border-bottom:1px solid #333;margin:40px 0 20px 0;}
+  .p-inst{color:#F59E0B;font-size:1.8rem;font-style:italic;background:#1e1e1e;padding:15px;border-left:5px solid #F59E0B;}
+  
+  /* ESPEJO */
   .mirror-x { transform: scaleX(-1); } .mirror-y { transform: scaleY(-1); } .mirror-xy { transform: scale(-1, -1); }
-  #controls{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;border:1px solid #333;padding:10px 20px;border-radius:50px;display:flex;gap:15px;align-items:center;z-index:999;box-shadow:0 10px 30px rgba(0,0,0,0.5);opacity:0.2;transition:opacity 0.3s;}
-  #controls:hover{opacity:1;}
-  button{background:#333;border:none;color:#fff;width:40px;height:40px;border-radius:50%;font-weight:bold;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
-  button:hover{background:#555;} button.active{background:#10B981;color:#000;}
-  .value-display{font-family:monospace;font-size:14px;width:30px;text-align:center;}
+
+  /* CONTROLES PRINCIPALES (ABAJO) */
+  #controls-main {
+      position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+      background:#111; border:1px solid #333; padding:15px 30px;
+      border-radius:50px; display:flex; gap:20px; align-items:center;
+      z-index:999; box-shadow:0 10px 40px rgba(0,0,0,0.8);
+  }
+  
+  /* CONTROLES CONFIGURACIÓN (ARRIBA DERECHA) - Lejos del peligro */
+  #controls-setup {
+      position:fixed; top:20px; right:20px;
+      background:rgba(0,0,0,0.5); border:1px solid #333; padding:8px;
+      border-radius:12px; display:flex; gap:5px; align-items:center;
+      z-index:999; opacity:0.3; transition:opacity 0.3s;
+  }
+  #controls-setup:hover { opacity:1; background:#111; }
+
+  button{background:#333;border:none;color:#fff;width:50px;height:50px;border-radius:50%;font-weight:bold;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.4rem; transition:all 0.2s;}
+  button:hover{background:#555; transform:scale(1.1);}
+  button:active{transform:scale(0.95);}
+  button.btn-play{background:#10B981; color:#000; width:70px; height:70px; font-size:2rem; box-shadow: 0 0 15px rgba(16,185,129,0.4);}
+  button.btn-play.playing{background:#EF4444; color:#fff; box-shadow: 0 0 15px rgba(239,68,68,0.4);}
+  
+  /* Botones pequeños para setup */
+  #controls-setup button { width:35px; height:35px; font-size:1rem; background:transparent; border:1px solid #444; }
+  #controls-setup button:hover { background:#333; }
+
+  .value-display{font-family:monospace;font-size:18px;width:40px;text-align:center;font-weight:bold;}
+  
+  /* MARCADOR CENTRAL */
   #guide{position:fixed;top:45%;left:0;width:100%;height:10%;border-top:2px dashed rgba(255,0,0,0.3);border-bottom:2px dashed rgba(255,0,0,0.3);pointer-events:none;z-index:50;}
-  @media (max-width: 600px) { .p-text { font-size: 2rem; } #controls { width: 90%; gap: 5px; justify-content: space-around; } }
+  
+  /* PANTALLA DE INICIO (OVERLAY) */
+  #start-overlay {
+      position:fixed; top:0; left:0; width:100%; height:100%;
+      background:rgba(0,0,0,0.95); z-index:2000;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      cursor:pointer;
+  }
+  #start-overlay h1 { font-size:3rem; color:#10B981; margin-bottom:10px; }
+  #start-overlay p { color:#aaa; font-size:1.2rem; animation:pulse 2s infinite; }
+  @keyframes pulse { 0%{opacity:0.5;} 50%{opacity:1;} 100%{opacity:0.5;} }
+
 </style>
 </head>
 <body>
+  <!-- Overlay de Inicio Obligatorio -->
+  <div id="start-overlay" onclick="startPrompter()">
+      <h1>▶ HAGA CLIC AQUÍ</h1>
+      <p>Para Iniciar el Teleprompter</p>
+  </div>
+
   <div id="guide"></div>
   <div id="prompter-area"><div id="content"></div></div>
-  <div id="controls">
-    <button onclick="togglePlay()" id="btnPlay">▶</button>
-    <button onclick="changeSpeed(-1)">-</button><span class="value-display" id="spdVal">3</span><button onclick="changeSpeed(1)">+</button>
-    <div style="width:1px;height:20px;background:#444;margin:0 5px;"></div>
-    <button onclick="toggleMirror()" title="Espejo">⇄</button>
-    <button onclick="changeSize(1)" title="A+">A+</button><button onclick="changeSize(-1)" title="A-">A-</button>
+  
+  <!-- Controles Principales (Abajo) -->
+  <div id="controls-main">
+    <button onclick="changeSpeed(-1)">-</button>
+    <span class="value-display" id="spdVal">3</span>
+    <button onclick="changeSpeed(1)">+</button>
+    <div style="width:2px;height:30px;background:#333;margin:0 10px;"></div>
+    <button onclick="togglePlay()" id="btnPlay" class="btn-play">▶</button>
   </div>
+
+  <!-- Controles Configuración (Arriba Derecha - Seguros) -->
+  <div id="controls-setup">
+    <button onclick="changeSize(-1)" title="Letra Pequeña">A-</button>
+    <button onclick="changeSize(1)" title="Letra Grande">A+</button>
+    <div style="width:1px;height:20px;background:#444;margin:0 5px;"></div>
+    <button onclick="toggleMirror()" title="Modo Espejo (CUIDADO)">⇄</button>
+  </div>
+
 <script>
   const data = ${jsonData};
   const content = document.getElementById('content');
   const area = document.getElementById('prompter-area');
+  const overlay = document.getElementById('start-overlay');
+  
+  // Renderizar contenido
   data.forEach(item => {
     let el = document.createElement('div');
     if(item.type==='title') { el.className='p-title'; el.innerText=item.content; }
@@ -327,13 +395,65 @@
     else { el.className='p-text'; el.innerText=item.content; }
     content.appendChild(el);
   });
-  let playing=false, speed=3, font=3, mirrorState=0, animationId;
-  function loop() { if(playing) { area.scrollTop += (speed * 0.5); animationId = requestAnimationFrame(loop); } }
-  function togglePlay() { playing = !playing; document.getElementById('btnPlay').innerText = playing ? '⏸' : '▶'; document.getElementById('btnPlay').className = playing ? 'active' : ''; if(playing) loop(); else cancelAnimationFrame(animationId); }
-  function changeSpeed(d) { speed = Math.max(1, Math.min(20, speed + d)); document.getElementById('spdVal').innerText = speed; }
-  function changeSize(d) { font = Math.max(1, Math.min(10, font + d * 0.5)); document.querySelectorAll('.p-text').forEach(e => e.style.fontSize = font + 'rem'); }
-  function toggleMirror() { mirrorState = (mirrorState + 1) % 4; const c = document.getElementById('prompter-area'); c.className = ''; if(mirrorState === 1) c.classList.add('mirror-x'); if(mirrorState === 2) c.classList.add('mirror-y'); if(mirrorState === 3) c.classList.add('mirror-x'); }
-  document.addEventListener('keydown', (e) => { if(e.code === 'Space') { e.preventDefault(); togglePlay(); } if(e.code === 'ArrowUp') changeSpeed(1); if(e.code === 'ArrowDown') changeSpeed(-1); });
+
+  let playing=false, speed=3, font=3.5, mirrorState=0, animationId;
+
+  // Función de Arranque (Click to Start)
+  function startPrompter() {
+      overlay.style.display = 'none'; // Ocultar overlay
+      togglePlay(); // Iniciar movimiento inmediatamente
+  }
+
+  function loop() {
+    if(playing) {
+      // Usamos scrollBy para asegurar movimiento relativo
+      area.scrollBy(0, speed * 0.6); 
+      
+      // Detector de fin de página (opcional, para detener)
+      // if((area.scrollTop + area.clientHeight) >= area.scrollHeight) playing = false;
+
+      animationId = requestAnimationFrame(loop);
+    }
+  }
+
+  function togglePlay() {
+    playing = !playing;
+    const btn = document.getElementById('btnPlay');
+    if(playing) {
+        btn.innerText = '⏸';
+        btn.classList.add('playing');
+        loop();
+    } else {
+        btn.innerText = '▶';
+        btn.classList.remove('playing');
+        cancelAnimationFrame(animationId);
+    }
+  }
+
+  function changeSpeed(d) { 
+      speed = Math.max(1, Math.min(25, speed + d)); 
+      document.getElementById('spdVal').innerText = speed; 
+  }
+
+  function changeSize(d) { 
+      font = Math.max(1.5, Math.min(8, font + d * 0.5)); 
+      document.querySelectorAll('.p-text').forEach(e => e.style.fontSize = font + 'rem'); 
+  }
+
+  function toggleMirror() { 
+      mirrorState = (mirrorState + 1) % 4; 
+      const c = document.getElementById('prompter-area'); 
+      c.className = ''; 
+      if(mirrorState === 1) c.classList.add('mirror-x'); 
+      if(mirrorState === 2) c.classList.add('mirror-y'); 
+      if(mirrorState === 3) c.classList.add('mirror-x'); 
+  }
+
+  document.addEventListener('keydown', (e) => { 
+      if(e.code === 'Space') { e.preventDefault(); togglePlay(); } 
+      if(e.code === 'ArrowUp') changeSpeed(1); 
+      if(e.code === 'ArrowDown') changeSpeed(-1); 
+  });
 <\/script>
 </body>
 </html>`;
