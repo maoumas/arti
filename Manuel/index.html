@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudio de Arquitectura - [Tu Nombre/Estudio]</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Futura:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-ocre-claro: #E0CCA6;
+            --color-ocre-medio: #C2A26B;
+            --color-azul-oscuro: #2A3D4F;
+            --color-azul-medio: #4B6E8F;
+            --color-texto-claro: #F5F5DC;
+            --color-fondo: #1A2633;
+            --font-body: 'Futura', sans-serif;
+            --font-heading: 'Futura', sans-serif;
+            --font-size-body: 16px;
+            --font-size-subtitle: calc(var(--font-size-body) * 3.14);
+            --font-size-title: calc(var(--font-size-body) * 3.14);
+        }
+
+        body {
+            font-family: var(--font-body);
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-fondo);
+            color: var(--color-texto-claro);
+            line-height: 1.6;
+        }
+
+        header {
+            width: 100%;
+            height: 400px; /* Ajusta la altura según tus preferencias */
+            background-image: url('header-image.jpg'); /* La imagen se generará y la podrás poner aquí */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--color-texto-claro);
+            position: relative;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* Overlay oscuro para mejor legibilidad del texto */
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-family: var(--font-heading);
+            font-size: var(--font-size-title);
+            margin-bottom: 10px;
+            color: var(--color-ocre-claro);
+        }
+
+        h2 {
+            font-family: var(--font-heading);
+            font-size: var(--font-size-subtitle);
+            color: var(--color-azul-medio);
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: var(--color-azul-oscuro);
+            padding: 1rem 0;
+            text-align: center;
+            border-bottom: 2px solid var(--color-ocre-medio);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--color-texto-claro);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease, background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--color-ocre-claro);
+            background-color: var(--color-azul-medio);
+            border-radius: 5px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 60px;
+        }
+
+        .section {
+            background-color: var(--color-azul-oscuro);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-left: 5px solid var(--color-ocre-medio);
+        }
+
+        .section h3 {
+            font-family: var(--font-heading);
+            font-size: calc(var(--font-size-body) * 2); /* Ajuste para subtítulos de sección */
+            color: var(--color-ocre-claro);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--color-azul-medio);
+            padding-bottom: 10px;
+        }
+
+        .section p, .section ul {
+            color: var(--color-texto-claro);
+        }
+
+        .section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .section ul li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .section ul li::before {
+            content: "•";
+            color: var(--color-ocre-claro);
+            position: absolute;
+            left: 0;
+        }
+
+        footer {
+            background-color: var(--color-azul-oscuro);
+            color: var(--color-texto-claro);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 60px;
+            border-top: 2px solid var(--color-ocre-medio);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <h1>Estudio de Arquitectura</h1>
+            <p>Innovación y Tradición en Cada Diseño</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#proyectos">Proyectos Destacados</a></li>
+            <li><a href="#servicios">Nuestros Servicios</a></li>
+            <li><a href="#noticias">Noticias y Artículos</a></li>
+            <li><a href="#perfil">Mi Estudio</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <section id="bienvenida" class="section">
+            <h2>Bienvenido a Nuestro Espacio de Diseño</h2>
+            <p>En nuestro estudio, fusionamos la sabiduría de la arquitectura clásica con las posibilidades ilimitadas del diseño contemporáneo. Creemos en la creación de espacios que inspiren, funcionen y perduren, siempre con un enfoque en la sostenibilidad y la belleza atemporal.</p>
+            <p>Explora nuestros proyectos, conoce nuestra filosofía y descubre cómo podemos dar vida a tus ideas.</p>
+        </section>
+
+        <section id="proyectos" class="section">
+            <h3>Proyectos Destacados</h3>
+            <p>Aquí presentamos una selección de nuestros trabajos más recientes, donde la estética y la funcionalidad se unen para crear espacios únicos.</p>
+            <ul>
+                <li><a href="proyectos/proyecto1.html" style="color: var(--color-ocre-claro);">Residencia Armonía Urbana</a></li>
+                <li><a href="proyectos/proyecto2.html" style="color: var(--color-ocre-claro);">Centro Cultural Metropolitano</a></li>
+                <li><a href="proyectos/proyecto3.html" style="color: var(--color-ocre-claro);">Rehabilitación de Edificio Histórico</a></li>
+            </ul>
+            <p><i>(En esta sección, podrás enlazar a páginas individuales para cada proyecto con más detalles, imágenes y planos.)</i></p>
+        </section>
+
+        <section id="servicios" class="section">
+            <h3>Nuestros Servicios</h3>
+            <p>Ofrecemos una amplia gama de servicios arquitectónicos para satisfacer las necesidades de nuestros clientes, desde el diseño conceptual hasta la supervisión de obra.</p>
+            <ul>
+                <li>Diseño Arquitectónico Residencial y Comercial</li>
+                <li>Diseño de Interiores y Paisajismo</li>
+                <li>Consultoría y Planificación Urbana</li>
+                <li>Restauración y Rehabilitación Patrimonial</li>
+                <li>Visualizaciones Arquitectónicas (Renderizado 3D)</li>
+            </ul>
+        </section>
+
+        <section id="noticias" class="section">
+            <h3>Noticias y Artículos</h3>
+            <p>Mantente al día con las últimas tendencias en arquitectura, innovaciones en construcción y los proyectos más interesantes que compartimos.</p>
+            <ul>
+                <li><a href="articulos/articulo1.html" style="color: var(--color-ocre-claro);">La Influencia del Biomimetismo en la Arquitectura Sostenible</a></li>
+                <li><a href="articulos/articulo2.html" style="color: var(--color-ocre-claro);">Desafíos y Oportunidades en la Rehabilitación de Espacios Urbanos</a></li>
+                <li><a href="articulos/articulo3.html" style="color: var(--color-ocre-claro);">Entrevista con [Arquitecto Invitado]: Visiones del Futuro</a></li>
+            </ul>
+            <p><i>(Aquí podrás publicar tus propios artículos, reflexiones y novedades del sector.)</i></p>
+        </section>
+
+        <section id="perfil" class="section">
+            <h3>Mi Estudio: Información y Archivo Personal</h3>
+            <p>Este espacio está dedicado a la historia, filosofía y los valores que impulsan mi estudio. Aquí también encontrarás un apartado seguro para mi información personal y recursos importantes.</p>
+            <ul>
+                <li><a href="acerca.html" style="color: var(--color-ocre-claro);">Acerca de Nosotros / Mi Biografía</a></li>
+                <li><a href="filosofia.html" style="color: var(--color-ocre-claro);">Filosofía y Enfoque de Diseño</a></li>
+                <li><a href="equipo.html" style="color: var(--color-ocre-claro);">Nuestro Equipo (Si aplica)</a></li>
+                <li><a href="privado/login.html" style="color: var(--color-azul-medio);">Acceso al Archivo Personal (Requiere Login)</a></li>
+            </ul>
+            <p><i>(El enlace al archivo personal puede ser una página protegida con contraseña o un sistema de gestión de archivos. Debes implementar la lógica de login por separado.)</i></p>
+        </section>
+
+        <section id="contacto" class="section">
+            <h3>Contacta con Nosotros</h3>
+            <p>¿Tienes un proyecto en mente? ¡Nos encantaría escucharte!</p>
+            <p>Email: <a href="mailto:info@tudominio.com" style="color: var(--color-ocre-claro);">info@tudominio.com</a></p>
+            <p>Teléfono: +XX XXX XXX XXX</p>
+            <p>Dirección: Calle Ficticia 123, Ciudad, País</p>
+            <p><i>(Podrías añadir un formulario de contacto aquí si lo deseas.)</i></p>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 [Tu Nombre/Estudio]. Todos los derechos reservados.</p>
+        <p>Diseño y Desarrollo por [Tu Nombre]</p>
+    </footer>
+
+</body>
+</html>
