@@ -168,7 +168,7 @@
         <span class="text-3xl">📡</span>
         <div>
             <h1 class="text-xl font-bold tracking-tight text-white">Teleprompter Studio <span class="text-emerald-500">PRO</span></h1>
-            <p class="text-xs text-slate-400 font-mono">v3.5 // Broadcast Engine</p>
+            <p class="text-xs text-slate-400 font-mono">v3.6 // Mobile Touch</p>
         </div>
     </div>
   </header>
@@ -216,22 +216,22 @@
 
         <!-- PANEL DE ESTADO -->
         <div class="panel control-panel">
-            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Notas de la Versión</h3>
+            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Mejoras V3.6</h3>
             
             <div class="w-full bg-slate-900 rounded p-3 text-left space-y-2 mb-4">
                 <div class="flex justify-between text-[11px] font-mono text-slate-400 border-b border-slate-800 pb-1">
-                    <span>MOTOR SCROLL</span> <span class="text-emerald-400">LINEAL (V2)</span>
+                    <span>TOUCH PLAY</span> <span class="text-emerald-400">ACTIVO</span>
                 </div>
                 <div class="flex justify-between text-[11px] font-mono text-slate-400 border-b border-slate-800 pb-1">
-                    <span>CONTROLES</span> <span class="text-emerald-400">UNIFICADOS</span>
+                    <span>DISEÑO</span> <span class="text-emerald-400">FULL WIDTH</span>
                 </div>
                 <div class="flex justify-between text-[11px] font-mono text-slate-400">
-                    <span>AUTO-START</span> <span class="text-emerald-400">2 SEG</span>
+                    <span>BOTONES</span> <span class="text-emerald-400">ADAPTATIVOS</span>
                 </div>
             </div>
             
             <p class="text-[10px] text-slate-600">
-                Al exportar, el HTML incluirá una tarjeta visual con el título para compartir en redes.
+                Toca cualquier parte de la pantalla negra para Pausar/Arrancar el teleprompter.
             </p>
         </div>
 
@@ -314,6 +314,7 @@
       overflow-y:scroll;
       padding:50px 20px;
       padding-bottom:50vh; /* Espacio para que el final llegue al centro */
+      cursor: pointer; /* Indica que es clicable */
   }
   
   .p-text{font-size:3.5rem;line-height:1.4;margin-bottom:1.5rem;font-weight:700;}
@@ -326,35 +327,48 @@
   /* CONTROLES UNIFICADOS (ABAJO) */
   #controls {
       position:fixed; bottom:0; left:0; width:100%;
-      background:linear-gradient(to top, #000 80%, transparent);
-      padding:20px; padding-bottom:30px;
-      display:flex; justify-content:center; align-items:flex-end; gap:30px;
-      z-index:999; opacity:0; transition:opacity 0.3s;
+      background: #000; /* Fondo sólido para mejor contraste en móvil */
+      border-top: 1px solid #333;
+      padding: 10px;
+      display:flex; justify-content: space-between; align-items:center;
+      z-index:999; 
+      box-sizing: border-box; /* Evita que el padding rompa el ancho */
   }
-  #controls:hover { opacity:1; }
 
   /* GRUPOS DE CONTROL */
-  .c-group { display:flex; gap:5px; align-items:center; background:#111; padding:5px; border-radius:30px; border:1px solid #333; }
+  .c-group { display:flex; gap:5px; align-items:center; background:#111; padding:4px; border-radius:12px; border:1px solid #333; }
   
   button {
       background:#222; border:none; color:#fff;
-      width:45px; height:45px; border-radius:50%;
-      font-weight:bold; cursor:pointer; font-size:1.2rem;
+      width:42px; height:42px; border-radius:8px; /* Cuadrado redondeado */
+      font-weight:bold; cursor:pointer; font-size:1.1rem;
+      display:flex; align-items:center; justify-content:center;
       transition:0.2s;
   }
   button:hover { background:#444; }
   
   /* BOTÓN PRINCIPAL (TEXTO) */
   button.btn-main {
-      width:auto; padding:0 30px; height:60px; border-radius:30px;
-      background:#10B981; color:#000; font-size:1.2rem; text-transform:uppercase;
-      box-shadow: 0 0 20px rgba(16,185,129,0.3);
+      width:auto; padding:0 20px; height:50px; border-radius:12px;
+      background:#10B981; color:#000; font-size:1rem; text-transform:uppercase;
+      box-shadow: 0 0 10px rgba(16,185,129,0.2);
+      min-width: 90px;
   }
-  button.btn-main:hover { transform:scale(1.05); }
-  button.btn-main.paused { background:#EF4444; color:#fff; box-shadow: 0 0 20px rgba(239,68,68,0.3); }
+  button.btn-main:hover { transform:scale(1.02); }
+  button.btn-main.paused { background:#EF4444; color:#fff; box-shadow: 0 0 10px rgba(239,68,68,0.2); }
 
-  .label { font-family:monospace; font-size:10px; color:#666; text-align:center; display:block; margin-bottom:2px; text-transform:uppercase; }
-  .val { font-family:monospace; font-size:14px; width:30px; text-align:center; font-weight:bold; }
+  /* Ocultar etiquetas en móvil */
+  .label { font-family:monospace; font-size:9px; color:#666; text-align:center; display:block; margin-bottom:2px; text-transform:uppercase; }
+  .val { font-family:monospace; font-size:14px; width:25px; text-align:center; font-weight:bold; }
+
+  /* Media Query para Móviles */
+  @media (max-width: 600px) {
+      .label { display: none; } /* Ahorra espacio vertical */
+      #controls { padding: 10px 5px; gap: 5px; }
+      button { width: 38px; height: 38px; }
+      .c-group { padding: 2px; }
+      /* Esconder espejo en móvil vertical muy estrecho si hace falta */
+  }
 
   #guide{position:fixed;top:45%;left:0;width:100%;height:10%;border-top:2px dashed rgba(255,0,0,0.3);border-bottom:2px dashed rgba(255,0,0,0.3);pointer-events:none;z-index:50;}
 </style>
@@ -364,9 +378,9 @@
   <div id="prompter-area"><div id="content"></div></div>
   
   <div id="controls">
-    <!-- VELOCIDAD -->
+    <!-- VELOCIDAD (IZQ) -->
     <div>
-        <span class="label">Velocidad</span>
+        <span class="label">VELOCIDAD</span>
         <div class="c-group">
             <button onclick="changeSpeed(-1)">-</button>
             <span class="val" id="spdVal">3</span>
@@ -377,21 +391,23 @@
     <!-- PLAY / PAUSE (CENTRO) -->
     <button onclick="togglePlay()" id="btnPlay" class="btn-main">INICIAR</button>
 
-    <!-- FUENTE -->
-    <div>
-        <span class="label">Fuente</span>
-        <div class="c-group">
-            <button onclick="changeSize(-1)">A-</button>
-            <span class="val" id="fntVal">3</span>
-            <button onclick="changeSize(1)">A+</button>
+    <!-- DERECHA: FUENTE + ESPEJO -->
+    <div style="display:flex; gap:5px;">
+        <!-- Fuente -->
+        <div>
+            <span class="label">FUENTE</span>
+            <div class="c-group">
+                <button onclick="changeSize(-1)">A-</button>
+                <span class="val" id="fntVal">3</span>
+                <button onclick="changeSize(1)">A+</button>
+            </div>
         </div>
-    </div>
-
-    <!-- EXTRA (ESPEJO) -->
-    <div>
-        <span class="label">Espejo</span>
-        <div class="c-group">
-            <button onclick="toggleMirror()" title="Espejo">⇄</button>
+        <!-- Espejo (Compacto) -->
+        <div>
+             <span class="label">ESPEJO</span>
+             <div class="c-group">
+                <button onclick="toggleMirror()" title="Espejo">⇄</button>
+             </div>
         </div>
     </div>
   </div>
@@ -410,27 +426,30 @@
   });
 
   let playing=false, speed=3, font=3.5, mirrorState=0, animationId;
-  let accumulator = 0; // Para scroll sub-pixel suave
+  let accumulator = 0; 
 
   // AUTO-START
   setTimeout(() => {
      if(!playing) togglePlay();
   }, 2000);
 
+  // CLICK TO PLAY/PAUSE (TÁCTIL)
+  area.addEventListener('click', (e) => {
+      // Evitar conflicto si se selecciona texto
+      if (window.getSelection().toString().length === 0) {
+          togglePlay();
+      }
+  });
+
   function loop() {
     if(playing) {
-      // Lógica de Scroll Lineal Suave
-      // Speed 1 = 0.3 px/frame (Lento pero se mueve)
-      // Incremento = 0.15 px por nivel
       const move = 0.3 + (speed * 0.15);
-      
       accumulator += move;
       if(accumulator >= 1) {
           const pixels = Math.floor(accumulator);
           area.scrollBy(0, pixels);
           accumulator -= pixels;
       }
-      
       animationId = requestAnimationFrame(loop);
     }
   }
@@ -450,7 +469,7 @@
   }
 
   function changeSpeed(d) { 
-      speed = Math.max(1, Math.min(50, speed + d)); // Rango más amplio para ajuste fino
+      speed = Math.max(1, Math.min(50, speed + d)); 
       document.getElementById('spdVal').innerText = speed; 
   }
 
