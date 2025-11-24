@@ -13,7 +13,7 @@
   <meta property="og:image" content="https://placehold.co/1200x630/1e293b/10b981/png?text=TELEPROMPTER+STUDIO">
 
   <style>
-    /* ESTILOS BASE DE LA APLICACIÓN */
+    /* ESTILOS BASE */
     :root {
         --bg-app: #0f172a;
         --bg-panel: #1e293b;
@@ -27,31 +27,48 @@
         color: var(--text-main);
         font-family: 'Inter', sans-serif;
         height: 100vh;
-        overflow: hidden;
         display: flex;
         flex-direction: column;
+        overflow: hidden;
     }
 
-    /* Editor Area */
-    .editor-wrapper {
+    /* HEADER SIMPLE */
+    .header {
+        padding: 15px 24px;
+        border-bottom: 1px solid var(--border);
+        background: var(--bg-panel);
+        display: flex;
+        align-items: center;
+        justify-content: center; /* Centrado en móvil por defecto */
+        flex-shrink: 0;
+    }
+
+    /* CONTENEDOR PRINCIPAL */
+    .main-layout {
         flex: 1;
         display: flex;
-        gap: 20px;
         padding: 20px;
-        height: calc(100vh - 80px); /* Restar header */
+        gap: 20px;
+        overflow-y: auto; /* Scroll general si es necesario */
     }
 
+    /* PANELES */
     .panel {
         background: var(--bg-panel);
         border: 1px solid var(--border);
         border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         display: flex;
         flex-direction: column;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
     }
 
-    .editor-panel { flex: 2; }
-    .preview-panel { flex: 1; border-color: var(--accent); position: relative; overflow: hidden;}
+    /* ÁREA DEL EDITOR (IZQUIERDA EN DESKTOP, ARRIBA EN MÓVIL) */
+    .editor-section {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        min-height: 300px;
+    }
 
     textarea {
         flex: 1;
@@ -66,39 +83,95 @@
         outline: none;
     }
 
-    /* Scrollbars */
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: var(--bg-app); }
-    ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+    /* ÁREA LATERAL (DERECHA EN DESKTOP, ABAJO EN MÓVIL) */
+    .sidebar-section {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        min-width: 300px;
+    }
 
-    /* Buttons */
+    /* BARRA DE ACCIONES (BOTONES) */
+    .actions-bar {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    /* PANEL DE CONTROL (INFO) */
+    .control-panel {
+        flex: 1; /* Ocupa el resto del espacio en la barra lateral */
+        padding: 20px;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        border-color: var(--accent); /* Borde verde para destacar */
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* BOTONES */
     .btn {
-        display: inline-flex; items-center; gap: 8px;
-        padding: 10px 20px;
+        display: inline-flex; justify-content: center; items-center; gap: 10px;
+        padding: 12px 20px;
         border-radius: 8px;
         font-weight: 600;
-        font-size: 0.9rem;
+        font-size: 0.95rem;
         cursor: pointer;
         transition: all 0.2s;
         border: 1px solid transparent;
+        width: 100%;
     }
     .btn-primary { background: var(--accent); color: #064e3b; }
-    .btn-primary:hover { filter: brightness(1.1); }
+    .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
     .btn-secondary { background: #334155; color: #fff; border-color: #475569; }
     .btn-secondary:hover { background: #475569; }
-    
-    .header {
-        height: 80px;
-        padding: 0 24px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid var(--border);
-        background: var(--bg-panel);
+    .btn-outline { background: transparent; color: #94a3b8; border: 1px dashed #475569; }
+    .btn-outline:hover { border-color: #94a3b8; color: #fff; }
+
+    /* SCROLLBARS */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-app); }
+    ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+
+    /* --- RESPONSIVE (MÓVIL) --- */
+    @media (max-width: 768px) {
+        body { height: auto; overflow-y: auto; } /* Permitir scroll natural en body */
+        
+        .main-layout {
+            flex-direction: column; /* Apilar todo verticalmente */
+            padding: 15px;
+            gap: 15px;
+        }
+
+        .editor-section {
+            min-height: 50vh; /* El editor es lo más importante, dale altura */
+            order: 1; /* 1. Editor */
+        }
+
+        .sidebar-section {
+            order: 2; /* 2. Barra Lateral debajo */
+            min-width: 100%;
+            gap: 15px;
+        }
+
+        .actions-bar {
+            order: 1; /* Dentro de sidebar: Botones primero */
+        }
+
+        .control-panel {
+            order: 2; /* Dentro de sidebar: Info al final */
+            min-height: auto;
+            padding: 30px 20px;
+        }
     }
 
-    /* Estilos para impresión (Generar PDF) */
+    /* PDF PRINT */
     @media print {
         body * { visibility: hidden; }
         #print-area, #print-area * { visibility: visible; }
@@ -108,86 +181,113 @@
 </head>
 <body>
 
-  <!-- HEADER -->
+  <!-- 1. TÍTULO / ENCABEZADO -->
   <header class="header">
     <div class="flex items-center gap-3">
         <span class="text-3xl">📡</span>
         <div>
             <h1 class="text-xl font-bold tracking-tight text-white">Teleprompter Studio <span class="text-emerald-500">PRO</span></h1>
-            <p class="text-xs text-slate-400 font-mono">v3.0 // Generator Core</p>
+            <p class="text-xs text-slate-400 font-mono">v3.2 // Mobile Flow</p>
         </div>
-    </div>
-    <div class="flex gap-3">
-        <button class="btn btn-secondary" onclick="generatePDF()">
-            <span>📄</span> Imprimir Guión (PDF)
-        </button>
-        <button class="btn btn-primary" onclick="exportPlayer()">
-            <span>🚀</span> Exportar Player HTML
-        </button>
     </div>
   </header>
 
-  <!-- WORKSPACE -->
-  <div class="editor-wrapper">
-    <!-- INPUT -->
-    <div class="panel editor-panel">
+  <div class="main-layout">
+    
+    <!-- 2. EDITOR (Arriba en móvil, Izquierda en Desktop) -->
+    <div class="panel editor-section">
         <div class="bg-slate-900/50 p-3 border-b border-slate-700 flex justify-between items-center">
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Editor de Guión</span>
-            <span class="text-xs text-slate-500 font-mono">Markdown Compatible</span>
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Guión / Script</span>
+            <span class="text-[10px] text-slate-600 font-mono bg-slate-800 px-2 py-1 rounded">MARKDOWN</span>
         </div>
-        <textarea id="input" placeholder="# Título del Programa&#10;* [Instrucción para cámara: Zoom In]&#10;&#10;Escribe tu guión aquí. Usa saltos de línea para separar párrafos.&#10;&#10;El texto aparecerá grande y legible en el reproductor."></textarea>
+        <textarea id="input" placeholder="# Título del Programa&#10;* [Instrucción: Cámara 1]&#10;&#10;Pega tu texto aquí..."></textarea>
     </div>
 
-    <!-- PREVIEW INFO -->
-    <div class="panel preview-panel p-6 flex flex-col justify-center items-center text-center">
-        <div class="mb-6 p-4 bg-emerald-500/10 rounded-full border border-emerald-500/20">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-            </svg>
-        </div>
-        <h3 class="text-xl font-bold text-white mb-2">Listo para Exportar</h3>
-        <p class="text-sm text-slate-400 mb-6">Genera un archivo HTML autónomo que funciona sin internet. Incluye controles de velocidad, espejo y fuentes.</p>
+    <!-- CONTENEDOR LATERAL (Abajo en móvil, Derecha en Desktop) -->
+    <div class="sidebar-section">
         
-        <div class="grid grid-cols-2 gap-4 w-full text-left text-xs text-slate-500 font-mono bg-slate-900 p-4 rounded mb-4">
-            <div>MODO: <span class="text-emerald-400">OFFLINE</span></div>
-            <div>MIRROR: <span class="text-emerald-400">ENABLED</span></div>
-            <div>SCROLL: <span class="text-emerald-400">SMOOTH</span></div>
-            <div>RESPONSIVE: <span class="text-emerald-400">YES</span></div>
+        <!-- 3. BOTONES DE ACCIÓN -->
+        <div class="actions-bar">
+            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Acciones</h3>
+            
+            <!-- Input oculto -->
+            <input type="file" id="fileImport" accept=".txt,.md,.json" style="display: none;" onchange="importFile(this)">
+            
+            <button class="btn btn-secondary" onclick="document.getElementById('fileImport').click()">
+                <span>📂</span> Importar Archivo
+            </button>
+            
+            <div class="grid grid-cols-2 gap-2">
+                <button class="btn btn-outline" onclick="generatePDF()">
+                    <span>📄</span> Exportar PDF
+                </button>
+                <button class="btn btn-primary" onclick="exportPlayer()">
+                    <span>🚀</span> Exportar HTML
+                </button>
+            </div>
         </div>
 
-        <button class="btn btn-secondary w-full justify-center" onclick="testLive()">
-            <span>▶</span> Probar Ventana Flotante
-        </button>
+        <!-- 4. PANEL DE CONTROL (AL FONDO) -->
+        <div class="panel control-panel">
+            <div class="mb-4 p-3 bg-emerald-500/10 rounded-full border border-emerald-500/20 inline-block">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-1">Estado: Listo</h3>
+            <p class="text-xs text-slate-400 mb-6">Motor de reproducción preparado.</p>
+            
+            <div class="w-full bg-slate-900 rounded p-3 text-left mb-6 space-y-1">
+                <div class="flex justify-between text-[10px] font-mono text-slate-500">
+                    <span>MODO ESPEJO</span> <span class="text-emerald-400">SÍ</span>
+                </div>
+                <div class="flex justify-between text-[10px] font-mono text-slate-500">
+                    <span>OFFLINE</span> <span class="text-emerald-400">SÍ</span>
+                </div>
+            </div>
+
+            <button class="btn btn-secondary" onclick="testLive()">
+                <span>▶</span> Probar Ventana Flotante
+            </button>
+        </div>
+
     </div>
   </div>
 
-  <!-- HIDDEN AREA FOR PDF GENERATION -->
+  <!-- ÁREA OCULTA PARA IMPRESIÓN -->
   <div id="print-area" style="display:none;"></div>
 
   <script>
-    // --- LÓGICA DE PDF ---
+    // --- IMPORTAR ---
+    function importFile(input) {
+        const file = input.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(e) { document.getElementById('input').value = e.target.result; };
+        reader.readAsText(file);
+        input.value = '';
+    }
+
+    // --- PDF (EXPORTAR) ---
     function generatePDF() {
         const raw = document.getElementById('input').value;
         const lines = raw.split('\n');
         let html = '<h1 style="margin-bottom:20px; font-family:sans-serif;">Guión de Teleprompter</h1>';
-        
         lines.forEach(line => {
             if(line.startsWith('#')) html += `<h2 style="color:#000; border-bottom:2px solid black; padding-bottom:5px;">${line.substring(1)}</h2>`;
             else if(line.startsWith('*')) html += `<p style="color:#666; font-style:italic; font-weight:bold; background:#eee; padding:5px;">[DIR] ${line.substring(1)}</p>`;
             else if(line.trim() !== '') html += `<p style="font-size:14pt; line-height:1.5; font-family:serif;">${line}</p>`;
         });
-
-        const printDiv = document.getElementById('print-area');
-        printDiv.innerHTML = html;
+        document.getElementById('print-area').innerHTML = html;
         window.print();
     }
 
-    // --- PARSER DE GUIÓN ---
+    // --- PARSER ---
     function parseScript() {
         const raw = document.getElementById('input').value;
         const lines = raw.split('\n');
         let scriptData = [];
-        
         lines.forEach(line => {
             line = line.trim();
             if (!line) return;
@@ -195,12 +295,11 @@
             else if (line.startsWith('*')) scriptData.push({ type: "instruction", content: line.substring(1).trim() });
             else scriptData.push({ type: "text", content: line });
         });
-        
-        if (scriptData.length === 0) scriptData = [{ type: "title", content: "DEMO MODE" }, { type: "text", content: "Escribe tu texto en el editor..." }];
+        if (scriptData.length === 0) scriptData = [{ type: "title", content: "DEMO MODE" }, { type: "text", content: "Escribe tu texto..." }];
         return JSON.stringify(scriptData);
     }
 
-    // --- GENERADOR DEL PLAYER (EL ARCHIVO EXPORTABLE) ---
+    // --- EXPORTAR PLAYER HTML ---
     function getPlayerHTML(jsonData) {
         return `<!DOCTYPE html>
 <html lang="es">
@@ -211,50 +310,33 @@
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
   body{background:#000;color:#fff;font-family:'Inter',sans-serif;margin:0;overflow-x:hidden;height:100vh;display:flex;flex-direction:column;}
   #prompter-area{flex:1;overflow-y:scroll;padding:50px 20px;padding-bottom:50vh;scroll-behavior:smooth;}
-  
-  /* ESTILOS DEL TEXTO */
   .p-text{font-size:3rem;line-height:1.4;margin-bottom:1.5rem;font-weight:700;}
   .p-title{color:#10B981;font-size:1.5rem;text-transform:uppercase;letter-spacing:2px;border-bottom:1px solid #333;margin:40px 0 20px 0;}
   .p-inst{color:#F59E0B;font-size:1.5rem;font-style:italic;background:#1e1e1e;padding:10px;border-left:4px solid #F59E0B;}
-  
-  /* ESTILOS DEL ESPEJO */
-  .mirror-x { transform: scaleX(-1); }
-  .mirror-y { transform: scaleY(-1); }
-  .mirror-xy { transform: scale(-1, -1); }
-
-  /* CONTROLES FLOTANTES */
+  .mirror-x { transform: scaleX(-1); } .mirror-y { transform: scaleY(-1); } .mirror-xy { transform: scale(-1, -1); }
   #controls{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;border:1px solid #333;padding:10px 20px;border-radius:50px;display:flex;gap:15px;align-items:center;z-index:999;box-shadow:0 10px 30px rgba(0,0,0,0.5);opacity:0.2;transition:opacity 0.3s;}
   #controls:hover{opacity:1;}
   button{background:#333;border:none;color:#fff;width:40px;height:40px;border-radius:50%;font-weight:bold;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
-  button:hover{background:#555;}
-  button.active{background:#10B981;color:#000;}
+  button:hover{background:#555;} button.active{background:#10B981;color:#000;}
   .value-display{font-family:monospace;font-size:14px;width:30px;text-align:center;}
-  
-  /* MARCADOR CENTRAL */
   #guide{position:fixed;top:45%;left:0;width:100%;height:10%;border-top:2px dashed rgba(255,0,0,0.3);border-bottom:2px dashed rgba(255,0,0,0.3);pointer-events:none;z-index:50;}
+  @media (max-width: 600px) { .p-text { font-size: 2rem; } #controls { width: 90%; gap: 5px; justify-content: space-around; } }
 </style>
 </head>
 <body>
   <div id="guide"></div>
   <div id="prompter-area"><div id="content"></div></div>
-  
   <div id="controls">
     <button onclick="togglePlay()" id="btnPlay">▶</button>
-    <button onclick="changeSpeed(-1)">-</button>
-    <span class="value-display" id="spdVal">3</span>
-    <button onclick="changeSpeed(1)">+</button>
+    <button onclick="changeSpeed(-1)">-</button><span class="value-display" id="spdVal">3</span><button onclick="changeSpeed(1)">+</button>
     <div style="width:1px;height:20px;background:#444;margin:0 5px;"></div>
-    <button onclick="toggleMirror()" title="Modo Espejo">⇄</button>
-    <button onclick="changeSize(1)" title="Aumentar Fuente">A+</button>
-    <button onclick="changeSize(-1)" title="Disminuir Fuente">A-</button>
+    <button onclick="toggleMirror()" title="Espejo">⇄</button>
+    <button onclick="changeSize(1)" title="A+">A+</button><button onclick="changeSize(-1)" title="A-">A-</button>
   </div>
-
 <script>
   const data = ${jsonData};
   const content = document.getElementById('content');
   const area = document.getElementById('prompter-area');
-  
-  // Render
   data.forEach(item => {
     let el = document.createElement('div');
     if(item.type==='title') { el.className='p-title'; el.innerText=item.content; }
@@ -262,82 +344,33 @@
     else { el.className='p-text'; el.innerText=item.content; }
     content.appendChild(el);
   });
-
-  // State
-  let playing = false;
-  let speed = 3;
-  let font = 3; // base 3rem
-  let mirrorState = 0; // 0:none, 1:X, 2:Y, 3:XY
-  let animationId;
-
-  function loop() {
-    if(playing) {
-      area.scrollTop += (speed * 0.5);
-      animationId = requestAnimationFrame(loop);
-    }
-  }
-
-  function togglePlay() {
-    playing = !playing;
-    document.getElementById('btnPlay').innerText = playing ? '⏸' : '▶';
-    document.getElementById('btnPlay').className = playing ? 'active' : '';
-    if(playing) loop(); else cancelAnimationFrame(animationId);
-  }
-
-  function changeSpeed(delta) {
-    speed = Math.max(1, Math.min(20, speed + delta));
-    document.getElementById('spdVal').innerText = speed;
-  }
-
-  function changeSize(delta) {
-    font = Math.max(1, Math.min(10, font + delta * 0.5));
-    document.querySelectorAll('.p-text').forEach(e => e.style.fontSize = font + 'rem');
-  }
-
-  function toggleMirror() {
-    mirrorState = (mirrorState + 1) % 4;
-    const c = document.getElementById('prompter-area');
-    c.className = '';
-    if(mirrorState === 1) c.classList.add('mirror-x');
-    if(mirrorState === 2) c.classList.add('mirror-y'); // Flip vertical es raro pero existe
-    if(mirrorState === 3) c.classList.add('mirror-x'); // Usualmente solo queremos X para teleprompter
-  }
-
-  // Keyboard Shortcuts
-  document.addEventListener('keydown', (e) => {
-    if(e.code === 'Space') { e.preventDefault(); togglePlay(); }
-    if(e.code === 'ArrowUp') changeSpeed(1);
-    if(e.code === 'ArrowDown') changeSpeed(-1);
-  });
+  let playing=false, speed=3, font=3, mirrorState=0, animationId;
+  function loop() { if(playing) { area.scrollTop += (speed * 0.5); animationId = requestAnimationFrame(loop); } }
+  function togglePlay() { playing = !playing; document.getElementById('btnPlay').innerText = playing ? '⏸' : '▶'; document.getElementById('btnPlay').className = playing ? 'active' : ''; if(playing) loop(); else cancelAnimationFrame(animationId); }
+  function changeSpeed(d) { speed = Math.max(1, Math.min(20, speed + d)); document.getElementById('spdVal').innerText = speed; }
+  function changeSize(d) { font = Math.max(1, Math.min(10, font + d * 0.5)); document.querySelectorAll('.p-text').forEach(e => e.style.fontSize = font + 'rem'); }
+  function toggleMirror() { mirrorState = (mirrorState + 1) % 4; const c = document.getElementById('prompter-area'); c.className = ''; if(mirrorState === 1) c.classList.add('mirror-x'); if(mirrorState === 2) c.classList.add('mirror-y'); if(mirrorState === 3) c.classList.add('mirror-x'); }
+  document.addEventListener('keydown', (e) => { if(e.code === 'Space') { e.preventDefault(); togglePlay(); } if(e.code === 'ArrowUp') changeSpeed(1); if(e.code === 'ArrowDown') changeSpeed(-1); });
 <\/script>
 </body>
 </html>`;
     }
 
-    // --- EXPORTAR ARCHIVO ---
     function exportPlayer() {
         const json = parseScript();
         const html = getPlayerHTML(json);
         const blob = new Blob([html], { type: 'text/html' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
-        a.href = url;
-        a.download = 'Teleprompter_Player.html';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+        a.href = url; a.download = 'Teleprompter_Player.html';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
     }
 
-    // --- PROBAR EN VIVO ---
     function testLive() {
         const json = parseScript();
         const html = getPlayerHTML(json);
         const win = window.open('', '_blank', 'width=1000,height=800,menubar=no,toolbar=no,location=no,status=no');
-        if(win) {
-            win.document.write(html);
-        } else {
-            alert("Por favor habilita las ventanas emergentes.");
-        }
+        if(win) win.document.write(html); else alert("Habilita Pop-ups");
     }
   </script>
 </body>
