@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teleprompter Studio PRO</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- METADATOS PRO -->
+  <meta property="og:title" content="Teleprompter Studio PRO">
+  <meta property="og:description" content="Generador de guiones profesional para transmisión.">
+  <meta property="og:image" content="https://placehold.co/1200x630/1e293b/10b981/png?text=TELEPROMPTER+STUDIO">
+
+  <style>
+    /* ESTILOS BASE DE LA APLICACIÓN */
+    :root {
+        --bg-app: #0f172a;
+        --bg-panel: #1e293b;
+        --accent: #10b981;
+        --text-main: #e2e8f0;
+        --border: #334155;
+    }
+
+    body {
+        background-color: var(--bg-app);
+        color: var(--text-main);
+        font-family: 'Inter', sans-serif;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Editor Area */
+    .editor-wrapper {
+        flex: 1;
+        display: flex;
+        gap: 20px;
+        padding: 20px;
+        height: calc(100vh - 80px); /* Restar header */
+    }
+
+    .panel {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+    }
+
+    .editor-panel { flex: 2; }
+    .preview-panel { flex: 1; border-color: var(--accent); position: relative; overflow: hidden;}
+
+    textarea {
+        flex: 1;
+        background: transparent;
+        border: none;
+        padding: 20px;
+        color: #fff;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 16px;
+        line-height: 1.6;
+        resize: none;
+        outline: none;
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-app); }
+    ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    /* Buttons */
+    .btn {
+        display: inline-flex; items-center; gap: 8px;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: 1px solid transparent;
+    }
+    .btn-primary { background: var(--accent); color: #064e3b; }
+    .btn-primary:hover { filter: brightness(1.1); }
+    .btn-secondary { background: #334155; color: #fff; border-color: #475569; }
+    .btn-secondary:hover { background: #475569; }
+    
+    .header {
+        height: 80px;
+        padding: 0 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--border);
+        background: var(--bg-panel);
+    }
+
+    /* Estilos para impresión (Generar PDF) */
+    @media print {
+        body * { visibility: hidden; }
+        #print-area, #print-area * { visibility: visible; }
+        #print-area { position: absolute; left: 0; top: 0; width: 100%; color: black; background: white; padding: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="flex items-center gap-3">
+        <span class="text-3xl">📡</span>
+        <div>
+            <h1 class="text-xl font-bold tracking-tight text-white">Teleprompter Studio <span class="text-emerald-500">PRO</span></h1>
+            <p class="text-xs text-slate-400 font-mono">v3.0 // Generator Core</p>
+        </div>
+    </div>
+    <div class="flex gap-3">
+        <button class="btn btn-secondary" onclick="generatePDF()">
+            <span>📄</span> Imprimir Guión (PDF)
+        </button>
+        <button class="btn btn-primary" onclick="exportPlayer()">
+            <span>🚀</span> Exportar Player HTML
+        </button>
+    </div>
+  </header>
+
+  <!-- WORKSPACE -->
+  <div class="editor-wrapper">
+    <!-- INPUT -->
+    <div class="panel editor-panel">
+        <div class="bg-slate-900/50 p-3 border-b border-slate-700 flex justify-between items-center">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Editor de Guión</span>
+            <span class="text-xs text-slate-500 font-mono">Markdown Compatible</span>
+        </div>
+        <textarea id="input" placeholder="# Título del Programa&#10;* [Instrucción para cámara: Zoom In]&#10;&#10;Escribe tu guión aquí. Usa saltos de línea para separar párrafos.&#10;&#10;El texto aparecerá grande y legible en el reproductor."></textarea>
+    </div>
+
+    <!-- PREVIEW INFO -->
+    <div class="panel preview-panel p-6 flex flex-col justify-center items-center text-center">
+        <div class="mb-6 p-4 bg-emerald-500/10 rounded-full border border-emerald-500/20">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2">Listo para Exportar</h3>
+        <p class="text-sm text-slate-400 mb-6">Genera un archivo HTML autónomo que funciona sin internet. Incluye controles de velocidad, espejo y fuentes.</p>
+        
+        <div class="grid grid-cols-2 gap-4 w-full text-left text-xs text-slate-500 font-mono bg-slate-900 p-4 rounded mb-4">
+            <div>MODO: <span class="text-emerald-400">OFFLINE</span></div>
+            <div>MIRROR: <span class="text-emerald-400">ENABLED</span></div>
+            <div>SCROLL: <span class="text-emerald-400">SMOOTH</span></div>
+            <div>RESPONSIVE: <span class="text-emerald-400">YES</span></div>
+        </div>
+
+        <button class="btn btn-secondary w-full justify-center" onclick="testLive()">
+            <span>▶</span> Probar Ventana Flotante
+        </button>
+    </div>
+  </div>
+
+  <!-- HIDDEN AREA FOR PDF GENERATION -->
+  <div id="print-area" style="display:none;"></div>
+
+  <script>
+    // --- LÓGICA DE PDF ---
+    function generatePDF() {
+        const raw = document.getElementById('input').value;
+        const lines = raw.split('\n');
+        let html = '<h1 style="margin-bottom:20px; font-family:sans-serif;">Guión de Teleprompter</h1>';
+        
+        lines.forEach(line => {
+            if(line.startsWith('#')) html += `<h2 style="color:#000; border-bottom:2px solid black; padding-bottom:5px;">${line.substring(1)}</h2>`;
+            else if(line.startsWith('*')) html += `<p style="color:#666; font-style:italic; font-weight:bold; background:#eee; padding:5px;">[DIR] ${line.substring(1)}</p>`;
+            else if(line.trim() !== '') html += `<p style="font-size:14pt; line-height:1.5; font-family:serif;">${line}</p>`;
+        });
+
+        const printDiv = document.getElementById('print-area');
+        printDiv.innerHTML = html;
+        window.print();
+    }
+
+    // --- PARSER DE GUIÓN ---
+    function parseScript() {
+        const raw = document.getElementById('input').value;
+        const lines = raw.split('\n');
+        let scriptData = [];
+        
+        lines.forEach(line => {
+            line = line.trim();
+            if (!line) return;
+            if (line.startsWith('#')) scriptData.push({ type: "title", content: line.substring(1).trim() });
+            else if (line.startsWith('*')) scriptData.push({ type: "instruction", content: line.substring(1).trim() });
+            else scriptData.push({ type: "text", content: line });
+        });
+        
+        if (scriptData.length === 0) scriptData = [{ type: "title", content: "DEMO MODE" }, { type: "text", content: "Escribe tu texto en el editor..." }];
+        return JSON.stringify(scriptData);
+    }
+
+    // --- GENERADOR DEL PLAYER (EL ARCHIVO EXPORTABLE) ---
+    function getPlayerHTML(jsonData) {
+        return `<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teleprompter Player</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+  body{background:#000;color:#fff;font-family:'Inter',sans-serif;margin:0;overflow-x:hidden;height:100vh;display:flex;flex-direction:column;}
+  #prompter-area{flex:1;overflow-y:scroll;padding:50px 20px;padding-bottom:50vh;scroll-behavior:smooth;}
+  
+  /* ESTILOS DEL TEXTO */
+  .p-text{font-size:3rem;line-height:1.4;margin-bottom:1.5rem;font-weight:700;}
+  .p-title{color:#10B981;font-size:1.5rem;text-transform:uppercase;letter-spacing:2px;border-bottom:1px solid #333;margin:40px 0 20px 0;}
+  .p-inst{color:#F59E0B;font-size:1.5rem;font-style:italic;background:#1e1e1e;padding:10px;border-left:4px solid #F59E0B;}
+  
+  /* ESTILOS DEL ESPEJO */
+  .mirror-x { transform: scaleX(-1); }
+  .mirror-y { transform: scaleY(-1); }
+  .mirror-xy { transform: scale(-1, -1); }
+
+  /* CONTROLES FLOTANTES */
+  #controls{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;border:1px solid #333;padding:10px 20px;border-radius:50px;display:flex;gap:15px;align-items:center;z-index:999;box-shadow:0 10px 30px rgba(0,0,0,0.5);opacity:0.2;transition:opacity 0.3s;}
+  #controls:hover{opacity:1;}
+  button{background:#333;border:none;color:#fff;width:40px;height:40px;border-radius:50%;font-weight:bold;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
+  button:hover{background:#555;}
+  button.active{background:#10B981;color:#000;}
+  .value-display{font-family:monospace;font-size:14px;width:30px;text-align:center;}
+  
+  /* MARCADOR CENTRAL */
+  #guide{position:fixed;top:45%;left:0;width:100%;height:10%;border-top:2px dashed rgba(255,0,0,0.3);border-bottom:2px dashed rgba(255,0,0,0.3);pointer-events:none;z-index:50;}
+</style>
+</head>
+<body>
+  <div id="guide"></div>
+  <div id="prompter-area"><div id="content"></div></div>
+  
+  <div id="controls">
+    <button onclick="togglePlay()" id="btnPlay">▶</button>
+    <button onclick="changeSpeed(-1)">-</button>
+    <span class="value-display" id="spdVal">3</span>
+    <button onclick="changeSpeed(1)">+</button>
+    <div style="width:1px;height:20px;background:#444;margin:0 5px;"></div>
+    <button onclick="toggleMirror()" title="Modo Espejo">⇄</button>
+    <button onclick="changeSize(1)" title="Aumentar Fuente">A+</button>
+    <button onclick="changeSize(-1)" title="Disminuir Fuente">A-</button>
+  </div>
+
+<script>
+  const data = ${jsonData};
+  const content = document.getElementById('content');
+  const area = document.getElementById('prompter-area');
+  
+  // Render
+  data.forEach(item => {
+    let el = document.createElement('div');
+    if(item.type==='title') { el.className='p-title'; el.innerText=item.content; }
+    else if(item.type==='instruction') { el.className='p-inst'; el.innerText=item.content; }
+    else { el.className='p-text'; el.innerText=item.content; }
+    content.appendChild(el);
+  });
+
+  // State
+  let playing = false;
+  let speed = 3;
+  let font = 3; // base 3rem
+  let mirrorState = 0; // 0:none, 1:X, 2:Y, 3:XY
+  let animationId;
+
+  function loop() {
+    if(playing) {
+      area.scrollTop += (speed * 0.5);
+      animationId = requestAnimationFrame(loop);
+    }
+  }
+
+  function togglePlay() {
+    playing = !playing;
+    document.getElementById('btnPlay').innerText = playing ? '⏸' : '▶';
+    document.getElementById('btnPlay').className = playing ? 'active' : '';
+    if(playing) loop(); else cancelAnimationFrame(animationId);
+  }
+
+  function changeSpeed(delta) {
+    speed = Math.max(1, Math.min(20, speed + delta));
+    document.getElementById('spdVal').innerText = speed;
+  }
+
+  function changeSize(delta) {
+    font = Math.max(1, Math.min(10, font + delta * 0.5));
+    document.querySelectorAll('.p-text').forEach(e => e.style.fontSize = font + 'rem');
+  }
+
+  function toggleMirror() {
+    mirrorState = (mirrorState + 1) % 4;
+    const c = document.getElementById('prompter-area');
+    c.className = '';
+    if(mirrorState === 1) c.classList.add('mirror-x');
+    if(mirrorState === 2) c.classList.add('mirror-y'); // Flip vertical es raro pero existe
+    if(mirrorState === 3) c.classList.add('mirror-x'); // Usualmente solo queremos X para teleprompter
+  }
+
+  // Keyboard Shortcuts
+  document.addEventListener('keydown', (e) => {
+    if(e.code === 'Space') { e.preventDefault(); togglePlay(); }
+    if(e.code === 'ArrowUp') changeSpeed(1);
+    if(e.code === 'ArrowDown') changeSpeed(-1);
+  });
+<\/script>
+</body>
+</html>`;
+    }
+
+    // --- EXPORTAR ARCHIVO ---
+    function exportPlayer() {
+        const json = parseScript();
+        const html = getPlayerHTML(json);
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Teleprompter_Player.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
+    // --- PROBAR EN VIVO ---
+    function testLive() {
+        const json = parseScript();
+        const html = getPlayerHTML(json);
+        const win = window.open('', '_blank', 'width=1000,height=800,menubar=no,toolbar=no,location=no,status=no');
+        if(win) {
+            win.document.write(html);
+        } else {
+            alert("Por favor habilita las ventanas emergentes.");
+        }
+    }
+  </script>
+</body>
+</html>
+
