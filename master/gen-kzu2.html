@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kontrollzentrum Generator - Purple Edition</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    /* NUEVA PALETA: GRIS PIZARRA & MORADO */
+    :root {
+        --bg-app: #1e293b;       /* Slate 800 - Gris de fondo (No negro) */
+        --bg-panel: #334155;     /* Slate 700 - Paneles un poco más claros */
+        --accent: #a855f7;       /* Purple 500 - Acento Morado Vibrante */
+        --accent-hover: #9333ea; /* Purple 600 */
+        --accent-text: #ffffff;  /* Texto blanco sobre el morado */
+        --text-main: #f1f5f9;    /* Slate 100 - Texto principal muy claro */
+        --text-muted: #cbd5e1;   /* Slate 300 - Textos secundarios */
+        --border: #64748b;       /* Slate 500 - Bordes sutiles */
+        --input-bg: #0f172a;     /* Slate 900 - Fondo de inputs para contraste */
+        --alert: #f472b6;        /* Pink 400 - Detalles de alerta */
+    }
+
+    body {
+        background-color: var(--bg-app);
+        color: var(--text-main);
+        font-family: 'Inter', sans-serif;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    /* SCROLLBARS (Adaptadas al morado) */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-app); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    /* HEADER */
+    .header {
+        padding: 15px 20px;
+        border-bottom: 2px solid var(--accent);
+        background: var(--bg-panel);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    }
+
+    /* LAYOUT */
+    .main-layout {
+        flex: 1;
+        display: flex;
+        padding: 20px;
+        gap: 20px;
+        overflow-y: hidden;
+    }
+
+    /* PANELES */
+    .panel {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    /* FORMULARIO */
+    .form-section {
+        flex: 2;
+        padding: 0;
+        overflow-y: auto;
+    }
+
+    .form-header {
+        background: rgba(0, 0, 0, 0.2); /* Oscurecido suave */
+        padding: 15px 25px;
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(5px);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .form-content {
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* INPUTS */
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+    
+    .input-group label {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--accent); /* Etiquetas Moradas */
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    input[type="text"], input[type="url"], textarea {
+        background: var(--input-bg);
+        border: 1px solid var(--border);
+        color: var(--text-main);
+        padding: 12px;
+        border-radius: 4px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+    }
+
+    input:focus, textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 1px var(--accent);
+    }
+
+    textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+
+    /* SIDEBAR */
+    .sidebar-section {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        min-width: 320px;
+        max-width: 400px;
+    }
+
+    .actions-panel {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 20px;
+    }
+
+    /* BOTONES */
+    .btn {
+        display: inline-flex; justify-content: center; items-center; gap: 8px;
+        padding: 12px 16px;
+        border-radius: 4px;
+        font-weight: 800;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: 1px solid transparent;
+        width: 100%;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+        letter-spacing: 0.05em;
+    }
+    
+    .btn-primary { 
+        background: var(--accent); 
+        color: var(--accent-text); 
+        box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+    }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+    .btn-secondary { 
+        background: transparent; 
+        border: 1px solid var(--text-muted); 
+        color: var(--text-main); 
+    }
+    .btn-secondary:hover { 
+        background: rgba(255,255,255,0.05); 
+        border-color: var(--accent);
+        color: var(--accent);
+    }
+
+    .status-panel {
+        padding: 20px;
+        background: rgba(15, 23, 42, 0.4); /* Fondo oscuro para el log */
+        border: 1px dashed var(--accent);
+        border-radius: 4px;
+        margin-top: auto;
+    }
+
+    .status-text { color: var(--accent); }
+
+    /* MENU DESPLEGABLE (Estilo adaptado al tema Gris/Morado) */
+    .lang-container {
+        position: relative;
+        margin-bottom: 10px;
+    }
+
+    .lang-btn-trigger {
+        width: 100%;
+        padding: 10px 15px;
+        background: rgba(0,0,0,0.2);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--text-main);
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.2s;
+    }
+
+    .lang-btn-trigger:hover { border-color: var(--accent); color: var(--accent); }
+
+    .lang-menu {
+        position: absolute;
+        top: 100%; left: 0; width: 100%;
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-top: none;
+        border-radius: 0 0 4px 4px;
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: 50;
+        box-shadow: 0 10px 15px rgba(0,0,0,0.5);
+    }
+
+    .lang-menu.open {
+        max-height: 200px;
+        opacity: 1;
+        margin-top: 2px;
+        border-top: 1px solid var(--border);
+    }
+
+    .lang-item {
+        padding: 10px 15px;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: background 0.2s;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .lang-item:last-child { border-bottom: none; }
+    .lang-item:hover { background: rgba(168, 85, 247, 0.1); color: white; }
+    .lang-item.selected { color: var(--accent); font-weight: bold; }
+
+    @media (max-width: 900px) {
+        body { height: auto; overflow-y: auto; }
+        .main-layout { flex-direction: column; padding: 10px; }
+        .sidebar-section { min-width: 100%; max-width: 100%; order: -1; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="flex items-center gap-3">
+        <span class="text-2xl text-purple-400"><i class="fa-solid fa-satellite-dish"></i> 📡</span>
+        <div>
+            <h1 class="text-lg font-bold tracking-tight text-white">GENERATOR <span style="color: var(--accent);">KONTROLLZENTRUM</span></h1>
+            <p class="text-[10px] text-slate-400 font-mono" id="lbl_version">v2.1 // PURPLE MASTER</p>
+        </div>
+    </div>
+    <div class="hidden md:block">
+         <span id="lbl_system_online" class="text-xs font-mono font-bold px-2 py-1 rounded border" style="color: var(--bg-app); background-color: var(--accent); border-color: var(--accent); color: #000;">SYSTEM ONLINE</span>
+    </div>
+  </header>
+
+  <div class="main-layout">
+    
+    <!-- PANEL IZQUIERDO -->
+    <div class="panel form-section">
+        <div class="form-header">
+            <h2 class="text-sm font-bold text-white uppercase tracking-widest flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full" style="background-color: var(--alert);"></span> <span id="lbl_mission_data">Missionsdaten</span>
+            </h2>
+            <button id="btn_load_example" class="text-xs text-slate-300 hover:text-white underline" onclick="loadExample()">Beispiel laden</button>
+        </div>
+
+        <div class="form-content">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="input-group">
+                    <label id="lbl_op_id">Operations-ID</label>
+                    <input type="text" id="opId" placeholder="z.B.: OPR-DE-2025">
+                </div>
+                <div class="input-group">
+                    <label id="lbl_loc">Standort (Ort)</label>
+                    <input type="text" id="opLoc" placeholder="z.B.: BERLIN, DE">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label id="lbl_title">Berichtstitel</label>
+                <input type="text" id="opTitle" placeholder="z.B.: Operation Gelber Sturm">
+            </div>
+
+            <div class="input-group">
+                <label id="lbl_desc">Beschreibung / Mission</label>
+                <textarea id="opDesc" rows="3" placeholder="Kurze Beschreibung des Übertragungsziels..."></textarea>
+            </div>
+
+            <hr style="border-color: var(--border);" class="my-2">
+
+            <div class="input-group">
+                <label id="lbl_slides">Präsentationslink (Google Slides)</label>
+                <input type="url" id="linkSlides" placeholder="Vollständigen Google Slides Link einfügen..." onchange="detectSlideId()">
+                <p class="text-[10px] text-slate-400 mt-1" id="lbl_slides_hint">Das System extrahiert automatisch die ID.</p>
+            </div>
+
+            <div class="input-group">
+                <label id="lbl_prompter">Teleprompter-Link (Leseansicht)</label>
+                <input type="url" id="linkPrompter" placeholder="z.B.: https://zmau.dev/bf/tp-bf.html">
+            </div>
+
+            <hr style="border-color: var(--border);" class="my-2">
+            
+            <div class="input-group">
+                <label id="lbl_tone">Protokollnotiz / Tonfall (Optional)</label>
+                <textarea id="opTone" rows="2" placeholder="z.B.: Ernster Ton, Spekulationen vermeiden..."></textarea>
+            </div>
+             <div class="input-group">
+                <label id="lbl_footer">Motivationsnachricht (Footer)</label>
+                <textarea id="opFooter" rows="2" placeholder="z.B.: Viel Glück, die Bühne gehört dir."></textarea>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- PANEL DERECHO -->
+    <div class="sidebar-section">
+        
+        <!-- SELECCIÓN DE IDIOMA -->
+        <div class="lang-container">
+            <div class="lang-btn-trigger" onclick="toggleLangMenu()">
+                <span id="currentLangDisplay"><i class="fa-solid fa-language mr-2"></i> Deutsch</span>
+                <i class="fa-solid fa-chevron-down text-xs"></i>
+            </div>
+            <div id="langMenu" class="lang-menu">
+                <div class="lang-item selected" onclick="setLang('de', this)">Deutsch (DE)</div>
+                <div class="lang-item" onclick="setLang('es', this)">Español (ES)</div>
+                <div class="lang-item" onclick="setLang('en', this)">English (EN)</div>
+            </div>
+        </div>
+
+        <div class="actions-panel">
+            <h3 id="lbl_actions" class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Aktionen</h3>
+            
+            <button id="btn_preview" class="btn btn-primary" onclick="previewControlCenter()">
+                <span>👁️</span> Vorschau
+            </button>
+            
+            <button id="btn_download" class="btn btn-secondary" onclick="downloadHTML()">
+                <span>💾</span> HTML Herunterladen
+            </button>
+        </div>
+
+        <div class="status-panel">
+            <h4 id="lbl_status_header" class="text-xs font-bold mb-2 font-mono status-text">SYSTEMSTATUS</h4>
+            <div id="statusLog" class="text-[11px] font-mono text-slate-300 space-y-1">
+                <p id="log_waiting">> Warte auf Daten...</p>
+            </div>
+        </div>
+
+        <div class="p-4 rounded border" style="background-color: rgba(0,0,0,0.2); border-color: var(--border);">
+            <h4 id="lbl_instr_header" class="text-xs font-bold text-white mb-2">Anleitung</h4>
+            <ul id="ul_instr_list" class="text-xs text-slate-300 space-y-2 list-disc pl-4">
+                <li>Fügen Sie den <strong>Standard</strong>-Link von Google Slides ein.</li>
+                <li>Verwenden Sie den direkten HTML-Link für den Teleprompter.</li>
+                <li>Laden Sie die Datei herunter und laden Sie sie auf Ihren Server hoch.</li>
+            </ul>
+        </div>
+
+    </div>
+  </div>
+
+  <script>
+    // --- TRADUCCIONES (Misma lógica del archivo anterior) ---
+    const translations = {
+        de: {
+            lbl_version: "v2.1 // DEUTSCH MASTER",
+            lbl_system_online: "SYSTEM ONLINE",
+            lbl_mission_data: "Missionsdaten",
+            btn_load_example: "Beispiel laden",
+            lbl_op_id: "Operations-ID",
+            ph_op_id: "z.B.: OPR-DE-2025",
+            lbl_loc: "Standort (Ort)",
+            ph_loc: "z.B.: BERLIN, DE",
+            lbl_title: "Berichtstitel",
+            ph_title: "z.B.: Operation Gelber Sturm",
+            lbl_desc: "Beschreibung / Mission",
+            ph_desc: "Kurze Beschreibung des Übertragungsziels...",
+            lbl_slides: "Präsentationslink (Google Slides)",
+            ph_slides: "Vollständigen Google Slides Link einfügen...",
+            lbl_slides_hint: "Das System extrahiert automatisch die ID.",
+            lbl_prompter: "Teleprompter-Link (Leseansicht)",
+            lbl_tone: "Protokollnotiz / Tonfall",
+            ph_tone: "z.B.: Ernster Ton, Spekulationen vermeiden...",
+            lbl_footer: "Motivationsnachricht (Footer)",
+            ph_footer: "z.B.: Viel Glück, die Bühne gehört dir.",
+            lbl_actions: "Aktionen",
+            btn_preview: "Vorschau",
+            btn_download: "HTML Herunterladen",
+            lbl_status_header: "SYSTEMSTATUS",
+            log_waiting: "> Warte auf Daten...",
+            lbl_instr_header: "Anleitung",
+            instr_1: "Fügen Sie den <strong>Standard</strong>-Link von Google Slides ein.",
+            instr_2: "Verwenden Sie den direkten HTML-Link für den Teleprompter.",
+            instr_3: "Laden Sie die Datei herunter und laden Sie sie auf Ihren Server hoch.",
+            msg_example_loaded: "Beispieldaten geladen.",
+            msg_slides_ok: "Slides ID erkannt",
+            msg_file_downloaded: "Datei heruntergeladen."
+        },
+        es: {
+            lbl_version: "v2.1 // MASTER ESPAÑOL",
+            lbl_system_online: "SISTEMA EN LÍNEA",
+            lbl_mission_data: "Datos de la Misión",
+            btn_load_example: "Cargar Ejemplo",
+            lbl_op_id: "ID de Operación",
+            ph_op_id: "Ej: OPR-ES-2025",
+            lbl_loc: "Ubicación",
+            ph_loc: "Ej: MADRID, ES",
+            lbl_title: "Título del Informe",
+            ph_title: "Ej: Operación Tormenta Dorada",
+            lbl_desc: "Descripción / Misión",
+            ph_desc: "Breve descripción del objetivo de transmisión...",
+            lbl_slides: "Enlace Presentación (Google Slides)",
+            ph_slides: "Pegue el enlace completo de Google Slides...",
+            lbl_slides_hint: "El sistema extrae automáticamente el ID.",
+            lbl_prompter: "Enlace Teleprompter (Vista Lectura)",
+            lbl_tone: "Nota de Protocolo / Tono",
+            ph_tone: "Ej: Tono serio, evitar especulaciones...",
+            lbl_footer: "Mensaje Motivacional (Pie)",
+            ph_footer: "Ej: Buena suerte, el escenario es tuyo.",
+            lbl_actions: "Acciones",
+            btn_preview: "Vista Previa",
+            btn_download: "Descargar HTML",
+            lbl_status_header: "ESTADO DEL SISTEMA",
+            log_waiting: "> Esperando datos...",
+            lbl_instr_header: "Instrucciones",
+            instr_1: "Pegue el enlace <strong>estándar</strong> de Google Slides.",
+            instr_2: "Use el enlace directo HTML para el Teleprompter.",
+            instr_3: "Descargue el archivo y súbalo a su servidor.",
+            msg_example_loaded: "Datos de ejemplo cargados.",
+            msg_slides_ok: "ID de Slides detectado",
+            msg_file_downloaded: "Archivo descargado."
+        },
+        en: {
+            lbl_version: "v2.1 // ENGLISH MASTER",
+            lbl_system_online: "SYSTEM ONLINE",
+            lbl_mission_data: "Mission Data",
+            btn_load_example: "Load Example",
+            lbl_op_id: "Operation ID",
+            ph_op_id: "e.g.: OPR-US-2025",
+            lbl_loc: "Location",
+            ph_loc: "e.g.: NEW YORK, US",
+            lbl_title: "Report Title",
+            ph_title: "e.g.: Operation Golden Storm",
+            lbl_desc: "Description / Mission",
+            ph_desc: "Brief description of the broadcast objective...",
+            lbl_slides: "Presentation Link (Google Slides)",
+            ph_slides: "Paste full Google Slides link here...",
+            lbl_slides_hint: "System automatically extracts the ID.",
+            lbl_prompter: "Teleprompter Link (Reader View)",
+            lbl_tone: "Protocol Note / Tone",
+            ph_tone: "e.g.: Serious tone, avoid speculation...",
+            lbl_footer: "Motivational Message (Footer)",
+            ph_footer: "e.g.: Good luck, the stage is yours.",
+            lbl_actions: "Actions",
+            btn_preview: "Preview",
+            btn_download: "Download HTML",
+            lbl_status_header: "SYSTEM STATUS",
+            log_waiting: "> Waiting for data...",
+            lbl_instr_header: "Instructions",
+            instr_1: "Paste the <strong>standard</strong> Google Slides link.",
+            instr_2: "Use the direct HTML link for the Teleprompter.",
+            instr_3: "Download the file and upload it to your server.",
+            msg_example_loaded: "Example data loaded.",
+            msg_slides_ok: "Slides ID detected",
+            msg_file_downloaded: "File downloaded."
+        }
+    };
+
+    let currentLang = 'de';
+
+    // --- LÓGICA DE IDIOMA ---
+    function toggleLangMenu() {
+        document.getElementById('langMenu').classList.toggle('open');
+    }
+
+    // Cerrar menú si se hace clic fuera
+    document.addEventListener('click', function(e) {
+        const container = document.querySelector('.lang-container');
+        if (!container.contains(e.target)) {
+            document.getElementById('langMenu').classList.remove('open');
+        }
+    });
+
+    function setLang(lang, element) {
+        currentLang = lang;
+        const t = translations[lang];
+
+        // Actualizar UI del menú
+        document.querySelectorAll('.lang-item').forEach(el => el.classList.remove('selected'));
+        element.classList.add('selected');
+        document.getElementById('langMenu').classList.remove('open');
+        
+        let langName = "Deutsch";
+        if(lang === 'es') langName = "Español";
+        if(lang === 'en') langName = "English";
+        document.getElementById('currentLangDisplay').innerHTML = `<i class="fa-solid fa-language mr-2"></i> ${langName}`;
+
+        // Actualizar Textos
+        const ids = [
+            'lbl_version', 'lbl_system_online', 'lbl_mission_data', 'btn_load_example',
+            'lbl_op_id', 'lbl_loc', 'lbl_title', 'lbl_desc', 'lbl_slides', 'lbl_slides_hint',
+            'lbl_prompter', 'lbl_tone', 'lbl_footer', 'lbl_actions', 'lbl_status_header',
+            'log_waiting', 'lbl_instr_header'
+        ];
+
+        ids.forEach(id => {
+            const el = document.getElementById(id);
+            if(el) el.innerText = t[id];
+        });
+
+        // Placeholders
+        document.getElementById('opId').placeholder = t.ph_op_id;
+        document.getElementById('opLoc').placeholder = t.ph_loc;
+        document.getElementById('opTitle').placeholder = t.ph_title;
+        document.getElementById('opDesc').placeholder = t.ph_desc;
+        document.getElementById('linkSlides').placeholder = t.ph_slides;
+        document.getElementById('opTone').placeholder = t.ph_tone;
+        document.getElementById('opFooter').placeholder = t.ph_footer;
+
+        // Botones con Iconos
+        document.getElementById('btn_preview').innerHTML = `<span>👁️</span> ${t.btn_preview}`;
+        document.getElementById('btn_download').innerHTML = `<span>💾</span> ${t.btn_download}`;
+
+        // Lista de instrucciones
+        const ul = document.getElementById('ul_instr_list');
+        ul.innerHTML = `<li>${t.instr_1}</li><li>${t.instr_2}</li><li>${t.instr_3}</li>`;
+
+        logStatus(`Idioma cambiado a: ${langName}`);
+    }
+
+    // CARGAR EJEMPLO
+    function loadExample() {
+        const t = translations[currentLang];
+        
+        if(currentLang === 'es') {
+            document.getElementById('opId').value = "OPR-ES-2025";
+            document.getElementById('opLoc').value = "MADRID, ES";
+            document.getElementById('opTitle').value = "Operación Tormenta";
+            document.getElementById('opDesc').value = "Análisis estratégico de la situación.";
+            document.getElementById('opTone').value = "Objetivo y directo.";
+            document.getElementById('opFooter').value = "Buena suerte.";
+        } else if (currentLang === 'en') {
+            document.getElementById('opId').value = "OPR-US-2025";
+            document.getElementById('opLoc').value = "NEW YORK, US";
+            document.getElementById('opTitle').value = "Operation Storm";
+            document.getElementById('opDesc').value = "Strategic situation analysis.";
+            document.getElementById('opTone').value = "Objective and direct.";
+            document.getElementById('opFooter').value = "Good luck.";
+        } else {
+            document.getElementById('opId').value = "OPR-DE-2025";
+            document.getElementById('opLoc').value = "BERLIN, DE";
+            document.getElementById('opTitle').value = "Operation Gelber Sturm";
+            document.getElementById('opDesc').value = "Strategische Analyse des Spielaufbaus.";
+            document.getElementById('opTone').value = "Objektivität bewahren.";
+            document.getElementById('opFooter').value = "Viel Glück.";
+        }
+
+        document.getElementById('linkSlides').value = "https://docs.google.com/presentation/d/1-CnNvoVp3yUJoH_eI2C6lUkzxBFtql6Q/edit?usp=sharing";
+        document.getElementById('linkPrompter').value = "https://zmau.dev/bf/tp-bf.html";
+        
+        logStatus(t.msg_example_loaded);
+    }
+
+    // LOGGING
+    function logStatus(msg) {
+        const log = document.getElementById('statusLog');
+        log.innerHTML += `<p>> ${msg}</p>`;
+        log.scrollTop = log.scrollHeight;
+    }
+
+    // DETECTAR ID DE SLIDES
+    function getSlideID(url) {
+        const match = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+        return match ? match[1] : null;
+    }
+
+    function detectSlideId() {
+        const url = document.getElementById('linkSlides').value;
+        const id = getSlideID(url);
+        if(id) {
+            logStatus(`${translations[currentLang].msg_slides_ok}: ${id.substring(0,8)}...`);
+        } else if (url.length > 0) {
+            logStatus(`⚠️ Error Link`);
+        }
+    }
+
+    // GENERAR CÓDIGO HTML
+    function generateHTML() {
+        // Recoger datos
+        const id = document.getElementById('opId').value || "OPR-GEN-001";
+        const loc = document.getElementById('opLoc').value || "UNBEKANNT";
+        const title = document.getElementById('opTitle').value || "Mission Title";
+        const desc = document.getElementById('opDesc').value || "No description.";
+        const footerMsg = document.getElementById('opFooter').value || "End.";
+        const tone = document.getElementById('opTone').value || "No notes.";
+        
+        const rawSlideLink = document.getElementById('linkSlides').value;
+        const slideID = getSlideID(rawSlideLink) || "";
+        const prompterLink = document.getElementById('linkPrompter').value || "#";
+        const embedSlides = slideID ? `https://docs.google.com/presentation/d/${slideID}/embed?start=false&loop=false&delayms=3000` : "";
+
+        return `<!DOCTYPE html>
+<html lang="${currentLang}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontrollzentrum: ${title}</title>
+    <script src="https://cdn.tailwindcss.com"><\/script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#1e293b">
+    <style>
+        :root {
+            --bg-main: #1e293b; --bg-panel: #334155; --accent: #a855f7; --alert: #f472b6; --text: #f1f5f9;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-main); color: #e2e8f0; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .scanline { width: 100%; height: 2px; background: var(--accent); opacity: 0.1; animation: scanline 6s linear infinite; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 50; }
+        @keyframes scanline { 0% { transform: translateY(-100vh); } 100% { transform: translateY(100vh); } }
+        .terminal-box { background-color: var(--bg-panel); border: 1px solid #64748b; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3); }
+        .status-dot { height: 10px; width: 10px; background-color: var(--accent); border-radius: 50%; display: inline-block; box-shadow: 0 0 10px var(--accent); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
+        ::selection { background: var(--accent); color: #ffffff; }
+    </style>
+</head>
+<body class="min-h-screen p-4 md:p-8 relative">
+    <div class="scanline"></div>
+    <header class="max-w-6xl mx-auto mb-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-500 pb-6">
+        <div>
+            <div class="flex items-center gap-3 mb-1">
+                <div class="status-dot"></div>
+                <span class="mono text-xs font-bold tracking-widest uppercase" style="color: var(--accent);">SECURE CONNECTION</span>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white">KONTROLLZENTRUM</h1>
+            <p class="text-slate-400 mono text-sm mt-1">${title} // OPERATIONSCENTER</p>
+        </div>
+        <div class="text-right hidden md:block">
+            <div class="mono text-xs text-slate-400">ID: ${id}</div>
+            <div class="mono text-xs text-slate-400">LOC: ${loc}</div>
+        </div>
+    </header>
+    <main class="max-w-6xl mx-auto space-y-12">
+        <section>
+            <div class="inline-block bg-slate-700 border border-slate-500 rounded px-3 py-1 mb-4">
+                <span class="mono text-xs font-bold" style="color: var(--accent);">DATA RECEIVED</span>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">Mission: "${title}"</h2>
+            <p class="text-lg text-slate-300 leading-relaxed max-w-3xl border-l-4 pl-4" style="border-color: var(--accent);">${desc}</p>
+        </section>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="terminal-box rounded p-6 hover:border-purple-400 transition-colors group">
+                <div class="flex items-center justify-between mb-4"><h3 class="text-xl font-bold text-white group-hover:text-purple-300 transition-colors">### Presentation</h3></div>
+                <div class="relative w-full aspect-video bg-black rounded border border-slate-500 overflow-hidden shadow-lg">
+                    ${slideID ? `<iframe src="${embedSlides}" frameborder="0" width="100%" height="100%" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>` : `<div class="flex items-center justify-center h-full text-slate-500">No ID</div>`}
+                </div>
+                <div class="mt-3 flex justify-between items-center"><span class="text-xs text-slate-400">ID: ${slideID || 'N/A'}</span><a href="${rawSlideLink}" target="_blank" class="text-xs mono hover:underline font-bold" style="color: var(--accent);">[ Open Slides ]</a></div>
+            </div>
+            <div class="terminal-box rounded p-6 hover:border-purple-400 transition-colors group flex flex-col">
+                <div class="flex items-center justify-between mb-4"><h3 class="text-xl font-bold text-white group-hover:text-purple-300 transition-colors">### Teleprompter</h3></div>
+                <p class="text-slate-300 mb-6 text-sm">Synchronized script.</p>
+                <div class="bg-slate-900 p-4 rounded border border-slate-600 font-mono text-xs text-slate-400 mb-auto">> LINK: ${prompterLink}<br>> STATUS: READY</div>
+                <a href="${prompterLink}" target="_blank" class="mt-6 inline-flex items-center justify-center w-full px-4 py-3 font-bold rounded transition-all shadow-lg" style="background-color: var(--accent); color: #ffffff;">Start Prompter</a>
+            </div>
+        </div>
+        <section class="terminal-box rounded p-8"><h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3"><span style="color: var(--alert);">##</span> Protocol</h2><div class="text-slate-300 italic border-l-2 border-slate-500 pl-4">"${tone}"</div></section>
+        <footer class="text-center py-12 border-t border-slate-600"><p class="text-slate-400 text-lg mb-2">${footerMsg}</p><div class="mt-4 inline-block"><span class="mono text-xs border px-3 py-1 rounded-full" style="color: var(--accent); border-color: rgba(168, 85, 247, 0.3); background-color: rgba(168, 85, 247, 0.1);">STATUS: GO</span></div></footer>
+    </main>
+</body>
+</html>`;
+    }
+
+    function downloadHTML() {
+        const html = generateHTML();
+        const id = document.getElementById('opId').value || "kontrollzentrum";
+        const cleanId = id.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; 
+        a.download = `Kontrollzentrum_${cleanId}.html`;
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        logStatus(translations[currentLang].msg_file_downloaded);
+    }
+
+    function previewControlCenter() {
+        const html = generateHTML();
+        const win = window.open('', '_blank');
+        if(win) win.document.write(html);
+        else alert("Pop-up blocked.");
+        logStatus("Vorschau...");
+    }
+  </script>
+</body>
+</html>
+
