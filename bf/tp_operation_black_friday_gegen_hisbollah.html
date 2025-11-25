@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operation Black Friday gegen Hisbollah</title>
+<meta property="og:title" content="Operation Black Friday gegen Hisbollah">
+<meta property="og:description" content="Guión de Teleprompter listo para leer.">
+<meta property="og:image" content="https://placehold.co/1200x630/000000/10b981/png?text=OPERATION%20BLACK%20FRIDAY%20GEGEN%20H&font=roboto">
+<meta property="og:type" content="website">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+  body{background:#000;color:#fff;font-family:'Inter',sans-serif;margin:0;overflow:hidden;height:100vh;display:flex;flex-direction:column;}
+  
+  #prompter-area{
+      flex:1;
+      overflow-y:scroll;
+      padding:20px 20px;
+      padding-bottom:60vh; /* Espacio final */
+      cursor: pointer;
+  }
+  
+  .p-text{font-size:3.5rem;line-height:1.4;margin-bottom:1.5rem;font-weight:700;}
+  .p-title{color:#10B981;font-size:2rem;text-transform:uppercase;letter-spacing:2px;border-bottom:1px solid #333;margin:40px 0 20px 0;}
+  .p-inst{color:#F59E0B;font-size:1.8rem;font-style:italic;background:#1e1e1e;padding:15px;border-left:5px solid #F59E0B;}
+  
+  /* UTILIDADES VISUALES */
+  .mirror-x { transform: scaleX(-1); } 
+  .mirror-y { transform: scaleY(-1); }
+  
+  /* BARRA DE CONTROL COMPACTA (Estilo TP-GEN Clásico Mejorado) */
+  #controls {
+      position:fixed; bottom:0; left:0; width:100%;
+      background: #111; border-top: 1px solid #333;
+      padding: 8px 15px;
+      display:flex; flex-wrap: wrap; justify-content: center; align-items:center; gap:10px;
+      z-index:999;
+  }
+
+  /* GRUPOS */
+  .c-group { 
+      display:flex; gap:2px; align-items:center; 
+      background:#222; padding:2px; border-radius:6px; border:1px solid #444; 
+  }
+  
+  /* BOTONES COMPACTOS */
+  button {
+      background:transparent; border:none; color:#eee;
+      width:36px; height:36px; border-radius:4px;
+      font-weight:bold; cursor:pointer; font-size:1.1rem;
+      display:flex; align-items:center; justify-content:center;
+      transition:0.1s;
+  }
+  button:hover { background:#333; color:#fff; }
+  button:active { background:#444; }
+
+  /* BOTÓN PLAY (DESTACADO PERO COMPACTO) */
+  #btnPlay {
+      background:#10B981; color:#000; 
+      width:auto; padding:0 20px; height:36px; border-radius:6px;
+      font-size:0.9rem; text-transform:uppercase; font-weight:800;
+      min-width: 80px;
+  }
+  #btnPlay:hover { background:#059669; }
+  #btnPlay.paused { background:#EF4444; color:#fff; }
+
+  /* VALORES */
+  .val { font-family:monospace; font-size:13px; width:30px; text-align:center; color:#ccc; }
+  
+  /* MARCADOR DE LECTURA */
+  #guide {
+      position:fixed; top:40%; left:0; width:100%; height:12%;
+      border-top:1px solid rgba(255,255,255,0.1);
+      border-bottom:1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.02);
+      pointer-events:none; z-index:50;
+  }
+  
+  /* ICONOS SVG SIMPLES */
+  .icon { width:18px; height:18px; fill:currentColor; }
+
+  @media (max-width: 600px) {
+      #controls { justify-content: space-between; padding: 10px; }
+      .c-group { gap:0; }
+      button { width: 40px; height: 40px; }
+  }
+</style>
+</head>
+<body>
+  <div id="guide"></div>
+  <div id="prompter-area"><div id="content"></div></div>
+  
+  <div id="controls">
+    
+    <!-- VELOCIDAD -->
+    <div class="c-group" title="Velocidad">
+        <button onclick="changeSpeed(-1)">-</button>
+        <span class="val" id="spdVal">1</span>
+        <button onclick="changeSpeed(1)">+</button>
+    </div>
+
+    <!-- PLAY -->
+    <button onclick="togglePlay()" id="btnPlay">INICIAR</button>
+
+    <!-- FUENTE -->
+    <div class="c-group" title="Tamaño Fuente">
+        <button onclick="changeSize(-1)">A-</button>
+        <span class="val" id="fntVal">3</span>
+        <button onclick="changeSize(1)">A+</button>
+    </div>
+
+    <!-- ESPEJO -->
+    <div class="c-group" title="Espejo">
+        <button onclick="toggleMirror()" style="width:36px;">⇄</button>
+    </div>
+
+  </div>
+
+<script>
+  const data = [{"type":"title","content":"Operation Black Friday gegen Hisbollah"},{"type":"instruction","content":"INTRODUCCIÓN DRAMÁTICA. SALUDAR A LOS ABONADOS MAYORES Y ENFATIZAR LA IMPORTANCIA DE LA INFORMACIÓN CRUCIAL.*"},{"type":"text","content":"Sehr geehrte Abonnenten, willkommen bei TranslatedPressDE. Heute enthüllen wir Details, die weit über die Schlagzeilen der traditionellen Medien hinausgehen [1]. Israel hat der Führungsstruktur des Terrors einen vernichtenden Schlag versetzt. Die Operation trägt den zynisch passenden Namen: **Operation Black Friday** [1-3]. Und glauben Sie uns, für die Terrorhierarchie war der Rabatt 100% [1]."},{"type":"instruction","content":"ERKLICAR QUE ESTE CANAL PROPORCIONA CONTEXTO PROFUNDO, DE ACUERDO CON NUESTRA POLÍTICA EDITORIAL.*"},{"type":"text","content":"Wir bieten Ihnen, wie immer, den ungefilterten Blick auf die Realität, die oft unter der Oberfläche der Nachrichten verborgen bleibt [3, 4]. Wir werden heute zwei Schauplätze beleuchten: Die **chirurgische Präzision** im Norden, die ein Terror-Assassiniertes eliminierte, und eine **schockierende Offenbarung** im Süden von Gaza, die die Vereinten Nationen direkt impliziert [3]."},{"type":"instruction","content":"TRANSIICIÓN AL ATAQUE DE BEIRUT.*"},{"type":"text","content":"Am Sonntag, mitten im Herzen von Beirut, in Dahieh, der als „unantastbare Hochburg“ der Hisbollah gilt [5], erfolgte ein Luftangriff [2, 6]. Es war keine großflächige Bombardierung [5]. Es war ein Präzisionsschlag, eine quasi „Hausbesuch“ bei einem bestimmten Apartment [5, 7]. Das Ziel war Haytham 'Ali Tabataba'i [2, 8]."},{"type":"instruction","content":"ENFATIZAR LA PRECISIÓN QUIRÚRGICA DE LA OPERACIÓN.*"},{"type":"text","content":"Die **chirurgische Präzision** dieser Operation war atemberaubend [5, 9]. Die israelischen Verteidigungskräfte (IDF) [2, 8] mussten sofort handeln. Ein Sicherheitsbeamter enthüllte, dass nur **60 Minuten** zwischen dem Erhalt der hochsensiblen Geheimdienstinformationen und dem Einschlag der Rakete lagen [10]. Die Zeit für eine Warnung, selbst an Verbündete, war zu knapp. Israel nutzt diese kleinen Gelegenheitsfenster sofort aus [10]. Dies ist die neue Doktrin: Wer das Waffenstillstandsabkommen verletzt und versucht, sich neu zu bewaffnen, wird überall und jederzeit angegriffen [11, 12]."},{"type":"text","content":"Wer war Tabataba'i? Er war nicht irgendein Kommandant, sondern der amtierende Generalstabschef der Hisbollah und militärisch die ranghöchste Figur der Organisation, nachdem zuvor mehrere Führungspersönlichkeiten eliminiert worden waren [2, 8, 13-15]. Er galt als \"Royalty des Terrorismus\" [5], Sohn einer libanesischen Mutter und eines iranischen Vaters, was ihn zur direkten Verbindung zwischen Teheran und Beirut machte [5, 16]."},{"type":"instruction","content":"MENCIONAR EL VALOR DEL OBJETIVO Y SU VINCULACIÓN INTERNACIONAL (SATÍRICO).*"},{"type":"text","content":"Die Vereinigten Staaten setzten ein Kopfgeld von **5 Millionen Dollar** auf Tabataba'i aus [3, 15, 17, 18]. Warum? Weil er der **„Architekt“** des Exports der iranischen Revolution war [18]. Er führte die Spezialeinheiten der Hisbollah im Jemen, wo er die Houthis in Sabotageakten gegen Schiffe ausbildete, und war in Syrien aktiv, um das Assad-Regime zu stützen [7, 13, 17, 18]. Er war verantwortlich für den operativen Plan zur Invasion Galiläas, der glücklicherweise am 7. Oktober 2023 nicht ausgeführt werden konnte [18]. Nach einer Reihe von Eliminierungen war er für den Wiederaufbau der militärischen Struktur der Hisbollah verantwortlich [19]."},{"type":"instruction","content":"TRANSIICIÓN DRAMÁTICA Y SATÍRICA AL SEGUNDO PUNTO: RAFAH.*"},{"type":"text","content":"Lassen wir das rauchende Beirut hinter uns und wenden uns dem Süden zu, nach Gaza. Wenn der Norden Gerechtigkeit bedeutete, dann ist das, was in Rafah aufgedeckt wurde, eine Offenbarung, die die ganze Welt in Schande stürzen sollte [20]."},{"type":"instruction","content":"DESCRIBIR EL TÚNEL ENCONTRADO.*"},{"type":"text","content":"Die IDF enthüllten das größte jemals gefundene Tunnelnetzwerk in Gaza: **7 Kilometer Länge** und erstaunliche **25 Meter Tiefe** [3, 20]. Dies ist buchstäblich eine Stadt unter der Stadt, ausgestattet mit 80 Verstecken und Räumen [20, 21]. Man fragt sich, wie Hamas die Milliarden von Dollar für diese Terror-Infrastruktur ausgeben konnte, statt für die Zivilbevölkerung [21]."},{"type":"instruction","content":"EL ELEMENTO MÁS INDIGNANTE: VÍNCULO CON LA ONU Y REHENES.*"},{"type":"text","content":"Doch das Schlimmste ist die Lage dieses Kolossaltunnels. Der militärische Bericht ist eindeutig: Der Tunnel verlief unter Moscheen, Kliniken, Schulen, Kindergärten und, halten Sie sich fest, **unter den Einrichtungen der UNRWA**, der Organisation der Vereinten Nationen [3, 22]."},{"type":"instruction","content":"SUBRAYAR LA POSIBLE COMPLICIDAD DEL PERSONAL DE NACIONES UNIDAS (UNRWA).*"},{"type":"text","content":"Wir berichten auf diesem Kanal seit Monaten darüber: Die internationale Infrastruktur in Gaza ist die Infrastruktur der Terroristen [22]. Es ist **buchstäblich unmöglich**, einen 7 Kilometer langen und 25 Meter tiefen Tunnel unter Schulen und UN-Büros zu graben, ohne dass jemand die Bagger, den Abtransport des Schutts oder das Personal bemerkt [22]. Die Schlussfolgerung ist klar: **Die Komplizenschaft ist vollständig** [22]."},{"type":"instruction","content":"PRESENTAR LA PRUEBA MÁS CONMOVEDORA: EL SECUESTRADO.*"},{"type":"text","content":"Was die Truppen in diesem unterirdischen Komplex fanden, war der endgültige Beweis für diesen Verrat: Forensische Beweise belegten, dass dort die sterblichen Überreste von Leutnant Adar Goldin festgehalten worden waren, der 2014 von Hamas entführt und vor Kurzem im Rahmen eines Abkommens tot übergeben wurde [3, 21]. Jahrelang hatte seine Familie die Vereinten Nationen angefleht, zu vermitteln. Es stellte sich heraus, dass ihr Sohn **unter den Füßen genau derer** lag, die ihn hätten schützen sollen [21]. Es wurden auch Spuren anderer Entführter gefunden [21]."},{"type":"instruction","content":"CIERRE SATÍRICO Y FIRME, ACORDE A LA POLÍTICA DEL CANAL.*"},{"type":"text","content":"Die Terroristen, die in diesem Megatunnel gefangen sind, von denen Berichte von bis zu 80 bis 120 Eingeschlossenen sprechen [23, 24], dachten, sie seien sicher oder dass die UNO sie retten würde [25]. Sie irrten sich [25]. Israel hat die Geduld verloren, die Spiele des Terrors hinzunehmen [4]."},{"type":"text","content":"Die Lektion von heute ist klar, meine Damen und Herren: Israels **Black Friday** war kein Angebot, sondern eine **Rechnung** [4]. Eine Rechnung, die sich über Jahre der Straflosigkeit angesammelt hat – Jahre, in denen man weggeschaut hat, während Terroristen Tunnel unter Schulen gruben, und Jahre, in denen man zuließ, dass iranische Generäle unbehelligt durch Beirut spazierten [4, 25]. Die Sicherheit Israels hängt nicht länger von in Genf unterzeichneten Dokumenten ab, sondern von **präzisen Geheimdienstinformationen** und dem **Willen, sofort zu handeln** [25]."},{"type":"instruction","content":"ABSCHLUSS UND HINWEIS AUF ANDERE INHALTE (MOTIVACIÓN/ENTRETENIMIENTO).*"},{"type":"instruction","content":"WENN SIE DIESE TIEFE ANALYSE WERTSCHÄTZEN, HINTERLASSEN SIE BITTE EIN LIKE UND ABONNIEREN SIE UNSEREN KANAL.*"},{"type":"instruction","content":"ERWÄHNEN SIE UNSERE MINIDOKUMENTATIONEN ALS ZUSÄTZLICHEN MEHRWERT FÜR UNSERE ABONNENTEN.*"},{"type":"text","content":"Verpassen Sie nicht unsere Minidokumentationen, in denen wir die unglaublichen Missionen Israels mit faszinierenden visuellen und narrativen Details beleuchten [26, 27]. Die Missionen, die von Filmen würdig sind, wie die Rettung von vier Geiseln bei Tageslicht [27]. Bleiben Sie dran. Wir sehen uns beim nächsten Mal."}];
+  const content = document.getElementById('content');
+  const area = document.getElementById('prompter-area');
+  
+  data.forEach(item => {
+    let el = document.createElement('div');
+    if(item.type==='title') { el.className='p-title'; el.innerText=item.content; }
+    else if(item.type==='instruction') { el.className='p-inst'; el.innerText=item.content; }
+    else { el.className='p-text'; el.innerText=item.content; }
+    content.appendChild(el);
+  });
+
+  let playing=false, speed=10, font=3.5, mirrorState=0, animationId;
+  let accumulator = 0; 
+
+  // AUTO-START (2 seg)
+  setTimeout(() => { if(!playing) togglePlay(); }, 2000);
+
+  // CLICK EN PANTALLA PARA PAUSA
+  area.addEventListener('click', () => {
+      if (window.getSelection().toString().length === 0) togglePlay();
+  });
+
+  function loop() {
+    if(playing) {
+      // MOTOR DE PRECISIÓN
+      // Base (offset) = 0.05 px (movimiento casi invisible)
+      // Multiplicador = 0.05 px por nivel
+      // Nivel 1 = 0.1 px/frame (muy lento)
+      // Nivel 10 = 0.55 px/frame
+      // Nivel 50 = 2.5 px/frame (rápido)
+      
+      const move = 0.05 + (speed * 0.05);
+      
+      accumulator += move;
+      if(accumulator >= 1) {
+          const pixels = Math.floor(accumulator);
+          area.scrollBy(0, pixels);
+          accumulator -= pixels;
+      }
+      animationId = requestAnimationFrame(loop);
+    }
+  }
+
+  function togglePlay() {
+    playing = !playing;
+    const btn = document.getElementById('btnPlay');
+    if(playing) {
+        btn.innerText = 'PAUSA';
+        btn.classList.add('paused');
+        loop();
+    } else {
+        btn.innerText = 'INICIAR';
+        btn.classList.remove('paused');
+        cancelAnimationFrame(animationId);
+    }
+  }
+
+  // Velocidad de 1 a 100 para control fino
+  function changeSpeed(d) { 
+      speed = Math.max(1, Math.min(100, speed + (d * 1))); // Pasos de 1 en 1
+      // Si pulsas shift + click, salta de 5 en 5 (opcional para el futuro)
+      document.getElementById('spdVal').innerText = speed; 
+  }
+
+  function changeSize(d) { 
+      font = Math.max(1.5, Math.min(10, font + d * 0.5)); 
+      document.querySelectorAll('.p-text').forEach(e => e.style.fontSize = font + 'rem');
+      document.getElementById('fntVal').innerText = Math.round(font*10)/10;
+  }
+
+  function toggleMirror() { 
+      mirrorState = (mirrorState + 1) % 3; 
+      const c = document.getElementById('prompter-area'); 
+      c.className = ''; 
+      if(mirrorState === 1) c.classList.add('mirror-x'); 
+      if(mirrorState === 2) c.classList.add('mirror-y'); 
+  }
+
+  document.addEventListener('keydown', (e) => { 
+      if(e.code === 'Space') { e.preventDefault(); togglePlay(); } 
+      if(e.code === 'ArrowUp') changeSpeed(1); 
+      if(e.code === 'ArrowDown') changeSpeed(-1); 
+  });
+  
+  // Iniciar display de velocidad
+  document.getElementById('spdVal').innerText = speed;
+</script>
+</body>
+</html>
