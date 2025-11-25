@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generador de Centro de Control - Modo Asistido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    /* PALETA "OCÉANO SERENO" - Diseñada para reducir ansiedad tecnológica */
+    :root {
+        --bg-app: #f0f9ff;       /* Azul cielo muy pálido (Casi blanco) */
+        --bg-panel: #ffffff;     /* Blanco Puro */
+        --accent: #0891b2;       /* Cerceta (Teal) - Color principal calmante */
+        --accent-hover: #0e7490; /* Cerceta más oscuro */
+        --accent-light: #cffafe; /* Cerceta muy claro para fondos */
+        --text-main: #334155;    /* Gris Pizarra Oscuro (Alto contraste, suave) */
+        --text-muted: #64748b;   /* Gris medio para instrucciones */
+        --border: #bae6fd;       /* Bordes azul claro */
+        --shadow: 0 4px 6px -1px rgba(8, 145, 178, 0.1), 0 2px 4px -1px rgba(8, 145, 178, 0.06);
+    }
+
+    body {
+        background-color: var(--bg-app);
+        color: var(--text-main);
+        font-family: 'Inter', sans-serif;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    /* BARRAS DE DESPLAZAMIENTO (Suaves) */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-app); }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    /* ENCABEZADO */
+    .header {
+        padding: 15px 25px;
+        background: var(--bg-panel);
+        border-bottom: 2px solid var(--accent); /* Línea de color de confianza */
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+        box-shadow: var(--shadow);
+        z-index: 20;
+    }
+
+    /* DISEÑO PRINCIPAL */
+    .main-layout {
+        flex: 1;
+        display: flex;
+        padding: 25px;
+        gap: 25px;
+        overflow-y: hidden;
+    }
+
+    /* PANELES */
+    .panel {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    /* FORMULARIO IZQUIERDO */
+    .form-section {
+        flex: 2;
+        padding: 0;
+        overflow-y: auto;
+    }
+
+    .form-header {
+        background: #fff;
+        padding: 20px 30px;
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #f8feff;
+    }
+
+    .form-content {
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    /* GRUPOS DE ENTRADA (Inputs) */
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        background: #f8fafc;
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+        transition: all 0.2s;
+    }
+    
+    .input-group:hover {
+        border-color: var(--accent);
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    .input-group label {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--accent); 
+        letter-spacing: -0.01em;
+    }
+
+    /* Instrucciones amigables */
+    .input-instruction {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+        line-height: 1.5;
+        font-weight: 500;
+    }
+
+    input[type="text"], input[type="url"], textarea {
+        background: #fff;
+        border: 1px solid #cbd5e1;
+        color: var(--text-main);
+        padding: 14px 16px; /* Más espacio para dedos/clic */
+        border-radius: 8px;
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        transition: all 0.2s;
+    }
+
+    input:focus, textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px var(--accent-light);
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 100px;
+        line-height: 1.6;
+    }
+
+    /* BARRA LATERAL DERECHA */
+    .sidebar-section {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        min-width: 340px;
+        max-width: 420px;
+    }
+
+    /* PANEL DE ACCIONES */
+    .actions-panel {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: var(--shadow);
+    }
+
+    /* BOTONES */
+    .btn {
+        display: inline-flex; justify-content: center; items-center; gap: 10px;
+        padding: 16px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: 1px solid transparent;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    
+    /* Botón Principal: Teal */
+    .btn-primary { 
+        background: var(--accent); 
+        color: white; 
+        box-shadow: 0 4px 6px rgba(8, 145, 178, 0.25);
+    }
+    .btn-primary:hover { 
+        background: var(--accent-hover); 
+        transform: translateY(-1px); 
+        box-shadow: 0 6px 8px rgba(8, 145, 178, 0.3);
+    }
+
+    /* Botón Secundario: Borde */
+    .btn-secondary { 
+        background: white; 
+        border: 1px solid #cbd5e1; 
+        color: var(--text-muted); 
+    }
+    .btn-secondary:hover { 
+        border-color: var(--accent);
+        color: var(--accent);
+        background: #f0f9ff;
+    }
+
+    /* REGISTRO DE ESTADO */
+    .status-panel {
+        padding: 20px;
+        background: #f0f9ff; 
+        border: 1px dashed var(--accent);
+        border-radius: 12px;
+        margin-top: auto;
+    }
+
+    @media (max-width: 900px) {
+        body { height: auto; overflow-y: auto; }
+        .main-layout { flex-direction: column; padding: 15px; }
+        .sidebar-section { min-width: 100%; max-width: 100%; order: -1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ENCABEZADO -->
+  <header class="header">
+    <div class="flex items-center gap-4">
+        <span class="text-3xl text-cyan-600"><i class="fa-solid fa-life-ring"></i></span>
+        <div>
+            <h1 class="text-xl font-bold tracking-tight text-slate-800">Generador de Estudio <span style="color: var(--accent);">Asistido</span></h1>
+            <p class="text-xs text-slate-500 font-medium">Modo Simplificado y Seguro</p>
+        </div>
+    </div>
+    <div class="hidden md:block">
+         <span class="text-xs font-bold px-3 py-2 rounded-full bg-cyan-50 text-cyan-700 border border-cyan-200">
+            Sistema Listo
+         </span>
+    </div>
+  </header>
+
+  <div class="main-layout">
+    
+    <!-- PANEL IZQUIERDO: FORMULARIO -->
+    <div class="panel form-section">
+        <div class="form-header">
+            <h2 class="text-base font-bold text-slate-700 flex items-center gap-3">
+                <span class="w-2 h-2 rounded-full bg-cyan-500"></span> 1. Ingrese la información aquí
+            </h2>
+            <button class="text-sm text-cyan-600 hover:text-cyan-800 font-medium underline" onclick="loadExample()">
+                Rellenar con un Ejemplo (Ayuda)
+            </button>
+        </div>
+
+        <div class="form-content">
+            
+            <!-- Bloque 1: Identidad -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="input-group">
+                    <label>1. Nombre Corto (Código)</label>
+                    <p class="input-instruction">Escriba una palabra o número corto para identificar este trabajo.</p>
+                    <input type="text" id="opId" placeholder="Ej: NOTICIAS-2025">
+                </div>
+                <div class="input-group">
+                    <label>2. ¿Dónde está usted?</label>
+                    <p class="input-instruction">Solo escriba la Ciudad y el País desde donde transmite.</p>
+                    <input type="text" id="opLoc" placeholder="Ej: Bogotá, Colombia">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>3. Título Principal</label>
+                <p class="input-instruction">El gran titular que aparecerá arriba. ¿Cómo se llama el programa?</p>
+                <input type="text" id="opTitle" placeholder="Escriba el título aquí...">
+            </div>
+
+            <div class="input-group">
+                <label>4. ¿De qué trata el programa?</label>
+                <p class="input-instruction">Escriba una o dos frases sencillas explicando el tema para la audiencia.</p>
+                <textarea id="opDesc" rows="3" placeholder="Breve descripción del tema..."></textarea>
+            </div>
+
+            <hr class="border-slate-200">
+
+            <!-- Bloque 2: Recursos -->
+            <div class="input-group">
+                <label>5. Enlace de la Presentación (Google)</label>
+                <p class="input-instruction">Vaya a su presentación de Google Slides. Copie toda la dirección larga de la barra superior del navegador y péguela aquí.</p>
+                <input type="url" id="linkSlides" placeholder="Pegue aquí el enlace largo de Google..." onchange="detectSlideId()">
+                <p class="text-xs font-bold mt-2" id="slideStatus"></p>
+            </div>
+
+            <div class="input-group">
+                <label>6. Enlace del Teleprompter</label>
+                <p class="input-instruction">Necesitamos la dirección web donde está el texto que el locutor va a leer. Péguela aquí.</p>
+                <input type="url" id="linkPrompter" placeholder="Ej: https://zmau.dev/mi-guion.html">
+            </div>
+
+            <!-- Bloque 3: Notas -->
+            <hr class="border-slate-200">
+            
+            <div class="input-group">
+                <label>7. ¿Cómo debe hablar el locutor?</label>
+                <p class="input-instruction">Dé una pequeña pista: ¿Debe sonar serio, alegre, rápido o calmado?</p>
+                <textarea id="opTone" rows="2" placeholder="Ej: Por favor hablar despacio y claro..."></textarea>
+            </div>
+             <div class="input-group">
+                <label>8. Mensaje de Ánimo</label>
+                <p class="input-instruction">Unas palabras bonitas para el locutor al final de la página. Algo como "¡Tú puedes!" ayuda mucho.</p>
+                <textarea id="opFooter" rows="2" placeholder="Ej: ¡Mucha suerte con la transmisión!"></textarea>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- PANEL DERECHO: ACCIONES -->
+    <div class="sidebar-section">
+        
+        <div class="actions-panel">
+            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-200 pb-3">2. Finalizar</h3>
+            
+            <p class="text-sm text-slate-500 mb-4 leading-relaxed">
+                Cuando haya llenado las casillas de la izquierda, haga clic en este botón azul para ver cómo quedó:
+            </p>
+            
+            <button class="btn btn-primary" onclick="previewControlCenter()">
+                <span><i class="fa-solid fa-eye"></i></span> Ver el Resultado
+            </button>
+            
+            <div class="h-px bg-slate-200 my-4"></div>
+
+            <p class="text-sm text-slate-500 mb-4">
+                O guarde el archivo en su computadora para usarlo luego:
+            </p>
+
+            <button class="btn btn-secondary" onclick="downloadHTML()">
+                <span><i class="fa-solid fa-download"></i></span> Guardar Archivo
+            </button>
+        </div>
+
+        <div class="status-panel">
+            <h4 class="text-xs font-bold mb-2 font-mono text-cyan-700">REGISTRO DEL SISTEMA</h4>
+            <div id="statusLog" class="text-xs font-mono text-slate-400 space-y-1 h-24 overflow-y-auto">
+                <p>> Esperando que escriba...</p>
+            </div>
+        </div>
+
+    </div>
+  </div>
+
+  <script>
+    // CARGAR EJEMPLO
+    function loadExample() {
+        document.getElementById('opId').value = "NOTICIAS-TARDE";
+        document.getElementById('opLoc').value = "Medellín, Colombia";
+        document.getElementById('opTitle').value = "Informe Especial: Avances Tecnológicos";
+        document.getElementById('opDesc').value = "Un análisis tranquilo sobre cómo la tecnología nos ayuda en el día a día.";
+        document.getElementById('linkSlides').value = "https://docs.google.com/presentation/d/1-CnNvoVp3yUJoH_eI2C6lUkzxBFtql6Q/edit?usp=sharing";
+        document.getElementById('linkPrompter').value = "https://zmau.dev/bf/tp-bf.html";
+        document.getElementById('opTone').value = "Mantener un tono amable, cercano y profesional. Sonreír.";
+        document.getElementById('opFooter').value = "Confía en ti mismo, conoces el tema perfectamente.";
+        logStatus("Se han rellenado los datos de ejemplo.");
+    }
+
+    // FUNCION DE REGISTRO
+    function logStatus(msg) {
+        const log = document.getElementById('statusLog');
+        log.innerHTML += `<p>> ${msg}</p>`;
+        log.scrollTop = log.scrollHeight;
+    }
+
+    // DETECTAR ID DE SLIDES
+    function getSlideID(url) {
+        const match = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+        return match ? match[1] : null;
+    }
+
+    function detectSlideId() {
+        const url = document.getElementById('linkSlides').value;
+        const id = getSlideID(url);
+        const statusEl = document.getElementById('slideStatus');
+        
+        if(id) {
+            statusEl.innerText = "✓ ¡Excelente! Presentación detectada correctamente.";
+            statusEl.className = "text-xs font-bold mt-2 text-cyan-600";
+            logStatus("ID de Google Slides encontrado.");
+        } else if (url.length > 0) {
+            statusEl.innerText = "⚠️ Hmm, eso no parece un enlace de Google. Por favor revíselo.";
+            statusEl.className = "text-xs font-bold mt-2 text-red-500";
+            logStatus("Error: Formato de enlace inválido.");
+        } else {
+            statusEl.innerText = "";
+        }
+    }
+
+    // GENERAR HTML FINAL (TEMA OCÉANO)
+    function generateHTML() {
+        // Recoger datos
+        const id = document.getElementById('opId').value || "GEN-001";
+        const loc = document.getElementById('opLoc').value || "Desconocido";
+        const title = document.getElementById('opTitle').value || "Misión sin Título";
+        const desc = document.getElementById('opDesc').value || "Sin descripción.";
+        const footerMsg = document.getElementById('opFooter').value || "Fin de la transmisión.";
+        const tone = document.getElementById('opTone').value || "Sin instrucciones específicas.";
+        
+        const rawSlideLink = document.getElementById('linkSlides').value;
+        const slideID = getSlideID(rawSlideLink) || "";
+        const prompterLink = document.getElementById('linkPrompter').value || "#";
+        const embedSlides = slideID ? `https://docs.google.com/presentation/d/${slideID}/embed?start=false&loop=false&delayms=3000` : "";
+
+        // Template String (Inyectando Tema Claro/Teal)
+        return `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Control: ${title}</title>
+    <script src="https://cdn.tailwindcss.com"><\/script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* TEMA OCÉANO - INYECTADO */
+        :root {
+            --bg-body: #f0f9ff;
+            --bg-card: #ffffff;
+            --primary: #0891b2; /* Teal */
+            --primary-dark: #0e7490;
+            --text-dark: #1e293b;
+            --text-gray: #64748b;
+            --border: #bae6fd;
+        }
+        
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-dark); }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Scanline sutil */
+        .scanline { width: 100%; height: 2px; background: var(--primary); opacity: 0.05; animation: scanline 8s linear infinite; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 50; }
+        @keyframes scanline { 0% { transform: translateY(-100vh); } 100% { transform: translateY(100vh); } }
+        
+        /* Estilo de Tarjetas */
+        .card { background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        
+        /* Punto pulsante */
+        .status-dot { height: 10px; width: 10px; background-color: var(--primary); border-radius: 50%; display: inline-block; box-shadow: 0 0 8px var(--primary); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
+        
+        a { transition: all 0.2s; }
+    </style>
+</head>
+<body class="min-h-screen p-6 md:p-10">
+    <div class="scanline"></div>
+
+    <!-- ENCABEZADO -->
+    <header class="max-w-6xl mx-auto mb-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-cyan-200 pb-6">
+        <div>
+            <div class="flex items-center gap-2 mb-2">
+                <div class="status-dot"></div>
+                <span class="text-xs font-bold tracking-widest uppercase text-cyan-700">Conexión Segura</span>
+            </div>
+            <h1 class="text-3xl font-extrabold tracking-tight text-slate-800">Centro de Control</h1>
+            <p class="text-slate-500 text-sm mt-1">${title}</p>
+        </div>
+        <div class="text-right hidden md:block">
+            <div class="font-mono text-xs text-slate-400 bg-white px-2 py-1 rounded border border-cyan-100">ID: ${id}</div>
+            <div class="font-mono text-xs text-slate-400 mt-1">UBIC: ${loc}</div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto space-y-10">
+        
+        <!-- SECCIÓN DE ALERTA -->
+        <section>
+            <div class="inline-flex items-center gap-2 bg-cyan-50 border border-cyan-100 rounded-full px-4 py-1 mb-4">
+                <i class="fa-solid fa-bell text-cyan-600 text-xs"></i>
+                <span class="text-xs font-bold text-cyan-700 uppercase">Nuevos Datos Recibidos</span>
+            </div>
+            <h2 class="text-2xl font-bold text-slate-800 mb-4">Paquete de Misión: "${title}"</h2>
+            <p class="text-lg text-slate-600 leading-relaxed max-w-3xl border-l-4 border-cyan-400 pl-6 bg-white py-4 pr-4 rounded-r-lg shadow-sm">
+                ${desc}
+            </p>
+        </section>
+
+        <!-- GRILLA PRINCIPAL -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- TARJETA SLIDES -->
+            <div class="card p-6 group hover:border-cyan-400 transition-colors">
+                <div class="flex items-center justify-between mb-5">
+                    <h3 class="text-xl font-bold text-slate-700 flex items-center gap-2">
+                        <i class="fa-solid fa-tv text-cyan-600"></i> La Presentación
+                    </h3>
+                </div>
+                <div class="relative w-full aspect-video bg-slate-100 rounded-lg border border-slate-200 overflow-hidden shadow-inner">
+                    ${slideID ? `<iframe src="${embedSlides}" frameborder="0" width="100%" height="100%" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>` : `<div class="flex items-center justify-center h-full text-slate-400 text-sm">No se detectó ID de Slides</div>`}
+                </div>
+                <div class="mt-4 flex justify-between items-center">
+                    <span class="text-xs text-slate-400 font-mono">ID: ${slideID || 'N/A'}</span>
+                    <a href="${rawSlideLink}" target="_blank" class="text-xs font-bold text-cyan-600 hover:text-cyan-800 hover:underline flex items-center gap-1">
+                        Abrir Google Slides <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- TARJETA TELEPROMPTER -->
+            <div class="card p-6 flex flex-col group hover:border-cyan-400 transition-colors">
+                <div class="flex items-center justify-between mb-5">
+                    <h3 class="text-xl font-bold text-slate-700 flex items-center gap-2">
+                        <i class="fa-solid fa-align-left text-cyan-600"></i> El Teleprompter
+                    </h3>
+                </div>
+                <p class="text-slate-500 mb-6 text-sm">Este es su guion. Haga clic en el botón de abajo para abrir la vista de lectura.</p>
+                
+                <div class="bg-cyan-50 p-4 rounded-lg border border-cyan-100 font-mono text-xs text-slate-500 mb-auto">
+                    > ENLACE DESTINO: <span class="text-cyan-700">${prompterLink}</span><br>
+                    > ESTADO: <span class="text-green-600 font-bold">LISTO PARA EMITIR</span><br>
+                    > ESPERANDO AL USUARIO...
+                </div>
+                
+                <a href="${prompterLink}" target="_blank" class="mt-6 inline-flex items-center justify-center w-full px-4 py-4 bg-cyan-600 hover:bg-cyan-700 text-white font-bold rounded-lg transition-all shadow-md hover:shadow-lg gap-2">
+                    <i class="fa-solid fa-play"></i> Iniciar Teleprompter
+                </a>
+            </div>
+        </div>
+
+        <!-- SECCIÓN DE NOTAS -->
+        <section class="card p-8">
+            <h2 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-clipboard-list text-cyan-600"></i> Notas de Protocolo
+            </h2>
+            <div class="text-slate-600 italic border-l-2 border-slate-300 pl-4 bg-slate-50 py-3 pr-3 rounded-r">
+                "${tone}"
+            </div>
+        </section>
+
+        <!-- PIE DE PÁGINA -->
+        <footer class="text-center py-12 border-t border-slate-200 mt-10">
+            <p class="text-slate-500 text-lg mb-4 font-medium">${footerMsg}</p>
+             <div class="inline-block">
+                <span class="text-xs font-bold border border-green-200 bg-green-50 text-green-700 px-3 py-1 rounded-full">
+                    ESTADO: MISIÓN ACTIVA
+                </span>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>`;
+    }
+
+    // DESCARGAR
+    function downloadHTML() {
+        const html = generateHTML();
+        const id = document.getElementById('opId').value || "centro-control";
+        const cleanId = id.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+        
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; 
+        a.download = `Centro_Control_${cleanId}.html`;
+        document.body.appendChild(a); 
+        a.click(); 
+        document.body.removeChild(a);
+        
+        logStatus("Archivo guardado exitosamente en su computadora.");
+    }
+
+    // VISTA PREVIA
+    function previewControlCenter() {
+        const html = generateHTML();
+        const win = window.open('', '_blank');
+        if(win) {
+            win.document.write(html);
+            win.document.close();
+        } else {
+            alert("Por favor permita las 'Ventanas Emergentes' (Pop-ups) para ver la vista previa.");
+        }
+        logStatus("Abriendo ventana de vista previa...");
+    }
+  </script>
+</body>
+</html>
+

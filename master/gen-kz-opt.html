@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kontrollzentrum Generator - Dark Edition</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    /* VARIABLES CSS - Esto permite el cambio de color dinámico */
+    :root {
+        /* Valores por defecto (Indigo Night) */
+        --bg-app: #0f172a;       /* Slate 900 */
+        --bg-panel: #1e293b;     /* Slate 800 */
+        --accent: #6366f1;       /* Indigo 500 */
+        --accent-hover: #4f46e5; /* Indigo 600 */
+        --text-main: #f1f5f9;    /* Slate 100 */
+        --text-muted: #94a3b8;   /* Slate 400 */
+        --border: #334155;       /* Slate 700 */
+        --input-bg: #020617;     /* Slate 950 */
+    }
+
+    body {
+        background-color: var(--bg-app);
+        color: var(--text-main);
+        font-family: 'Inter', sans-serif;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: background-color 0.3s ease;
+    }
+
+    /* SCROLLBARS */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-app); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    /* HEADER */
+    .header {
+        padding: 15px 25px;
+        background: var(--bg-panel);
+        border-bottom: 2px solid var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        z-index: 20;
+        transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+
+    /* MAIN LAYOUT */
+    .main-layout {
+        flex: 1;
+        display: flex;
+        padding: 25px;
+        gap: 25px;
+        overflow-y: hidden;
+    }
+
+    /* PANELS */
+    .panel {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* FORM SECTION */
+    .form-section {
+        flex: 2;
+        padding: 0;
+        overflow-y: auto;
+    }
+
+    .form-header {
+        background: rgba(0, 0, 0, 0.2);
+        padding: 20px 30px;
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        backdrop-filter: blur(10px);
+    }
+
+    .form-content {
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    /* INPUT GROUPS */
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        transition: border-color 0.2s;
+    }
+    
+    .input-group:hover {
+        border-color: var(--accent);
+    }
+    
+    .input-group label {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--accent);
+        letter-spacing: 0.02em;
+        transition: color 0.3s ease;
+    }
+
+    .input-instruction {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+        line-height: 1.5;
+    }
+
+    input[type="text"], input[type="url"], textarea {
+        background: var(--input-bg);
+        border: 1px solid var(--border);
+        color: #fff;
+        padding: 14px 16px;
+        border-radius: 6px;
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        transition: all 0.2s;
+    }
+
+    input:focus, textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 2px var(--border);
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 100px;
+        line-height: 1.6;
+    }
+
+    /* SIDEBAR */
+    .sidebar-section {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        min-width: 340px;
+        max-width: 420px;
+    }
+
+    /* ACTIONS PANEL */
+    .actions-panel {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 25px;
+    }
+
+    /* BUTTONS */
+    .btn {
+        display: inline-flex; justify-content: center; items-center; gap: 10px;
+        padding: 16px 20px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: 1px solid transparent;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    
+    .btn-primary { 
+        background: var(--accent); 
+        color: #fff; 
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    .btn-primary:hover { 
+        background: var(--accent-hover); 
+        transform: translateY(-1px); 
+    }
+
+    .btn-secondary { 
+        background: transparent; 
+        border: 1px solid var(--border); 
+        color: var(--text-muted); 
+    }
+    .btn-secondary:hover { 
+        border-color: var(--accent);
+        color: #fff;
+        background: rgba(255,255,255,0.05);
+    }
+
+    /* COLOR PICKER DOTS */
+    .theme-selector {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 25px;
+        padding-bottom: 25px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .theme-dot {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: transform 0.2s;
+    }
+    .theme-dot:hover { transform: scale(1.1); }
+    .theme-dot.active { border-color: #fff; box-shadow: 0 0 10px rgba(255,255,255,0.5); }
+
+    /* STATUS PANEL */
+    .status-panel {
+        padding: 20px;
+        background: rgba(0,0,0,0.2); 
+        border: 1px dashed var(--accent);
+        border-radius: 8px;
+        margin-top: auto;
+    }
+
+    @media (max-width: 900px) {
+        body { height: auto; overflow-y: auto; }
+        .main-layout { flex-direction: column; padding: 15px; }
+        .sidebar-section { min-width: 100%; max-width: 100%; order: -1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="flex items-center gap-4">
+        <span class="text-3xl" style="color: var(--accent);"><i class="fa-solid fa-sliders"></i></span>
+        <div>
+            <h1 class="text-xl font-bold tracking-tight text-white">Generator <span style="color: var(--accent);">Kontrollzentrum</span></h1>
+            <p class="text-xs text-slate-400 font-medium">Dark Mode // Einfache Bedienung</p>
+        </div>
+    </div>
+    <div class="hidden md:block">
+         <span class="text-xs font-bold px-3 py-2 rounded border" style="background-color: rgba(255,255,255,0.05); border-color: var(--border); color: var(--accent);">
+            System Aktiv
+         </span>
+    </div>
+  </header>
+
+  <div class="main-layout">
+    
+    <!-- LEFT PANEL: FORM -->
+    <div class="panel form-section">
+        <div class="form-header">
+            <h2 class="text-base font-bold text-white flex items-center gap-3">
+                <span class="w-2 h-2 rounded-full" style="background-color: var(--accent);"></span> 1. Informationen eingeben
+            </h2>
+            <button class="text-sm font-medium underline hover:text-white" style="color: var(--accent);" onclick="loadExample()">
+                Beispiel ausfüllen (Hilfe)
+            </button>
+        </div>
+
+        <div class="form-content">
+            
+            <!-- Block 1 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="input-group">
+                    <label>1. Kurzname (ID)</label>
+                    <p class="input-instruction">Geben Sie hier ein kurzes Kürzel für diesen Auftrag ein.</p>
+                    <input type="text" id="opId" placeholder="z.B.: SHOW-2025">
+                </div>
+                <div class="input-group">
+                    <label>2. Standort</label>
+                    <p class="input-instruction">Wo befinden Sie sich? (Stadt, Land)</p>
+                    <input type="text" id="opLoc" placeholder="z.B.: Hamburg, DE">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>3. Titel der Sendung</label>
+                <p class="input-instruction">Die große Überschrift ganz oben auf der Seite.</p>
+                <input type="text" id="opTitle" placeholder="Titel hier eingeben...">
+            </div>
+
+            <div class="input-group">
+                <label>4. Beschreibung</label>
+                <p class="input-instruction">Worum geht es? Ein oder zwei einfache Sätze.</p>
+                <textarea id="opDesc" rows="3" placeholder="Kurze Beschreibung des Themas..."></textarea>
+            </div>
+
+            <hr style="border-color: var(--border);">
+
+            <!-- Block 2 -->
+            <div class="input-group">
+                <label>5. Google Slides Link</label>
+                <p class="input-instruction">Kopieren Sie die komplette Internetadresse Ihrer Präsentation und fügen Sie sie hier ein.</p>
+                <input type="url" id="linkSlides" placeholder="Langen Google-Link hier einfügen..." onchange="detectSlideId()">
+                <p class="text-xs font-bold mt-2" id="slideStatus"></p>
+            </div>
+
+            <div class="input-group">
+                <label>6. Teleprompter Link</label>
+                <p class="input-instruction">Die Internetadresse, wo der Sprecher-Text steht.</p>
+                <input type="url" id="linkPrompter" placeholder="z.B.: https://zmau.dev/mein-skript.html">
+            </div>
+
+            <!-- Block 3 -->
+            <hr style="border-color: var(--border);">
+            
+            <div class="input-group">
+                <label>7. Regieanweisung</label>
+                <p class="input-instruction">Wie soll der Sprecher klingen? (Ruhig, schnell, fröhlich...)</p>
+                <textarea id="opTone" rows="2" placeholder="z.B.: Bitte deutlich und langsam sprechen..."></textarea>
+            </div>
+             <div class="input-group">
+                <label>8. Nachricht am Ende</label>
+                <p class="input-instruction">Ein paar motivierende Worte für den Schluss.</p>
+                <textarea id="opFooter" rows="2" placeholder="z.B.: Viel Erfolg, du schaffst das!"></textarea>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- RIGHT PANEL: ACTIONS -->
+    <div class="sidebar-section">
+        
+        <div class="actions-panel">
+            
+            <!-- COLOR PICKER -->
+            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Farbschema wählen</h3>
+            <p class="text-xs text-slate-500 mb-3">Klicken Sie auf eine Farbe, die Ihnen gefällt:</p>
+            
+            <div class="theme-selector">
+                <!-- Indigo (Default) -->
+                <div class="theme-dot active" style="background: #6366f1;" onclick="setTheme('indigo', this)" title="Nachtblau"></div>
+                <!-- Amber (Classic) -->
+                <div class="theme-dot" style="background: #f59e0b;" onclick="setTheme('amber', this)" title="Onyx & Gold"></div>
+                <!-- Emerald (Nature) -->
+                <div class="theme-dot" style="background: #10b981;" onclick="setTheme('emerald', this)" title="Tiefgrün"></div>
+            </div>
+
+            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">2. Fertigstellen</h3>
+            
+            <button class="btn btn-primary" onclick="previewControlCenter()">
+                <span><i class="fa-solid fa-eye"></i></span> Ergebnis ansehen
+            </button>
+            
+            <button class="btn btn-secondary" onclick="downloadHTML()">
+                <span><i class="fa-solid fa-download"></i></span> Datei speichern
+            </button>
+        </div>
+
+        <div class="status-panel">
+            <h4 class="text-xs font-bold mb-2 font-mono" style="color: var(--accent);">SYSTEM-LOG</h4>
+            <div id="statusLog" class="text-xs font-mono text-slate-400 space-y-1 h-24 overflow-y-auto">
+                <p>> Bereit für Eingaben...</p>
+            </div>
+        </div>
+
+    </div>
+  </div>
+
+  <script>
+    // --- THEME MANAGEMENT ---
+    let currentTheme = {
+        name: 'indigo',
+        bgApp: '#0f172a',
+        bgPanel: '#1e293b',
+        accent: '#6366f1',
+        accentHover: '#4f46e5',
+        border: '#334155',
+        textMuted: '#94a3b8'
+    };
+
+    function setTheme(themeName, element) {
+        const root = document.documentElement;
+        
+        // Update Active Dot UI
+        document.querySelectorAll('.theme-dot').forEach(el => el.classList.remove('active'));
+        if(element) element.classList.add('active');
+
+        if(themeName === 'indigo') {
+            // Indigo Night (Default)
+            root.style.setProperty('--bg-app', '#0f172a');
+            root.style.setProperty('--bg-panel', '#1e293b');
+            root.style.setProperty('--accent', '#6366f1');
+            root.style.setProperty('--accent-hover', '#4f46e5');
+            root.style.setProperty('--border', '#334155');
+            root.style.setProperty('--input-bg', '#020617');
+            
+            currentTheme = { name: 'indigo', bgApp: '#0f172a', bgPanel: '#1e293b', accent: '#6366f1', accentHover: '#4f46e5', border: '#334155' };
+            logStatus("Farbe geändert: Nachtblau");
+        }
+        else if(themeName === 'amber') {
+            // Onyx & Gold
+            root.style.setProperty('--bg-app', '#1c1917'); // Stone 900
+            root.style.setProperty('--bg-panel', '#292524'); // Stone 800
+            root.style.setProperty('--accent', '#f59e0b'); // Amber 500
+            root.style.setProperty('--accent-hover', '#d97706');
+            root.style.setProperty('--border', '#44403c');
+            root.style.setProperty('--input-bg', '#0c0a09');
+
+            currentTheme = { name: 'amber', bgApp: '#1c1917', bgPanel: '#292524', accent: '#f59e0b', accentHover: '#d97706', border: '#44403c' };
+            logStatus("Farbe geändert: Onyx & Gold");
+        }
+        else if(themeName === 'emerald') {
+            // Deep Forest
+            root.style.setProperty('--bg-app', '#022c22'); // Emerald 950
+            root.style.setProperty('--bg-panel', '#064e3b'); // Emerald 900
+            root.style.setProperty('--accent', '#34d399'); // Emerald 400
+            root.style.setProperty('--accent-hover', '#10b981');
+            root.style.setProperty('--border', '#065f46');
+            root.style.setProperty('--input-bg', '#022c22');
+
+            currentTheme = { name: 'emerald', bgApp: '#022c22', bgPanel: '#064e3b', accent: '#34d399', accentHover: '#10b981', border: '#065f46' };
+            logStatus("Farbe geändert: Tiefgrün");
+        }
+    }
+
+    // --- DATA & LOGIC ---
+
+    function loadExample() {
+        document.getElementById('opId').value = "NACHRICHTEN-01";
+        document.getElementById('opLoc').value = "Berlin, DE";
+        document.getElementById('opTitle').value = "Abendnachrichten Spezial";
+        document.getElementById('opDesc').value = "Eine Zusammenfassung der heutigen Ereignisse mit Schwerpunkt auf Technologie.";
+        document.getElementById('linkSlides').value = "https://docs.google.com/presentation/d/1-CnNvoVp3yUJoH_eI2C6lUkzxBFtql6Q/edit?usp=sharing";
+        document.getElementById('linkPrompter').value = "https://zmau.dev/bf/tp-bf.html";
+        document.getElementById('opTone').value = "Seriös, informativ und ruhig bleiben.";
+        document.getElementById('opFooter').value = "Gute Sendung!";
+        logStatus("Beispiel-Daten geladen.");
+    }
+
+    function logStatus(msg) {
+        const log = document.getElementById('statusLog');
+        log.innerHTML += `<p>> ${msg}</p>`;
+        log.scrollTop = log.scrollHeight;
+    }
+
+    function getSlideID(url) {
+        const match = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+        return match ? match[1] : null;
+    }
+
+    function detectSlideId() {
+        const url = document.getElementById('linkSlides').value;
+        const id = getSlideID(url);
+        const statusEl = document.getElementById('slideStatus');
+        
+        if(id) {
+            statusEl.innerText = "✓ Präsentation erkannt.";
+            statusEl.style.color = currentTheme.accent;
+            logStatus("Google Slides ID gefunden.");
+        } else if (url.length > 0) {
+            statusEl.innerText = "⚠️ Link sieht ungültig aus.";
+            statusEl.style.color = "#ef4444";
+            logStatus("Fehler: Link Format prüfen.");
+        } else {
+            statusEl.innerText = "";
+        }
+    }
+
+    function generateHTML() {
+        const id = document.getElementById('opId').value || "GEN-001";
+        const loc = document.getElementById('opLoc').value || "Unbekannt";
+        const title = document.getElementById('opTitle').value || "Ohne Titel";
+        const desc = document.getElementById('opDesc').value || "Keine Beschreibung.";
+        const footerMsg = document.getElementById('opFooter').value || "Ende.";
+        const tone = document.getElementById('opTone').value || "Keine Anweisungen.";
+        
+        const rawSlideLink = document.getElementById('linkSlides').value;
+        const slideID = getSlideID(rawSlideLink) || "";
+        const prompterLink = document.getElementById('linkPrompter').value || "#";
+        const embedSlides = slideID ? `https://docs.google.com/presentation/d/${slideID}/embed?start=false&loop=false&delayms=3000` : "";
+
+        // Template INJECTING the CURRENT THEME variables
+        return `<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontrollzentrum: ${title}</title>
+    <script src="https://cdn.tailwindcss.com"><\/script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* INJECTED THEME */
+        :root {
+            --bg-body: ${currentTheme.bgApp};
+            --bg-card: ${currentTheme.bgPanel};
+            --primary: ${currentTheme.accent};
+            --primary-dark: ${currentTheme.accentHover};
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: ${currentTheme.border};
+        }
+        
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); transition: background 0.3s; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Scanline Effect */
+        .scanline { width: 100%; height: 2px; background: var(--primary); opacity: 0.1; animation: scanline 8s linear infinite; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 50; }
+        @keyframes scanline { 0% { transform: translateY(-100vh); } 100% { transform: translateY(100vh); } }
+        
+        /* Cards */
+        .card { background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); }
+        
+        /* Pulse Dot */
+        .status-dot { height: 10px; width: 10px; background-color: var(--primary); border-radius: 50%; display: inline-block; box-shadow: 0 0 10px var(--primary); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
+        
+        a { transition: all 0.2s; }
+        a:hover { color: var(--primary); }
+    </style>
+</head>
+<body class="min-h-screen p-6 md:p-10">
+    <div class="scanline"></div>
+
+    <!-- HEADER -->
+    <header class="max-w-6xl mx-auto mb-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b pb-6" style="border-color: var(--border);">
+        <div>
+            <div class="flex items-center gap-2 mb-2">
+                <div class="status-dot"></div>
+                <span class="text-xs font-bold tracking-widest uppercase" style="color: var(--primary);">Verbindung Sicher</span>
+            </div>
+            <h1 class="text-3xl font-extrabold tracking-tight text-white">Kontrollzentrum</h1>
+            <p class="text-slate-400 text-sm mt-1">${title}</p>
+        </div>
+        <div class="text-right hidden md:block">
+            <div class="font-mono text-xs text-slate-500 border border-slate-700 px-2 py-1 rounded">ID: ${id}</div>
+            <div class="font-mono text-xs text-slate-500 mt-1">ORT: ${loc}</div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto space-y-10">
+        
+        <!-- INFO -->
+        <section>
+            <div class="inline-flex items-center gap-2 border rounded-full px-4 py-1 mb-4" style="background-color: rgba(255,255,255,0.05); border-color: var(--border);">
+                <i class="fa-solid fa-bell text-xs" style="color: var(--primary);"></i>
+                <span class="text-xs font-bold uppercase" style="color: var(--primary);">Neue Daten</span>
+            </div>
+            <h2 class="text-2xl font-bold text-white mb-4">Mission: "${title}"</h2>
+            <p class="text-lg text-slate-300 leading-relaxed max-w-3xl border-l-4 pl-6 py-2" style="border-color: var(--primary);">
+                ${desc}
+            </p>
+        </section>
+
+        <!-- GRID -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- SLIDES -->
+            <div class="card p-6 group hover:border-slate-500 transition-colors">
+                <div class="flex items-center justify-between mb-5">
+                    <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-tv" style="color: var(--primary);"></i> Die Präsentation
+                    </h3>
+                </div>
+                <div class="relative w-full aspect-video bg-black rounded border border-slate-700 overflow-hidden shadow-inner">
+                    ${slideID ? `<iframe src="${embedSlides}" frameborder="0" width="100%" height="100%" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>` : `<div class="flex items-center justify-center h-full text-slate-600 text-sm">Keine Slide ID erkannt</div>`}
+                </div>
+                <div class="mt-4 flex justify-between items-center">
+                    <span class="text-xs text-slate-500 font-mono">ID: ${slideID || 'N/A'}</span>
+                    <a href="${rawSlideLink}" target="_blank" class="text-xs font-bold hover:underline flex items-center gap-1" style="color: var(--primary);">
+                        Google Slides öffnen <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PROMPTER -->
+            <div class="card p-6 flex flex-col group hover:border-slate-500 transition-colors">
+                <div class="flex items-center justify-between mb-5">
+                    <h3 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-align-left" style="color: var(--primary);"></i> Der Teleprompter
+                    </h3>
+                </div>
+                <p class="text-slate-400 mb-6 text-sm">Dies ist der Text für den Sprecher. Klicken Sie unten, um ihn zu öffnen.</p>
+                
+                <div class="p-4 rounded border font-mono text-xs text-slate-400 mb-auto" style="background-color: rgba(0,0,0,0.3); border-color: var(--border);">
+                    > ZIEL: <span style="color: var(--primary);">${prompterLink}</span><br>
+                    > STATUS: <span class="text-green-500 font-bold">BEREIT</span><br>
+                    > WARTE AUF BENUTZER...
+                </div>
+                
+                <a href="${prompterLink}" target="_blank" class="mt-6 inline-flex items-center justify-center w-full px-4 py-4 text-white font-bold rounded transition-all shadow-md hover:shadow-lg gap-2" style="background-color: var(--primary);">
+                    <i class="fa-solid fa-play"></i> Teleprompter Starten
+                </a>
+            </div>
+        </div>
+
+        <!-- NOTES -->
+        <section class="card p-8">
+            <h2 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-clipboard-list" style="color: var(--primary);"></i> Protokoll & Anweisungen
+            </h2>
+            <div class="text-slate-300 italic border-l-2 border-slate-600 pl-4 py-2">
+                "${tone}"
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="text-center py-12 border-t mt-10" style="border-color: var(--border);">
+            <p class="text-slate-400 text-lg mb-4 font-medium">${footerMsg}</p>
+             <div class="inline-block">
+                <span class="text-xs font-bold border px-3 py-1 rounded-full" style="color: var(--primary); border-color: var(--primary); background-color: rgba(255,255,255,0.05);">
+                    STATUS: MISSION GO
+                </span>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>`;
+    }
+
+    function downloadHTML() {
+        const html = generateHTML();
+        const id = document.getElementById('opId').value || "kontrollzentrum";
+        const cleanId = id.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+        
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; 
+        a.download = `Kontrollzentrum_${cleanId}.html`;
+        document.body.appendChild(a); 
+        a.click(); 
+        document.body.removeChild(a);
+        
+        logStatus("Datei erfolgreich gespeichert.");
+    }
+
+    function previewControlCenter() {
+        const html = generateHTML();
+        const win = window.open('', '_blank');
+        if(win) {
+            win.document.write(html);
+            win.document.close();
+        } else {
+            alert("Bitte Pop-ups erlauben.");
+        }
+        logStatus("Vorschau wird geöffnet...");
+    }
+  </script>
+</body>
+</html>
+

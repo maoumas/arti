@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Control Center Generator - Light Mode</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    /* COLOR PALETTE - Light, Grey & Purple */
+    :root {
+        --bg-app: #f1f5f9;       /* Light Grey Background */
+        --bg-panel: #ffffff;     /* Pure White Panels */
+        --accent: #8b5cf6;       /* Vibrant Purple */
+        --accent-hover: #7c3aed; /* Darker Purple */
+        --accent-light: #ddd6fe; /* Very Light Purple */
+        --text-main: #334155;    /* Dark Slate Text */
+        --text-muted: #64748b;   /* Muted Grey Text */
+        --border: #e2e8f0;       /* Light Grey Borders */
+        --input-bg: #f8fafc;     /* Very Light Input Background */
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+
+    body {
+        background-color: var(--bg-app);
+        color: var(--text-main);
+        font-family: 'Inter', sans-serif;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    /* CUSTOM SCROLLBARS (Purple) */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-app); }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    /* HEADER */
+    .header {
+        padding: 15px 25px;
+        background: var(--bg-panel);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+        box-shadow: var(--shadow);
+        z-index: 20;
+    }
+
+    /* MAIN LAYOUT */
+    .main-layout {
+        flex: 1;
+        display: flex;
+        padding: 25px;
+        gap: 25px;
+        overflow-y: hidden;
+    }
+
+    /* PANELS */
+    .panel {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: 12px; /* Softer, rounder corners */
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    /* LEFT FORM */
+    .form-section {
+        flex: 2;
+        padding: 0;
+        overflow-y: auto;
+    }
+
+    .form-header {
+        background: #fff;
+        padding: 20px 30px;
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .form-content {
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    /* INPUT GROUPS */
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        background: #f8fafc;
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        transition: border-color 0.2s;
+    }
+    
+    .input-group:hover {
+        border-color: #cbd5e1;
+    }
+    
+    .input-group label {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--accent); /* Purple Labels */
+        letter-spacing: -0.01em;
+    }
+
+    /* Friendly Instructions */
+    .input-instruction {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 8px;
+        line-height: 1.5;
+    }
+
+    input[type="text"], input[type="url"], textarea {
+        background: #fff;
+        border: 1px solid #cbd5e1;
+        color: var(--text-main);
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        transition: all 0.2s;
+    }
+
+    input:focus, textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px var(--accent-light);
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 100px;
+        line-height: 1.6;
+    }
+
+    /* RIGHT SIDEBAR */
+    .sidebar-section {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        min-width: 340px;
+        max-width: 420px;
+    }
+
+    /* ACTIONS PANEL */
+    .actions-panel {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: var(--shadow);
+    }
+
+    /* BUTTONS */
+    .btn {
+        display: inline-flex; justify-content: center; items-center; gap: 10px;
+        padding: 16px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: 1px solid transparent;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    
+    /* Primary Button: Purple */
+    .btn-primary { 
+        background: var(--accent); 
+        color: white; 
+        box-shadow: 0 4px 6px rgba(139, 92, 246, 0.25);
+    }
+    .btn-primary:hover { 
+        background: var(--accent-hover); 
+        transform: translateY(-1px); 
+        box-shadow: 0 6px 8px rgba(139, 92, 246, 0.3);
+    }
+
+    /* Secondary Button: Outline */
+    .btn-secondary { 
+        background: white; 
+        border: 1px solid var(--border); 
+        color: var(--text-muted); 
+    }
+    .btn-secondary:hover { 
+        border-color: var(--accent);
+        color: var(--accent);
+        background: #fdfbff;
+    }
+
+    /* STATUS LOG */
+    .status-panel {
+        padding: 20px;
+        background: #fcfaff; /* Very light purple tint */
+        border: 1px dashed var(--accent);
+        border-radius: 12px;
+        margin-top: auto;
+    }
+
+    @media (max-width: 900px) {
+        body { height: auto; overflow-y: auto; }
+        .main-layout { flex-direction: column; padding: 15px; }
+        .sidebar-section { min-width: 100%; max-width: 100%; order: -1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="flex items-center gap-4">
+        <span class="text-3xl text-purple-600"><i class="fa-solid fa-layer-group"></i></span>
+        <div>
+            <h1 class="text-xl font-bold tracking-tight text-slate-800">Control Center <span style="color: var(--accent);">Generator</span></h1>
+            <p class="text-xs text-slate-500 font-medium">Simplified Mode</p>
+        </div>
+    </div>
+    <div class="hidden md:block">
+         <span class="text-xs font-bold px-3 py-2 rounded-full bg-purple-100 text-purple-700 border border-purple-200">
+            System Ready
+         </span>
+    </div>
+  </header>
+
+  <div class="main-layout">
+    
+    <!-- LEFT PANEL: FORM -->
+    <div class="panel form-section">
+        <div class="form-header">
+            <h2 class="text-base font-bold text-slate-700 flex items-center gap-3">
+                <span class="w-2 h-2 rounded-full bg-purple-500"></span> 1. Enter Information Here
+            </h2>
+            <button class="text-sm text-purple-600 hover:text-purple-800 font-medium underline" onclick="loadExample()">
+                Fill with Example Data (Help)
+            </button>
+        </div>
+
+        <div class="form-content">
+            
+            <!-- Block 1: Identity -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="input-group">
+                    <label>1. Short Name (ID)</label>
+                    <p class="input-instruction">Please type a short code or number for this job. It helps to organize your files.</p>
+                    <input type="text" id="opId" placeholder="e.g.: JOB-2025">
+                </div>
+                <div class="input-group">
+                    <label>2. Location</label>
+                    <p class="input-instruction">Where are you broadcasting from right now? Just the City and Country is fine.</p>
+                    <input type="text" id="opLoc" placeholder="e.g.: London, UK">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>3. Main Title</label>
+                <p class="input-instruction">What is the big headline for this presentation? This text will appear at the very top.</p>
+                <input type="text" id="opTitle" placeholder="Type the title here...">
+            </div>
+
+            <div class="input-group">
+                <label>4. Description</label>
+                <p class="input-instruction">What is this show about? Please write one or two simple sentences so everyone knows what to expect.</p>
+                <textarea id="opDesc" rows="3" placeholder="Briefly describe the topic here..."></textarea>
+            </div>
+
+            <hr class="border-slate-200">
+
+            <!-- Block 2: Resources -->
+            <div class="input-group">
+                <label>5. Google Slides Address</label>
+                <p class="input-instruction">Go to your presentation in your browser. Copy the entire long address from the top bar and paste it here.</p>
+                <input type="url" id="linkSlides" placeholder="Paste the long Google link here..." onchange="detectSlideId()">
+                <p class="text-xs font-bold mt-2" id="slideStatus"></p>
+            </div>
+
+            <div class="input-group">
+                <label>6. Teleprompter Address</label>
+                <p class="input-instruction">We need the link to the text the speaker will read. Please paste that link in this box.</p>
+                <input type="url" id="linkPrompter" placeholder="e.g.: https://zmau.dev/my-script.html">
+            </div>
+
+            <!-- Block 3: Notes -->
+            <hr class="border-slate-200">
+            
+            <div class="input-group">
+                <label>7. Tone of Voice (Instructions)</label>
+                <p class="input-instruction">Give the speaker a small hint: Should they sound serious, happy, or calm?</p>
+                <textarea id="opTone" rows="2" placeholder="e.g.: Please speak slowly and clearly..."></textarea>
+            </div>
+             <div class="input-group">
+                <label>8. Encouraging Message</label>
+                <p class="input-instruction">A nice message for the speaker at the bottom of the page. Something like "You can do it!" helps.</p>
+                <textarea id="opFooter" rows="2" placeholder="e.g.: Good luck with the show!"></textarea>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- RIGHT PANEL: ACTIONS -->
+    <div class="sidebar-section">
+        
+        <div class="actions-panel">
+            <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 border-b border-slate-200 pb-3">2. Finish Up</h3>
+            
+            <p class="text-sm text-slate-500 mb-4 leading-relaxed">
+                Once you have filled in the boxes on the left, click this purple button to see the result:
+            </p>
+            
+            <button class="btn btn-primary" onclick="previewControlCenter()">
+                <span><i class="fa-solid fa-eye"></i></span> Preview Result
+            </button>
+            
+            <div class="h-px bg-slate-200 my-4"></div>
+
+            <p class="text-sm text-slate-500 mb-4">
+                Or save the file directly to your computer:
+            </p>
+
+            <button class="btn btn-secondary" onclick="downloadHTML()">
+                <span><i class="fa-solid fa-download"></i></span> Save File
+            </button>
+        </div>
+
+        <div class="status-panel">
+            <h4 class="text-xs font-bold mb-2 font-mono text-purple-600">SYSTEM LOG</h4>
+            <div id="statusLog" class="text-xs font-mono text-slate-400 space-y-1 h-24 overflow-y-auto">
+                <p>> Waiting for your input...</p>
+            </div>
+        </div>
+
+    </div>
+  </div>
+
+  <script>
+    // LOAD EXAMPLE DATA
+    function loadExample() {
+        document.getElementById('opId').value = "OPS-NY-2025";
+        document.getElementById('opLoc').value = "New York, USA";
+        document.getElementById('opTitle').value = "Annual Strategy Review";
+        document.getElementById('opDesc').value = "A comprehensive look at our goals for the next year and a review of the budget.";
+        document.getElementById('linkSlides').value = "https://docs.google.com/presentation/d/1-CnNvoVp3yUJoH_eI2C6lUkzxBFtql6Q/edit?usp=sharing";
+        document.getElementById('linkPrompter').value = "https://zmau.dev/bf/tp-bf.html";
+        document.getElementById('opTone').value = "Keep it professional but friendly. Smile often.";
+        document.getElementById('opFooter').value = "Believe in yourself. You know this material.";
+        logStatus("Example data has been filled in.");
+    }
+
+    // LOGGING FUNCTION
+    function logStatus(msg) {
+        const log = document.getElementById('statusLog');
+        log.innerHTML += `<p>> ${msg}</p>`;
+        log.scrollTop = log.scrollHeight;
+    }
+
+    // SLIDE ID DETECTION
+    function getSlideID(url) {
+        const match = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+        return match ? match[1] : null;
+    }
+
+    function detectSlideId() {
+        const url = document.getElementById('linkSlides').value;
+        const id = getSlideID(url);
+        const statusEl = document.getElementById('slideStatus');
+        
+        if(id) {
+            statusEl.innerText = "✓ Great! Presentation detected successfully.";
+            statusEl.className = "text-xs font-bold mt-2 text-purple-600";
+            logStatus("Google Slides ID found.");
+        } else if (url.length > 0) {
+            statusEl.innerText = "⚠️ Hmm, that doesn't look like a Google link. Please check it.";
+            statusEl.className = "text-xs font-bold mt-2 text-red-500";
+            logStatus("Error: Invalid Link format.");
+        } else {
+            statusEl.innerText = "";
+        }
+    }
+
+    // GENERATE THE FINAL HTML (LIGHT THEME)
+    function generateHTML() {
+        // Collect Data
+        const id = document.getElementById('opId').value || "GEN-001";
+        const loc = document.getElementById('opLoc').value || "Unknown";
+        const title = document.getElementById('opTitle').value || "Untitled Mission";
+        const desc = document.getElementById('opDesc').value || "No description provided.";
+        const footerMsg = document.getElementById('opFooter').value || "End of transmission.";
+        const tone = document.getElementById('opTone').value || "No specific instructions.";
+        
+        const rawSlideLink = document.getElementById('linkSlides').value;
+        const slideID = getSlideID(rawSlideLink) || "";
+        const prompterLink = document.getElementById('linkPrompter').value || "#";
+        const embedSlides = slideID ? `https://docs.google.com/presentation/d/${slideID}/embed?start=false&loop=false&delayms=3000` : "";
+
+        // The Template String (Light & Purple Theme injected)
+        return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Center: ${title}</title>
+    <script src="https://cdn.tailwindcss.com"><\/script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* LIGHT THEME VARIABLES */
+        :root {
+            --bg-body: #f1f5f9;
+            --bg-card: #ffffff;
+            --primary: #8b5cf6; /* Purple */
+            --primary-dark: #7c3aed;
+            --text-dark: #1e293b;
+            --text-gray: #64748b;
+            --border: #e2e8f0;
+        }
+        
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-dark); }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Subtle scanline */
+        .scanline { width: 100%; height: 2px; background: var(--primary); opacity: 0.05; animation: scanline 8s linear infinite; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 50; }
+        @keyframes scanline { 0% { transform: translateY(-100vh); } 100% { transform: translateY(100vh); } }
+        
+        /* Card Styling */
+        .card { background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        
+        /* Pulsing Dot */
+        .status-dot { height: 10px; width: 10px; background-color: var(--primary); border-radius: 50%; display: inline-block; box-shadow: 0 0 8px var(--primary); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
+        
+        a { transition: all 0.2s; }
+    </style>
+</head>
+<body class="min-h-screen p-6 md:p-10">
+    <div class="scanline"></div>
+
+    <!-- HEADER -->
+    <header class="max-w-6xl mx-auto mb-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-200 pb-6">
+        <div>
+            <div class="flex items-center gap-2 mb-2">
+                <div class="status-dot"></div>
+                <span class="text-xs font-bold tracking-widest uppercase text-purple-600">Secure Connection</span>
+            </div>
+            <h1 class="text-3xl font-extrabold tracking-tight text-slate-800">Control Center</h1>
+            <p class="text-slate-500 text-sm mt-1">${title}</p>
+        </div>
+        <div class="text-right hidden md:block">
+            <div class="font-mono text-xs text-slate-400 bg-white px-2 py-1 rounded border border-slate-200">ID: ${id}</div>
+            <div class="font-mono text-xs text-slate-400 mt-1">LOC: ${loc}</div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto space-y-10">
+        
+        <!-- ALERT SECTION -->
+        <section>
+            <div class="inline-flex items-center gap-2 bg-purple-50 border border-purple-100 rounded-full px-4 py-1 mb-4">
+                <i class="fa-solid fa-bell text-purple-600 text-xs"></i>
+                <span class="text-xs font-bold text-purple-700 uppercase">New Data Received</span>
+            </div>
+            <h2 class="text-2xl font-bold text-slate-800 mb-4">Mission Package: "${title}"</h2>
+            <p class="text-lg text-slate-600 leading-relaxed max-w-3xl border-l-4 border-purple-400 pl-6 bg-white py-4 pr-4 rounded-r-lg shadow-sm">
+                ${desc}
+            </p>
+        </section>
+
+        <!-- MAIN GRID -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- SLIDES CARD -->
+            <div class="card p-6 group hover:border-purple-300 transition-colors">
+                <div class="flex items-center justify-between mb-5">
+                    <h3 class="text-xl font-bold text-slate-700 flex items-center gap-2">
+                        <i class="fa-solid fa-tv text-purple-500"></i> The Presentation
+                    </h3>
+                </div>
+                <div class="relative w-full aspect-video bg-slate-100 rounded-lg border border-slate-200 overflow-hidden shadow-inner">
+                    ${slideID ? `<iframe src="${embedSlides}" frameborder="0" width="100%" height="100%" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>` : `<div class="flex items-center justify-center h-full text-slate-400 text-sm">No Slide ID detected</div>`}
+                </div>
+                <div class="mt-4 flex justify-between items-center">
+                    <span class="text-xs text-slate-400 font-mono">ID: ${slideID || 'N/A'}</span>
+                    <a href="${rawSlideLink}" target="_blank" class="text-xs font-bold text-purple-600 hover:text-purple-800 hover:underline flex items-center gap-1">
+                        Open Google Slides <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- TELEPROMPTER CARD -->
+            <div class="card p-6 flex flex-col group hover:border-purple-300 transition-colors">
+                <div class="flex items-center justify-between mb-5">
+                    <h3 class="text-xl font-bold text-slate-700 flex items-center gap-2">
+                        <i class="fa-solid fa-align-left text-purple-500"></i> The Teleprompter
+                    </h3>
+                </div>
+                <p class="text-slate-500 mb-6 text-sm">This is your script. Click the button below to open the reading view.</p>
+                
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 font-mono text-xs text-slate-500 mb-auto">
+                    > TARGET LINK: <span class="text-purple-600">${prompterLink}</span><br>
+                    > STATUS: <span class="text-green-600 font-bold">READY TO BROADCAST</span><br>
+                    > WAITING FOR USER...
+                </div>
+                
+                <a href="${prompterLink}" target="_blank" class="mt-6 inline-flex items-center justify-center w-full px-4 py-4 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-lg transition-all shadow-md hover:shadow-lg gap-2">
+                    <i class="fa-solid fa-play"></i> Launch Teleprompter
+                </a>
+            </div>
+        </div>
+
+        <!-- NOTES SECTION -->
+        <section class="card p-8">
+            <h2 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-clipboard-list text-purple-500"></i> Protocol Notes
+            </h2>
+            <div class="text-slate-600 italic border-l-2 border-slate-300 pl-4 bg-slate-50 py-3 pr-3 rounded-r">
+                "${tone}"
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="text-center py-12 border-t border-slate-200 mt-10">
+            <p class="text-slate-500 text-lg mb-4 font-medium">${footerMsg}</p>
+             <div class="inline-block">
+                <span class="text-xs font-bold border border-green-200 bg-green-50 text-green-700 px-3 py-1 rounded-full">
+                    STATUS: MISSION GO
+                </span>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>`;
+    }
+
+    // DOWNLOAD FUNCTION
+    function downloadHTML() {
+        const html = generateHTML();
+        const id = document.getElementById('opId').value || "control-center";
+        // Clean filename
+        const cleanId = id.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+        
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; 
+        a.download = `Control_Center_${cleanId}.html`;
+        document.body.appendChild(a); 
+        a.click(); 
+        document.body.removeChild(a);
+        
+        logStatus("File successfully saved to your computer.");
+    }
+
+    // PREVIEW FUNCTION
+    function previewControlCenter() {
+        const html = generateHTML();
+        const win = window.open('', '_blank');
+        if(win) {
+            win.document.write(html);
+            win.document.close();
+        } else {
+            alert("Please allow 'Pop-ups' in your browser to see the preview.");
+        }
+        logStatus("Opening preview window...");
+    }
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Universal Control Center Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    /* VARIABLES DINÁMICAS (Se actualizan con JS) */
+    :root {
+        --bg-app: #0f172a;       
+        --bg-panel: #1e293b;     
+        --accent: #6366f1;       
+        --accent-hover: #4f46e5; 
+        --text-main: #f1f5f9;    
+        --text-muted: #94a3b8;   
+        --border: #334155;       
+        --input-bg: #020617;     
+    }
+
+    body {
+        background-color: var(--bg-app);
+        color: var(--text-main);
+        font-family: 'Inter', sans-serif;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    /* SCROLLBARS */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-app); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    /* HEADER */
+    .header {
+        padding: 15px 25px;
+        background: var(--bg-panel);
+        border-bottom: 3px solid var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-shrink: 0;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        z-index: 20;
+        transition: all 0.4s ease;
+    }
+
+    /* MAIN LAYOUT */
+    .main-layout {
+        flex: 1;
+        display: flex;
+        padding: 25px;
+        gap: 25px;
+        overflow-y: hidden;
+    }
+
+    /* PANELS */
+    .panel {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        transition: all 0.4s ease;
+    }
+
+    /* FORM SECTION */
+    .form-section {
+        flex: 2;
+        padding: 0;
+        overflow-y: auto;
+    }
+
+    .form-header {
+        background: rgba(0,0,0,0.05);
+        padding: 20px 30px;
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        backdrop-filter: blur(5px);
+    }
+
+    .form-content {
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    /* INPUT GROUPS */
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        background: rgba(125, 125, 125, 0.05);
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        transition: border-color 0.2s;
+    }
+    
+    .input-group:hover {
+        border-color: var(--accent);
+    }
+    
+    .input-group label {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--accent);
+        letter-spacing: 0.01em;
+        transition: color 0.3s ease;
+    }
+
+    .input-instruction {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 5px;
+        line-height: 1.4;
+    }
+
+    input[type="text"], input[type="url"], textarea {
+        background: var(--input-bg);
+        border: 1px solid var(--border);
+        color: var(--text-main);
+        padding: 14px 16px;
+        border-radius: 6px;
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        transition: all 0.2s;
+    }
+
+    input:focus, textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(125,125,125,0.1);
+    }
+
+    textarea { resize: vertical; min-height: 90px; }
+
+    /* SIDEBAR */
+    .sidebar-section {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        min-width: 320px;
+        max-width: 400px;
+    }
+
+    .actions-panel {
+        background: var(--bg-panel);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 25px;
+        transition: background-color 0.4s ease;
+    }
+
+    /* BUTTONS */
+    .btn {
+        display: inline-flex; justify-content: center; items-center; gap: 10px;
+        padding: 16px 20px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: 1px solid transparent;
+        width: 100%;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+    }
+    
+    .btn-primary { 
+        background: var(--accent); 
+        color: #fff; 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .btn-primary:hover { 
+        filter: brightness(1.1);
+        transform: translateY(-1px); 
+    }
+
+    .btn-secondary { 
+        background: transparent; 
+        border: 1px solid var(--border); 
+        color: var(--text-muted); 
+    }
+    .btn-secondary:hover { 
+        border-color: var(--accent);
+        color: var(--accent);
+        background: rgba(125,125,125,0.05);
+    }
+
+    /* SELECTORS */
+    .selector-container {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+    
+    .lang-btn {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid var(--border);
+        background: rgba(0,0,0,0.2);
+        color: var(--text-muted);
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        font-weight: bold;
+        text-align: center;
+        transition: all 0.2s;
+    }
+    .lang-btn:hover { border-color: var(--accent); color: var(--text-main); }
+    .lang-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+    .theme-dot {
+        width: 35px; height: 35px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 3px solid transparent;
+        transition: transform 0.2s;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .theme-dot:hover { transform: scale(1.1); }
+    .theme-dot.active { border-color: var(--text-main); transform: scale(1.1); }
+
+    .status-panel {
+        padding: 15px;
+        background: rgba(125,125,125,0.05); 
+        border: 1px dashed var(--accent);
+        border-radius: 8px;
+        margin-top: auto;
+    }
+
+    @media (max-width: 900px) {
+        body { height: auto; overflow-y: auto; }
+        .main-layout { flex-direction: column; padding: 15px; }
+        .sidebar-section { min-width: 100%; max-width: 100%; order: -1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="flex items-center gap-4">
+        <span class="text-3xl" style="color: var(--accent);"><i class="fa-solid fa-satellite-dish"></i></span>
+        <div>
+            <h1 class="text-xl font-bold tracking-tight" style="color: var(--text-main)">MASTER <span style="color: var(--accent);">CONTROL</span></h1>
+            <p class="text-xs font-mono" style="color: var(--text-muted)" id="lbl_subtitle">Universal Generator v3.0</p>
+        </div>
+    </div>
+    <div class="hidden md:block">
+         <span id="lbl_sys_status" class="text-xs font-bold px-3 py-2 rounded border" style="background-color: rgba(125,125,125,0.1); border-color: var(--border); color: var(--accent);">
+            SYSTEM ONLINE
+         </span>
+    </div>
+  </header>
+
+  <div class="main-layout">
+    
+    <!-- LEFT: FORM -->
+    <div class="panel form-section">
+        <div class="form-header">
+            <h2 class="text-base font-bold flex items-center gap-3" style="color: var(--text-main)">
+                <span class="w-3 h-3 rounded-full" style="background-color: var(--accent);"></span> <span id="lbl_step1">1. Datos</span>
+            </h2>
+            <button id="btn_example" class="text-sm font-medium underline hover:opacity-80" style="color: var(--accent);" onclick="loadExample()">
+                Cargar Ejemplo
+            </button>
+        </div>
+
+        <div class="form-content">
+            <!-- Fields -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="input-group">
+                    <label id="lbl_id">1. ID</label>
+                    <p class="input-instruction" id="inst_id">Instrucciones...</p>
+                    <input type="text" id="opId">
+                </div>
+                <div class="input-group">
+                    <label id="lbl_loc">2. Ubicación</label>
+                    <p class="input-instruction" id="inst_loc">Instrucciones...</p>
+                    <input type="text" id="opLoc">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label id="lbl_title">3. Título</label>
+                <p class="input-instruction" id="inst_title">Instrucciones...</p>
+                <input type="text" id="opTitle">
+            </div>
+
+            <div class="input-group">
+                <label id="lbl_desc">4. Descripción</label>
+                <p class="input-instruction" id="inst_desc">Instrucciones...</p>
+                <textarea id="opDesc" rows="3"></textarea>
+            </div>
+
+            <hr style="border-color: var(--border);">
+
+            <div class="input-group">
+                <label id="lbl_slides">5. Link Slides</label>
+                <p class="input-instruction" id="inst_slides">Instrucciones...</p>
+                <input type="url" id="linkSlides" onchange="detectSlideId()">
+                <p class="text-xs font-bold mt-2" id="slideStatus"></p>
+            </div>
+
+            <div class="input-group">
+                <label id="lbl_prompter">6. Link Prompter</label>
+                <p class="input-instruction" id="inst_prompter">Instrucciones...</p>
+                <input type="url" id="linkPrompter">
+            </div>
+
+            <hr style="border-color: var(--border);">
+            
+            <div class="input-group">
+                <label id="lbl_tone">7. Tono</label>
+                <p class="input-instruction" id="inst_tone">Instrucciones...</p>
+                <textarea id="opTone" rows="2"></textarea>
+            </div>
+             <div class="input-group">
+                <label id="lbl_footer">8. Mensaje Final</label>
+                <p class="input-instruction" id="inst_footer">Instrucciones...</p>
+                <textarea id="opFooter" rows="2"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT: CONFIG & ACTIONS -->
+    <div class="sidebar-section">
+        
+        <div class="actions-panel">
+            
+            <!-- LANGUAGE SELECTOR -->
+            <h3 id="head_lang" class="text-xs font-bold uppercase tracking-wider mb-2" style="color: var(--text-muted)">Idioma / Language</h3>
+            <div class="selector-container">
+                <button class="lang-btn active" onclick="setLang('es', this)">Español</button>
+                <button class="lang-btn" onclick="setLang('de', this)">Deutsch</button>
+                <button class="lang-btn" onclick="setLang('en', this)">English</button>
+            </div>
+
+            <!-- THEME SELECTOR -->
+            <h3 id="head_theme" class="text-xs font-bold uppercase tracking-wider mb-2" style="color: var(--text-muted)">Paleta / Theme</h3>
+            <div class="selector-container" style="justify-content: space-between; background: rgba(0,0,0,0.05); padding: 10px; border-radius: 8px;">
+                <div class="theme-dot active" style="background: #6366f1;" onclick="setTheme('indigo', this)" title="Tech Blue"></div>
+                <div class="theme-dot" style="background: #f59e0b;" onclick="setTheme('amber', this)" title="Dark Gold"></div>
+                <div class="theme-dot" style="background: #10b981;" onclick="setTheme('emerald', this)" title="Forest Green"></div>
+                <div class="theme-dot" style="background: #8b5cf6; border: 2px solid #ddd;" onclick="setTheme('light', this)" title="Light Purple"></div>
+            </div>
+
+            <hr style="border-color: var(--border); margin: 20px 0;">
+
+            <h3 id="head_actions" class="text-xs font-bold uppercase tracking-wider mb-4" style="color: var(--text-muted)">Finalizar</h3>
+            
+            <button id="btn_preview" class="btn btn-primary" onclick="previewControlCenter()">
+                <span><i class="fa-solid fa-eye"></i></span> Ver Resultado
+            </button>
+            
+            <button id="btn_download" class="btn btn-secondary" onclick="downloadHTML()">
+                <span><i class="fa-solid fa-download"></i></span> Guardar Archivo
+            </button>
+        </div>
+
+        <div class="status-panel">
+            <h4 class="text-xs font-bold mb-2 font-mono" style="color: var(--accent);">LOG</h4>
+            <div id="statusLog" class="text-xs font-mono space-y-1 h-20 overflow-y-auto" style="color: var(--text-muted)">
+                <p>> System Ready.</p>
+            </div>
+        </div>
+
+    </div>
+  </div>
+
+  <script>
+    // --- 1. CONFIGURATION & STATE ---
+    let currentState = {
+        lang: 'es',
+        theme: 'indigo'
+    };
+
+    // Translations Database
+    const i18n = {
+        es: {
+            lbl_subtitle: "Generador Universal v3.0",
+            lbl_sys_status: "SISTEMA ACTIVO",
+            lbl_step1: "1. Introducir Datos",
+            btn_example: "Cargar Ejemplo (Ayuda)",
+            lbl_id: "1. Identificador Corto",
+            inst_id: "Escriba una palabra clave o número para este trabajo.",
+            ph_id: "Ej: NOTICIAS-2025",
+            lbl_loc: "2. Ubicación",
+            inst_loc: "¿Desde qué ciudad transmite?",
+            ph_loc: "Ej: Bogotá, Colombia",
+            lbl_title: "3. Título del Programa",
+            inst_title: "El gran titular que aparecerá arriba.",
+            ph_title: "Escriba el título...",
+            lbl_desc: "4. Descripción",
+            inst_desc: "¿De qué trata? Una o dos frases sencillas.",
+            ph_desc: "Breve descripción...",
+            lbl_slides: "5. Enlace Google Slides",
+            inst_slides: "Copie el enlace completo del navegador y péguelo aquí.",
+            ph_slides: "Pegue el enlace largo aquí...",
+            lbl_prompter: "6. Enlace Teleprompter",
+            inst_prompter: "La dirección web donde está el texto a leer.",
+            ph_prompter: "https://...",
+            lbl_tone: "7. Tono de Voz",
+            inst_tone: "¿Cómo debe hablar el locutor? (Serio, alegre...)",
+            ph_tone: "Ej: Hablar tranquilo y sonreír.",
+            lbl_footer: "8. Mensaje de Ánimo",
+            inst_footer: "Unas palabras finales para el locutor.",
+            ph_footer: "Ej: ¡Mucha suerte!",
+            head_lang: "IDIOMA / LANGUAGE",
+            head_theme: "COLOR / TEMA",
+            head_actions: "2. ACCIONES",
+            btn_preview: "Ver Resultado",
+            btn_download: "Guardar Archivo",
+            status_ready: "Sistema listo. Esperando datos.",
+            status_example: "Datos de ejemplo cargados.",
+            status_slide_ok: "✓ Presentación detectada.",
+            status_slide_err: "⚠️ Enlace no reconocido.",
+            // Result Template Texts
+            res_secure: "Conexión Segura",
+            res_control: "Centro de Control",
+            res_new_data: "Nuevos Datos",
+            res_mission: "Paquete de Misión",
+            res_pres: "La Presentación",
+            res_open_pres: "Abrir Google Slides",
+            res_prompter: "El Teleprompter",
+            res_prompter_desc: "Este es su guion. Haga clic abajo para abrir.",
+            res_prompter_status: "LISTO PARA EMITIR",
+            res_target: "ENLACE OBJETIVO",
+            res_launch: "Iniciar Teleprompter",
+            res_notes: "Notas de Protocolo",
+            res_status_go: "ESTADO: GO"
+        },
+        de: {
+            lbl_subtitle: "Universal Generator v3.0",
+            lbl_sys_status: "SYSTEM ONLINE",
+            lbl_step1: "1. Daten Eingeben",
+            btn_example: "Beispiel laden (Hilfe)",
+            lbl_id: "1. Kurz-ID",
+            inst_id: "Geben Sie ein kurzes Kürzel ein.",
+            ph_id: "z.B.: NEWS-2025",
+            lbl_loc: "2. Standort",
+            inst_loc: "Wo befinden Sie sich? (Stadt)",
+            ph_loc: "z.B.: Berlin, DE",
+            lbl_title: "3. Sendungstitel",
+            inst_title: "Die große Überschrift der Seite.",
+            ph_title: "Titel eingeben...",
+            lbl_desc: "4. Beschreibung",
+            inst_desc: "Worum geht es? Ein oder zwei Sätze.",
+            ph_desc: "Kurzbeschreibung...",
+            lbl_slides: "5. Google Slides Link",
+            inst_slides: "Kopieren Sie den Browser-Link hierher.",
+            ph_slides: "Langen Link hier einfügen...",
+            lbl_prompter: "6. Teleprompter Link",
+            inst_prompter: "Der Link zum Sprechertext.",
+            ph_prompter: "https://...",
+            lbl_tone: "7. Regieanweisung",
+            inst_tone: "Wie soll gesprochen werden? (Ruhig, schnell...)",
+            ph_tone: "z.B.: Bitte deutlich sprechen.",
+            lbl_footer: "8. Schlussnachricht",
+            inst_footer: "Motivierende Worte für den Sprecher.",
+            ph_footer: "z.B.: Viel Erfolg!",
+            head_lang: "SPRACHE / LANGUAGE",
+            head_theme: "FARBSCHEMA",
+            head_actions: "2. FERTIGSTELLEN",
+            btn_preview: "Vorschau ansehen",
+            btn_download: "Datei speichern",
+            status_ready: "Bereit für Eingaben.",
+            status_example: "Beispieldaten geladen.",
+            status_slide_ok: "✓ Präsentation erkannt.",
+            status_slide_err: "⚠️ Link prüfen.",
+            // Result Template Texts
+            res_secure: "Sichere Verbindung",
+            res_control: "Kontrollzentrum",
+            res_new_data: "Neue Daten",
+            res_mission: "Missionspaket",
+            res_pres: "Die Präsentation",
+            res_open_pres: "Google Slides öffnen",
+            res_prompter: "Der Teleprompter",
+            res_prompter_desc: "Das Skript für den Sprecher.",
+            res_prompter_status: "BEREIT",
+            res_target: "ZIEL-LINK",
+            res_launch: "Teleprompter Starten",
+            res_notes: "Protokollnotizen",
+            res_status_go: "STATUS: MISSION GO"
+        },
+        en: {
+            lbl_subtitle: "Universal Generator v3.0",
+            lbl_sys_status: "SYSTEM ONLINE",
+            lbl_step1: "1. Enter Data",
+            btn_example: "Load Example (Help)",
+            lbl_id: "1. Short ID",
+            inst_id: "Type a short code for this job.",
+            ph_id: "e.g.: JOB-2025",
+            lbl_loc: "2. Location",
+            inst_loc: "City and Country of broadcast.",
+            ph_loc: "e.g.: London, UK",
+            lbl_title: "3. Main Title",
+            inst_title: "The big headline at the top.",
+            ph_title: "Type title here...",
+            lbl_desc: "4. Description",
+            inst_desc: "What is this about? Keep it simple.",
+            ph_desc: "Brief description...",
+            lbl_slides: "5. Google Slides Link",
+            inst_slides: "Copy the full browser link and paste here.",
+            ph_slides: "Paste long link here...",
+            lbl_prompter: "6. Teleprompter Link",
+            inst_prompter: "The web address for the script.",
+            ph_prompter: "https://...",
+            lbl_tone: "7. Tone of Voice",
+            inst_tone: "Instructions for the speaker (Calm, happy...)",
+            ph_tone: "e.g.: Speak slowly.",
+            lbl_footer: "8. Final Message",
+            inst_footer: "Encouraging words for the footer.",
+            ph_footer: "e.g.: Good luck!",
+            head_lang: "LANGUAGE",
+            head_theme: "COLOR THEME",
+            head_actions: "2. FINISH",
+            btn_preview: "Preview Result",
+            btn_download: "Save File",
+            status_ready: "System ready. Waiting for input.",
+            status_example: "Example data loaded.",
+            status_slide_ok: "✓ Presentation detected.",
+            status_slide_err: "⚠️ Invalid link.",
+            // Result Template Texts
+            res_secure: "Secure Connection",
+            res_control: "Control Center",
+            res_new_data: "New Data Received",
+            res_mission: "Mission Package",
+            res_pres: "The Presentation",
+            res_open_pres: "Open Google Slides",
+            res_prompter: "The Teleprompter",
+            res_prompter_desc: "This is your script. Click below to open.",
+            res_prompter_status: "READY TO BROADCAST",
+            res_target: "TARGET LINK",
+            res_launch: "Launch Teleprompter",
+            res_notes: "Protocol Notes",
+            res_status_go: "STATUS: MISSION GO"
+        }
+    };
+
+    // Color Themes
+    const themes = {
+        indigo: { bgApp: '#0f172a', bgPanel: '#1e293b', accent: '#6366f1', textMain: '#f1f5f9', border: '#334155', inputBg: '#020617', name: 'Tech Blue' },
+        amber:  { bgApp: '#1c1917', bgPanel: '#292524', accent: '#f59e0b', textMain: '#f5f5f4', border: '#44403c', inputBg: '#0c0a09', name: 'Onyx Gold' },
+        emerald:{ bgApp: '#022c22', bgPanel: '#064e3b', accent: '#34d399', textMain: '#ecfdf5', border: '#065f46', inputBg: '#022c22', name: 'Forest' },
+        light:  { bgApp: '#f1f5f9', bgPanel: '#ffffff', accent: '#8b5cf6', textMain: '#334155', border: '#e2e8f0', inputBg: '#f8fafc', name: 'Light Purple' }
+    };
+
+    // --- 2. LOGIC ---
+
+    function setLang(lang, btn) {
+        currentState.lang = lang;
+        
+        // Update Buttons
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Update Text Content
+        const t = i18n[lang];
+        
+        // Update simple texts
+        ['lbl_subtitle','lbl_sys_status','lbl_step1','btn_example','lbl_id','inst_id','lbl_loc','inst_loc','lbl_title','inst_title','lbl_desc','inst_desc','lbl_slides','inst_slides','lbl_prompter','inst_prompter','lbl_tone','inst_tone','lbl_footer','inst_footer','head_lang','head_theme','head_actions'].forEach(id => {
+            document.getElementById(id).innerText = t[id];
+        });
+
+        // Update buttons with icons
+        document.getElementById('btn_preview').innerHTML = `<span><i class="fa-solid fa-eye"></i></span> ${t.btn_preview}`;
+        document.getElementById('btn_download').innerHTML = `<span><i class="fa-solid fa-download"></i></span> ${t.btn_download}`;
+
+        // Update Placeholders
+        document.getElementById('opId').placeholder = t.ph_id;
+        document.getElementById('opLoc').placeholder = t.ph_loc;
+        document.getElementById('opTitle').placeholder = t.ph_title;
+        document.getElementById('opDesc').placeholder = t.ph_desc;
+        document.getElementById('linkSlides').placeholder = t.ph_slides;
+        document.getElementById('linkPrompter').placeholder = t.ph_prompter;
+        document.getElementById('opTone').placeholder = t.ph_tone;
+        document.getElementById('opFooter').placeholder = t.ph_footer;
+
+        logStatus(t.status_ready);
+    }
+
+    function setTheme(themeName, dot) {
+        currentState.theme = themeName;
+        const th = themes[themeName];
+        const root = document.documentElement;
+
+        // Visual update of dots
+        document.querySelectorAll('.theme-dot').forEach(d => d.classList.remove('active'));
+        dot.classList.add('active');
+
+        // Apply CSS Variables to Generator
+        root.style.setProperty('--bg-app', th.bgApp);
+        root.style.setProperty('--bg-panel', th.bgPanel);
+        root.style.setProperty('--accent', th.accent);
+        root.style.setProperty('--text-main', th.textMain);
+        root.style.setProperty('--border', th.border);
+        root.style.setProperty('--input-bg', th.inputBg);
+        
+        // Special handle for light mode text contrast
+        if(themeName === 'light') {
+            root.style.setProperty('--text-muted', '#64748b');
+        } else {
+            root.style.setProperty('--text-muted', '#94a3b8');
+        }
+
+        logStatus(`Theme: ${th.name}`);
+    }
+
+    function logStatus(msg) {
+        const log = document.getElementById('statusLog');
+        log.innerHTML += `<p>> ${msg}</p>`;
+        log.scrollTop = log.scrollHeight;
+    }
+
+    function loadExample() {
+        // Pre-fill based on language to be helpful
+        const l = currentState.lang;
+        if(l === 'es') {
+            document.getElementById('opId').value = "NOTICIAS-01";
+            document.getElementById('opLoc').value = "Madrid, ES";
+            document.getElementById('opTitle').value = "Resumen Semanal";
+            document.getElementById('opDesc').value = "Un repaso tranquilo a los eventos de la semana.";
+            document.getElementById('opTone').value = "Amable y pausado.";
+            document.getElementById('opFooter').value = "¡Tú puedes!";
+        } else if (l === 'de') {
+            document.getElementById('opId').value = "NEWS-01";
+            document.getElementById('opLoc').value = "Berlin, DE";
+            document.getElementById('opTitle').value = "Wochenrückblick";
+            document.getElementById('opDesc').value = "Ein ruhiger Blick auf die Ereignisse der Woche.";
+            document.getElementById('opTone').value = "Freundlich und langsam.";
+            document.getElementById('opFooter').value = "Viel Erfolg!";
+        } else {
+            document.getElementById('opId').value = "NEWS-01";
+            document.getElementById('opLoc').value = "London, UK";
+            document.getElementById('opTitle').value = "Weekly Review";
+            document.getElementById('opDesc').value = "A calm look at this week's events.";
+            document.getElementById('opTone').value = "Friendly and slow.";
+            document.getElementById('opFooter').value = "Good luck!";
+        }
+        
+        document.getElementById('linkSlides').value = "https://docs.google.com/presentation/d/1-CnNvoVp3yUJoH_eI2C6lUkzxBFtql6Q/edit?usp=sharing";
+        document.getElementById('linkPrompter').value = "https://zmau.dev/bf/tp-bf.html";
+        
+        logStatus(i18n[l].status_example);
+    }
+
+    function getSlideID(url) {
+        const match = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+        return match ? match[1] : null;
+    }
+
+    function detectSlideId() {
+        const url = document.getElementById('linkSlides').value;
+        const id = getSlideID(url);
+        const statusEl = document.getElementById('slideStatus');
+        const t = i18n[currentState.lang];
+        
+        if(id) {
+            statusEl.innerText = t.status_slide_ok;
+            statusEl.style.color = themes[currentState.theme].accent;
+        } else if (url.length > 0) {
+            statusEl.innerText = t.status_slide_err;
+            statusEl.style.color = "#ef4444";
+        } else {
+            statusEl.innerText = "";
+        }
+    }
+
+    // --- 3. GENERATION LOGIC ---
+
+    function generateHTML() {
+        // Gather Data
+        const t = i18n[currentState.lang]; // Get translations for result
+        const th = themes[currentState.theme]; // Get colors for result
+        
+        const id = document.getElementById('opId').value || "GEN-01";
+        const loc = document.getElementById('opLoc').value || "---";
+        const title = document.getElementById('opTitle').value || "---";
+        const desc = document.getElementById('opDesc').value || "---";
+        const tone = document.getElementById('opTone').value || "---";
+        const footer = document.getElementById('opFooter').value || "---";
+        
+        const rawSlideLink = document.getElementById('linkSlides').value;
+        const slideID = getSlideID(rawSlideLink) || "";
+        const prompterLink = document.getElementById('linkPrompter').value || "#";
+        const embedSlides = slideID ? `https://docs.google.com/presentation/d/${slideID}/embed?start=false&loop=false&delayms=3000` : "";
+
+        // Determine text color for light mode exception
+        const resultTextMuted = (currentState.theme === 'light') ? '#64748b' : '#94a3b8';
+
+        return `<!DOCTYPE html>
+<html lang="${currentState.lang}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${t.res_control}: ${title}</title>
+    <script src="https://cdn.tailwindcss.com"><\/script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* INJECTED THEME */
+        :root {
+            --bg-body: ${th.bgApp};
+            --bg-card: ${th.bgPanel};
+            --primary: ${th.accent};
+            --text-main: ${th.textMain};
+            --text-muted: ${resultTextMuted};
+            --border: ${th.border};
+        }
+        
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-body); color: var(--text-main); }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        .scanline { width: 100%; height: 2px; background: var(--primary); opacity: 0.1; animation: scanline 8s linear infinite; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 50; }
+        @keyframes scanline { 0% { transform: translateY(-100vh); } 100% { transform: translateY(100vh); } }
+        
+        .card { background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        .status-dot { height: 10px; width: 10px; background-color: var(--primary); border-radius: 50%; display: inline-block; box-shadow: 0 0 10px var(--primary); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
+        a { transition: all 0.2s; }
+        a:hover { color: var(--primary); }
+    </style>
+</head>
+<body class="min-h-screen p-6 md:p-10">
+    <div class="scanline"></div>
+
+    <header class="max-w-6xl mx-auto mb-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b pb-6" style="border-color: var(--border);">
+        <div>
+            <div class="flex items-center gap-2 mb-2">
+                <div class="status-dot"></div>
+                <span class="text-xs font-bold tracking-widest uppercase" style="color: var(--primary);">${t.res_secure}</span>
+            </div>
+            <h1 class="text-3xl font-extrabold tracking-tight">${t.res_control}</h1>
+            <p class="text-sm mt-1" style="color: var(--text-muted);">${title}</p>
+        </div>
+        <div class="text-right hidden md:block">
+            <div class="font-mono text-xs border px-2 py-1 rounded" style="border-color: var(--border); color: var(--text-muted);">ID: ${id}</div>
+            <div class="font-mono text-xs mt-1" style="color: var(--text-muted);">LOC: ${loc}</div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto space-y-10">
+        <section>
+            <div class="inline-flex items-center gap-2 border rounded-full px-4 py-1 mb-4" style="background-color: rgba(125,125,125,0.05); border-color: var(--border);">
+                <i class="fa-solid fa-bell text-xs" style="color: var(--primary);"></i>
+                <span class="text-xs font-bold uppercase" style="color: var(--primary);">${t.res_new_data}</span>
+            </div>
+            <h2 class="text-2xl font-bold mb-4">${t.res_mission}: "${title}"</h2>
+            <p class="text-lg leading-relaxed max-w-3xl border-l-4 pl-6 py-2" style="border-color: var(--primary); color: var(--text-muted);">
+                ${desc}
+            </p>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- SLIDES -->
+            <div class="card p-6 group hover:border-opacity-50 transition-colors" style="border-color: var(--border);">
+                <div class="flex items-center justify-between mb-5">
+                    <h3 class="text-xl font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-tv" style="color: var(--primary);"></i> ${t.res_pres}
+                    </h3>
+                </div>
+                <div class="relative w-full aspect-video bg-black rounded border overflow-hidden shadow-inner" style="border-color: var(--border);">
+                    ${slideID ? `<iframe src="${embedSlides}" frameborder="0" width="100%" height="100%" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>` : `<div class="flex items-center justify-center h-full text-sm" style="color: var(--text-muted)">No Slide ID</div>`}
+                </div>
+                <div class="mt-4 flex justify-between items-center">
+                    <span class="text-xs font-mono" style="color: var(--text-muted);">ID: ${slideID || 'N/A'}</span>
+                    <a href="${rawSlideLink}" target="_blank" class="text-xs font-bold hover:underline flex items-center gap-1" style="color: var(--primary);">
+                        ${t.res_open_pres} <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PROMPTER -->
+            <div class="card p-6 flex flex-col group hover:border-opacity-50 transition-colors" style="border-color: var(--border);">
+                <div class="flex items-center justify-between mb-5">
+                    <h3 class="text-xl font-bold flex items-center gap-2">
+                        <i class="fa-solid fa-align-left" style="color: var(--primary);"></i> ${t.res_prompter}
+                    </h3>
+                </div>
+                <p class="mb-6 text-sm" style="color: var(--text-muted);">${t.res_prompter_desc}</p>
+                
+                <div class="p-4 rounded border font-mono text-xs mb-auto" style="background-color: rgba(0,0,0,0.2); border-color: var(--border); color: var(--text-muted);">
+                    > ${t.res_target}: <span style="color: var(--primary);">${prompterLink}</span><br>
+                    > STATUS: <span class="text-green-500 font-bold">${t.res_prompter_status}</span>
+                </div>
+                
+                <a href="${prompterLink}" target="_blank" class="mt-6 inline-flex items-center justify-center w-full px-4 py-4 text-white font-bold rounded transition-all shadow-md hover:shadow-lg gap-2" style="background-color: var(--primary);">
+                    <i class="fa-solid fa-play"></i> ${t.res_launch}
+                </a>
+            </div>
+        </div>
+
+        <section class="card p-8">
+            <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-clipboard-list" style="color: var(--primary);"></i> ${t.res_notes}
+            </h2>
+            <div class="italic border-l-2 pl-4 py-2" style="border-color: var(--border); color: var(--text-muted);">
+                "${tone}"
+            </div>
+        </section>
+
+        <footer class="text-center py-12 border-t mt-10" style="border-color: var(--border);">
+            <p class="text-lg mb-4 font-medium" style="color: var(--text-muted);">${footer}</p>
+             <div class="inline-block">
+                <span class="text-xs font-bold border px-3 py-1 rounded-full" style="color: var(--primary); border-color: var(--primary); background-color: rgba(125,125,125,0.05);">
+                    ${t.res_status_go}
+                </span>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>`;
+    }
+
+    function downloadHTML() {
+        const html = generateHTML();
+        const id = document.getElementById('opId').value || "control-center";
+        const cleanId = id.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+        
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; 
+        a.download = `ControlCenter_${currentState.lang}_${cleanId}.html`;
+        document.body.appendChild(a); 
+        a.click(); 
+        document.body.removeChild(a);
+    }
+
+    function previewControlCenter() {
+        const html = generateHTML();
+        const win = window.open('', '_blank');
+        if(win) win.document.write(html);
+        else alert("Pop-up blocked.");
+    }
+  </script>
+</body>
+</html>
+
