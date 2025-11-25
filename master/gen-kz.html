@@ -550,12 +550,17 @@
 
     function loadExample() {
         const t = translations[currentLang];
-        document.getElementById('opId').value = currentLang === 'de' ? "OPR-DE-2025" : "OPR-EX-2025";
-        document.getElementById('opLoc').value = currentLang === 'de' ? "BERLIN" : "CITY";
-        document.getElementById('opTitle').value = currentLang === 'de' ? "Operation Gelber Sturm" : "Operation Storm";
-        document.getElementById('opDesc').value = "Demo description.";
-        document.getElementById('linkSlides').value = "https://docs.google.com/presentation/d/1-CnNvoVp3yUJoH_eI2C6lUkzxBFtql6Q/edit?usp=sharing";
-        document.getElementById('linkPrompter').value = "https://zmau.dev/bf/tp-bf.html";
+        
+        // SET DATA FOR OPERATION BLACK FRIDAY
+        document.getElementById('opId').value = "LIVE-BF-2025";
+        document.getElementById('opLoc').value = "JERUSALEM, IL";
+        document.getElementById('opTitle').value = "Operation Black Friday: Live Report";
+        document.getElementById('opDesc').value = "Comprehensive analysis of the strike against Hezbollah leadership and the discovery of UNRWA tunnels.";
+        document.getElementById('linkSlides').value = "https://docs.google.com/presentation/d/1-CnNvoVp3yUJoH_eI2C6lUkzxBFtql6Q/edit?usp=drivesdk&ouid=116140788865093108711&rtpof=true&sd=true";
+        document.getElementById('linkPrompter').value = "https://zmau.div/bf/tp-bf.html";
+        document.getElementById('opTone').value = "Maintain a serious, journalistic tone. Emphasize factual data.";
+        document.getElementById('opFooter').value = "Live transmission starting in T-minus 5.";
+        
         logStatus(t.msg_example);
     }
 
