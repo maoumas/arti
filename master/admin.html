@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
   <style>
-    /* --- 1. VARIABLES DINÁMICAS (Igual que gen-kz.html) --- */
+    /* --- 1. VARIABLES DINÁMICAS --- */
     :root {
         /* Default: Original (Dark Blue/Gold) */
         --bg-app: #020617;       
@@ -170,7 +170,13 @@
     .status-text { color: var(--accent); }
 
     /* MENUS DESPLEGABLES (Mismo estilo que gen-kz) */
-    .options-grid { display: flex; gap: 10px; margin-bottom: 10px; }
+    .options-grid { 
+        display: flex; 
+        gap: 10px; 
+        padding: 15px 20px; 
+        border-bottom: 1px solid var(--border); 
+        background: rgba(0,0,0,0.1); 
+    }
     .dropdown-wrapper { position: relative; flex: 1; }
 
     .dropdown-btn {
@@ -205,10 +211,22 @@
     .dropdown-item.selected { color: var(--accent); font-weight: bold; }
     .theme-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; border: 1px solid rgba(255,255,255,0.3); }
 
+    /* MÓVIL: AJUSTES CRÍTICOS */
     @media (max-width: 900px) {
         body { height: auto; overflow-y: auto; }
         .main-layout { flex-direction: column; padding: 10px; }
-        .sidebar-section { min-width: 100%; max-width: 100%; order: -1; }
+        .sidebar-section { min-width: 100%; max-width: 100%; order: 2; } /* Sidebar abajo */
+        .editor-section { order: 1; min-height: 400px; } /* Editor primero (pero debajo de las opciones porque están DENTRO del editor-section) */
+        
+        /* FORZAR FILA HORIZONTAL EN MÓVIL */
+        .options-grid { 
+            flex-direction: row; /* Forzar fila */
+            gap: 10px;
+        }
+        .dropdown-wrapper {
+            width: 50%; /* Cada uno ocupa la mitad */
+            flex: 1;
+        }
     }
   </style>
 </head>
@@ -229,21 +247,10 @@
 
   <div class="main-layout">
     
-    <!-- EDITOR (Izquierda) -->
+    <!-- PANEL IZQUIERDO: EDITOR + CONFIG -->
     <div class="panel editor-section">
-        <div class="editor-header">
-            <h2 class="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style="color: var(--text-main);">
-                <i class="fa-solid fa-file-pen"></i> <span id="lbl_editor">Skript-Editor</span>
-            </h2>
-            <button id="btn_load_example" class="text-xs underline hover:opacity-80" style="color: var(--text-muted);" onclick="loadExample()">Beispiel laden</button>
-        </div>
-        <textarea id="input" placeholder="# Titel\n* Anweisung...\n\nText hier..."></textarea>
-    </div>
-
-    <!-- CONTROLES (Derecha) -->
-    <div class="sidebar-section">
         
-        <!-- GRID DE OPCIONES (IDIOMA + TEMA) -->
+        <!-- GRID DE OPCIONES (MUDADO AQUÍ, ARRIBA DEL EDITOR) -->
         <div class="options-grid">
             <!-- IDIOMA -->
             <div class="dropdown-wrapper">
@@ -278,6 +285,21 @@
             </div>
         </div>
 
+        <!-- CABECERA DEL EDITOR -->
+        <div class="editor-header">
+            <h2 class="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style="color: var(--text-main);">
+                <i class="fa-solid fa-file-pen"></i> <span id="lbl_editor">Skript-Editor</span>
+            </h2>
+            <button id="btn_load_example" class="text-xs underline hover:opacity-80" style="color: var(--text-muted);" onclick="loadExample()">Beispiel laden</button>
+        </div>
+        
+        <!-- AREA DE TEXTO -->
+        <textarea id="input" placeholder="# Titel\n* Anweisung...\n\nText hier..."></textarea>
+    </div>
+
+    <!-- PANEL DERECHO: CONTROLES -->
+    <div class="sidebar-section">
+        
         <div class="actions-panel">
             <h3 id="lbl_actions" class="text-xs font-bold uppercase tracking-wider mb-4" style="color: var(--text-muted);">Aktionen</h3>
             
@@ -401,7 +423,8 @@
         document.getElementById('btn_import').innerHTML = `<span>📂</span> ${t.btn_import}`;
         document.getElementById('input').placeholder = t.ph_editor;
 
-        toggleMenu('langMenu');
+        // IMPORTANT: Close menu explicitly by removing class, do NOT toggle
+        document.getElementById('langMenu').classList.remove('open');
     }
 
     function setTheme(themeKey, el) {
@@ -410,10 +433,10 @@
         for (const [key, value] of Object.entries(theme.vars)) root.style.setProperty(key, value);
 
         document.querySelectorAll('#themeMenu .dropdown-item').forEach(i => i.classList.remove('selected'));
-        el.classList.add('selected');
+        if(el) el.classList.add('selected');
         document.getElementById('currentThemeDisplay').innerHTML = `<span class="theme-dot mr-1" style="background:${theme.vars['--accent']}"></span> ${theme.name}`;
         
-        toggleMenu('themeMenu');
+        document.getElementById('themeMenu').classList.remove('open');
     }
 
     function loadExample() {
@@ -515,10 +538,10 @@ document.addEventListener('keydown', e=>{ if(e.code==='Space'){e.preventDefault(
         else alert("Pop-ups blocked");
     }
 
-    // Inicialización automática
+    // Inicialización automática: Deutsch
     document.addEventListener('DOMContentLoaded', () => {
         const deBtn = document.querySelector('#langMenu .dropdown-item[onclick*="de"]');
-        setLang('de', deBtn);
+        setLang('de', deBtn); // This updates text but also closes menu via new logic
     });
   </script>
 </body>
