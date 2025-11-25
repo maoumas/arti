@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zmau Broadcast Master Suite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+        }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .card {
+            transition: all 0.3s ease;
+            border: 1px solid #1e293b;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #6366f1;
+            box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.3);
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+        }
+        
+        /* Language Menu Styles */
+        .lang-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .lang-btn {
+            background-color: rgba(30, 41, 59, 0.5);
+            color: #94a3b8;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover {
+            color: #f8fafc;
+            border-color: #6366f1;
+        }
+        .lang-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: #1e293b;
+            min-width: 120px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+        .lang-content a {
+            color: #cbd5e1;
+            padding: 10px 12px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.85rem;
+            transition: background 0.2s;
+        }
+        .lang-content a:hover {
+            background-color: #334155;
+            color: #fff;
+        }
+        .show { display: block; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur">
+        <div class="max-w-6xl mx-auto px-6 py-6 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <span class="text-3xl text-indigo-500"><i class="fa-solid fa-network-wired"></i></span>
+                <div>
+                    <h1 class="text-2xl font-extrabold tracking-tight text-white">ZMAU <span class="text-indigo-500">MASTER</span></h1>
+                    <p class="text-xs text-slate-400 mono">Broadcast Ecosystem v2.0</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <div class="lang-dropdown">
+                    <button onclick="toggleLang()" class="lang-btn">
+                        <i class="fa-solid fa-globe"></i> <span id="currentLang">English</span> <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </button>
+                    <div id="langDropdown" class="lang-content">
+                        <a href="#" onclick="setLang('en')">English</a>
+                        <a href="#" onclick="setLang('es')">Español</a>
+                        <a href="#" onclick="setLang('de')">Deutsch</a>
+                    </div>
+                </div>
+                
+                <div class="hidden md:block">
+                    <span class="text-xs font-bold px-3 py-1 rounded-full bg-emerald-900/30 text-emerald-400 border border-emerald-800">
+                        ● SYSTEMS OPERATIONAL
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-6xl mx-auto px-6 py-12 w-full">
+        
+        <div class="mb-12 text-center max-w-3xl mx-auto">
+            <h2 class="text-4xl font-bold mb-4" id="heroTitle">Command Your Broadcast</h2>
+            <p class="text-slate-400 text-lg" id="heroDesc">
+                A unified suite of tools to generate professional, secure, and operator-friendly environments for live transmission.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- Card 1: Master Generator -->
+            <div class="card bg-slate-800 rounded-xl p-8 flex flex-col relative overflow-hidden group">
+                <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <i class="fa-solid fa-satellite-dish text-9xl text-indigo-500"></i>
+                </div>
+                
+                <div class="z-10">
+                    <div class="w-12 h-12 bg-indigo-500/20 rounded-lg flex items-center justify-center mb-6 text-indigo-400">
+                        <i class="fa-solid fa-sliders text-2xl"></i>
+                    </div>
+                    
+                    <h3 class="text-2xl font-bold text-white mb-2" id="card1Title">Master Control Generator</h3>
+                    <p class="text-slate-400 mb-6 h-20" id="card1Desc">
+                        The core compiler. Input your mission data, slide links, and scripts to generate a unified HTML dashboard for your operators. Supports multi-language and theming.
+                    </p>
+
+                    <div class="bg-slate-900/50 rounded p-4 mb-6 border border-slate-700/50">
+                        <ul class="text-sm text-slate-300 space-y-2" id="card1List">
+                            <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Generates Standalone HTML</li>
+                            <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Multi-Language (DE, ES, EN)</li>
+                            <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Theme Selection (Dark/Light)</li>
+                        </ul>
+                    </div>
+
+                    <a href="https://zmau.dev/master/gen-kz" class="btn-glow block w-full py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-center rounded-lg transition-colors" id="card1Btn">
+                        Launch Generator <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card 2: Teleprompter -->
+            <div class="card bg-slate-800 rounded-xl p-8 flex flex-col relative overflow-hidden group">
+                <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <i class="fa-solid fa-align-left text-9xl text-emerald-500"></i>
+                </div>
+                
+                <div class="z-10">
+                    <div class="w-12 h-12 bg-emerald-500/20 rounded-lg flex items-center justify-center mb-6 text-emerald-400">
+                        <i class="fa-solid fa-pen-to-square text-2xl"></i>
+                    </div>
+                    
+                    <h3 class="text-2xl font-bold text-white mb-2" id="card2Title">Teleprompter Studio</h3>
+                    <p class="text-slate-400 mb-6 h-20" id="card2Desc">
+                        The content engine. Write, edit, and format your scripts using Markdown. Generate distraction-free player links to embed into the Control Center.
+                    </p>
+
+                    <div class="bg-slate-900/50 rounded p-4 mb-6 border border-slate-700/50">
+                        <ul class="text-sm text-slate-300 space-y-2" id="card2List">
+                            <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Markdown Support</li>
+                            <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Mirror Mode & Speed Control</li>
+                            <li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Live Projection</li>
+                        </ul>
+                    </div>
+
+                    <a href="https://zmau.dev/master/admin" class="btn-glow block w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-center rounded-lg transition-colors" id="card2Btn">
+                        Open Studio <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Future Section / Other Links -->
+        <div class="mt-12 border-t border-slate-800 pt-8">
+            <h4 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4" id="resTitle">Documentation & Resources</h4>
+            <div class="flex gap-4">
+                <a href="#" class="text-slate-400 hover:text-white text-sm flex items-center gap-2">
+                    <i class="fa-regular fa-file-code"></i> <span id="resManual">Operator Manual (PDF)</span>
+                </a>
+                <a href="#" class="text-slate-400 hover:text-white text-sm flex items-center gap-2">
+                    <i class="fa-brands fa-github"></i> <span id="resRepo">Source Repository</span>
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="border-t border-slate-800 bg-slate-900 py-8 text-center">
+        <p class="text-slate-500 text-sm">© 2025 Zmau Development. Authorized Personnel Only.</p>
+    </footer>
+
+    <script>
+        /* Language Data */
+        const i18n = {
+            en: {
+                heroTitle: "Command Your Broadcast",
+                heroDesc: "A unified suite of tools to generate professional, secure, and operator-friendly environments for live transmission.",
+                card1Title: "Master Control Generator",
+                card1Desc: "The core compiler. Input your mission data, slide links, and scripts to generate a unified HTML dashboard for your operators. Supports multi-language and theming.",
+                card1List: `<li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Generates Standalone HTML</li><li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Multi-Language (DE, ES, EN)</li><li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Theme Selection (Dark/Light)</li>`,
+                card1Btn: 'Launch Generator <i class="fa-solid fa-arrow-right ml-2"></i>',
+                card2Title: "Teleprompter Studio",
+                card2Desc: "The content engine. Write, edit, and format your scripts using Markdown. Generate distraction-free player links to embed into the Control Center.",
+                card2List: `<li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Markdown Support</li><li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Mirror Mode & Speed Control</li><li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Live Projection</li>`,
+                card2Btn: 'Open Studio <i class="fa-solid fa-arrow-right ml-2"></i>',
+                resTitle: "Documentation & Resources",
+                resManual: "Operator Manual (PDF)",
+                resRepo: "Source Repository"
+            },
+            es: {
+                heroTitle: "Controla tu Transmisión",
+                heroDesc: "Una suite unificada de herramientas para generar entornos profesionales, seguros y amigables para el operador en transmisiones en vivo.",
+                card1Title: "Generador de Centro de Control",
+                card1Desc: "El compilador central. Introduce los datos de la misión, enlaces a diapositivas y guiones para generar un panel HTML unificado. Soporta múltiples idiomas y temas.",
+                card1List: `<li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Genera HTML Independiente</li><li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Multi-Idioma (DE, ES, EN)</li><li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Selección de Temas (Oscuro/Claro)</li>`,
+                card1Btn: 'Lanzar Generador <i class="fa-solid fa-arrow-right ml-2"></i>',
+                card2Title: "Estudio de Teleprompter",
+                card2Desc: "El motor de contenido. Escribe, edita y formatea tus guiones usando Markdown. Genera enlaces de reproducción sin distracciones para incrustar en el Centro de Control.",
+                card2List: `<li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Soporte Markdown</li><li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Modo Espejo y Control de Velocidad</li><li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Proyección en Vivo</li>`,
+                card2Btn: 'Abrir Estudio <i class="fa-solid fa-arrow-right ml-2"></i>',
+                resTitle: "Documentación y Recursos",
+                resManual: "Manual del Operador (PDF)",
+                resRepo: "Repositorio Fuente"
+            },
+            de: {
+                heroTitle: "Steuern Sie Ihre Sendung",
+                heroDesc: "Eine einheitliche Suite von Tools zur Erstellung professioneller, sicherer und bedienerfreundlicher Umgebungen für Live-Übertragungen.",
+                card1Title: "Master Control Generator",
+                card1Desc: "Der zentrale Compiler. Geben Sie Missionsdaten, Folien-Links und Skripte ein, um ein einheitliches HTML-Dashboard zu erstellen. Unterstützt Mehrsprachigkeit und Themen.",
+                card1List: `<li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Erzeugt eigenständiges HTML</li><li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Mehrsprachig (DE, ES, EN)</li><li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Themenauswahl (Dunkel/Hell)</li>`,
+                card1Btn: 'Generator Starten <i class="fa-solid fa-arrow-right ml-2"></i>',
+                card2Title: "Teleprompter Studio",
+                card2Desc: "Die Content-Engine. Schreiben, bearbeiten und formatieren Sie Skripte mit Markdown. Erstellen Sie ablenkungsfreie Player-Links zum Einbetten.",
+                card2List: `<li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Markdown-Unterstützung</li><li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Spiegelmodus & Geschwindigkeitskontrolle</li><li><i class="fa-solid fa-check text-emerald-500 mr-2"></i>Live-Projektion</li>`,
+                card2Btn: 'Studio Öffnen <i class="fa-solid fa-arrow-right ml-2"></i>',
+                resTitle: "Dokumentation & Ressourcen",
+                resManual: "Bedienerhandbuch (PDF)",
+                resRepo: "Quellcode-Repository"
+            }
+        };
+
+        function toggleLang() {
+            document.getElementById("langDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.closest('.lang-btn')) {
+                var dropdowns = document.getElementsByClassName("lang-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+
+        function setLang(lang) {
+            const t = i18n[lang];
+            
+            // Update Button Text
+            const langMap = { 'en': 'English', 'es': 'Español', 'de': 'Deutsch' };
+            document.getElementById('currentLang').innerText = langMap[lang];
+
+            // Update Text Content
+            document.getElementById('heroTitle').innerText = t.heroTitle;
+            document.getElementById('heroDesc').innerText = t.heroDesc;
+            
+            document.getElementById('card1Title').innerText = t.card1Title;
+            document.getElementById('card1Desc').innerText = t.card1Desc;
+            document.getElementById('card1List').innerHTML = t.card1List;
+            document.getElementById('card1Btn').innerHTML = t.card1Btn;
+
+            document.getElementById('card2Title').innerText = t.card2Title;
+            document.getElementById('card2Desc').innerText = t.card2Desc;
+            document.getElementById('card2List').innerHTML = t.card2List;
+            document.getElementById('card2Btn').innerHTML = t.card2Btn;
+
+            document.getElementById('resTitle').innerText = t.resTitle;
+            document.getElementById('resManual').innerText = t.resManual;
+            document.getElementById('resRepo').innerText = t.resRepo;
+        }
+    </script>
+
+</body>
+</html>
+
+

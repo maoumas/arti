@@ -1,25 +1,27 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="de">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Teleprompter Studio PRO</title>
+  <title>Teleprompter Studio - Ultimate</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
-  <meta property="og:title" content="Teleprompter Studio PRO">
-  <meta property="og:description" content="Generador de guiones profesional para transmisión.">
-  <meta property="og:image" content="https://placehold.co/1200x630/1e293b/10b981/png?text=TELEPROMPTER+STUDIO">
-
   <style>
-    /* ESTILOS BASE */
+    /* --- 1. VARIABLES DINÁMICAS (Igual que gen-kz.html) --- */
     :root {
-        --bg-app: #0f172a;
-        --bg-panel: #1e293b;
-        --accent: #10b981;
-        --accent-hover: #059669;
-        --text-main: #e2e8f0;
-        --border: #334155;
+        /* Default: Original (Dark Blue/Gold) */
+        --bg-app: #020617;       
+        --bg-panel: #172554;     
+        --accent: #facc15;       
+        --accent-hover: #eab308; 
+        --accent-text: #000000;  
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;    
+        --border: #1e3a8a;       
+        --input-bg: #0f172a;     
+        --alert: #ef4444;        
     }
 
     body {
@@ -30,203 +32,286 @@
         display: flex;
         flex-direction: column;
         overflow: hidden;
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
+
+    /* SCROLLBARS */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-app); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
     /* HEADER */
     .header {
-        padding: 10px 20px;
-        border-bottom: 1px solid var(--border);
+        padding: 15px 20px;
+        border-bottom: 2px solid var(--accent);
         background: var(--bg-panel);
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: space-between;
         flex-shrink: 0;
+        transition: background-color 0.3s ease;
     }
 
-    /* CONTENEDOR PRINCIPAL */
+    /* LAYOUT */
     .main-layout {
         flex: 1;
         display: flex;
-        padding: 15px;
-        gap: 15px;
-        overflow-y: auto;
+        padding: 20px;
+        gap: 20px;
+        overflow-y: hidden;
     }
 
     /* PANELES */
     .panel {
         background: var(--bg-panel);
         border: 1px solid var(--border);
-        border-radius: 8px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
         display: flex;
         flex-direction: column;
+        overflow: hidden;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
-    /* EDITOR */
+    /* EDITOR SECTION (Izquierda) */
     .editor-section {
         flex: 2;
         display: flex;
         flex-direction: column;
-        min-height: 300px;
     }
 
+    .editor-header {
+        background: rgba(0,0,0,0.2);
+        padding: 10px 20px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        backdrop-filter: blur(5px);
+    }
+
+    /* TEXTAREA DEL EDITOR */
     textarea {
         flex: 1;
-        background: transparent;
+        background: var(--input-bg);
+        color: var(--text-main);
         border: none;
-        padding: 20px;
-        color: #fff;
+        padding: 25px;
         font-family: 'JetBrains Mono', monospace;
-        font-size: 15px;
+        font-size: 16px;
         line-height: 1.6;
         resize: none;
         outline: none;
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
+    
+    textarea::placeholder { color: var(--text-muted); opacity: 0.5; }
 
-    /* SIDEBAR */
+    /* SIDEBAR (Derecha) */
     .sidebar-section {
         flex: 1;
         display: flex;
         flex-direction: column;
-        gap: 15px;
+        gap: 20px;
         min-width: 300px;
+        max-width: 380px;
     }
 
-    /* BARRA DE ACCIONES */
-    .actions-bar {
+    .actions-panel {
         background: var(--bg-panel);
         border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 15px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+        border-radius: 4px;
+        padding: 20px;
     }
 
-    /* BOTONES GENÉRICOS DE LA APP */
+    /* BOTONES */
     .btn {
         display: inline-flex; justify-content: center; items-center; gap: 8px;
-        padding: 10px 16px;
-        border-radius: 6px;
-        font-weight: 600;
+        padding: 12px 16px;
+        border-radius: 4px;
+        font-weight: 800;
         font-size: 0.9rem;
         cursor: pointer;
         transition: all 0.2s;
         border: 1px solid transparent;
         width: 100%;
         text-transform: uppercase;
+        margin-bottom: 10px;
+        letter-spacing: 0.05em;
     }
     
-    .btn-live { 
-        background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%); 
-        color: #022c22; 
-        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+    .btn-primary { 
+        background: var(--accent); 
+        color: var(--accent-text); 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
-    .btn-live:hover { transform: translateY(-1px); filter: brightness(1.1); }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
 
-    .btn-secondary { background: #334155; color: #fff; border-color: #475569; }
-    .btn-secondary:hover { background: #475569; }
-    
-    .btn-outline { background: transparent; color: #94a3b8; border: 1px dashed #475569; font-size: 0.8rem; }
-    .btn-outline:hover { border-color: #94a3b8; color: #fff; }
+    .btn-secondary { 
+        background: transparent; 
+        border: 1px solid var(--text-main); 
+        color: var(--text-main); 
+    }
+    .btn-secondary:hover { 
+        background: rgba(255,255,255,0.05); 
+        border-color: var(--accent);
+        color: var(--accent);
+    }
 
-    /* PANEL INFO */
-    .control-panel {
-        flex: 1;
+    /* ESTADO */
+    .status-panel {
         padding: 20px;
-        align-items: center;
-        text-align: center;
-        justify-content: flex-start;
-        opacity: 0.8;
+        background: rgba(0,0,0,0.2);
+        border: 1px dashed var(--accent);
+        border-radius: 4px;
+        margin-top: auto;
     }
+    .status-text { color: var(--accent); }
 
-    /* MÓVIL */
-    @media (max-width: 768px) {
+    /* MENUS DESPLEGABLES (Mismo estilo que gen-kz) */
+    .options-grid { display: flex; gap: 10px; margin-bottom: 10px; }
+    .dropdown-wrapper { position: relative; flex: 1; }
+
+    .dropdown-btn {
+        width: 100%; padding: 10px;
+        background: rgba(0,0,0,0.2);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--text-main);
+        font-size: 0.8rem; font-weight: 600;
+        cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+        transition: all 0.2s; white-space: nowrap;
+    }
+    .dropdown-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    .dropdown-menu {
+        position: absolute; top: 100%; left: 0; width: 100%;
+        background: var(--bg-panel);
+        border: 1px solid var(--border); border-top: none;
+        border-radius: 0 0 4px 4px;
+        overflow: hidden; max-height: 0; opacity: 0;
+        transition: all 0.2s ease; z-index: 50;
+        box-shadow: 0 10px 15px rgba(0,0,0,0.5);
+    }
+    .dropdown-menu.open { max-height: 200px; opacity: 1; margin-top: 2px; border-top: 1px solid var(--border); }
+
+    .dropdown-item {
+        padding: 10px; font-size: 0.75rem; color: var(--text-muted); cursor: pointer;
+        display: flex; align-items: center; gap: 8px; transition: background 0.2s;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .dropdown-item:hover { background: rgba(255,255,255,0.05); color: var(--text-main); }
+    .dropdown-item.selected { color: var(--accent); font-weight: bold; }
+    .theme-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; border: 1px solid rgba(255,255,255,0.3); }
+
+    @media (max-width: 900px) {
         body { height: auto; overflow-y: auto; }
-        .main-layout { flex-direction: column; padding: 10px; gap: 10px; }
-        .editor-section { min-height: 50vh; order: 1; }
-        .sidebar-section { order: 2; min-width: 100%; gap: 10px; }
-    }
-
-    @media print {
-        body * { visibility: hidden; }
-        #print-area, #print-area * { visibility: visible; }
-        #print-area { position: absolute; left: 0; top: 0; width: 100%; color: black; background: white; padding: 40px; }
+        .main-layout { flex-direction: column; padding: 10px; }
+        .sidebar-section { min-width: 100%; max-width: 100%; order: -1; }
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
   <header class="header">
     <div class="flex items-center gap-3">
-        <span class="text-2xl">📡</span>
+        <span class="text-2xl" style="color: var(--accent);"><i class="fa-solid fa-microphone-lines"></i></span>
         <div>
-            <h1 class="text-lg font-bold tracking-tight text-white">Teleprompter Studio <span class="text-emerald-500">PRO</span></h1>
-            <p class="text-[10px] text-slate-400 font-mono">v4.0 // Precision Engine</p>
+            <h1 class="text-lg font-bold tracking-tight" style="color: var(--text-main);">TELEPROMPTER <span style="color: var(--accent);">STUDIO</span></h1>
+            <p class="text-[10px] font-mono" style="color: var(--text-muted);" id="lbl_version">v4.0 // PRO EDITOR</p>
         </div>
+    </div>
+    <div class="hidden md:block">
+         <span id="lbl_system_online" class="text-xs font-mono font-bold px-2 py-1 rounded border" style="color: var(--bg-app); background-color: var(--accent); border-color: var(--accent); color: var(--accent-text);">SYSTEM ONLINE</span>
     </div>
   </header>
 
   <div class="main-layout">
     
-    <!-- EDITOR -->
+    <!-- EDITOR (Izquierda) -->
     <div class="panel editor-section">
-        <div class="bg-slate-900/50 p-2 px-3 border-b border-slate-700 flex justify-between items-center">
-            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Editor</span>
-            <span class="text-[10px] text-slate-600 font-mono bg-slate-800 px-2 py-1 rounded">MARKDOWN</span>
+        <div class="editor-header">
+            <h2 class="text-sm font-bold uppercase tracking-widest flex items-center gap-2" style="color: var(--text-main);">
+                <i class="fa-solid fa-file-pen"></i> <span id="lbl_editor">Skript-Editor</span>
+            </h2>
+            <button id="btn_load_example" class="text-xs underline hover:opacity-80" style="color: var(--text-muted);" onclick="loadExample()">Beispiel laden</button>
         </div>
-        <textarea id="input" placeholder="# Título del Programa&#10;* [Instrucción: Cámara 1]&#10;&#10;Pega tu texto aquí..."></textarea>
+        <textarea id="input" placeholder="# Titel\n* Anweisung...\n\nText hier..."></textarea>
     </div>
 
-    <!-- SIDEBAR -->
+    <!-- CONTROLES (Derecha) -->
     <div class="sidebar-section">
         
-        <!-- BARRA DE ACCIONES -->
-        <div class="actions-bar">
+        <!-- GRID DE OPCIONES (IDIOMA + TEMA) -->
+        <div class="options-grid">
+            <!-- IDIOMA -->
+            <div class="dropdown-wrapper">
+                <div class="dropdown-btn" onclick="toggleMenu('langMenu')">
+                    <span id="currentLangDisplay"><i class="fa-solid fa-language mr-1"></i> DE</span>
+                    <i class="fa-solid fa-caret-down text-[10px]"></i>
+                </div>
+                <div id="langMenu" class="dropdown-menu">
+                    <div class="dropdown-item selected" onclick="setLang('de', this)">Deutsch</div>
+                    <div class="dropdown-item" onclick="setLang('es', this)">Español</div>
+                    <div class="dropdown-item" onclick="setLang('en', this)">English</div>
+                </div>
+            </div>
+
+            <!-- TEMA -->
+            <div class="dropdown-wrapper">
+                <div class="dropdown-btn" onclick="toggleMenu('themeMenu')">
+                    <span id="currentThemeDisplay"><span class="theme-dot mr-1" style="background:#facc15"></span> Original</span>
+                    <i class="fa-solid fa-caret-down text-[10px]"></i>
+                </div>
+                <div id="themeMenu" class="dropdown-menu">
+                    <div class="dropdown-item selected" onclick="setTheme('original', this)">
+                        <span class="theme-dot" style="background:#facc15"></span> Original
+                    </div>
+                    <div class="dropdown-item" onclick="setTheme('purple', this)">
+                        <span class="theme-dot" style="background:#a855f7"></span> Nebula
+                    </div>
+                    <div class="dropdown-item" onclick="setTheme('light', this)">
+                        <span class="theme-dot" style="background:#f8fafc"></span> Daylight
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions-panel">
+            <h3 id="lbl_actions" class="text-xs font-bold uppercase tracking-wider mb-4" style="color: var(--text-muted);">Aktionen</h3>
             
             <input type="file" id="fileImport" accept=".txt,.md,.json" style="display: none;" onchange="importFile(this)">
-            <button class="btn btn-secondary" onclick="document.getElementById('fileImport').click()">
-                <span>📂</span> Importar Texto
+            <button id="btn_import" class="btn btn-secondary" onclick="document.getElementById('fileImport').click()">
+                <span>📂</span> Import
             </button>
 
-            <div class="my-1">
-                <button class="btn btn-live" onclick="testLive()">
-                    <span>▶</span> LANZAR AHORA
+            <div class="my-2 border-t border-b py-2" style="border-color: var(--border);">
+                <button id="btn_live" class="btn btn-primary" onclick="testLive()">
+                    <span>▶</span> <span id="lbl_live">LIVE PROJEKTION</span>
                 </button>
             </div>
 
-            <hr class="border-slate-700 my-1">
-
             <div class="grid grid-cols-2 gap-2">
-                <button class="btn btn-outline" onclick="generatePDF()">
+                <button class="btn btn-secondary" onclick="generatePDF()">
                     <span>📄</span> PDF
                 </button>
-                <button class="btn btn-outline" onclick="exportPlayer()">
+                <button class="btn btn-secondary" onclick="exportPlayer()">
                     <span>💾</span> HTML
                 </button>
             </div>
         </div>
 
-        <!-- PANEL DE ESTADO -->
-        <div class="panel control-panel">
-            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Mejoras v4.0</h3>
-            
-            <div class="w-full bg-slate-900 rounded p-3 text-left space-y-2 mb-4">
-                <div class="flex justify-between text-[11px] font-mono text-slate-400 border-b border-slate-800 pb-1">
-                    <span>MOTOR</span> <span class="text-emerald-400">PRECISIÓN FINA</span>
+        <div class="status-panel">
+            <h4 id="lbl_status_header" class="text-xs font-bold mb-2 font-mono status-text">ENGINE V4.0</h4>
+            <div class="w-full rounded p-3 text-left space-y-2" style="background: var(--input-bg);">
+                <div class="flex justify-between text-[11px] font-mono" style="color: var(--text-muted); border-bottom: 1px solid var(--border);">
+                    <span id="lbl_engine">ENGINE</span> <span style="color: var(--accent);">PRÄZISION</span>
                 </div>
-                <div class="flex justify-between text-[11px] font-mono text-slate-400 border-b border-slate-800 pb-1">
-                    <span>CONTROLES</span> <span class="text-emerald-400">COMPACTOS</span>
-                </div>
-                <div class="flex justify-between text-[11px] font-mono text-slate-400">
-                    <span>MIRROR</span> <span class="text-emerald-400">INTEGRADO</span>
+                <div class="flex justify-between text-[11px] font-mono" style="color: var(--text-muted);">
+                    <span id="lbl_mode">MODUS</span> <span style="color: var(--accent);">MARKDOWN</span>
                 </div>
             </div>
-            
-            <p class="text-[10px] text-slate-600">
-                Scroll ultra-lento habilitado para lectura precisa. Controles optimizados para ocupar menos espacio.
-            </p>
         </div>
 
     </div>
@@ -235,6 +320,107 @@
   <div id="print-area" style="display:none;"></div>
 
   <script>
+    // --- 1. CONFIGURACIÓN VISUAL (TEMAS) ---
+    const themes = {
+        original: {
+            name: "Original",
+            vars: {
+                '--bg-app': '#020617', '--bg-panel': '#172554', '--accent': '#facc15', '--accent-hover': '#eab308',
+                '--accent-text': '#000000', '--text-main': '#f8fafc', '--text-muted': '#94a3b8', '--border': '#1e3a8a',
+                '--input-bg': '#0f172a', '--alert': '#ef4444'
+            }
+        },
+        purple: {
+            name: "Nebula",
+            vars: {
+                '--bg-app': '#1e293b', '--bg-panel': '#334155', '--accent': '#a855f7', '--accent-hover': '#9333ea',
+                '--accent-text': '#ffffff', '--text-main': '#f1f5f9', '--text-muted': '#cbd5e1', '--border': '#64748b',
+                '--input-bg': '#0f172a', '--alert': '#f472b6'
+            }
+        },
+        light: {
+            name: "Daylight",
+            vars: {
+                '--bg-app': '#f8fafc', '--bg-panel': '#ffffff', '--accent': '#7c3aed', '--accent-hover': '#6d28d9',
+                '--accent-text': '#ffffff', '--text-main': '#1e293b', '--text-muted': '#64748b', '--border': '#e2e8f0',
+                '--input-bg': '#ffffff', '--alert': '#be185d'
+            }
+        }
+    };
+
+    // --- 2. TRADUCCIONES ---
+    const translations = {
+        es: {
+            lbl_version: "v4.0 // EDITOR PRO", lbl_system_online: "SISTEMA EN LÍNEA", lbl_editor: "Editor de Guion",
+            btn_load_example: "Cargar Ejemplo", lbl_actions: "Acciones", btn_import: "Importar Texto",
+            lbl_live: "PROYECTAR EN VIVO", lbl_status_header: "MOTOR V4.0", lbl_engine: "MOTOR", lbl_mode: "MODO",
+            ph_editor: "# Título del Programa\n* [Instrucción: Cámara 1]\n\nPega tu texto aquí...",
+            example_text: "# 📡 Zmau Broadcast Master Suite\n\n* [CAM 1 - PLANO MEDIO]\n\nBienvenidos al centro de operaciones.\nEsta herramienta unifica la creación de guiones y la gestión del entorno.\n\n* [PAUSA 2 SEG]\n\n## 🛠️ Características\n\n1. **Editor Markdown:** Usa numerales para títulos y asteriscos para instrucciones.\n2. **Multilingüe:** Soporte completo para ES, EN y DE.\n3. **Temas:** Adapta la interfaz a la iluminación de tu estudio.\n\n* [CAM 2 - ZOOM IN]\n\nTodo está listo para la transmisión.\n¡Buena suerte!"
+        },
+        en: {
+            lbl_version: "v4.0 // PRO EDITOR", lbl_system_online: "SYSTEM ONLINE", lbl_editor: "Script Editor",
+            btn_load_example: "Load Example", lbl_actions: "Actions", btn_import: "Import Text",
+            lbl_live: "PROJECT LIVE", lbl_status_header: "ENGINE V4.0", lbl_engine: "ENGINE", lbl_mode: "MODE",
+            ph_editor: "# Show Title\n* [Instruction: Cam 1]\n\nPaste text here...",
+            example_text: "# 📡 Zmau Broadcast Master Suite\n\n* [CAM 1 - MEDIUM SHOT]\n\nWelcome to the operations center.\nThis tool unifies script creation and environment management.\n\n* [PAUSE 2 SEC]\n\n## 🛠️ Features\n\n1. **Markdown Editor:** Use hashes for titles and asterisks for instructions.\n2. **Multi-language:** Full support for ES, EN, and DE.\n3. **Themes:** Adapt the interface to your studio lighting.\n\n* [CAM 2 - ZOOM IN]\n\nEverything is ready for broadcast.\nGood luck!"
+        },
+        de: {
+            lbl_version: "v4.0 // PRO EDITOR", lbl_system_online: "SYSTEM ONLINE", lbl_editor: "Skript-Editor",
+            btn_load_example: "Beispiel laden", lbl_actions: "Aktionen", btn_import: "Text importieren",
+            lbl_live: "LIVE PROJIZIEREN", lbl_status_header: "ENGINE V4.0", lbl_engine: "ENGINE", lbl_mode: "MODUS",
+            ph_editor: "# Sendungstitel\n* [Anweisung: Kamera 1]\n\nText hier einfügen...",
+            example_text: "# 📡 Zmau Broadcast Master Suite\n\n* [KAM 1 - HALBNAH]\n\nWillkommen im Operationszentrum.\nDieses Tool vereint Skripterstellung und Umgebungsmanagement.\n\n* [PAUSE 2 SEK]\n\n## 🛠️ Funktionen\n\n1. **Markdown Editor:** Rauten für Titel, Sternchen für Anweisungen.\n2. **Mehrsprachig:** Volle Unterstützung für ES, EN und DE.\n3. **Themen:** Passen Sie das Interface an Ihr Studiolicht an.\n\n* [KAM 2 - ZOOM IN]\n\nAlles ist bereit für die Übertragung.\nViel Glück!"
+        }
+    };
+
+    let currentLang = 'de'; // IDIOMA POR DEFECTO: ALEMÁN
+
+    // --- UI LOGIC (Dropdowns & Themes) ---
+    function toggleMenu(id) {
+        document.querySelectorAll('.dropdown-menu').forEach(m => { if(m.id !== id) m.classList.remove('open'); });
+        document.getElementById(id).classList.toggle('open');
+    }
+
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.dropdown-wrapper')) document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('open'));
+    });
+
+    function setLang(lang, el) {
+        currentLang = lang;
+        const t = translations[lang];
+        
+        document.querySelectorAll('#langMenu .dropdown-item').forEach(i => i.classList.remove('selected'));
+        if(el) el.classList.add('selected');
+        document.getElementById('currentLangDisplay').innerHTML = `<i class="fa-solid fa-language mr-1"></i> ${lang.toUpperCase()}`;
+        
+        // Update Texts
+        const ids = ['lbl_version', 'lbl_system_online', 'lbl_editor', 'btn_load_example', 'lbl_actions', 'lbl_live', 'lbl_status_header', 'lbl_engine', 'lbl_mode'];
+        ids.forEach(id => { const dom = document.getElementById(id); if(dom) dom.innerText = t[id]; });
+        
+        // Update Import Button (HTML inside)
+        document.getElementById('btn_import').innerHTML = `<span>📂</span> ${t.btn_import}`;
+        document.getElementById('input').placeholder = t.ph_editor;
+
+        toggleMenu('langMenu');
+    }
+
+    function setTheme(themeKey, el) {
+        const theme = themes[themeKey];
+        const root = document.documentElement;
+        for (const [key, value] of Object.entries(theme.vars)) root.style.setProperty(key, value);
+
+        document.querySelectorAll('#themeMenu .dropdown-item').forEach(i => i.classList.remove('selected'));
+        el.classList.add('selected');
+        document.getElementById('currentThemeDisplay').innerHTML = `<span class="theme-dot mr-1" style="background:${theme.vars['--accent']}"></span> ${theme.name}`;
+        
+        toggleMenu('themeMenu');
+    }
+
+    function loadExample() {
+        document.getElementById('input').value = translations[currentLang].example_text;
+    }
+
+    // --- LOGICA TELEPROMPTER (CORE) ---
     function importFile(input) {
         const file = input.files[0];
         if (!file) return;
@@ -247,7 +433,7 @@
     function generatePDF() {
         const raw = document.getElementById('input').value;
         const lines = raw.split('\n');
-        let html = '<h1 style="margin-bottom:20px; font-family:sans-serif;">Guión de Teleprompter</h1>';
+        let html = '<h1 style="margin-bottom:20px; font-family:sans-serif;">Guión</h1>';
         lines.forEach(line => {
             if(line.startsWith('#')) html += `<h2 style="color:#000; border-bottom:2px solid black; padding-bottom:5px;">${line.substring(1)}</h2>`;
             else if(line.startsWith('*')) html += `<p style="color:#666; font-style:italic; font-weight:bold; background:#eee; padding:5px;">[DIR] ${line.substring(1)}</p>`;
@@ -260,10 +446,8 @@
     function getTitleFromScript() {
         const raw = document.getElementById('input').value;
         const lines = raw.split('\n');
-        for(let line of lines) {
-            if(line.startsWith('#')) return line.substring(1).trim();
-        }
-        return "Teleprompter Studio";
+        for(let line of lines) if(line.startsWith('#')) return line.substring(1).trim();
+        return "Teleprompter";
     }
 
     function parseScript() {
@@ -277,246 +461,67 @@
             else if (line.startsWith('*')) scriptData.push({ type: "instruction", content: line.substring(1).trim() });
             else scriptData.push({ type: "text", content: line });
         });
-        if (scriptData.length === 0) scriptData = [{ type: "title", content: "LISTO" }, { type: "text", content: "Escribe tu texto..." }];
+        if (scriptData.length === 0) scriptData = [{ type: "title", content: "READY" }, { type: "text", content: "..." }];
         return JSON.stringify(scriptData);
     }
 
+    // Plantilla del Player (Optimizada)
     function getPlayerHTML(jsonData) {
-        const scriptTitle = getTitleFromScript();
-        // Uso de placehold.co para generar imagen con el título del guión
-        const ogImage = `https://placehold.co/1200x630/000000/10b981/png?text=${encodeURIComponent(scriptTitle.substring(0, 30).toUpperCase())}&font=roboto`;
-        
+        const title = getTitleFromScript();
         return `<!DOCTYPE html>
 <html lang="es">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${scriptTitle}</title>
-<meta property="og:title" content="${scriptTitle}">
-<meta property="og:description" content="Guión de Teleprompter listo para leer.">
-<meta property="og:image" content="${ogImage}">
-<meta property="og:type" content="website">
-
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${title}</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-  body{background:#000;color:#fff;font-family:'Inter',sans-serif;margin:0;overflow:hidden;height:100vh;display:flex;flex-direction:column;}
-  
-  #prompter-area{
-      flex:1;
-      overflow-y:scroll;
-      padding:20px 20px;
-      padding-bottom:60vh; /* Espacio final */
-      cursor: pointer;
-  }
-  
-  .p-text{font-size:3.5rem;line-height:1.4;margin-bottom:1.5rem;font-weight:700;}
-  .p-title{color:#10B981;font-size:2rem;text-transform:uppercase;letter-spacing:2px;border-bottom:1px solid #333;margin:40px 0 20px 0;}
-  .p-inst{color:#F59E0B;font-size:1.8rem;font-style:italic;background:#1e1e1e;padding:15px;border-left:5px solid #F59E0B;}
-  
-  /* UTILIDADES VISUALES */
-  .mirror-x { transform: scaleX(-1); } 
-  .mirror-y { transform: scaleY(-1); }
-  
-  /* BARRA DE CONTROL COMPACTA (Estilo TP-GEN Clásico Mejorado) */
-  #controls {
-      position:fixed; bottom:0; left:0; width:100%;
-      background: #111; border-top: 1px solid #333;
-      padding: 8px 15px;
-      display:flex; flex-wrap: wrap; justify-content: center; align-items:center; gap:10px;
-      z-index:999;
-  }
-
-  /* GRUPOS */
-  .c-group { 
-      display:flex; gap:2px; align-items:center; 
-      background:#222; padding:2px; border-radius:6px; border:1px solid #444; 
-  }
-  
-  /* BOTONES COMPACTOS */
-  button {
-      background:transparent; border:none; color:#eee;
-      width:36px; height:36px; border-radius:4px;
-      font-weight:bold; cursor:pointer; font-size:1.1rem;
-      display:flex; align-items:center; justify-content:center;
-      transition:0.1s;
-  }
-  button:hover { background:#333; color:#fff; }
-  button:active { background:#444; }
-
-  /* BOTÓN PLAY (DESTACADO PERO COMPACTO) */
-  #btnPlay {
-      background:#10B981; color:#000; 
-      width:auto; padding:0 20px; height:36px; border-radius:6px;
-      font-size:0.9rem; text-transform:uppercase; font-weight:800;
-      min-width: 80px;
-  }
-  #btnPlay:hover { background:#059669; }
-  #btnPlay.paused { background:#EF4444; color:#fff; }
-
-  /* VALORES */
-  .val { font-family:monospace; font-size:13px; width:30px; text-align:center; color:#ccc; }
-  
-  /* MARCADOR DE LECTURA */
-  #guide {
-      position:fixed; top:40%; left:0; width:100%; height:12%;
-      border-top:1px solid rgba(255,255,255,0.1);
-      border-bottom:1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.02);
-      pointer-events:none; z-index:50;
-  }
-  
-  /* ICONOS SVG SIMPLES */
-  .icon { width:18px; height:18px; fill:currentColor; }
-
-  @media (max-width: 600px) {
-      #controls { justify-content: space-between; padding: 10px; }
-      .c-group { gap:0; }
-      button { width: 40px; height: 40px; }
-  }
-</style>
-</head>
-<body>
-  <div id="guide"></div>
-  <div id="prompter-area"><div id="content"></div></div>
-  
-  <div id="controls">
-    
-    <!-- VELOCIDAD -->
-    <div class="c-group" title="Velocidad">
-        <button onclick="changeSpeed(-1)">-</button>
-        <span class="val" id="spdVal">1</span>
-        <button onclick="changeSpeed(1)">+</button>
-    </div>
-
-    <!-- PLAY -->
-    <button onclick="togglePlay()" id="btnPlay">INICIAR</button>
-
-    <!-- FUENTE -->
-    <div class="c-group" title="Tamaño Fuente">
-        <button onclick="changeSize(-1)">A-</button>
-        <span class="val" id="fntVal">3</span>
-        <button onclick="changeSize(1)">A+</button>
-    </div>
-
-    <!-- ESPEJO -->
-    <div class="c-group" title="Espejo">
-        <button onclick="toggleMirror()" style="width:36px;">⇄</button>
-    </div>
-
-  </div>
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+body{background:#000;color:#fff;font-family:'Inter',sans-serif;margin:0;overflow:hidden;height:100vh;display:flex;flex-direction:column;}
+#prompter-area{flex:1;overflow-y:scroll;padding:20px 40px;padding-bottom:60vh;cursor:pointer;scroll-behavior: auto;}
+.p-text{font-size:4rem;line-height:1.4;margin-bottom:1.5rem;font-weight:700;}
+.p-title{color:#10B981;font-size:2.5rem;text-transform:uppercase;letter-spacing:2px;border-bottom:1px solid #333;margin:40px 0 20px 0;}
+.p-inst{color:#F59E0B;font-size:2rem;font-style:italic;background:#1e1e1e;padding:15px;border-left:5px solid #F59E0B;margin-bottom:20px;}
+.mirror-x { transform: scaleX(-1); } .mirror-y { transform: scaleY(-1); }
+#controls {position:fixed; bottom:0; left:0; width:100%; background: #111; border-top: 1px solid #333; padding: 10px; display:flex; justify-content:center; gap:15px; z-index:999;}
+button {background:#222; border:1px solid #444; color:#eee; width:40px; height:40px; border-radius:6px; font-weight:bold; cursor:pointer; transition:0.1s;}
+button:hover {background:#333;}
+#btnPlay {background:#10B981; color:#000; width:auto; padding:0 20px; font-weight:800;}
+#btnPlay.paused {background:#EF4444; color:#fff;}
+#guide {position:fixed; top:40%; left:0; width:100%; height:10%; border-top:1px solid rgba(255,255,255,0.1); border-bottom:1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.02); pointer-events:none; z-index:50;}
+</style></head><body><div id="guide"></div><div id="prompter-area"><div id="content"></div></div><div id="controls"><button onclick="changeSpeed(-1)">-</button><button id="spdVal" style="width:auto;padding:0 10px;font-family:monospace;">10</button><button onclick="changeSpeed(1)">+</button><button onclick="togglePlay()" id="btnPlay">START</button><button onclick="changeSize(-1)">A-</button><button onclick="changeSize(1)">A+</button><button onclick="toggleMirror()">⇄</button></div>
 <script>
-  const data = ${jsonData};
-  const content = document.getElementById('content');
-  const area = document.getElementById('prompter-area');
-  
-  data.forEach(item => {
-    let el = document.createElement('div');
-    if(item.type==='title') { el.className='p-title'; el.innerText=item.content; }
-    else if(item.type==='instruction') { el.className='p-inst'; el.innerText=item.content; }
-    else { el.className='p-text'; el.innerText=item.content; }
-    content.appendChild(el);
-  });
-
-  let playing=false, speed=10, font=3.5, mirrorState=0, animationId;
-  let accumulator = 0; 
-
-  // AUTO-START (2 seg)
-  setTimeout(() => { if(!playing) togglePlay(); }, 2000);
-
-  // CLICK EN PANTALLA PARA PAUSA
-  area.addEventListener('click', () => {
-      if (window.getSelection().toString().length === 0) togglePlay();
-  });
-
-  function loop() {
-    if(playing) {
-      // MOTOR DE PRECISIÓN
-      // Base (offset) = 0.05 px (movimiento casi invisible)
-      // Multiplicador = 0.05 px por nivel
-      // Nivel 1 = 0.1 px/frame (muy lento)
-      // Nivel 10 = 0.55 px/frame
-      // Nivel 50 = 2.5 px/frame (rápido)
-      
-      const move = 0.05 + (speed * 0.05);
-      
-      accumulator += move;
-      if(accumulator >= 1) {
-          const pixels = Math.floor(accumulator);
-          area.scrollBy(0, pixels);
-          accumulator -= pixels;
-      }
-      animationId = requestAnimationFrame(loop);
-    }
-  }
-
-  function togglePlay() {
-    playing = !playing;
-    const btn = document.getElementById('btnPlay');
-    if(playing) {
-        btn.innerText = 'PAUSA';
-        btn.classList.add('paused');
-        loop();
-    } else {
-        btn.innerText = 'INICIAR';
-        btn.classList.remove('paused');
-        cancelAnimationFrame(animationId);
-    }
-  }
-
-  // Velocidad de 1 a 100 para control fino
-  function changeSpeed(d) { 
-      speed = Math.max(1, Math.min(100, speed + (d * 1))); // Pasos de 1 en 1
-      // Si pulsas shift + click, salta de 5 en 5 (opcional para el futuro)
-      document.getElementById('spdVal').innerText = speed; 
-  }
-
-  function changeSize(d) { 
-      font = Math.max(1.5, Math.min(10, font + d * 0.5)); 
-      document.querySelectorAll('.p-text').forEach(e => e.style.fontSize = font + 'rem');
-      document.getElementById('fntVal').innerText = Math.round(font*10)/10;
-  }
-
-  function toggleMirror() { 
-      mirrorState = (mirrorState + 1) % 3; 
-      const c = document.getElementById('prompter-area'); 
-      c.className = ''; 
-      if(mirrorState === 1) c.classList.add('mirror-x'); 
-      if(mirrorState === 2) c.classList.add('mirror-y'); 
-  }
-
-  document.addEventListener('keydown', (e) => { 
-      if(e.code === 'Space') { e.preventDefault(); togglePlay(); } 
-      if(e.code === 'ArrowUp') changeSpeed(1); 
-      if(e.code === 'ArrowDown') changeSpeed(-1); 
-  });
-  
-  // Iniciar display de velocidad
-  document.getElementById('spdVal').innerText = speed;
-<\/script>
-</body>
-</html>`;
+const data = ${jsonData}; const content = document.getElementById('content');
+data.forEach(item => { let el = document.createElement('div'); el.className = item.type==='title'?'p-title':item.type==='instruction'?'p-inst':'p-text'; el.innerText=item.content; content.appendChild(el); });
+let playing=false, speed=10, font=4, mirrorState=0, anim; const area=document.getElementById('prompter-area');
+function loop(){ if(playing){ area.scrollBy(0, speed*0.15); anim=requestAnimationFrame(loop); } }
+function togglePlay(){ playing=!playing; document.getElementById('btnPlay').innerText=playing?'PAUSE':'START'; document.getElementById('btnPlay').classList.toggle('paused', playing); if(playing) loop(); else cancelAnimationFrame(anim); }
+function changeSpeed(d){ speed=Math.max(1,Math.min(100,speed+d)); document.getElementById('spdVal').innerText=speed; }
+function changeSize(d){ font=Math.max(1,Math.min(10,font+d*0.5)); document.querySelectorAll('.p-text').forEach(e=>e.style.fontSize=font+'rem'); }
+function toggleMirror(){ mirrorState=(mirrorState+1)%3; area.className=''; if(mirrorState===1) area.classList.add('mirror-x'); if(mirrorState===2) area.classList.add('mirror-y'); }
+area.addEventListener('click', togglePlay);
+document.addEventListener('keydown', e=>{ if(e.code==='Space'){e.preventDefault();togglePlay();} if(e.code==='ArrowUp')changeSpeed(1); if(e.code==='ArrowDown')changeSpeed(-1); });
+<\/script></body></html>`;
     }
 
     function exportPlayer() {
-        const json = parseScript();
-        const html = getPlayerHTML(json);
-        const scriptTitle = getTitleFromScript();
-        const cleanTitle = scriptTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-        
+        const html = getPlayerHTML(parseScript());
+        const title = getTitleFromScript().replace(/[^a-z0-9]/gi, '_');
         const blob = new Blob([html], { type: 'text/html' });
-        const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
-        a.href = url; a.download = `Prompter_${cleanTitle}.html`;
+        a.href = URL.createObjectURL(blob); a.download = `Prompter_${title}.html`;
         document.body.appendChild(a); a.click(); document.body.removeChild(a);
     }
 
     function testLive() {
-        const json = parseScript();
-        const html = getPlayerHTML(json);
-        const win = window.open('', '_blank', 'width=1000,height=800,menubar=no,toolbar=no,location=no,status=no');
-        if(win) win.document.write(html); else alert("Habilita Pop-ups");
+        const win = window.open('', '_blank', 'width=1000,height=800');
+        if(win) win.document.write(getPlayerHTML(parseScript()));
+        else alert("Pop-ups blocked");
     }
+
+    // Inicialización automática
+    document.addEventListener('DOMContentLoaded', () => {
+        const deBtn = document.querySelector('#langMenu .dropdown-item[onclick*="de"]');
+        setLang('de', deBtn);
+    });
   </script>
 </body>
 </html>
+
 
