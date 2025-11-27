@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arti's Tutorial Center</title>
+
+    <!-- METADATOS PARA WHATSAPP / REDES SOCIALES -->
+    <meta property="og:title" content="Arti's Tutorial Center">
+    <meta property="og:description" content="Acceso centralizado a manuales de producción, guías de YouTube Studio y herramientas para Arti.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://zmau.dev/tutor/">
+    <!-- Asegúrate de subir una imagen llamada 'preview-tutor.jpg' a tu carpeta o cambia esta URL -->
+    <meta property="og:image" content="https://zmau.dev/tutor/preview-tutor.jpg">
+    <meta property="og:site_name" content="zmau.dev">
+
+    <!-- Estilos y Fuentes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .tutorial-card {
+            transition: all 0.3s ease;
+        }
+        .tutorial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <!-- Navbar / Header -->
+    <nav class="glass-header fixed w-full z-10 top-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <!-- Logo / Title -->
+                <div class="flex items-center gap-3">
+                    <div class="bg-blue-600 text-white w-10 h-10 rounded-lg flex items-center justify-center font-bold text-xl shadow-lg">
+                        A
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-bold text-xl tracking-tight text-slate-900">Tutorial Center</span>
+                        <span class="text-xs text-slate-500 uppercase tracking-wider">For Arti @ TranslatedPress</span>
+                    </div>
+                </div>
+
+                <!-- Language Switcher -->
+                <div class="relative group">
+                    <button id="langBtn" class="flex items-center gap-2 bg-white border border-slate-200 px-4 py-2 rounded-full text-sm font-medium hover:bg-slate-50 transition-colors">
+                        <i class="fa-solid fa-globe text-blue-500"></i>
+                        <span id="currentLangDisplay">Deutsch</span>
+                        <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
+                    </button>
+                    <!-- Dropdown -->
+                    <div class="absolute right-0 mt-2 w-40 bg-white rounded-xl shadow-xl border border-slate-100 hidden group-hover:block overflow-hidden animation-fade-in">
+                        <a href="#" onclick="changeLanguage('de')" class="block px-4 py-3 text-sm hover:bg-blue-50 hover:text-blue-700 transition-colors border-b border-slate-50">Deutsch</a>
+                        <a href="#" onclick="changeLanguage('en')" class="block px-4 py-3 text-sm hover:bg-blue-50 hover:text-blue-700 transition-colors border-b border-slate-50">English</a>
+                        <a href="#" onclick="changeLanguage('es')" class="block px-4 py-3 text-sm hover:bg-blue-50 hover:text-blue-700 transition-colors">Español</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-12">
+        
+        <!-- Welcome Hero -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4" id="heroTitle">
+                Willkommen im Kontrollzentrum
+            </h1>
+            <p class="text-lg text-slate-600 max-w-2xl mx-auto" id="heroSubtitle">
+                Wähle ein Modul aus, um die Produktion zu starten oder Anleitungen zu lesen.
+            </p>
+        </div>
+
+        <!-- Tutorials Grid -->
+        <div id="tutorialGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Las tarjetas se generarán aquí automáticamente con Javascript -->
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center text-slate-400 text-sm">
+            <p>&copy; 2025 zmau.dev/tutor • Designed for Arti</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- CONFIGURACIÓN DE TUTORIALES ---
+        // AGREGA AQUÍ TUS NUEVOS ARCHIVOS CUANDO LOS SUBAS
+        const tutorials = [
+            {
+                id: 1,
+                filename: "index 1.html", // Nombre exacto del archivo en el servidor
+                icon: "fa-book-open",     // Icono de FontAwesome
+                color: "text-blue-600",   // Color del icono (Tailwind)
+                bg: "bg-blue-50",         // Fondo del icono
+                title: {
+                    de: "Das Regiebuch (Produktion)",
+                    en: "Production Manual",
+                    es: "Manual de Producción"
+                },
+                desc: {
+                    de: "Schritt-für-Schritt-Anleitung für NotebookLM & Gemini Shows.",
+                    en: "Step-by-step guide for NotebookLM & Gemini shows.",
+                    es: "Guía paso a paso para los shows de NotebookLM y Gemini."
+                }
+            },
+            {
+                id: 2,
+                filename: "youtube_manual_multi.html", // O 'yt-studio.html' según como lo hayas nombrado
+                icon: "fa-youtube",
+                color: "text-red-600",
+                bg: "bg-red-50",
+                title: {
+                    de: "YouTube Studio Guide",
+                    en: "YouTube Studio Guide",
+                    es: "Guía de YouTube Studio"
+                },
+                desc: {
+                    de: "Wie man Abspanne (End Screens) und Links hinzufügt.",
+                    en: "How to add End Screens and links to your videos.",
+                    es: "Cómo agregar pantallas finales y enlaces a tus videos."
+                }
+            },
+            {
+                id: 3,
+                filename: "https://github.com/maoumas/arti/tree/main", // También puede ser un enlace externo
+                icon: "fa-github",
+                color: "text-gray-800",
+                bg: "bg-gray-100",
+                title: {
+                    de: "Arti Repository",
+                    en: "Arti Repository",
+                    es: "Repositorio Arti"
+                },
+                desc: {
+                    de: "Direkter Link zum GitHub Quellcode.",
+                    en: "Direct link to GitHub source code.",
+                    es: "Enlace directo al código fuente en GitHub."
+                }
+            }
+            // Copia y pega un bloque {} anterior para agregar más...
+        ];
+
+        // --- UI TEXTS ---
+        const uiText = {
+            de: { title: "Willkommen im Kontrollzentrum", sub: "Wähle ein Modul aus, um die Produktion zu starten oder Anleitungen zu lesen.", btn: "Öffnen", langLabel: "Deutsch" },
+            en: { title: "Welcome to Control Center", sub: "Select a module to start production or read guides.", btn: "Open", langLabel: "English" },
+            es: { title: "Bienvenido al Centro de Control", sub: "Selecciona un módulo para iniciar producción o leer guías.", btn: "Abrir", langLabel: "Español" }
+        };
+
+        // --- APP LOGIC ---
+        let currentLang = localStorage.getItem('arti_lang') || 'de'; // Default to German
+
+        function renderGrid() {
+            const grid = document.getElementById('tutorialGrid');
+            grid.innerHTML = ''; // Clear existing
+
+            tutorials.forEach(t => {
+                const card = document.createElement('div');
+                card.className = "tutorial-card bg-white rounded-2xl p-6 shadow-sm border border-slate-100 flex flex-col justify-between h-full";
+                
+                // Content
+                card.innerHTML = `
+                    <div>
+                        <div class="w-14 h-14 ${t.bg} ${t.color} rounded-full flex items-center justify-center text-2xl mb-4">
+                            <i class="fa-brands ${t.icon} ${t.icon.includes('fa-') ? 'fa-solid' : ''}"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">${t.title[currentLang]}</h3>
+                        <p class="text-slate-500 mb-6 leading-relaxed">
+                            ${t.desc[currentLang]}
+                        </p>
+                    </div>
+                    <a href="${t.filename}" class="w-full block text-center bg-white border border-slate-200 text-slate-700 font-semibold py-3 px-4 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-colors group">
+                        ${uiText[currentLang].btn} <i class="fa-solid fa-arrow-right ml-2 text-slate-400 group-hover:text-slate-600 transition-colors"></i>
+                    </a>
+                `;
+                grid.appendChild(card);
+            });
+
+            // Update Header Texts
+            document.getElementById('heroTitle').textContent = uiText[currentLang].title;
+            document.getElementById('heroSubtitle').textContent = uiText[currentLang].sub;
+            document.getElementById('currentLangDisplay').textContent = uiText[currentLang].langLabel;
+        }
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('arti_lang', lang); // Save preference
+            renderGrid();
+        }
+
+        // Fix for FontAwesome logic in the loop above (handle solid vs brands)
+        // Adjusting render logic slightly to robustly handle icons
+        
+        // Initial Render
+        document.addEventListener('DOMContentLoaded', () => {
+            renderGrid();
+        });
+
+    </script>
+</body>
+</html>
+
