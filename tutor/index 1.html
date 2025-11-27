@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <!-- INICIO DE ETIQUETAS PARA REDES SOCIALES (OPEN GRAPH) -->
+<!-- Pega esto dentro de la sección <head> de tu index.html -->
+
+<!-- Título que aparecerá en azul/negrita -->
+<meta property="og:title" content="Präsentation ARTI - zmau.dev">
+
+<!-- Descripción corta que aparece debajo del título -->
+<meta property="og:description" content="Spezialprogramm und Analysen von @TranslatedPressDE.">
+
+<!-- La imagen que creamos (IMPORTANTE: Debe ser la ruta completa https://...) -->
+<!-- Asegúrate de subir la imagen 'arti_preview.png' a tu carpeta de imágenes -->
+<meta property="og:image" content="https://zmau.dev/img/arti_preview.png">
+
+<!-- Tipo de contenido y URL canónica -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://zmau.dev">
+
+<!-- Tamaño recomendado para WhatsApp (opcional pero ayuda) -->
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- FIN DE ETIQUETAS -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produktions-Handbuch für Arti</title>
+    
+    <!-- WhatsApp / Social Media Preview Tags -->
+    <meta property="og:title" content="Das Regiebuch für Arti">
+    <meta property="og:description" content="Deine Anleitung für die perfekte Sendung mit NotebookLM & Gemini.">
+    <!-- Hier ist dein verlinktes Bild für die Vorschau -->
+    <meta property="og:image" content="http://zmau.dev/img/IMG_tutor.JPG">
+    <meta property="og:type" content="article">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f0f2f5;
+            --card-color: #ffffff;
+            --primary-color: #1a73e8; /* Google Blueish */
+            --secondary-color: #ea4335; /* Alert/Live color */
+            --text-color: #333333;
+            --text-light: #666666;
+            --success-color: #34a853;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Hero Image */
+        .hero-image {
+            width: 100%;
+            height: 300px; /* Etwas höher für bessere Sichtbarkeit */
+            object-fit: cover;
+            border-radius: 15px 15px 0 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: -20px; /* Overlap with header */
+            display: block;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            background: white;
+            padding: 40px 20px 20px;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 10;
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            margin-top: 0;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 0;
+        }
+
+        /* Steps */
+        .step-card {
+            background: var(--card-color);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-left: 6px solid var(--primary-color);
+            position: relative;
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            background: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(26, 115, 232, 0.4);
+        }
+
+        .step-title {
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .tool-badge {
+            font-size: 0.8rem;
+            background: #e8f0fe;
+            color: var(--primary-color);
+            padding: 5px 10px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        /* Prompt Box */
+        .prompt-box {
+            background-color: #f8f9fa;
+            border: 1px dashed #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            color: #444;
+            margin-top: 15px;
+            white-space: pre-wrap;
+        }
+
+        .prompt-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: var(--success-color);
+            font-family: sans-serif;
+        }
+
+        /* Warning Box for Live Videos */
+        .warning-box {
+            background-color: #fce8e6;
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-title {
+            color: var(--secondary-color);
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Illustration Icons */
+        .icon-instruction {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .icon-instruction i {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Hero Image Displayed at Top (Linked from server) -->
+        <img src="http://zmau.dev/img/IMG_tutor.JPG" alt="Studio Regieplatz" class="hero-image">
+
+        <div class="header">
+            <h1><i class="fa-solid fa-wand-magic-sparkles"></i> Das Regiebuch</h1>
+            <p>Hallo Arti! Hier ist deine Schritt-für-Schritt-Anleitung, um aus bloßen Informationen eine großartige Sendung zu machen.</p>
+        </div>
+
+        <!-- SCHRITT 1 -->
+        <div class="step-card">
+            <div class="step-number">1</div>
+            <h2 class="step-title">
+                Material sammeln
+                <span class="tool-badge">NotebookLM & Gemini</span>
+            </h2>
+            
+            <p>Zuerst füttern wir unser "Super-Gehirn" (NotebookLM) mit Wissen. Lade PDFs, Texte oder normale YouTube-Links hoch.</p>
+
+            <div class="warning-box">
+                <span class="warning-title"><i class="fa-solid fa-triangle-exclamation"></i> Spezialfall: Live-Streams</span>
+                NotebookLM kann keine YouTube-Live-Videos direkt lesen.
+                <br><br>
+                <strong>Der Trick:</strong>
+                <ol style="margin: 10px 0 0 20px;">
+                    <li>Gehe zu <strong>Gemini</strong>.</li>
+                    <li>Gib Gemini den Link zum Live-Video.</li>
+                    <li>Befehl: <em>"Mache eine detaillierte Analyse dieses Videos."</em></li>
+                    <li>Kopiere die Antwort von Gemini und füge sie als Text in NotebookLM ein.</li>
+                </ol>
+            </div>
+
+            <div class="icon-instruction">
+                <i class="fa-solid fa-globe"></i>
+                <div>
+                    <strong>Neu: Internet-Suche</strong><br>
+                    Aktiviere in NotebookLM die Internet-Funktion, um brandaktuelle Fakten hinzuzufügen.
+                </div>
+            </div>
+        </div>
+
+        <!-- SCHRITT 2 -->
+        <div class="step-card">
+            <div class="step-number">2</div>
+            <h2 class="step-title">
+                Das Skript schreiben
+                <span class="tool-badge">NotebookLM</span>
+            </h2>
+            
+            <p>Jetzt bitten wir NotebookLM, aus dem gesammelten Material einen perfekten Moderationstext (Teleprompter) zu erstellen. Kopiere diesen Befehl genau so:</p>
+
+            <div class="prompt-box">
+<span class="prompt-label">BEFEHL FÜR DAS SKRIPT:</span>
+## Inhaltliche und stilistische Anforderungen
+
+1.  **Betone die offizielle Aktivierung:** Beginne damit, dass die Benennung der Operation durch Kriegsminister Pete Hegseth/Hexath als **"Operation Southern Spear"** bedeutet, dass die Mission offiziell aktiviert wurde und es **kein Zurück mehr** gibt. Beschreibe dies als eine militärische Aktivität, bei der die "Schachfiguren" bereitstehen.
+2.  **Vergleiche Deklaration vs. Realität (Sarkasmus):** Stelle die offiziellen Ziele (Bekämpfung des Narko-Terrorismus, Schutz der Heimat) den offensichtlichen, nicht deklarierten Zielen (Regime-Change, Enthauptung des Maduro-Regimes, Zugriff auf die Ölreserven) sarkastisch gegenüber.
+3.  **Fokus auf das beispiellose militärische Gerät:** Beschreibe die **beispiellose militärische Aufrüstung** in der Region. Hebe die Symbolik und die Feuerkraft des **USS Gerald R. Ford** hervor, sowie die Präsenz von **15.000 US-Soldaten**.
+4.  **Hervorhebung der Kontroverse:** Integriere die Kritik an den **"illegalen extralegalen Tötungen"** (etwa 20 Boote, etwa 80 Tote).
+5.  **Strategische Tiefe:** Erkläre, dass die Operation über das Meer hinausgeht und die **"Wurzel des Problems"** (Cartel de los Soles) angreift.
+
+**Beginne dein Skript sofort mit dem Titel und dem Inhalt, ohne einleitende Kommentare.**
+            </div>
+        </div>
+
+        <!-- SCHRITT 3 -->
+        <div class="step-card">
+            <div class="step-number">3</div>
+            <h2 class="step-title">
+                Die Bilder (Slides) erstellen
+                <span class="tool-badge">Gemini</span>
+            </h2>
+            
+            <p>Sobald wir den Text haben, brauchen wir visuelle Unterstützung für den Hintergrund. Wir gehen zurück zu Gemini und sagen:</p>
+
+            <div class="prompt-box">
+<span class="prompt-label">BEFEHL FÜR DIE BILDER:</span>
+Handeln Sie mit der ganzen Professionalität und Ernsthaftigkeit dieser Nachricht und erstellen Sie mir eine Präsentation mit journalistischen Bildern und etwas Satire im Stil moderner Karikaturen, speziell für mein älteres deutsches Publikum, von unserem Kanal @translatedPressDE, um es zu informieren und zu unterhalten. Alles auf Deutsch für mein Publikum.
+            </div>
+
+            <p><em>Tipp: Gemini erstellt daraus den Code oder die Struktur, die wir dann als PowerPoint oder HTML speichern.</em></p>
+        </div>
+
+        <!-- SCHRITT 4 -->
+        <div class="step-card">
+            <div class="step-number">4</div>
+            <h2 class="step-title">
+                Die Show starten
+                <span class="tool-badge">Mission Control</span>
+            </h2>
+            
+            <p>Jetzt hast du alles:</p>
+            <ul style="list-style: none; padding-left: 0;">
+                <li><i class="fa-solid fa-check" style="color: green;"></i> Das Wissen (aus NotebookLM)</li>
+                <li><i class="fa-solid fa-check" style="color: green;"></i> Das Skript (Der Teleprompter)</li>
+                <li><i class="fa-solid fa-check" style="color: green;"></i> Die Bilder (Die Präsentation)</li>
+            </ul>
+            <p>Gehe zu deinem <strong>Mission Control Dashboard</strong>, öffne die beiden Dateien und starte die Aufnahme. Du bist bereit!</p>
+        </div>
+
+        <div class="footer">
+            "Technik ist nur das Werkzeug. Dein Talent macht die Show."
+        </div>
+
+    </div>
+
+</body>
+</html>
+
+
