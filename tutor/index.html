@@ -32,6 +32,14 @@
             transform: translateY(-5px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
+        /* Animación suave para el menú */
+        .fade-in {
+            animation: fadeIn 0.2s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
@@ -51,18 +59,18 @@
                     </div>
                 </div>
 
-                <!-- Language Switcher -->
-                <div class="relative group">
-                    <button id="langBtn" class="flex items-center gap-2 bg-white border border-slate-200 px-4 py-2 rounded-full text-sm font-medium hover:bg-slate-50 transition-colors">
+                <!-- Language Switcher (MODIFICADO PARA CLICK) -->
+                <div class="relative">
+                    <button id="langBtn" onclick="toggleLanguageMenu(event)" class="flex items-center gap-2 bg-white border border-slate-200 px-4 py-2 rounded-full text-sm font-medium hover:bg-slate-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-100">
                         <i class="fa-solid fa-globe text-blue-500"></i>
                         <span id="currentLangDisplay">Deutsch</span>
                         <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
                     </button>
-                    <!-- Dropdown -->
-                    <div class="absolute right-0 mt-2 w-40 bg-white rounded-xl shadow-xl border border-slate-100 hidden group-hover:block overflow-hidden animation-fade-in">
-                        <a href="#" onclick="changeLanguage('de')" class="block px-4 py-3 text-sm hover:bg-blue-50 hover:text-blue-700 transition-colors border-b border-slate-50">Deutsch</a>
-                        <a href="#" onclick="changeLanguage('en')" class="block px-4 py-3 text-sm hover:bg-blue-50 hover:text-blue-700 transition-colors border-b border-slate-50">English</a>
-                        <a href="#" onclick="changeLanguage('es')" class="block px-4 py-3 text-sm hover:bg-blue-50 hover:text-blue-700 transition-colors">Español</a>
+                    <!-- Dropdown Menu -->
+                    <div id="langDropdown" class="hidden absolute right-0 mt-2 w-40 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden fade-in z-50">
+                        <a href="#" onclick="selectLanguage('de', event)" class="block px-4 py-3 text-sm hover:bg-blue-50 hover:text-blue-700 transition-colors border-b border-slate-50">Deutsch</a>
+                        <a href="#" onclick="selectLanguage('en', event)" class="block px-4 py-3 text-sm hover:bg-blue-50 hover:text-blue-700 transition-colors border-b border-slate-50">English</a>
+                        <a href="#" onclick="selectLanguage('es', event)" class="block px-4 py-3 text-sm hover:bg-blue-50 hover:text-blue-700 transition-colors">Español</a>
                     </div>
                 </div>
             </div>
@@ -103,10 +111,10 @@
         const tutorials = [
             {
                 id: 1,
-                filename: "manual-pro.html", // Nombre exacto del archivo en el servidor
-                icon: "fa-book-open",     // Icono de FontAwesome
-                color: "text-blue-600",   // Color del icono (Tailwind)
-                bg: "bg-blue-50",         // Fondo del icono
+                filename: "index 1.html", // Archivo del Manual de Producción
+                icon: "fa-book-open",
+                color: "text-blue-600",
+                bg: "bg-blue-50",
                 title: {
                     de: "Das Regiebuch (Produktion)",
                     en: "Production Manual",
@@ -120,7 +128,7 @@
             },
             {
                 id: 2,
-                filename: "youtube_manual_multi.html", // O 'yt-studio.html' según como lo hayas nombrado
+                filename: "youtube_manual_multi.html", // Archivo de YouTube Studio
                 icon: "fa-youtube",
                 color: "text-red-600",
                 bg: "bg-red-50",
@@ -137,7 +145,7 @@
             },
             {
                 id: 3,
-                filename: "https://github.com/maoumas/arti/tree/main", // También puede ser un enlace externo
+                filename: "https://github.com/maoumas/arti/tree/main", // Repo externo
                 icon: "fa-github",
                 color: "text-gray-800",
                 bg: "bg-gray-100",
@@ -152,7 +160,6 @@
                     es: "Enlace directo al código fuente en GitHub."
                 }
             }
-            // Copia y pega un bloque {} anterior para agregar más...
         ];
 
         // --- UI TEXTS ---
@@ -163,11 +170,12 @@
         };
 
         // --- APP LOGIC ---
-        let currentLang = localStorage.getItem('arti_lang') || 'de'; // Default to German
+        let currentLang = localStorage.getItem('arti_lang') || 'de';
 
+        // 1. Render Grid Function
         function renderGrid() {
             const grid = document.getElementById('tutorialGrid');
-            grid.innerHTML = ''; // Clear existing
+            grid.innerHTML = ''; 
 
             tutorials.forEach(t => {
                 const card = document.createElement('div');
@@ -191,21 +199,39 @@
                 grid.appendChild(card);
             });
 
-            // Update Header Texts
+            // Update UI Texts
             document.getElementById('heroTitle').textContent = uiText[currentLang].title;
             document.getElementById('heroSubtitle').textContent = uiText[currentLang].sub;
             document.getElementById('currentLangDisplay').textContent = uiText[currentLang].langLabel;
         }
 
-        function changeLanguage(lang) {
+        // 2. Menu Logic (Dropdown Toggle)
+        function toggleLanguageMenu(event) {
+            event.stopPropagation(); // Evita que el clic se propague al documento
+            const menu = document.getElementById('langDropdown');
+            menu.classList.toggle('hidden');
+        }
+
+        function selectLanguage(lang, event) {
+            event.preventDefault(); // Evita scroll al top
             currentLang = lang;
-            localStorage.setItem('arti_lang', lang); // Save preference
+            localStorage.setItem('arti_lang', lang);
+            
+            // Cerrar menú y renderizar
+            document.getElementById('langDropdown').classList.add('hidden');
             renderGrid();
         }
 
-        // Fix for FontAwesome logic in the loop above (handle solid vs brands)
-        // Adjusting render logic slightly to robustly handle icons
-        
+        // Cerrar menú al hacer clic fuera
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('langDropdown');
+            const btn = document.getElementById('langBtn');
+            
+            if (!menu.classList.contains('hidden') && !btn.contains(event.target) && !menu.contains(event.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+
         // Initial Render
         document.addEventListener('DOMContentLoaded', () => {
             renderGrid();
@@ -214,4 +240,5 @@
     </script>
 </body>
 </html>
+
 
