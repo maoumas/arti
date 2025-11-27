@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anleitung: YouTube Abspann</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+        .yt-button {
+            background-color: #065fd4;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 2px;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            display: inline-block;
+        }
+        .yt-gray-button {
+            background-color: #f0f0f0;
+            color: #606060;
+            padding: 6px 12px;
+            border-radius: 2px;
+            font-weight: 500;
+            border: 1px solid #ccc;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .step-card {
+            transition: transform 0.2s;
+        }
+        .step-card:hover {
+            transform: translateY(-2px);
+        }
+        .menu-item {
+            border-left: 4px solid #ff0000;
+            background-color: #f1f1f1;
+            padding: 10px;
+            font-weight: bold;
+            color: #cc0000;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="max-w-3xl mx-auto p-6 bg-white shadow-xl my-8 rounded-lg border-t-8 border-red-600">
+        
+        <!-- Header -->
+        <header class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Wie man Videos verlinkt</h1>
+            <p class="text-xl text-gray-600">YouTube Studio Anleitung für Arti</p>
+            <div class="mt-4 inline-block bg-red-100 text-red-800 px-4 py-1 rounded-full text-sm font-semibold">
+                Ziel: Klickbare Links am Ende des Videos
+            </div>
+        </header>
+
+        <!-- Step 1 -->
+        <div class="step-card bg-white border border-gray-200 rounded-lg p-6 mb-6 shadow-sm relative overflow-hidden">
+            <div class="absolute top-0 left-0 bg-red-600 text-white font-bold py-1 px-3 rounded-br-lg">Schritt 1</div>
+            <div class="mt-4">
+                <h2 class="text-xl font-bold mb-3">YouTube Studio öffnen</h2>
+                <p class="mb-4">Gehe zu <strong>YouTube Studio</strong>. Im linken Menü klicke auf:</p>
+                <div class="w-full max-w-xs bg-white border border-gray-300 rounded shadow-inner p-4">
+                    <div class="space-y-2">
+                        <div class="flex items-center text-gray-400"><i class="fas fa-th-large w-6"></i> Dashboard</div>
+                        <div class="flex items-center text-red-600 font-bold bg-red-50 p-2 rounded"><i class="fas fa-video w-6"></i> Inhalte</div>
+                        <div class="flex items-center text-gray-400"><i class="fas fa-chart-bar w-6"></i> Analytics</div>
+                    </div>
+                </div>
+                <p class="mt-3 text-sm text-gray-500">Klicke dann auf das <strong>Stift-Symbol (Details)</strong> bei dem Video, das du bearbeiten möchtest.</p>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-card bg-white border border-gray-200 rounded-lg p-6 mb-6 shadow-sm relative overflow-hidden">
+            <div class="absolute top-0 left-0 bg-red-600 text-white font-bold py-1 px-3 rounded-br-lg">Schritt 2</div>
+            <div class="mt-4">
+                <h2 class="text-xl font-bold mb-3">Abspann finden</h2>
+                <p class="mb-4">Scrolle auf der rechten Seite nach unten, bis du diesen Bereich siehst:</p>
+                <div class="bg-gray-100 p-6 rounded-lg border border-gray-300 flex flex-col gap-4 max-w-sm">
+                    <div class="flex justify-between items-center bg-white p-3 rounded shadow-sm cursor-pointer border border-gray-200 hover:border-blue-400">
+                        <div class="flex flex-col">
+                            <span class="text-sm font-semibold text-gray-700">Abspann</span>
+                            <span class="text-xs text-gray-500">Elemente am Ende hinzufügen</span>
+                        </div>
+                        <i class="fas fa-pen text-gray-400"></i>
+                    </div>
+                </div>
+                <p class="mt-3 text-green-700 font-medium"><i class="fas fa-check-circle"></i> Klicke auf das Stift-Symbol neben "Abspann".</p>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-card bg-white border border-gray-200 rounded-lg p-6 mb-6 shadow-sm relative overflow-hidden">
+            <div class="absolute top-0 left-0 bg-red-600 text-white font-bold py-1 px-3 rounded-br-lg">Schritt 3</div>
+            <div class="mt-4">
+                <h2 class="text-xl font-bold mb-3">Video hinzufügen</h2>
+                <p class="mb-4">Ein neues Fenster öffnet sich. Klicke oben links auf:</p>
+                
+                <div class="flex gap-4 items-center mb-6">
+                    <span class="yt-gray-button"><i class="fas fa-plus"></i> Element</span>
+                    <i class="fas fa-arrow-right text-gray-400"></i>
+                    <span class="font-bold">Video</span>
+                </div>
+
+                <p class="mb-2">Wähle dann die Option:</p>
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4">
+                    <div class="flex items-center gap-2 mb-2 text-gray-400">
+                        <i class="far fa-circle"></i> Zuletzt hochgeladenes Video
+                    </div>
+                    <div class="flex items-center gap-2 mb-2 text-gray-400">
+                        <i class="far fa-circle"></i> Beste Option für Zuschauer
+                    </div>
+                    <div class="flex items-center gap-2 font-bold text-gray-800">
+                        <i class="fas fa-dot-circle text-blue-600"></i> Bestimmtes Video auswählen
+                    </div>
+                </div>
+                <p class="mt-3 text-sm">Wähle jetzt das Video von Zohran/Truthahn aus der Liste aus.</p>
+            </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step-card bg-white border border-gray-200 rounded-lg p-6 mb-6 shadow-sm relative overflow-hidden">
+            <div class="absolute top-0 left-0 bg-red-600 text-white font-bold py-1 px-3 rounded-br-lg">Schritt 4</div>
+            <div class="mt-4">
+                <h2 class="text-xl font-bold mb-3">Speichern</h2>
+                <p class="mb-4">Schiebe das Video an die gewünschte Stelle auf dem Bildschirm.</p>
+                <p class="mb-4">Zum Schluss klicke oben rechts auf:</p>
+                <div class="text-right">
+                    <span class="yt-button">SPEICHERN</span>
+                </div>
+                <div class="mt-6 p-4 bg-green-100 rounded text-green-800 text-center font-bold">
+                    <i class="fas fa-check"></i> Fertig! Der Link ist jetzt im Video.
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center text-gray-500 text-sm mt-10 border-t pt-4">
+            Erstellt für Arti • YouTube Guide 2025
+        </footer>
+
+    </div>
+
+</body>
+</html>
+
