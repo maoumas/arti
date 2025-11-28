@@ -4,13 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Open Graph Data for Social Media Sharing (WhatsApp, etc.) -->
     <meta property="og:title" content="Guía de YouTube Studio: Cómo enlazar videos" />
     <meta property="og:description" content="Manual paso a paso para añadir pantallas finales con enlaces a tus videos en YouTube Studio. Multilingüe (ES, DE, EN)." />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://zmau.dev/tutor/youtube_manual_multi.html" />
-    <!-- IMPORTANTE: Reemplaza 'preview.jpg' con la URL real de una imagen miniatura para tu guía.
-         Debe ser una imagen de al menos 1200x630 píxeles para obtener mejores resultados. -->
     <meta property="og:image" content="https://zmau.dev/tutor/preview.jpg" />
     <meta property="og:site_name" content="Guías de Arti" />
     
@@ -49,17 +46,37 @@
         .step-card:hover {
             transform: translateY(-2px);
         }
-        /* Dropdown styles */
+        /* Dropdown styles - CORREGIDO */
+        .dropdown {
+            position: relative; /* Asegura que el menú se posicione relativo a esto */
+            display: inline-block;
+        }
         .dropdown:hover .dropdown-menu {
             display: block;
         }
+        /* CORRECCIÓN CLAVE AQUÍ */
+        .dropdown-menu {
+            /* Un margen superior negativo pequeño ayuda a cerrar la brecha */
+            margin-top: 0 !important; 
+            /* Se añade un padding superior transparente invisible para crear un "puente" */
+            padding-top: 10px; 
+            /* Se ajusta la posición para compensar el padding */
+            top: 100%; 
+        }
+        /* El contenido real del menú necesita un fondo y borde, separado del padding invisible */
+        .dropdown-content {
+            background-color: white;
+            border-radius: 0.375rem; /* rounded-md */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 relative">
 
-    <!-- Language Switcher -->
     <div class="absolute top-4 right-4 z-50">
-        <div class="relative inline-block text-left dropdown">
+        <div class="dropdown">
             <div>
                 <button type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none" id="menu-button" aria-expanded="true" aria-haspopup="true">
                     <i class="fas fa-globe mr-2 mt-0.5"></i> <span id="current-lang-label">Deutsch</span>
@@ -69,11 +86,11 @@
                 </button>
             </div>
 
-            <div class="dropdown-menu origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-                <div class="py-1" role="none">
-                    <a href="#" onclick="setLanguage('de')" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem" tabindex="-1">Deutsch</a>
-                    <a href="#" onclick="setLanguage('en')" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem" tabindex="-1">English</a>
-                    <a href="#" onclick="setLanguage('es')" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem" tabindex="-1">Español</a>
+            <div class="dropdown-menu origin-top-right absolute right-0 w-40 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                <div class="dropdown-content py-1">
+                    <a href="#" onclick="setLanguage('de'); return false;" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem" tabindex="-1">Deutsch</a>
+                    <a href="#" onclick="setLanguage('en'); return false;" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem" tabindex="-1">English</a>
+                    <a href="#" onclick="setLanguage('es'); return false;" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem" tabindex="-1">Español</a>
                 </div>
             </div>
         </div>
@@ -81,7 +98,6 @@
 
     <div class="max-w-3xl mx-auto p-6 bg-white shadow-xl my-8 rounded-lg border-t-8 border-red-600">
         
-        <!-- Header -->
         <header class="text-center mb-10 mt-6">
             <h1 class="text-4xl font-bold text-gray-900 mb-2" data-i18n="mainTitle">Wie man Videos verlinkt</h1>
             <p class="text-xl text-gray-600" data-i18n="subTitle">YouTube Studio Anleitung für Arti</p>
@@ -90,7 +106,6 @@
             </div>
         </header>
 
-        <!-- Step 1 -->
         <div class="step-card bg-white border border-gray-200 rounded-lg p-6 mb-6 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 left-0 bg-red-600 text-white font-bold py-1 px-3 rounded-br-lg" data-i18n="step1Label">Schritt 1</div>
             <div class="mt-4">
@@ -107,7 +122,6 @@
             </div>
         </div>
 
-        <!-- Step 2 -->
         <div class="step-card bg-white border border-gray-200 rounded-lg p-6 mb-6 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 left-0 bg-red-600 text-white font-bold py-1 px-3 rounded-br-lg" data-i18n="step2Label">Schritt 2</div>
             <div class="mt-4">
@@ -126,7 +140,6 @@
             </div>
         </div>
 
-        <!-- Step 3 -->
         <div class="step-card bg-white border border-gray-200 rounded-lg p-6 mb-6 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 left-0 bg-red-600 text-white font-bold py-1 px-3 rounded-br-lg" data-i18n="step3Label">Schritt 3</div>
             <div class="mt-4">
@@ -155,7 +168,6 @@
             </div>
         </div>
 
-        <!-- Step 4 -->
         <div class="step-card bg-white border border-gray-200 rounded-lg p-6 mb-6 shadow-sm relative overflow-hidden">
             <div class="absolute top-0 left-0 bg-red-600 text-white font-bold py-1 px-3 rounded-br-lg" data-i18n="step4Label">Schritt 4</div>
             <div class="mt-4">
@@ -290,9 +302,6 @@
                 const key = el.getAttribute('data-i18n');
                 if (translations[lang][key]) {
                     if (el.innerHTML.includes('<strong') || el.innerHTML.includes('<i')) {
-                         // Preserve inner HTML structure if needed (simple replacement for now)
-                         // For this specific case, we just replace textContent for buttons but need innerHTML for descriptions
-                         // Let's check keys to see if they are text-only or HTML
                          if (key === 'step1Text' || key === 'step1Hint') {
                              el.innerHTML = translations[lang][key];
                          } else {
@@ -310,11 +319,10 @@
             if (lang === 'en') label.innerText = 'English';
             if (lang === 'es') label.innerText = 'Español';
 
-            // Close dropdown (it closes on hover out via CSS, but good for mobile to just click)
-            // (CSS handles hover state, so no JS needed to close)
+            // Force close dropdown by removing hover effect temporarily is tricky with pure CSS hover.
+            // The padding trick should solve the usability issue.
+            // Adding 'return false' to onclick links to prevent unwanted scrolling/jumping.
         }
     </script>
 </body>
 </html>
-
-
