@@ -2,6 +2,19 @@
 * TELEPROMPTER-SKRIPT: 
 # Der globale Sumpf der Zerstörung
 
+
+# BREAKING: 
+Die neue Währung der Wahrheit – Wenn TDS-Journalismus den Bankrott der Seriosität garantiert! 💣
+​Der „Trump Derangement Syndrome“-Klickfang: Ein Hoch auf die Selbstzerstörung 🤡
+​Meine Damen und Herren, heute widmen wir uns einem Phänomen, das – Achtung, Spoiler! – die intellektuelle Integrität Europas (und des restlichen Planeten) buchstäblich aus den Angeln hebt: Dem TDS-Journalismus.
+​Ja, Sie haben richtig gehört. Während der Rest der Welt vielleicht mit Kriegen, Inflation oder der schieren Langeweile des Alltags kämpft, hat die journalistische Elite eine weit wichtigere Mission gefunden. Diese tapfere Branche lebt, atmet und generiert Klicks, indem sie eine einzige, nicht näher zu nennende Person unaufhörlich und mit der Hingabe eines religiösen Kults in den Schmutz zieht.
+​Und zwar koste es, was es wolle!
+​Man könnte meinen, das Fundament des seriösen Berichts wäre die Recherche, die Ausgewogenheit, oder zumindest der Versuch, nicht wie eine hysterische PR-Abteilung einer politischen Gegenbewegung zu klingen. Aber nein! Das neue Geschäftsmodell ist so genial wie einfach: Je mehr man Trump Derangement Syndrome (TDS) als intellektuelle Basis nutzt, desto sicherer ist der... Moment mal... ja, genau: Der Bankrott der Glaubwürdigkeit ist so sicher wie das Amen in der Kirche!
+​Es ist ein Meisterwerk der Ökonomie des Wahnsinns. Warum komplexe Sachverhalte erklären, wenn man einfach das emotionale Zentrum seiner Leserschaft mit täglichen Dosen Entrüstung über den einen Kerl füttern kann?
+​Hier, seht euch das mal an, wie unser stolzer "Vierte Stand" seine Prioritäten setzt:
+
+
+
 * (Dramatische Einleitungsmusik, zerreißende Nachrichtensounds)
 
 # ERSTE STUNDE: Der Propagandafeldzug der Medien und die Verteidigung der Nation (60 Minuten)
