@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GrokVideo Builder Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #e2e8f0; }
+        .input-group { margin-bottom: 1.5rem; }
+        label { display: block; font-weight: 600; margin-bottom: 0.5rem; color: #94a3b8; }
+        input, select, textarea {
+            width: 100%; padding: 10px; border-radius: 8px;
+            background: #1e293b; border: 1px solid #334155; color: white;
+            outline: none; transition: border-color 0.2s;
+        }
+        input:focus, select:focus, textarea:focus { border-color: #38bdf8; }
+        .btn-primary {
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            color: white; font-weight: bold; padding: 12px 24px;
+            border-radius: 8px; cursor: pointer; width: 100%;
+            transition: opacity 0.2s;
+        }
+        .btn-primary:hover { opacity: 0.9; }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="max-w-2xl w-full bg-slate-900 p-8 rounded-2xl shadow-2xl border border-slate-800">
+        
+        <h1 class="text-3xl font-bold text-center mb-2 text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-400">
+            GrokVideo Builder
+        </h1>
+        <p class="text-center text-slate-400 mb-8 text-sm">Generador de Prompts Estructurados para Video IA</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            <div class="input-group md:col-span-2">
+                <label>1. Sujeto y Acción (Lo más importante)</label>
+                <input type="text" id="subject" placeholder="Ej: Un astronauta bailando en la luna..." oninput="updatePrompt()">
+            </div>
+
+            <div class="input-group">
+                <label>2. Estilo Visual</label>
+                <select id="style" onchange="updatePrompt()">
+                    <option value="">Seleccionar...</option>
+                    <option value="Photorealistic, 8k, highly detailed">Fotorealista (8k)</option>
+                    <option value="Cinematic movie scene, anamorphic lens">Cinematográfico</option>
+                    <option value="3D animation, Pixar style, cute">Animación 3D (Pixar)</option>
+                    <option value="Anime style, Studio Ghibli, vibrant colors">Anime (Ghibli)</option>
+                    <option value="Vintage 1980s VHS tape footage, grainy">Vintage VHS</option>
+                    <option value="Cyberpunk, neon lights, futuristic">Cyberpunk</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>3. Iluminación</label>
+                <select id="lighting" onchange="updatePrompt()">
+                    <option value="">Seleccionar...</option>
+                    <option value="Golden hour sunlight, warm tones">Hora dorada (Atardecer)</option>
+                    <option value="Cinematic moody lighting, dark shadows">Dramática / Oscura</option>
+                    <option value="Soft studio lighting, evenly lit">Estudio Suave</option>
+                    <option value="Neon volumetric fog">Neón con niebla</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>4. Cámara</label>
+                <select id="camera" onchange="updatePrompt()">
+                    <option value="">Seleccionar...</option>
+                    <option value="Static shot">Estática (Trípode)</option>
+                    <option value="Slow drone flyover">Dron (Vuelo lento)</option>
+                    <option value="Handheld shaky camera">Cámara en mano (Realista)</option>
+                    <option value="Cinematic pan right">Paneo cinemático</option>
+                    <option value="Zoom in slowly">Zoom lento</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>5. Formato</label>
+                <select id="ar" onchange="updatePrompt()">
+                    <option value="--ar 16:9">Horizontal (YouTube/Cine) 16:9</option>
+                    <option value="--ar 9:16">Vertical (TikTok/Reels) 9:16</option>
+                    <option value="--ar 1:1">Cuadrado (Post) 1:1</option>
+                </select>
+            </div>
+
+        </div>
+
+        <hr class="border-slate-800 my-6">
+
+        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 relative">
+            <label class="text-xs uppercase tracking-wider mb-2">Prompt Generado:</label>
+            <textarea id="output" rows="4" class="bg-transparent border-none text-sky-300 font-mono text-sm resize-none" readonly></textarea>
+            
+            <button onclick="copyToClipboard()" class="btn-primary mt-4">
+                Copiar Prompt
+            </button>
+        </div>
+        
+        <p id="msg" class="text-center text-green-400 text-sm mt-2 opacity-0 transition-opacity">¡Copiado al portapapeles!</p>
+
+    </div>
+
+    <script>
+        function updatePrompt() {
+            // Capturar valores
+            const subject = document.getElementById('subject').value.trim();
+            const style = document.getElementById('style').value;
+            const lighting = document.getElementById('lighting').value;
+            const camera = document.getElementById('camera').value;
+            const ar = document.getElementById('ar').value;
+
+            // Lógica de construcción
+            // Grok funciona bien con descripciones fluidas, así que unimos con comas.
+            let parts = [];
+            
+            if (subject) parts.push(subject);
+            if (style) parts.push("Style: " + style);
+            if (lighting) parts.push("Lighting: " + lighting);
+            if (camera) parts.push("Camera: " + camera);
+            if (ar) parts.push(ar);
+
+            // Unir y traducir el prompt base al inglés (simulado) o dejarlo tal cual
+            // Nota: Para mejores resultados en Grok, la estructura en inglés suele ser superior,
+            // pero Grok entiende español perfectamente. Aquí lo dejamos directo.
+            
+            const finalPrompt = parts.join(', ');
+            document.getElementById('output').value = finalPrompt;
+        }
+
+        function copyToClipboard() {
+            const output = document.getElementById('output');
+            output.select();
+            output.setSelectionRange(0, 99999); /* Para móviles */
+            navigator.clipboard.writeText(output.value);
+            
+            // Feedback visual
+            const msg = document.getElementById('msg');
+            msg.classList.remove('opacity-0');
+            setTimeout(() => msg.classList.add('opacity-0'), 2000);
+        }
+    </script>
+</body>
+</html>
